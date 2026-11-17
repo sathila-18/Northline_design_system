@@ -1,0 +1,16 @@
+{
+  "name": "@northline/tokens",
+  "version": "0.0.0",
+  "description": "Northline design tokens: CSS variables, TypeScript constants and the Tailwind theme, built from tokens/design.tokens.json.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "node -e \"console.log('@northline/tokens build is set up in S2')\""
+  }
+}

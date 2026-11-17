@@ -1,0 +1,42 @@
+{
+  "name": "northline-design-system",
+  "private": true,
+  "description": "Northline, a public demo design system. React + TypeScript components, Tailwind CSS 4, Storybook.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@12.21.0",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "prepare": "simple-git-hooks",
+    "lint": "eslint . && stylelint \"**/*.css\" --allow-empty-input && prettier --check .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "test:a11y": "node -e \"console.log('test:a11y is set up in S6')\"",
+    "build": "pnpm -r --if-present build",
+    "build-storybook": "node -e \"console.log('build-storybook is set up in S5')\"",
+    "tokens": "node -e \"console.log('tokens is set up in S2')\"",
+    "scrub": "node scripts/scrub.mjs",
+    "nextjs-check": "node -e \"console.log('nextjs-check is set up in S7')\""
+  },
+  "simple-git-hooks": {
+    "pre-push": "pnpm scrub"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.14.0",
+    "prettier": "3.10.1",
+    "simple-git-hooks": "2.14.0",
+    "stylelint": "18.0.0",
+    "stylelint-config-standard": "41.0.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.73.0"
+  }
+}

@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+  - apps/*
+
+# Dependencies allowed to run install scripts. simple-git-hooks installs the pre-push hook (pnpm scrub).
+allowBuilds:
+  simple-git-hooks: true
