@@ -210,3 +210,9 @@ These are things in DESIGN.md §3 or in the token file's shape that may cause pr
 2. Is the Alpha form in R2 acceptable, or would you rather have Alpha tokens as resolved 8-digit hex values (for example `#0F0F1329`)? Resolved values work in any tool but stop following the brand.
 3. Are the names in R3 (`base.white`, `base.black`) and R4 (`Line Height-62_4`) fine?
 4. Should colours stay hex strings (R1), or move to DTCG 2025.10 colour objects before the token build?
+
+## 7. Found later
+
+| Date | Finding | Decision |
+|---|---|---|
+| 18 Nov 2026 | `pnpm test:a11y` (S6) found a pairing this audit didn't check: `text-white_subtle` on `bg-brand` (the pairing its description names). 3.82:1 in Northline Dark, 3.49:1 in Garnet Dark, 4.23:1 in Voltic Light and Dark; needs 4.5:1. Northline Light (5.68) and Garnet Light (5.78) pass | Accepted for now as known issue K2 (DESIGN.md). Add this pairing to the audit's contrast list next time the JSON changes |

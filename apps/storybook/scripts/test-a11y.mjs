@@ -18,7 +18,9 @@ const staticDir = fileURLToPath(new URL('../storybook-static/', import.meta.url)
 const BRANDS = ['northline', 'garnet', 'voltic'];
 const THEMES = ['light', 'dark'];
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
-const CONTRAST_EXCLUDED = ['[data-a11y-state="hover"]', '[data-a11y-state="pressed"]'];
+// Also left out: samples of an accepted known issue (DESIGN.md "Known issues", for example K2), marked
+// data-a11y-known-issue="K2". Only the designer accepts a known issue.
+const CONTRAST_EXCLUDED = ['[data-a11y-state="hover"]', '[data-a11y-state="pressed"]', '[data-a11y-known-issue]'];
 
 if (!existsSync(join(staticDir, 'index.json'))) {
   console.error('FAIL: storybook-static is missing. Run pnpm build-storybook first (pnpm test:a11y does both).');

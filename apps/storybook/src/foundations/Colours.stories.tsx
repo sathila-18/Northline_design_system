@@ -120,6 +120,8 @@ function SemanticSample({ token }: { token: SemanticToken }) {
         className="nl:inline-block nl:rounded-xs nl:px-xs nl:text-title-l"
         style={{ color, backgroundColor: surface ? `var(${surface})` : undefined }}
         aria-disabled={disabledText.has(token.name) || undefined}
+        // text-white_subtle on bg-brand is under 4.5:1 in some brands and themes: accepted known issue K2.
+        data-a11y-known-issue={token.name === 'text-white_subtle' ? 'K2' : undefined}
       >
         Aa
       </span>
