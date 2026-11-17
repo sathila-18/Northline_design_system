@@ -10,3 +10,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | S2 | 2026-11-17 23:55 | 2026-11-18 00:00 | Token build. Merged without a separate review (setup S1 to S8) |
 | S3 | 2026-11-18 00:00 | 2026-11-18 00:01 | Hand-written styles. Merged without a separate review (setup S1 to S8) |
 | S4 | 2026-11-18 00:02 | 2026-11-18 00:04 | Fonts and base styles. Merged without a separate review (setup S1 to S8) |
+| S5 | 2026-11-18 00:06 | 2026-11-18 00:27 | Storybook. Reviewed and approved by the designer |
