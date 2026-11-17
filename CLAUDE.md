@@ -160,5 +160,6 @@ Before saying anything is done, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnp
 
 - `main` always builds, its tests pass and its Storybook runs.
 - One short-lived branch per item (`feat/<name>`). Push the branch so Vercel builds a preview, and give the designer the link.
+- Storybook on Vercel. Production (`main`): https://northline-design-system-blond.vercel.app. Each pushed branch gets a preview; its link is on the branch's latest commit on GitHub (the Vercel status) and in the Vercel dashboard. Previews are behind Vercel Authentication, so only signed-in team members can open them.
 - Merge into `main` only after the designer approves and every check passes. Then delete the branch.
 - Commit messages in the present tense, naming the component (`Add NlButtonBase`).
