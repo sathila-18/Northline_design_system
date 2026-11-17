@@ -4,5 +4,5 @@
     "types": ["vite/client", "node"],
     "noEmit": true
   },
-  "include": ["src", ".storybook"]
+  "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }

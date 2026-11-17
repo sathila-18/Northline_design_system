@@ -564,7 +564,7 @@ Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, c
 | S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ✅ |
 | S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ✅ |
 | S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | ✅ |
-| S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ⬜ |
+| S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ✅ |
 | S7 | Next.js check app and `pnpm nextjs-check` | `apps/nextjs-check` | ⬜ |
 | S8 | Vercel deploy of Storybook | `vercel.json` | ⬜ |
 
@@ -5971,6 +5971,7 @@ Known issues
 | # | Issue | Status |
 |---|---|---|
 | K1 | The grey scale has two light steps, so `bg-tertiary`, `bg-neutral`, `bg-icons` and `bg-disabled` share Neutral-100 in Light. A grey-25 step would separate them | Open |
+| K2 | `text-white_subtle` (Neutral-100) on `bg-brand` is under 4.5:1 in Northline Dark (3.82), Garnet Dark (3.49) and Voltic (4.23, both themes). Found by `pnpm test:a11y` (S6). Accepted for now; decide when a component uses this pairing | Open |
 
 ---
 
@@ -5988,3 +5989,4 @@ Known issues
 | 18 Nov 2026 | S3: `packages/tokens/src/styles.css` with shadows (black from `--nl-palette-black` via `color-mix`), layers, grid (`--nl-grid-columns`, `--nl-grid-gutter`, `--nl-grid-margin`) and motion. Reduced motion sets every duration to 0ms. Tests check every value against §4.1, §4.3 and §5 |
 | 18 Nov 2026 | S4: self-hosted fonts through `@fontsource` (Inter, IBM Plex Sans, Space Grotesk; 400 to 700; Latin and Latin Extended) and `material-symbols` (Rounded). `packages/ui/src/styles/` holds `index.css`, `fonts.css`, `tailwind.css` and `reset.css`; the build writes `dist/index.css` with the font files beside it. Page default: Body M, `text-primary` on `bg-primary`; `color-scheme` follows the theme. Data L and Data M use tabular figures (S2) |
 | 18 Nov 2026 | S5: Storybook 10.6 (`@storybook/react-vite`, a11y and docs addons) with a Brand and Theme toolbar that sets `data-brand` and `data-theme` on `<html>`. Foundations pages: Token pipeline, Colours (primitives, aliases, semantic tokens), Typography, Spacing and sizes, Radius, Shadows, Layers, Motion, Icons. Approved by the designer, including the §3.8 utility names, the documentation-only dynamic class on the Token pipeline page, and Northline and Light as the `:root` defaults |
+| 18 Nov 2026 | S6: Vitest, Testing Library and jsdom in `@northline/ui`. `pnpm test:a11y` runs axe (WCAG 2.2 AA) on every story in 3 brands × 2 themes; contrast skips anything inside `data-a11y-state="hover"` or `"pressed"` (D17) and accepted known issues marked `data-a11y-known-issue`. ESLint is type-aware, and `scripts/lint/` adds the CLAUDE.md rules: `nl:` prefix, theme classes only, no arbitrary values, `!`, `dark:` or raw colours and pixels, no `outline-none` beside a focus ring width, whole literal class strings. Each rule has tests. Found and accepted K2 |

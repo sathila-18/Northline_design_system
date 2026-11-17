@@ -8,6 +8,14 @@ export interface BrandTheme {
   theme: string;
 }
 
+/** The brand and theme from Storybook's toolbar globals (untyped in Storybook). */
+export function fromGlobals(globals: Record<string, unknown>): BrandTheme {
+  return {
+    brand: typeof globals.brand === 'string' ? globals.brand : 'northline',
+    theme: typeof globals.theme === 'string' ? globals.theme : 'light',
+  };
+}
+
 const capitalise = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 export const brandLabel = (brand: string) => capitalise(brand);
 export const themeLabel = (theme: string) => capitalise(theme);

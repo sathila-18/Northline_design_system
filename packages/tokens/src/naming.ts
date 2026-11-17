@@ -30,13 +30,13 @@ export function cssName(path: readonly string[]): string {
       return `nl-color-${slug(last)}`; // Primary-500 → color-primary-500, Base.White → color-white
     case 'Alias Typography': {
       const [style = '', property = ''] = rest;
-      const short = {
+      const short: Partial<Record<string, string>> = {
         'Font family': 'family',
         'Font weight': 'weight',
         'Font size': 'size',
         'Line height': 'line-height',
       };
-      return `nl-font-${slug(style)}-${short[property as keyof typeof short] ?? slug(property)}`;
+      return `nl-font-${slug(style)}-${short[property] ?? slug(property)}`;
     }
     case 'Color collection':
       return `nl-${slug(last)}`; // bg-action-primary_hovered → bg-action-primary-hovered, Alpha-md → alpha-md

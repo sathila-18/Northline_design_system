@@ -10,7 +10,7 @@ import {
   type SemanticToken,
   type SemanticTokenName,
 } from '@northline/tokens';
-import { Code, Description, Value, brandLabel, themeLabel, useCssValues, type BrandTheme } from './docs';
+import { Code, Description, Value, brandLabel, fromGlobals, themeLabel, useCssValues, type BrandTheme } from './docs';
 
 interface Args {
   token: SemanticTokenName;
@@ -149,7 +149,9 @@ function TokenPipelinePage({
           <span className="nl:text-label-m nl:text-primary">Semantic token</span>
           <select
             value={name}
-            onChange={(event) => onChange(event.target.value as SemanticTokenName)}
+            onChange={(event) => {
+              onChange(event.target.value as SemanticTokenName);
+            }}
             className="nl:h-40 nl:rounded-s nl:border nl:border-strong nl:bg-primary nl:px-l nl:text-body-m nl:text-primary nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused"
           >
             {groups.map((group) => (
@@ -176,7 +178,7 @@ function TokenPipelinePage({
         </Step>
         <Step number={2} title={`Alias: what the ${brand} brand uses${aliases.length > 1 ? ', in two steps' : ''}`}>
           {aliases.map((alias) => (
-            <ColourLine key={alias} cssVar={alias} note={`Points at ${aliasChains[alias]?.[brand]}`} />
+            <ColourLine key={alias} cssVar={alias} note={`Points at ${aliasChains[alias]?.[brand] ?? ''}`} />
           ))}
         </Step>
         <Step number={3} title={`Semantic token: what it is for, in the ${theme} theme`}>
@@ -214,9 +216,11 @@ export const TokenPipeline: StoryObj<Args> = {
     const [, updateArgs] = useArgs<Args>();
     return (
       <TokenPipelinePage
-        context={{ brand: globals.brand, theme: globals.theme }}
+        context={fromGlobals(globals)}
         name={args.token}
-        onChange={(token) => updateArgs({ token })}
+        onChange={(token) => {
+          updateArgs({ token });
+        }}
       />
     );
   },

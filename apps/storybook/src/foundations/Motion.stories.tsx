@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Code, Page, Row, Section, TokenTable, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Row, Section, TokenTable, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 import { motion } from './data';
 
 const meta: Meta = { title: 'Foundations/Motion', parameters: { layout: 'fullscreen' } };
@@ -38,7 +38,9 @@ function MotionPage(context: BrandTheme) {
         <div className="nl:flex nl:flex-col nl:gap-l">
           <button
             type="button"
-            onClick={() => setMoved(!moved)}
+            onClick={() => {
+              setMoved(!moved);
+            }}
             // A plain native button for this page only, deliberately not styled like NlButton (not built yet).
             className="nl:self-start nl:rounded-xs nl:border nl:border-strong nl:px-l nl:py-xs nl:text-label-m nl:text-primary nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused"
           >
@@ -68,5 +70,5 @@ function MotionPage(context: BrandTheme) {
 }
 
 export const Motion: StoryObj = {
-  render: (_, { globals }) => <MotionPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <MotionPage {...fromGlobals(globals)} />,
 };

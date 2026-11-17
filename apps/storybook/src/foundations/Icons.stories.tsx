@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Code, Page, Row, Section, TokenTable, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Row, Section, TokenTable, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 import { iconSizes } from './data';
 
 const meta: Meta = { title: 'Foundations/Icons', parameters: { layout: 'fullscreen' } };
@@ -50,5 +50,5 @@ function IconsPage(context: BrandTheme) {
 }
 
 export const Icons: StoryObj = {
-  render: (_, { globals }) => <IconsPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <IconsPage {...fromGlobals(globals)} />,
 };

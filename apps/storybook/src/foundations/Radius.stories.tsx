@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { tokenList } from '@northline/tokens';
-import { Code, Page, Section, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Section, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 
 const meta: Meta = { title: 'Foundations/Radius', parameters: { layout: 'fullscreen' } };
 export default meta;
@@ -37,5 +37,5 @@ function RadiusPage(context: BrandTheme) {
 }
 
 export const Radius: StoryObj = {
-  render: (_, { globals }) => <RadiusPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <RadiusPage {...fromGlobals(globals)} />,
 };
