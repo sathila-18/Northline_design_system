@@ -542,7 +542,7 @@ Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, c
 |---|---|---|---|
 | S-1 | Neutral component specs extracted from the reference system, reviewed and scrubbed, copied into §8 and §9 | `DESIGN.md` §8, §9 | ✅ |
 | S0 | Token JSON built from §3, plus the audit report | `tokens/design.tokens.json`, `docs/TOKEN_AUDIT.md` | ✅ |
-| S1 | pnpm monorepo scaffold (`packages/tokens`, `packages/ui`, `apps/storybook`), TypeScript, Vite, ESLint, Stylelint | repo root | ⬜ |
+| S1 | pnpm monorepo scaffold (`packages/tokens`, `packages/ui`, `apps/storybook`), TypeScript, Vite, ESLint, Stylelint | repo root | ✅ |
 | S2 | Token build with Style Dictionary, brand and theme scoping, Tailwind theme | `packages/tokens/dist/` | ⬜ |
 | S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ⬜ |
 | S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ⬜ |
@@ -5966,3 +5966,4 @@ Known issues
 | 17 Nov 2026 | `Size-320` added to `Primitives.Sizes` (§3.5), for the rich tooltip's maximum width |
 | 17 Nov 2026 | S-1: 78 components added to §8.1 to §8.4 and their specs to §9. Open items tracked in `docs/DEPENDENCIES.md` |
 | 17 Nov 2026 | S0: `tokens/design.tokens.json` (425 tokens) and `docs/TOKEN_AUDIT.md`. D17 records the token file decisions. S-1 and S0 approved |
+| 17 Nov 2026 | S1: pnpm 12 workspaces (`@northline/tokens`, `@northline/ui`, `apps/storybook`), Node 24, TypeScript 6.0.3 strict, Vite 8 library build with `preserveModules` and a `'use client'` check, ESLint, Stylelint, Prettier, `pnpm scrub` and a pre-push hook that runs it |

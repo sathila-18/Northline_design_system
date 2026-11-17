@@ -1,0 +1,7 @@
+# Specs and decisions are hand-written Markdown; tokens are generated in TokensBrücke shape
+*.md
+tokens/design.tokens.json
+pnpm-lock.yaml
+dist
+storybook-static
+coverage

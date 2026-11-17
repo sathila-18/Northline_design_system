@@ -1,0 +1,7 @@
+{
+  "name": "@northline/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Northline Storybook: components, Foundations and pages. Set up in S5.",
+  "type": "module"
+}

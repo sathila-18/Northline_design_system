@@ -1,0 +1,42 @@
+{
+  "name": "@northline/ui",
+  "version": "0.0.0",
+  "description": "Northline React components, styled with Tailwind CSS 4 and the Northline tokens.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node scripts/check-directives.mjs"
+  },
+  "peerDependencies": {
+    "@northline/tokens": "workspace:^",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@northline/tokens": "workspace:^",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.8"
+  }
+}

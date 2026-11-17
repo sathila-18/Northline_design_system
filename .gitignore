@@ -4,5 +4,12 @@ scripts/scrub-words.txt
 # Private: extracted specs waiting to be copied into DESIGN.md §9
 incoming/
 
+# Dependencies and build output
+node_modules/
+dist/
+storybook-static/
+coverage/
+*.tsbuildinfo
+
 # OS files
 .DS_Store
