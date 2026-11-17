@@ -18,7 +18,7 @@
     "test:a11y": "node -e \"console.log('test:a11y is set up in S6')\"",
     "build": "pnpm -r --if-present build",
     "build-storybook": "node -e \"console.log('build-storybook is set up in S5')\"",
-    "tokens": "node -e \"console.log('tokens is set up in S2')\"",
+    "tokens": "pnpm --filter @northline/tokens build",
     "scrub": "node scripts/scrub.mjs",
     "nextjs-check": "node -e \"console.log('nextjs-check is set up in S7')\""
   },
