@@ -1,0 +1,5968 @@
+# Northline design system
+
+> **Status.** Draft v0.1, 17 Nov 2026
+> **Platform.** Web, desktop admin product. React + TypeScript components that also run in Next.js (App Router).
+> **Owner.** The designer, who decides what gets built and when.
+
+This file is the spec. It says **what** the system is (tokens, styles, icons, components and their status). [`CLAUDE.md`](./CLAUDE.md) says **how** Claude Code works in this repo.
+
+Northline is a public demo. It rebuilds a real design-to-code process with fictional brands and placeholder content. Nothing in it belongs to a real company or client.
+
+---
+
+## Contents
+
+1. Sources of truth
+2. Core rules
+3. Foundations, tokens
+4. Foundations, styles
+5. Motion
+6. Icons
+7. Component architecture
+8. Component inventory and build status
+9. Component specs
+10. Decisions and known issues
+11. Changelog
+
+---
+
+## 1. Sources of truth
+
+| What | Where |
+|---|---|
+| Token values | `tokens/design.tokens.json` (DTCG 2025.10, colours as hex). Built from §3 of this file |
+| Token plan, mapping and component specs | This file |
+| Ways of working | `CLAUDE.md` |
+| Icons | [Material Symbols Rounded](https://fonts.google.com/icons), npm package `material-symbols`, self-hosted |
+| Fonts | Google Fonts, Open Font License, self-hosted through `@fontsource` packages |
+
+**There is no Figma file for this demo.** The token JSON plays the part of the Figma export, and it keeps the same shape as a TokensBrücke export (collections, modes in `$extensions.mode`, a `$description` on every token).
+
+**Component specs come from a reference system.** Before this repo was set up, the designer's existing component library was read once, outside this repo, and turned into neutral specs (anatomy, variants, sizes, states, token names, behaviour). Those specs were reviewed, scrubbed and copied into §9. This repo never connects to that Figma file, and no file key, node ID or name from it appears here. New components (charts and pages) are specified by the designer directly in §9.
+
+If this file and the token JSON disagree, stop and tell the designer. Never edit one to match the other without approval.
+
+---
+
+## 2. Core rules
+
+1. **Tokens only.** Components never contain raw hex values, pixel numbers or font sizes. The only exceptions are artwork (logos, illustrations) and `0`.
+2. **Components use semantic colours only** (layer 3, `bg-*`, `text-*`, `border-*`, `fg-*`, `alpha-*`). Primitives and aliases exist only so semantic tokens can point at them.
+3. **Light, Dark and brand come from tokens.** Theme and brand are set once on `<html>` with `data-theme="light|dark"` and `data-brand="northline|garnet|voltic"`. A component never branches on theme or brand.
+4. **Desktop layout.** 12-column grid, 24 gutter, 24 page margin, narrowest width 1024.
+5. **React and Next.js.** Every component works in a plain React app and in the Next.js App Router (§7.4).
+6. **WCAG 2.2 AA.** Text 4.5 to 1, icons, borders and focus rings 3 to 1, in every brand and both themes.
+7. **Sentence case** for all text content.
+8. **Fake, generic content only.** Members, tiers, rewards and numbers are invented. No real company, product, client or person names, apart from open-source projects credited in docs.
+
+---
+
+## 3. Foundations, tokens
+
+### 3.0 How the layers work
+
+```
+Primitives (raw hex)  →  Alias (brand modes)  →  Colour collection (Light / Dark)  →  components
+```
+
+| Layer | Collection | Modes | Code scoping |
+|---|---|---|---|
+| 1. Primitives | `Primitives` | none | `:root` |
+| 2. Alias colours | `Alias Colors` | one per brand, `Northline`, `Garnet`, `Voltic` | `[data-brand="…"]`, Northline also on `:root` |
+| 2. Alias typography | `Alias Typography` | one per brand (only the font family differs) | font family per brand, the rest on `:root` |
+| 2. Alias spacing and radius | `Alias Spacing & Radius` | none | `:root` |
+| 3. Semantic colours | `Color collection` | `Light`, `Dark` | `[data-theme="light|dark"]` |
+
+- **Brands live in the alias layer.** Each brand mode points the same alias names at its own primitives. Adding a brand means adding primitives and one alias mode. Layer 3 and the components never change.
+- **Light and Dark live in layer 3.** Semantic tokens point at aliases, so every brand gets both themes automatically.
+- **Brand-specific Light and Dark steps live in the alias layer**, in the `Primary light` and `Primary dark` groups (§3.2). This is what lets one layer 3 work for brands of very different lightness.
+- `data-brand` goes on `<html>` only. `data-theme` may also go on an inner element (side-by-side previews).
+
+### 3.1 Primitive colours
+
+_Collection `Primitives`, group `Colors`. Named by colour, never by role._
+
+| Step | royal-blue | garnet-green | pink | grey |
+|---|---|---|---|---|
+| 50 | #E8EAFD | #E8EFEC | #FDE8F5 | #EDEDEF |
+| 100 | #D0D6FB | #D0DED9 | #FCD1EA | #DBDBDF |
+| 200 | #A1ADF7 | #A1BEB2 | #F9A3D5 | #B7B7BF |
+| 300 | #7384F3 | #729D8C | #F576C0 | #94949E |
+| 400 | #445BEE | #437D65 | #F248AB | #70707E |
+| 500 | #1532EA | #145C3F | #EF1A96 | #4C4C5E |
+| 600 | #1128BB | #104A32 | #BF1578 | #3D3D4B |
+| 700 | #0D1E8D | #0C3726 | #8F105A | #2E2E38 |
+| 800 | #08145E | #082519 | #600A3C | #1E1E26 |
+| 900 | #040A2F | #04120D | #30051E | #0F0F13 |
+
+| Step | blue | green | yellow | red |
+|---|---|---|---|---|
+| 50 | #E8F3FC | #E7F6E8 | #FCF8E7 | #FDEAE8 |
+| 100 | #D1E7FA | #CFEDD0 | #F9F0CF | #FAD6D1 |
+| 200 | #A3CFF4 | #9EDAA1 | #F4E19F | #F5ADA4 |
+| 300 | #74B8EF | #6EC872 | #EED26F | #F18476 |
+| 400 | #46A0E9 | #3DB643 | #E9C33F | #EC5B49 |
+| 500 | #1888E4 | #0DA314 | #E3B510 | #E7321B |
+| 600 | #136DB6 | #0A8310 | #B6900C | #B92816 |
+| 700 | #0E5289 | #08620C | #886C09 | #8B1E10 |
+| 800 | #0A365B | #054108 | #5B4806 | #5C140B |
+| 900 | #051B2E | #032104 | #2D2403 | #2E0A05 |
+
+| Primitive | Hex |
+|---|---|
+| white | #FFFFFF |
+| black | #000000 |
+
+Token paths are `Primitives.Colors.<scale>.<scale>-<step>`, for example `Primitives.Colors.royal-blue.royal-blue-500`.
+
+### 3.2 Alias colours (brand layer)
+
+_Collection `Alias Colors`, group `Colors.Brand`, modes `Northline`, `Garnet`, `Voltic`._
+
+**Role scales.** Each step maps one to one to the primitive step.
+
+| Alias | Northline | Garnet | Voltic |
+|---|---|---|---|
+| `Primary-50 … -900` | royal-blue | garnet-green | pink |
+| `Neutral-50 … -900` | grey | grey | grey |
+| `Info-50 … -900` | blue | blue | blue |
+| `Success-50 … -900` | green | green | green |
+| `Warning-50 … -900` | yellow | yellow | yellow |
+| `Error-50 … -900` | red | red | red |
+| `White`, `Black` | white, black | white, black | white, black |
+
+**Primary light.** Brand colours the Light theme uses for actions and fills.
+
+| Alias | Northline | Garnet | Voltic | Use |
+|---|---|---|---|---|
+| `Primary-light-action` | Primary-500 | Primary-500 | Primary-600 | Links, action text, icons, active borders |
+| `Primary-light-hovered` | Primary-600 | Primary-600 | Primary-700 | Hover of action text, icons, borders |
+| `Primary-light-pressed` | Primary-700 | Primary-700 | Primary-800 | Pressed of action text, icons, borders |
+| `Primary-light-focus` | Primary-400 | Primary-400 | Primary-500 | Focus ring |
+| `Primary-light-fill` | Primary-500 | Primary-500 | Primary-600 | Primary buttons and brand backgrounds |
+| `Primary-light-fill-hovered` | Primary-600 | Primary-600 | Primary-700 | Hover of primary buttons |
+| `Primary-light-fill-pressed` | Primary-700 | Primary-700 | Primary-800 | Pressed of primary buttons |
+
+**Primary dark.** The same roles for the Dark theme.
+
+| Alias | Northline | Garnet | Voltic | Use |
+|---|---|---|---|---|
+| `Primary-dark-action` | Primary-300 | Primary-300 | Primary-400 | Links, action text, icons, active borders |
+| `Primary-dark-hovered` | Primary-200 | Primary-200 | Primary-300 | Hover of action text, icons, borders |
+| `Primary-dark-pressed` | Primary-100 | Primary-100 | Primary-200 | Pressed of action text, icons, borders |
+| `Primary-dark-focus` | Primary-300 | Primary-300 | Primary-400 | Focus ring |
+| `Primary-dark-fill` | Primary-400 | Primary-400 | Primary-600 | Primary buttons and brand backgrounds |
+| `Primary-dark-fill-hovered` | Primary-500 | Primary-500 | Primary-700 | Hover of primary buttons |
+| `Primary-dark-fill-pressed` | Primary-600 | Primary-600 | Primary-800 | Pressed of primary buttons |
+
+- Every value in both groups points at the brand's own `Primary-*` alias, never straight at a primitive.
+- Text on every primary fill is white in all brands. The admin colour picker (later) rejects colours that fail with white text, so no "text on primary" token is needed.
+
+### 3.3 Semantic colours (Light / Dark)
+
+_Collection `Color collection`, modes `Light` and `Dark`. **Components use only these.** Values point at aliases._
+
+#### Background
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `bg-primary` | White | Neutral-900 | Main background of screens, dialogs and side sheets |
+| `bg-secondary` | Neutral-50 | Neutral-800 | Side nav and grey panels |
+| `bg-tertiary` | Neutral-100 | Neutral-700 | Callouts and nested surfaces |
+| `bg-neutral` | Neutral-100 | Neutral-700 | Neutral badge background |
+| `bg-icons` | Neutral-100 | Neutral-700 | Icon and default avatar backgrounds |
+| `bg-disabled` | Neutral-100 | Neutral-700 | Disabled backgrounds |
+| `bg-direct` | Neutral-900 | Neutral-50 | Snackbar and tooltip backgrounds. Text on it uses `text-inverse` |
+| `bg-brand` | Primary-light-fill | Primary-dark-fill | Brand backgrounds |
+| `bg-active` | Primary-50 | Primary-900 | Active or selected backgrounds |
+| `bg-active-hover` | Primary-100 | Primary-800 | Hover of active backgrounds |
+| `bg-action-primary` | Primary-light-fill | Primary-dark-fill | Primary button |
+| `bg-action-primary_hovered` | Primary-light-fill-hovered | Primary-dark-fill-hovered | Primary button, hover |
+| `bg-action-primary_pressed` | Primary-light-fill-pressed | Primary-dark-fill-pressed | Primary button, pressed |
+| `bg-action-secondary` | Primary-50 | Primary-900 | Secondary button |
+| `bg-action-secondary_hovered` | Primary-100 | Primary-800 | Secondary button, hover |
+| `bg-action-secondary_pressed` | Primary-200 | Primary-700 | Secondary button, pressed |
+| `bg-action-inverse` | White | White | White call to action on brand |
+| `bg-action-destructive` | Error-600 | Error-600 | Destructive button |
+| `bg-action-destructive_hovered` | Error-700 | Error-700 | Destructive button, hover |
+| `bg-action-destructive_pressed` | Error-800 | Error-800 | Destructive button, pressed |
+| `bg-action-destructive-secondary_hovered` | Error-50 | Error-900 | Secondary destructive button, hover |
+| `bg-action-destructive-secondary_pressed` | Error-100 | Error-800 | Secondary destructive button, pressed |
+| `bg-info` | Info-600 | Info-600 | Solid info background, white text |
+| `bg-info_secondary` | Info-100 | Info-900 | Tinted info background |
+| `bg-success` | Success-600 | Success-600 | Solid success background, white text |
+| `bg-success_secondary` | Success-100 | Success-900 | Tinted success background |
+| `bg-warning` | Warning-500 | Warning-500 | Solid warning background, dark text (`text-dark_both`) |
+| `bg-warning_secondary` | Warning-100 | Warning-900 | Tinted warning background |
+| `bg-error` | Error-600 | Error-600 | Solid error background, white text |
+| `bg-error_secondary` | Error-100 | Error-900 | Tinted error background |
+
+#### Text
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `text-primary` | Neutral-900 | White | Titles and headings |
+| `text-secondary` | Neutral-500 | Neutral-200 | Body text and descriptions |
+| `text-tertiary` | Neutral-600 | Neutral-300 | Captions, overlines, hints |
+| `text-placeholder` | Neutral-400 | Neutral-300 | Input placeholder text |
+| `text-disabled` | Neutral-300 | Neutral-600 | Disabled text |
+| `text-disabled-on_bg` | Neutral-400 | Neutral-500 | Disabled text on a filled background |
+| `text-inverse` | White | Neutral-900 | Text on `bg-direct`. Flips with the theme |
+| `text-white_both` | White | White | White text in both themes (primary and destructive buttons) |
+| `text-white_subtle` | Neutral-100 | Neutral-100 | Secondary text on brand backgrounds |
+| `text-dark_both` | Neutral-900 | Neutral-900 | Dark text in both themes (solid warning backgrounds) |
+| `text-action` | Primary-light-action | Primary-dark-action | Text links and secondary buttons |
+| `text-hovered` | Primary-light-hovered | Primary-dark-hovered | Text link, hover |
+| `text-pressed` | Primary-light-pressed | Primary-dark-pressed | Text link, pressed |
+| `text-info` | Info-700 | Info-200 | Info text |
+| `text-success` | Success-700 | Success-200 | Success text |
+| `text-warning` | Warning-800 | Warning-200 | Warning text |
+| `text-error` | Error-700 | Error-200 | Error text |
+
+#### Border
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `border-default` | Neutral-100 | Neutral-700 | Default border and dividers |
+| `border-subtle` | Neutral-50 | Neutral-800 | Subtle border |
+| `border-strong` | Neutral-400 | Neutral-300 | Checkbox, radio and other control outlines |
+| `border-disabled` | Neutral-100 | Neutral-700 | Disabled borders |
+| `border-inverse` | White | Neutral-900 | Borders on brand colour |
+| `border-active` | Primary-light-action | Primary-dark-action | Active, selected and typing states |
+| `border-hovered` | Primary-light-hovered | Primary-dark-hovered | Hover |
+| `border-pressed` | Primary-light-pressed | Primary-dark-pressed | Pressed |
+| `border-focused` | Primary-light-focus | Primary-dark-focus | Focus ring |
+| `border-action-primary` | Primary-light-fill | Primary-dark-fill | Outline buttons |
+| `border-info` | Info-500 | Info-400 | Info border |
+| `border-success` | Success-500 | Success-400 | Success border |
+| `border-warning` | Warning-500 | Warning-400 | Warning border |
+| `border-error` | Error-500 | Error-400 | Error border |
+
+`border-warning` is decorative only. It reaches about 1.9:1 on `bg-primary` in Light, so it may outline something only when text or an icon next to it carries the meaning (for example the warning `NlBadge`). It must never be a control's only outline (D17).
+
+#### Foreground (icons)
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `fg-primary` | Neutral-900 | White | Primary icons |
+| `fg-secondary` | Neutral-500 | Neutral-200 | Secondary icons (fields, close, chevron) |
+| `fg-placeholder` | Neutral-400 | Neutral-400 | Input field icons |
+| `fg-disabled` | Neutral-300 | Neutral-600 | Disabled icons |
+| `fg-disabled-on_bg` | Neutral-400 | Neutral-500 | Disabled icons on a filled background |
+| `fg-inverse` | White | Neutral-900 | Icons on `bg-direct`. Flips with the theme |
+| `fg-white_both` | White | White | White icons in both themes |
+| `fg-dark_both` | Neutral-900 | Neutral-900 | Dark icons in both themes |
+| `fg-brand` | Primary-light-action | Primary-dark-action | Brand icons |
+| `fg-action` | Primary-light-action | Primary-dark-action | Action icons |
+| `fg-hovered` | Primary-light-hovered | Primary-dark-hovered | Action icon, hover |
+| `fg-pressed` | Primary-light-pressed | Primary-dark-pressed | Action icon, pressed |
+| `fg-active` | Primary-light-hovered | Primary-dark-hovered | Icons in the active state |
+| `fg-info` | Info-600 | Info-300 | Info icons |
+| `fg-success` | Success-600 | Success-300 | Success icons |
+| `fg-warning` | Warning-700 | Warning-300 | Warning icons |
+| `fg-error` | Error-600 | Error-300 | Error icons |
+
+#### Alpha
+
+_An alias colour plus an opacity. The value follows the brand._
+
+In `tokens/design.tokens.json` each Alpha token's `$value` is the alias reference, and the opacity is stored per theme in `$extensions["com.northline.alpha"]`. DTCG 2025.10 can't add an opacity to a referenced colour, so the token build (S2) must apply this opacity (D17).
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `Alpha-sm` | Neutral-900 at 16% | Neutral-900 at 16% | Small call to action inside brand cards |
+| `Alpha-md` | Neutral-900 at 40% | Black at 60% | Overlay (scrim) behind dialogs and side sheets |
+| `Alpha-light` | White at 12% | White at 12% | Depth on brand backgrounds |
+| `Alpha-nav` | White at 75% | White at 6% | Navigation backgrounds and loading overlay |
+| `Alpha-border` | Neutral-900 at 8% | White at 8% | Subtle borders on icon circles and avatars |
+| `Alpha-brand` | Primary-500 at 16% | Primary-500 at 16% | Brand tint |
+| `Alpha-success` | Success-500 at 16% | Success-500 at 16% | Success tint |
+| `Alpha-error` | Error-500 at 16% | Error-500 at 16% | Error tint |
+
+#### Chart colours
+
+To be added at the dashboard stage (§10, D9). The first series will use the brand primary, the rest a fixed set tested for Light and Dark.
+
+### 3.4 Typography
+
+_Collection `Alias Typography`, modes `Northline`, `Garnet`, `Voltic`. Only the font family differs between brands._
+
+| Brand | Font family (primitive `Font style/<name>`) | Fallback stack added by the token build |
+|---|---|---|
+| Northline | Inter | `system-ui, sans-serif` |
+| Garnet | IBM Plex Sans | `system-ui, sans-serif` |
+| Voltic | Space Grotesk | `system-ui, sans-serif` |
+
+All three are self-hosted with weights 400, 500, 600 and 700, Latin and Latin Extended. Font weights are stored as numbers (`$type: fontWeight`). Line heights are in px, rounded to one decimal. Letter spacing is 0.
+
+| Text style | Weight | Size | Line height |
+|---|---|---|---|
+| `Display Large-H1` | 700 | 48 | 62.4 |
+| `Display Medium-H2` | 700 | 36 | 46.8 |
+| `Display Small-H3` | 700 | 28 | 39.2 |
+| `Headline Large-H4` | 700 | 24 | 33.6 |
+| `Headline Medium-H5` | 600 | 20 | 28 |
+| `Headline Small-H6` | 600 | 16 | 24 |
+| `Title XL` | 600 | 32 | 41.6 |
+| `Title L` | 600 | 18 | 25.2 |
+| `Title M` | 600 | 16 | 24 |
+| `Title S` | 600 | 14 | 21 |
+| `Body L` | 400 | 16 | 24 |
+| `Body M` | 400 | 14 | 21 |
+| `Body S` | 400 | 12 | 18 |
+| `Label L` | 500 | 16 | 24 |
+| `Label M` | 500 | 14 | 21 |
+| `Label S` | 500 | 12 | 18 |
+| `Caption L` | 500 | 12 | 18 |
+| `Caption M` | 500 | 11 | 16.5 |
+| `Caption S` | 600 | 10 | 15 |
+| `Button XL` | 600 | 18 | 24 |
+| `Button L` | 600 | 16 | 24 |
+| `Button M` | 600 | 14 | 24 |
+| `Button S` | 600 | 12 | 24 |
+| `Data L` | 600 | 32 | 41.6 |
+| `Data M` | 600 | 24 | 31.2 |
+
+`Button XL` is the large button's label (D12).
+
+`Data L` and `Data M` are new, for large numbers on stat cards and dashboards. They use tabular figures (`font-variant-numeric: tabular-nums`).
+
+### 3.5 Spacing
+
+_Collection `Alias Spacing & Radius`, group `Spacing`. Values point at `Primitives.Sizes`._
+
+| Token | Value |
+|---|---|
+| `Space-none` | 0 |
+| `Space-XXS` | 2 |
+| `Space-XS` | 4 |
+| `Space-S` | 6 |
+| `Space-M` | 8 |
+| `Space-L` | 12 |
+| `Space-XL` | 16 |
+| `Space-2XL` | 20 |
+| `Space-3XL` | 24 |
+| `Space-4XL` | 32 |
+| `Space-5XL` | 36 |
+| `Space-6XL` | 40 |
+| `Space-7XL` | 48 |
+| `Space-8XL` | 56 |
+| `Space-9XL` | 64 |
+| `Space-10XL` | 80 |
+| `Space-11XL` | 96 |
+| `Space-12XL` | 120 |
+
+The scale and names match the reference system, so extracted specs (§9) map one to one.
+
+`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 320` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-320` is a maximum width only (rich tooltip), never a spacing value, so there is no matching `Space-*` token.
+
+### 3.6 Radius
+
+| Token | Value |
+|---|---|
+| `Radius-none` | 0 |
+| `Radius-XS` | 4 |
+| `Radius-S` | 8 |
+| `Radius-M` | 12 |
+| `Radius-L` | 16 |
+| `Radius-XL` | 24 |
+| `Radius-Full` | `Size-full` (pill) |
+
+### 3.7 Breakpoints
+
+_Group `Primitives.Breakpoints`, kept apart from `Sizes` so layout widths never mix with spacing._
+
+| Token | Value | Use |
+|---|---|---|
+| `Breakpoint-1024` | 1024 | Narrowest supported width. Side nav collapsed |
+| `Breakpoint-1280` | 1280 | Side nav expanded from here |
+| `Breakpoint-1440` | 1440 | Main design width |
+| `Breakpoint-1920` | 1920 | Large desktop |
+
+### 3.8 Token names in code
+
+| Layer | JSON path example | CSS variable | Tailwind |
+|---|---|---|---|
+| Primitive | `Primitives.Colors.royal-blue.royal-blue-500` | `--nl-palette-royal-blue-500` | none |
+| Alias | `Alias Colors.Colors.Brand.Primary.Primary-500` | `--nl-color-primary-500` | none |
+| Semantic | `Color collection.Background.bg-primary` | `--nl-bg-primary` | `nl:bg-primary` |
+| Text style | `Alias Typography.Body M` | `--nl-font-body-m` (shorthand) | `nl:text-body-m` |
+| Spacing | `Space-XL` | `--nl-space-xl` | `nl:p-xl`, `nl:gap-xl` |
+| Radius | `Radius-S` | `--nl-radius-s` | `nl:rounded-s` |
+
+Names are lowercased, spaces and `_` become `-`. Components see only semantic, text style, spacing, radius, size and shadow utilities.
+
+### 3.9 Token file rules
+
+These are checked by the audit (CLAUDE.md, "Token audit") every time the JSON changes.
+
+1. Every token has `$type`, `$value`, `$description` and `$extensions.mode`.
+2. Every colour token in `Color collection` and `Alias Colors` has a written description that says where to use it. Primitives say what they are ("Royal blue, step 500").
+3. Descriptions are never copied from another token and never name a real product or client.
+4. Font weights are `fontWeight` numbers, not dimensions.
+5. Dimensions use the DTCG object `{ "value": 16, "unit": "px" }`. No float noise (62.4, never 62.399997).
+6. Alias values point at primitives. Semantic values point at aliases. Nothing skips a layer.
+7. Inside `Primary light` and `Primary dark`, every mode points at a `Primary-*` alias, never at a primitive.
+8. Every mode of a collection has a value for every token.
+9. No two tokens in one group have the same name, and no two primitives in one scale have the same hex.
+
+### 3.10 Brands
+
+| Brand | `data-brand` | Primary | Font | Feel |
+|---|---|---|---|---|
+| Northline | `northline` (default, also `:root`) | royal-blue | Inter | Clear, precise, engineered |
+| Garnet | `garnet` | garnet-green | IBM Plex Sans | Deep, heritage, calm |
+| Voltic | `voltic` | pink (#EF1A96) | Space Grotesk | Loud, high energy |
+
+Northline and Garnet are both dark primaries, so they need lighter steps in Dark. Voltic is bright, so it needs a darker step in Light. All of that sits in the alias layer (§3.2).
+
+### 3.11 Tailwind theme
+
+Tailwind CSS 4, with a theme generated from the tokens. Every class has the `nl:` prefix. The theme holds only this system's tokens (Tailwind's default colours, spacing and radius are removed), and `dark:` is disabled because theme and brand come from the tokens. Full rules are in `CLAUDE.md`.
+
+---
+
+## 4. Foundations, styles
+
+### 4.1 Shadows
+
+Hand-written in `packages/tokens/src/styles.css`.
+
+| Token | Value | Use |
+|---|---|---|
+| `--nl-shadow-resting` | 0 1px 3px 0 black at 5% | Cards and surfaces at rest |
+| `--nl-shadow-panel` | 0 2px 10px 0 black at 4% | Panels on the page |
+| `--nl-shadow-menu` | 0 -2px 16px 0 black at 8% | Menus and popovers |
+| `--nl-shadow-sticky` | 0 -2px 16px 0 black at 8% | Sticky bottom bars |
+| `--nl-shadow-sticky-end` | -2px 0 16px 0 black at 8% | Fixed table columns (shadow falls to the left) |
+
+### 4.2 Border widths
+
+Borders, inset strokes and focus rings use Tailwind's built-in 1px and 2px widths (`border`, `border-2`, `inset-ring`, `inset-ring-2`, `outline-2`). These are the only allowed widths, so they don't need tokens.
+
+### 4.3 Layers (z-index)
+
+| Token | Value | Use |
+|---|---|---|
+| `--nl-z-base` | 0 | Page content |
+| `--nl-z-sticky` | 10 | Sticky headers, fixed table columns, sticky bottom bars |
+| `--nl-z-overlay` | 100 | Overlay (scrim) |
+| `--nl-z-modal` | 110 | Dialogs and side sheets |
+| `--nl-z-menu` | 200 | Menus, popovers, the calendar |
+| `--nl-z-tooltip` | 300 | Tooltips |
+| `--nl-z-snackbar` | 400 | Snackbars |
+
+### 4.4 Grid and page widths
+
+12 columns, 24 gutter (`Space-3XL`), 24 margin. Every Storybook page is checked at 1920, 1440, 1280 and 1024.
+
+---
+
+## 5. Motion
+
+| Token | Value | Use |
+|---|---|---|
+| `--nl-duration-fast` | 120ms | Hover and press |
+| `--nl-duration-base` | 200ms | Menus, tooltips |
+| `--nl-duration-slow` | 300ms | Side sheets, dialogs |
+| `--nl-duration-pulse` | 1600ms | Skeleton loading pulse (one full cycle) |
+| `--nl-ease-standard` | cubic-bezier(0.2, 0, 0, 1) | Default |
+
+Every animation has a `prefers-reduced-motion` alternative.
+
+---
+
+## 6. Icons
+
+- Material Symbols Rounded, self-hosted. Outlined (`FILL 0`) by default, filled (`FILL 1`) for active and selected states.
+- Always through `NlIcon` and the `nlIcons` registry. The icon font is subset at build time to the registered icons.
+- Sizes `16`, `20`, `24` (default), `36`, `48`, `64` only, mapped to the `Size-*` primitives, never to spacing tokens.
+- Never draw or invent an icon. If one isn't in Material Symbols, stop and ask.
+
+---
+
+## 7. Component architecture
+
+### 7.1 Levels
+
+| Level | Meaning |
+|---|---|
+| Atom L0 | Contains no other component |
+| Atom L1 | Contains only icons or L0 atoms |
+| Molecule | Built from atoms |
+| Organism | Built from molecules |
+| Page | Storybook only, never shipped in the library |
+
+**Composition rule (hard rule).** Molecules are built only from atoms. Organisms are built only from molecules and atoms. A component never recreates the markup or styles of a component below it. It uses that component. A component is built only after everything it depends on is done, and its level follows from what it contains.
+
+**What counts toward a level.** Only the parts a component renders itself. Content passed in through a slot (menu items, table rows, dialog bodies, the app shell's nav, header and content) is chosen by whoever uses the component and doesn't raise its level.
+
+### 7.2 Base and mapped components
+
+A **base** holds every option as props. **Mapped** components are thin wrappers that pass fixed props to a base and never copy its markup or styles. Bases are internal (not exported) unless this file says otherwise. Bases have no interaction states. Hover, pressed and selected styling belongs to the components built on them.
+
+### 7.3 Props
+
+| Spec says | React |
+|---|---|
+| Variant (type, size, style) | String union prop, also rendered as a `data-*` attribute |
+| Colour-only variant (primary, success, error…) | `tone` prop |
+| Interaction state (hover, pressed, focus, typing) | Not a prop. CSS states only. `disabled` is the native attribute |
+| On or off option | `boolean` prop, or an optional node |
+| Text | `string` prop, or `children` for the main label |
+| Slot | `ReactNode` prop |
+| Icon | `NlIconName` prop |
+
+- Disabled controls are never focusable.
+- Form controls are controlled or uncontrolled like native inputs and forward `ref`.
+- Every component accepts `className` and passes other native attributes to its root.
+
+### 7.4 React and Next.js
+
+- `'use client'` at the top of any component with state, effects, refs or event handlers. Presentational components don't get it.
+- No `window`, `document` or `localStorage` at import time or during render.
+- The same output on server and client. No `Date.now()`, `Math.random()` or locale formatting during render. IDs from `useId`.
+- No router imports. Link-like components take an `as` prop.
+- The library build keeps one file per source file, so every `'use client'` survives. `@northline/tokens` is a peer dependency of `@northline/ui`.
+- `pnpm nextjs-check` installs the packed library into a small Next.js App Router app and builds it.
+
+### 7.5 Later frameworks
+
+The tokens package is framework neutral (CSS variables, the JSON and TypeScript constants). Vue, Angular or Svelte would reuse it and need their own component layer. A mobile app would get its own output from the same JSON through Style Dictionary. The token structure never changes.
+
+---
+
+## 8. Component inventory and build status
+
+Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, checked in every brand and theme, approved)
+
+### 8.0 Setup
+
+| # | Task | Output | Status |
+|---|---|---|---|
+| S-1 | Neutral component specs extracted from the reference system, reviewed and scrubbed, copied into §8 and §9 | `DESIGN.md` §8, §9 | ✅ |
+| S0 | Token JSON built from §3, plus the audit report | `tokens/design.tokens.json`, `docs/TOKEN_AUDIT.md` | ✅ |
+| S1 | pnpm monorepo scaffold (`packages/tokens`, `packages/ui`, `apps/storybook`), TypeScript, Vite, ESLint, Stylelint | repo root | ⬜ |
+| S2 | Token build with Style Dictionary, brand and theme scoping, Tailwind theme | `packages/tokens/dist/` | ⬜ |
+| S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ⬜ |
+| S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ⬜ |
+| S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | ⬜ |
+| S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ⬜ |
+| S7 | Next.js check app and `pnpm nextjs-check` | `apps/nextjs-check` | ⬜ |
+| S8 | Vercel deploy of Storybook | `vercel.json` | ⬜ |
+
+### 8.1 Atoms L0
+
+_The designer adds rows here before each build._
+
+| # | Component | Code name | Depends on | Spec | Status |
+|---|---|---|---|---|---|
+| 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ⬜ |
+| 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ⬜ |
+| 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ⬜ |
+| 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ⬜ |
+| 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
+| 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ⬜ |
+| 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ⬜ |
+| 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ⬜ |
+| 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ⬜ |
+| 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ⬜ |
+| 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ⬜ |
+| 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ⬜ |
+| 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
+| 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
+| 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ⬜ |
+| 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ⬜ |
+| 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ⬜ |
+| 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ⬜ |
+| 19 | Page dot (internal) | `NlPageDot` | – | [§9](#nlpagedot) | ⬜ |
+
+### 8.2 Atoms L1
+
+| # | Component | Code name | Depends on | Spec | Status |
+|---|---|---|---|---|---|
+| 20 | Icon container | `NlIconContainer` | `NlIcon` | [§9](#nliconcontainer) | ⬜ |
+| 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ⬜ |
+| 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ⬜ |
+| 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ⬜ |
+| 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
+| 25 | White button (internal) | `NlWhiteButton` | `NlIcon` | [§9](#nlwhitebutton) | ⬜ |
+| 26 | Destructive button (internal) | `NlDestructiveButton` | `NlIcon` | [§9](#nldestructivebutton) | ⬜ |
+| 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ⬜ |
+| 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ⬜ |
+| 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
+| 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ⬜ |
+| 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
+| 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
+| 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
+| 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ⬜ |
+| 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ⬜ |
+| 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ⬜ |
+| 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
+| 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ⬜ |
+| 39 | Page dots | `NlPageDots` | `NlPageDot` | [§9](#nlpagedots) | ⬜ |
+| 40 | Tooltip | `NlTooltip` | `NlTextBlock` | [§9](#nltooltip) | ⬜ |
+
+### 8.3 Molecules
+
+| # | Component | Code name | Depends on | Spec | Status |
+|---|---|---|---|---|---|
+| 41 | Segmented button | `NlSegmentedButton` | `NlSegment` | [§9](#nlsegmentedbutton) | ⬜ |
+| 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ⬜ |
+| 43 | Notification button | `NlNotificationButton` | `NlButton`, `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ⬜ |
+| 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ⬜ |
+| 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ⬜ |
+| 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ⬜ |
+| 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ⬜ |
+| 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ⬜ |
+| 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ⬜ |
+| 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ⬜ |
+| 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
+| 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ⬜ |
+| 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ⬜ |
+| 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ⬜ |
+| 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ⬜ |
+| 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ⬜ |
+| 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
+| 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ⬜ |
+| 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ⬜ |
+| 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ⬜ |
+| 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ⬜ |
+| 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ⬜ |
+| 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ⬜ |
+| 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ⬜ |
+| 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ⬜ |
+| 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ⬜ |
+| 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ⬜ |
+| 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon` | [§9](#nlnavitem) | ⬜ |
+| 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ⬜ |
+
+### 8.4 Organisms
+
+| # | Component | Code name | Depends on | Spec | Status |
+|---|---|---|---|---|---|
+| 70 | Select | `NlSelect` | `NlInputBase`, `NlMenu`, `NlListItem` | [§9](#nlselect) | ⬜ |
+| 71 | Multi select | `NlMultiSelect` | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | [§9](#nlmultiselect) | ⬜ |
+| 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ⬜ |
+| 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
+| 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ⬜ |
+| 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ⬜ |
+| 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ⬜ |
+| 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ⬜ |
+| 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ⬜ |
+
+Every row in §8.1 to §8.4 was checked against the composition rule (§7.1) on 17 Nov 2026: L0 contains no component, L1 only L0 atoms and icons, molecules only atoms, organisms only molecules and atoms. Mapped components take their base's level (§7.2) and slot content doesn't count (D15). Rows are in build order: a component comes after everything it depends on. `NlTable`'s toolbar, header row, rows and footer are internal parts, not rows (D15).
+
+### 8.5 Data visualisation
+
+Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
+
+| # | Component | Code name | Depends on | Spec | Status |
+|---|---|---|---|---|---|
+
+### 8.6 Pages (Storybook only)
+
+| # | Page | Area | Status |
+|---|---|---|---|
+
+---
+
+## 9. Component specs
+
+_One section per component. Specs for existing components come from the extraction (S-1). Specs for new components (charts, dashboard parts) are written by the designer before the build. Every spec covers anatomy, variants, sizes, states, tokens, behaviour and accessibility. Claude Code adds the "Spec → code" table, the API and any decisions after the build._
+
+The specs below are in build order (§8). Proposals marked **needs approval**, and the open decisions listed under each spec (`OD-n`), are tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md) and decided during the build.
+
+### NlIcon
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+Shows one Material Symbols Rounded glyph from the `nlIcons` registry at a fixed size and colour.
+
+#### Anatomy
+
+```
+NlIcon (box, square)
+└── glyph (Material Symbols Rounded, centred)
+```
+
+- The box is always square. The glyph takes about two thirds of the box, which is the font's own optical sizing.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Icon | any name in the `nlIcons` registry | `name: NlIconName` |
+| Size | 16, 20, 24 (default), 36, 48, 64 | `size: 16 \| 20 \| 24 \| 36 \| 48 \| 64`, also `data-size` |
+| Colour | inherit (default), primary, secondary, disabled, success, warning, error, info | `tone`, default `inherit` (uses `currentColor`) |
+| Fill | outlined (default), filled | `filled: boolean` (§6: filled for active and selected states) |
+| Accessible name | none (decorative) or text | `label?: string` |
+
+#### Sizes and layout
+
+| Size | Box (width and height) |
+|---|---|
+| 16 | `Size-16` |
+| 20 | `Size-20` |
+| 24 | `Size-24` |
+| 36 | `Size-36` |
+| 48 | `Size-48` |
+| 64 | `Size-64` |
+
+- Padding `Space-none`. No radius, border or shadow.
+- The glyph's font size equals the box size. Optical size follows the font's `opsz` axis. No line-height effect: the box is `display: inline-flex`, centred.
+
+#### Colours
+
+| Tone | Glyph colour |
+|---|---|
+| inherit (default) | `currentColor`: the parent's colour, set by the parent through its own `fg-*` or `text-*` token |
+| primary | `fg-primary` |
+| secondary | `fg-secondary` |
+| disabled | `fg-disabled` |
+| success | `fg-success` |
+| warning | `fg-warning` |
+| error | `fg-error` |
+| info | `fg-info` |
+
+#### States
+
+None. `NlIcon` is not interactive. A component that contains an icon sets the icon's tone for its own states.
+
+#### Behaviour and accessibility
+
+- Decorative by default: `aria-hidden="true"`, no role. A screen reader hears nothing.
+- With `label`: `role="img"` and `aria-label={label}`. A screen reader hears the label, for example "Warning".
+- Never focusable on its own. Icon-only controls get their name from the control (`NlButton` keeps a visually hidden label, D12), not from `NlIcon`.
+- Glyphs render from the self-hosted icon font. The registry only allows names that are subset into the font (§6).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Sizes | 16, 20, 24, 36, 48, 64 | Same, `Size-*` (§6, updated) | Matches |
+| Colour tones | The 7 tones above, each bound to the matching foreground token | Same layer 3 tokens | Matches |
+| Default tone | The reference always sets a tone, and every instance in other components overrides it | `tone="inherit"` (uses `currentColor`) is the default, so a parent such as a button or link colours the icon through its own state classes. The 7 named tones stay as options | Approved |
+| Other foreground tokens | Other components colour icons with `fg-action`, `fg-brand`, `fg-hovered`, `fg-pressed`, `fg-inverse`, `fg-white_both`, `fg-disabled-on_bg` | Covered by `tone="inherit"`. The parent sets the colour. No extra tones | Approved |
+| Icon source | Icons come from a linked external icon library | Material Symbols Rounded through the `nlIcons` registry (§6) | Matches §6 |
+
+---
+
+### NlStatusDot
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+A small round dot that shows presence (online). Used on `NlAvatar`.
+
+#### Anatomy
+
+```
+NlStatusDot (circle)
+└── ring (outer stroke that separates the dot from what it sits on)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | xsmall, small, medium, large, xlarge | `size: 'xsmall' \| 'small' \| 'medium' \| 'large' \| 'xlarge'`, also `data-size` |
+| Accessible name | none (decorative) or text | `label?: string` |
+
+#### Sizes and layout
+
+| Size | Diameter |
+|---|---|
+| xsmall | `Size-6` |
+| small | `Size-8` |
+| medium | `Size-12` |
+| large | `Size-16` |
+| xlarge | `Size-24` |
+
+- Shape: `Radius-Full`.
+- Ring: 1px, drawn **outside** the dot (Tailwind's 1px width, §4.2), so the outer size is the diameter plus 2.
+- No padding, no shadow.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Dot | `fg-success` |
+| Ring | `fg-inverse` |
+
+- `fg-inverse` is white in Light and `Neutral-900` in Dark, so the ring matches `bg-primary` and the dot looks cut out of the avatar.
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- Colour alone never carries meaning. Wherever presence matters, the dot is paired with a text status ("Online") nearby, or given a `label`.
+- Decorative by default: `aria-hidden="true"`.
+- With `label`: `role="img"` and `aria-label={label}`. A screen reader hears, for example, "Online".
+- Contrast: `fg-success` against the ring and the avatar needs 3 to 1 as a graphic (§2.6). Check this in the token audit for all brands and both themes.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Ring width | 1px stroke, outside | Tailwind's built-in 1px width (§4.2, D16) | Matches |
+| Tones | The reference only has online (success) | Only success. No `tone` prop until another status (busy, away) is specified | Matches |
+| Sizes | 6, 8, 12, 16, 24 | `Size-6`, `Size-8`, `Size-12`, `Size-16`, `Size-24` | Matches |
+
+---
+
+### NlCountBadge
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-4.
+
+A small pill that shows a count (1 to 99+), or a plain dot when there is no number. Used on `NlLabel` and the notification button.
+
+#### Anatomy
+
+```
+NlCountBadge (pill)
+└── count text (optional; absent in the dot form)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | small, large | `size: 'small' \| 'large'`, also `data-size` |
+| Digits | none (dot), single, double | Derived from `count`: no `count` gives the dot, 1 to 9 gives single, 10 and over gives double. Over 99 shows "99+". Also `data-digits` |
+| Colour | red, yellow, green | `tone: 'error' \| 'warning' \| 'success'` (§7.3) |
+| Count | number | `count?: number` |
+| Maximum | 99 | `max?: number`, default 99 |
+
+#### Sizes and layout
+
+| Size | Digits | Width | Height | Padding (block / inline) | Text style |
+|---|---|---|---|---|---|
+| small | none | `Size-6` | `Size-6` | – | – |
+| small | single | `Size-16` | `Size-16` | `Space-none` | `Caption S` |
+| small | double | hug | hug (line height + padding) | `Space-XXS` / `Space-XS` | `Caption S` |
+| large | none | `Size-12` | `Size-12` | – | – |
+| large | single | `Size-20` | `Size-20` | `Space-none` | `Caption L` |
+| large | double | hug | hug | `Space-XXS` / `Space-XS` | `Caption L` |
+
+- Shape `Radius-Full`. Content centred both ways. No border, no shadow.
+- Proposed (**needs approval**): double digits get a minimum width equal to the single-digit size, `Size-16` (small) and `Size-20` (large), so "10" is never narrower than a circle.
+
+#### Colours
+
+| Tone | Background | Text |
+|---|---|---|
+| error | `fg-error` | `text-inverse` |
+| warning | `fg-warning` | `text-inverse` |
+| success | `fg-success` | `text-inverse` |
+
+- The background uses `fg-*` tokens on purpose. They are the solid status colours meant for small graphics.
+- Dark theme: `fg-*` becomes the light 300 step and `text-inverse` becomes `Neutral-900`, so the count reads dark on light.
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- The visible count is short. Give the meaning in text through the parent or `label`, for example "3 unread notifications". `NlCountBadge` takes `label?: string` and renders it as visually hidden text. The visible digits are `aria-hidden`.
+- Without a `label` and without a count (the dot form), the badge is decorative: `aria-hidden="true"`.
+- No live region by default. A parent that updates the count and needs it announced adds its own polite live region.
+- Contrast: check white text on `fg-warning` (Warning-700) in Light for every brand in the token audit. Small text needs 4.5 to 1.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Large single padding | Raw 3px inline padding | Dropped. The badge is a fixed `Size-20` square with the digit centred | Approved |
+| Gap and padding tokens on the small forms | Bound to a spacing collection from another library ("8px" gap, "0px" padding) | No gap is used (one child). Padding `Space-none`, as with the large form | Follows from the decision above |
+| Minimum width for double digits | Not set in the reference (hug only) | Proposed: `Size-16` (small) and `Size-20` (large), the existing tokens for the single-digit squares | **Needs approval** |
+| Over 99 | Reference shows "99+" | `max` prop, default 99, shows "99+" | Matches |
+| Tone names | Red, yellow, green | `error`, `warning`, `success` | Matches §7.3 |
+
+---
+
+### NlDivider
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-5.
+
+A horizontal line that separates content. The section form is a thick band between page sections.
+
+#### Anatomy
+
+```
+NlDivider (full-width rule)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | divider, section | `type: 'divider' \| 'section'`, default `divider`, also `data-type` |
+| Semantics | separator or decorative | `decorative?: boolean`, default `false` |
+
+#### Sizes and layout
+
+| Type | Height | Width |
+|---|---|---|
+| divider | 1px (Tailwind's 1px border width, §4.2) | Fills its container |
+| section | `Size-8` | Fills its container |
+
+- No margin of its own. The parent sets spacing with its gap.
+- No radius, no shadow.
+
+#### Colours
+
+| Type | Fill |
+|---|---|
+| divider | `border-default` |
+| section | `border-default` |
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- Renders `<hr>`, which carries `role="separator"`. A screen reader may announce "separator".
+- `decorative` renders a `<div aria-hidden="true">` instead, for lines that are only visual (between list rows, inside menus).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Divider thickness | 1px | A 1px top border in `border-default`, using Tailwind's built-in 1px width (§4.2, D16) | Matches |
+| Section divider | 8 tall, `border-default` | `Size-8`, `border-default` | Matches |
+| Vertical orientation | Not in the reference | Not specified. Add only if a component needs it | Open |
+| Width | Drawn at a 375 mobile width | Fills its container | Matches (desktop, §2.4) |
+
+---
+
+### NlSkeleton
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-6.
+
+A grey placeholder shown while content loads. Sized to the content it stands in for.
+
+#### Anatomy
+
+```
+NlSkeleton (filled shape)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Shape | text, rect, circle | `shape: 'text' \| 'rect' \| 'circle'`, default `text`, also `data-shape` |
+| Width | fills its container by default | `className` for placement only (width), per CLAUDE.md |
+
+#### Sizes and layout
+
+| Shape | Height | Width | Radius |
+|---|---|---|---|
+| text | `Size-12` | Fills its container | `Radius-XS` |
+| rect | `Size-24` | Fills its container | `Radius-S` |
+| circle | `Size-24` | `Size-24` | `Radius-Full` |
+
+- No padding, border or shadow.
+- Callers resize a skeleton to match what it replaces (an avatar circle at the avatar size, a table cell at the row height).
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Fill | `bg-neutral` |
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- Every skeleton is `aria-hidden="true"`.
+- The region that is loading sets `aria-busy="true"` while skeletons show. That is the parent's job, not the skeleton's.
+- Animation: opacity pulses from 100% to 60% and back, one full cycle per `--nl-duration-pulse`, with `--nl-ease-standard`, repeating while shown.
+- Reduced motion: no animation. The skeleton stays at full opacity.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Width | Bound to a size primitive of 343 (a mobile content width) that doesn't exist in Northline | Fills its container | Approved |
+| Pulse animation | The reference describes a pulse from 100% to 60% opacity, 1.6 s per cycle | `--nl-duration-pulse` (§5, D16) | Approved |
+| Pulse easing | Not in the reference | `--nl-ease-standard` | **Needs approval** |
+| Reduced motion | The reference says static | Static (CLAUDE.md, motion-reduce counterpart) | Matches |
+| Text and rect heights | 12 and 24 | `Size-12`, `Size-24` | Matches |
+| Radius | `Radius-XS`, `Radius-S`, `Radius-Full` | Same | Matches |
+
+---
+
+### NlOverlay
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The dim layer (scrim) behind dialogs and side sheets.
+
+#### Anatomy
+
+```
+NlOverlay (full-viewport layer)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Open | shown or hidden | `open: boolean` |
+| Close on click | on or off | `onClick` passed by the parent (dialog or side sheet) |
+
+The reference's mobile type is left out (desktop only, §2.4).
+
+#### Sizes and layout
+
+- Fixed to the viewport, covering it fully (inset `Space-none`).
+- Layer `--nl-z-overlay` (§4.3), directly below dialogs and side sheets (`--nl-z-modal`).
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Fill | `Alpha-md` |
+
+- `Alpha-md` is `Neutral-900` at 40% in Light and Black at 60% in Dark.
+
+#### States
+
+| State | Look |
+|---|---|
+| Hidden | Not rendered |
+| Shown | `Alpha-md` at full opacity |
+
+#### Behaviour and accessibility
+
+- Always `aria-hidden="true"`. It is never focusable and has no name.
+- The parent (dialog, side sheet) owns focus trapping, Escape to close, and making the page behind inert. The overlay only draws the scrim and passes clicks to the parent.
+- Fades in and out with `--nl-duration-base` and `--nl-ease-standard`. Reduced motion: appears and disappears with no fade.
+- Page scrolling behind is locked by the parent while the overlay is shown.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Fill | `Alpha-md` | `Alpha-md` | Matches |
+| Size | Drawn at 1920 × 1080 | Fills the viewport | Matches |
+| Fade timing | Not in the reference | `--nl-duration-base`, `--nl-ease-standard` | Approved (duration). Easing follows §5's default |
+| Stacking order | Not in the reference | `--nl-z-overlay` (§4.3, D16) | Approved |
+
+---
+
+### NlProgressBar
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-7, OD-8, OD-9.
+
+A horizontal bar that shows how much of a task is done.
+
+#### Anatomy
+
+```
+NlProgressBar (track)
+└── fill (from the start edge, width = value)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size: 'large' \| 'small'`, default `small`, also `data-size` |
+| Value | 0 to 100 | `value: number` (percent), clamped to 0 to 100 |
+| Accessible name | text | `label: string` (required, see accessibility) |
+| Steps | 4 or 5 in the reference | Not a prop. See "Mapping notes" |
+
+The "with text" version is left out (D13). A caller that needs visible text places it next to the bar.
+
+#### Sizes and layout
+
+| Size | Track height | Fill height |
+|---|---|---|
+| large | `Size-8` | `Size-8` |
+| small | `Size-4` | `Size-4` |
+
+- Track width fills its container.
+- Track radius `Radius-XS`. Fill radius `Radius-XS`.
+- Fill width is `value`% of the track. At 0 the fill is not drawn.
+- No padding, border or shadow.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Track | `bg-active-hover` |
+| Fill | `fg-brand` |
+
+#### States
+
+None. Not interactive. The only change is the value.
+
+#### Behaviour and accessibility
+
+- Renders `role="progressbar"` with `aria-valuemin="0"`, `aria-valuemax="100"`, `aria-valuenow={value}` and `aria-label={label}`, or `aria-labelledby` when the caller has a visible label.
+- A screen reader hears, for example, "Upload, progress bar, 50%".
+- Fill width changes animate with `--nl-duration-base` and `--nl-ease-standard`. Reduced motion: no animation, the width jumps.
+- Contrast: the fill against the track is a meaningful graphic and needs 3 to 1 (§2.6). Check `fg-brand` on `bg-active-hover` in all brands and both themes in the token audit.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Steps 4 and 5 | The reference draws one continuous bar at preset percentages (25, 50, 75, 100 for 4 steps; 20, 40, 60, 80, 100 for 5). There are no visible segments | No `steps` prop. `value` takes any percent. A caller with 4 steps passes 25, 50, 75, 100 | Approved |
+| Fill radius | Bound to a radius token from another library ("4px") | `Radius-XS` (4) | Approved |
+| Track radius | `Radius-XS` | `Radius-XS` | Matches |
+| Indeterminate | Not in the reference | Not specified. `NlSpinner` covers unknown duration | Open |
+| Animation | Not in the reference | `--nl-duration-base`, `--nl-ease-standard`, none under reduced motion | **Needs approval** |
+| Default size | Not set in the reference | `small` | **Needs approval** |
+
+---
+
+### NlSlider
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-10, OD-11, OD-12.
+
+Picks one value along a range by dragging a thumb or using the keyboard.
+
+#### Anatomy
+
+```
+NlSlider
+├── track (full width)
+│   └── fill (from the start edge to the thumb)
+└── thumb (circle, centred on the end of the fill)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Value | number between `min` and `max` | `value` / `defaultValue` (controlled or uncontrolled, §7.3) |
+| Range | min, max | `min` (default 0), `max` (default 100) |
+| Step | number | `step` (default 1) |
+| Disabled | on or off | `disabled` (native) |
+| Accessible name | text | `aria-label` or `aria-labelledby` (required) |
+| Change | callback | `onChange(value)` |
+
+The reference only shows fill levels (5%, 25%, 50%, 75%, 100%). These are values, not variants.
+
+#### Sizes and layout
+
+| Part | Size | Radius | Other |
+|---|---|---|---|
+| Track | Height `Size-8`, width fills its container | `Radius-XS` | – |
+| Fill | Height `Size-8` | `Radius-XS` | Padding `Space-none` |
+| Thumb | `Size-24` × `Size-24` | `Radius-Full` | 2px inset stroke (Tailwind's 2px width, §4.2), shadow `--nl-shadow-resting` |
+
+- The thumb's centre sits on the end of the fill. At the minimum the thumb is half outside the track's start. Keep half a thumb (`Space-L`) clear on both ends in layouts.
+- Pointer target: the thumb is 24 × 24, which meets the 24 × 24 minimum (CLAUDE.md). The whole track also responds to clicks.
+
+#### Colours
+
+| Part | Enabled (reference) | Hover (proposed) | Pressed / dragging (proposed) | Focus (proposed) | Disabled (proposed) |
+|---|---|---|---|---|---|
+| Track | `bg-active-hover` | `bg-active-hover` | `bg-active-hover` | `bg-active-hover` | `bg-disabled` |
+| Fill | `fg-brand` | `fg-hovered` | `fg-pressed` | `fg-brand` | `fg-disabled-on_bg` |
+| Thumb fill | `fg-brand` | `fg-hovered` | `fg-pressed` | `fg-brand` | `fg-disabled-on_bg` |
+| Thumb border | `border-inverse` | `border-inverse` | `border-inverse` | `border-inverse` | `border-inverse` |
+| Thumb shadow | `--nl-shadow-resting` | `--nl-shadow-resting` | `--nl-shadow-resting` | `--nl-shadow-resting` | none |
+| Focus ring | – | – | – | `border-focused` (standard ring on the thumb) | – |
+
+The hover, pressed, focus and disabled columns are **approved for now**. The designer checks them in Storybook before the slider is marked done.
+
+#### States
+
+| State | Source | Description |
+|---|---|---|
+| Enabled | Reference | As drawn |
+| Hover | Proposed, approved for now (Storybook check) | Pointer over the track or thumb. Fill and thumb darken one step (`fg-hovered`), like other brand-coloured controls |
+| Pressed / dragging | Proposed, approved for now (Storybook check) | While the pointer is down or the thumb is dragged. `fg-pressed` |
+| Focus | Proposed, approved for now (Storybook check) | Keyboard focus. Standard Northline focus ring on the thumb (CLAUDE.md, rule 5). Colours stay as enabled |
+| Disabled | Proposed, approved for now (Storybook check) | Same pairing as a disabled selected switch: `bg-disabled` track, `fg-disabled-on_bg` fill and thumb. No shadow. Not focusable (§7.3) |
+
+#### Behaviour and accessibility
+
+- Built on native `<input type="range">`, styled. A screen reader hears the name, "slider" and the value, for example "Points, slider, 50".
+- Keyboard (native):
+  - Left or Down: minus one step. Right or Up: plus one step.
+  - Page Down and Page Up: minus or plus 10% of the range.
+  - Home and End: minimum and maximum.
+- `aria-valuetext` can be set when the number needs a unit ("50 points").
+- Disabled: native `disabled`, not focusable, no pointer events.
+- Value changes don't animate, so there is nothing to reduce. Hover and press colour changes use `--nl-duration-fast`, with none under reduced motion.
+- Contrast: the fill and thumb against the track need 3 to 1 in every brand and theme (token audit).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Interaction states | Only enabled is drawn | Hover, pressed, focus and disabled proposed above, using existing semantic tokens only | Approved for now, Storybook check |
+| Thumb border | 2px stroke, inside | Tailwind's 2px inset ring (§4.2, D16) | Matches |
+| Thumb shadow | A shadow style called "resting cards" (0 1 3, black at 5%) | `--nl-shadow-resting`, same value | Matches |
+| Fill padding | `Space-none` | `Space-none` | Matches |
+| Radius | `Radius-XS` (track, fill), round thumb | `Radius-XS`, `Radius-Full` | Matches |
+| Range and step | Not in the reference | `min` 0, `max` 100, `step` 1 by default | **Needs approval** |
+| Visible value or ticks | Not in the reference | Not specified | Open |
+
+---
+
+### NlRadio
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The bare radio control: a ring with a dot when selected. It has no label of its own (D13). It is used in radio list items, and on its own with a label the caller provides.
+
+#### Anatomy
+
+```
+NlRadio (24 × 24 box)
+└── ring (circle with a border)
+    └── dot (shown when selected)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | unselected, selected | `checked` / `defaultChecked` (native) |
+| Disabled | on or off | `disabled` (native) |
+| Group | name | `name` (native) |
+| Value | string | `value` (native) |
+| Accessible name | text | `aria-label` or `aria-labelledby`, or a wrapping `<label>` from the caller (required) |
+| Change | callback | `onChange` (native) |
+
+Hover, pressed and focus are CSS states, not props (§7.3).
+
+#### Sizes and layout
+
+| Part | Size | Radius | Border |
+|---|---|---|---|
+| Box (hit area) | `Size-24` | – | – |
+| Ring | `Size-20`, centred in the box | `Radius-Full` | 2px, inside (Tailwind's 2px width, §4.2) |
+| Dot | `Size-12`, centred | `Radius-Full` | – |
+
+- Pointer target is the 24 × 24 box (CLAUDE.md minimum).
+
+#### Colours
+
+| State | Ring border | Ring fill | Dot |
+|---|---|---|---|
+| Unselected, enabled | `border-strong` | none | – |
+| Unselected, hover | `border-hovered` | `bg-active` | – |
+| Unselected, pressed | `border-pressed` | `bg-active-hover` | – |
+| Unselected, disabled | `fg-disabled` | none | – |
+| Selected, enabled | `fg-action` | none | `fg-action` |
+| Selected, hover | `fg-hovered` | none | `fg-hovered` |
+| Selected, pressed | `fg-pressed` | none | `fg-pressed` |
+| Selected, disabled | `fg-disabled` | none | `fg-disabled` |
+| Focus (any) | as the state above, plus the standard focus ring (`border-focused`) | | |
+
+#### States
+
+Enabled, hover, pressed, focus (keyboard only), disabled, each unselected and selected. There is no error state in the reference.
+
+#### Behaviour and accessibility
+
+- Built on native `<input type="radio">`, visually replaced, with the native input kept for semantics and keyboard.
+- Keyboard (native radio group):
+  - Tab moves into the group, to the selected radio or the first one.
+  - Arrow keys move and select within the group.
+  - Space selects the focused radio.
+- Focus ring (required for accessibility, WCAG 2.4.7): the standard Northline ring from CLAUDE.md (rule 5: 2px outline, offset −1, `border-focused`), shown on keyboard focus only, around the 24 × 24 box. The reference doesn't draw a focused radio.
+- Disabled: native `disabled`, not focusable (§7.3).
+- A screen reader hears the name, "radio button", "selected" or "not selected", and the position, for example "Tier 2, radio button, not selected, 2 of 3".
+- Contrast: `border-strong` on `bg-primary` must reach 3 to 1 (token audit).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Ring border width | 2px, inside | Tailwind's 2px width (§4.2, D16) | Matches |
+| Disabled ring colour | `fg-disabled` (a foreground token used as a border) | Kept as `fg-disabled`. `border-disabled` (Neutral-100) is too faint to see a ring | Approved |
+| Selected colours | `fg-action`, `fg-hovered`, `fg-pressed` used as both ring and dot | Same | Matches |
+| Selected hover fill | The reference has no fill on selected hover, unlike unselected hover | Kept as in the reference | Matches |
+| Focus state | Not drawn | Standard focus ring from CLAUDE.md, required for accessibility | Approved |
+| Label | None (D13) | None. The caller labels it | Matches |
+
+---
+
+### NlSwitch
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-13a, OD-13b, OD-13c, OD-13d.
+
+The bare on/off switch: a track with a sliding handle. It has no label of its own (D13). It is used in switch list items, and on its own with a label the caller provides.
+
+#### Anatomy
+
+```
+NlSwitch (track, pill)
+└── handle (circle, at the start when off and the end when on)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | off (unselected), on (selected) | `checked` / `defaultChecked` |
+| Size | large, small | `size: 'large' \| 'small'`, default `large`, also `data-size` |
+| Disabled | on or off | `disabled` (native) |
+| Accessible name | text | `aria-label` or `aria-labelledby` (required) |
+| Change | callback | `onCheckedChange(checked)` |
+
+Focused is a CSS state, not a prop (§7.3).
+
+#### Sizes and layout
+
+| Size | Track (w × h) | Handle | Handle inset from the track edge |
+|---|---|---|---|
+| large | `Size-56` × `Size-32` | `Size-24` | `Space-XS` |
+| small | `Size-40` × `Size-24` | `Size-16` | `Space-XS` |
+
+- Track radius `Radius-Full`. Handle radius `Radius-Full`.
+- No border, no shadow.
+- Pointer target: the track. Both sizes meet the 24 × 24 minimum.
+
+#### Colours
+
+| State | Track | Handle |
+|---|---|---|
+| Off, enabled | `fg-placeholder` | `fg-white_both` |
+| On, enabled | `fg-brand` | `fg-white_both` |
+| Off, disabled | `border-disabled` | `fg-disabled` |
+| On, disabled | `bg-disabled` | `fg-disabled-on_bg` |
+| On, hover (proposed, **needs approval**) | `fg-hovered` | `fg-white_both` |
+| On, pressed (proposed, **needs approval**) | `fg-pressed` | `fg-white_both` |
+| Off, hover (proposed, **needs approval**) | `fg-placeholder` (unchanged) | `fg-white_both` |
+| Off, pressed (proposed, **needs approval**) | `fg-placeholder` (unchanged) | `fg-white_both` |
+| Focus (any) | as above, plus the standard focus ring (`border-focused`) | |
+
+- The "on" hover and pressed colours follow the slider: the brand fill darkens one step with `fg-hovered`, then `fg-pressed`.
+- The "off" track stays `fg-placeholder` on hover and press. No existing token darkens that grey in both themes while keeping the white handle readable. `fg-secondary`, for example, becomes `Neutral-200` in Dark, and a white handle on it would fail the 3 to 1 contrast. If off-state feedback is wanted, it needs a new token. Designer to decide.
+
+#### States
+
+| State | Source |
+|---|---|
+| Off and on, enabled | Reference |
+| Off and on, disabled | Reference |
+| Focused | Reference draws it. Built with the standard ring from CLAUDE.md, keyboard focus only |
+| Hover, pressed | Not in the reference. Proposed above, **needs approval** |
+
+#### Behaviour and accessibility
+
+- A native `<button type="button" role="switch" aria-checked>`.
+- Keyboard: Tab to focus; Space or Enter toggles.
+- A screen reader hears the name, "switch", and "on" or "off", for example "Email updates, switch, on".
+- The handle slides with `--nl-duration-fast` and `--nl-ease-standard`, and hover and press colours change with `--nl-duration-fast`. Reduced motion: no slide and no colour transition.
+- Disabled: native `disabled`, not focusable (§7.3).
+- Contrast: the off track (`fg-placeholder`) against `bg-primary`, and the white handle against both tracks, need 3 to 1 in every brand and theme (token audit). Check the white handle on the Light `fg-brand` track for the Voltic brand especially.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Track radius | Raw 100 | `Radius-Full` | Approved |
+| Handle radius | Raw 23 | `Radius-Full` | Approved |
+| Handle inset | Raw positions that give 4 on each side | `Space-XS` | **Needs approval** |
+| Focus ring | 2px, outside, `border-focused`, round | The standard ring from CLAUDE.md (rule 5: 2px outline, offset −1, `border-focused`). It sits 1px inside the reference's position | Approved |
+| Hover and pressed | Not drawn | "On": `fg-hovered`, `fg-pressed`, like the slider. "Off": unchanged, because no token works in both themes (see "Colours") | **Needs approval** |
+| Off-state disabled track | `border-disabled` (a border token used as a fill) | Kept. Same value as `bg-disabled` today (K1) | Matches |
+| Slide animation | Not in the reference | `--nl-duration-fast`, `--nl-ease-standard` | **Needs approval** |
+| Default size | Not set | `large` | **Needs approval** |
+
+---
+
+### NlTextBlock
+
+**Level** Atom L0 (D15) · **Base** none · **Depends on** nothing (the label is a slot) · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-2, OD-14, OD-15, OD-16, OD-41, OD-120.
+
+A heading with an optional description under it, and an optional label slot above. It is the text part of list items, dialogs, empty states, snackbars, tooltips and cards.
+
+#### Anatomy
+
+```
+NlTextBlock (vertical stack)
+├── label slot (optional; usually NlLabel)
+└── content (vertical stack)
+    ├── heading (optional)
+    └── description (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | display-large, display-medium, display-small, headline-large, headline-medium, headline-small | `type`, default `headline-small`, also `data-type` |
+| Extra type for list rows | label (see "Mapping notes") | `type="label"`, **needs approval** |
+| Alignment | left, center, right | `align: 'start' \| 'center' \| 'end'`, default `start`, also `data-align` |
+| Show label | on or off | `label?: ReactNode` (slot, D15). Usually `<NlLabel>` |
+| Show heading | on or off | `heading?: ReactNode` (text) |
+| Show description | on or off | `description?: ReactNode` (text) |
+| Colour tone | default, inverse | `tone`, default `default`. Inverse is for dark surfaces such as tooltips |
+| Heading element | h1 to h6, or plain text | `headingAs?: 'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'p' \| 'span'`, default `p`. See "Behaviour and accessibility" |
+
+#### Sizes and layout
+
+| Type | Heading text style | Description text style | Gap heading → description |
+|---|---|---|---|
+| display-large | `Display Large-H1` | `Body L` | `Space-M` |
+| display-medium | `Display Medium-H2` | `Body L` | `Space-M` |
+| display-small | `Display Small-H3` | `Body M` | `Space-M` |
+| headline-large | `Headline Large-H4` | `Body M` | `Space-M` |
+| headline-medium | `Headline Medium-H5` | `Body M` | `Space-XS` |
+| headline-small | `Headline Small-H6` | `Body M` | `Space-XS` |
+| label (proposed) | `Label M` | `Body S` | `Space-none` |
+
+- Gap label slot → content: `Space-none`.
+- Padding `Space-none`. Width fills its container. Text wraps (no truncation by default).
+- Alignment sets both the text alignment and the cross-axis alignment of the label slot.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Heading | `text-primary` (`tone="inverse"`: `text-inverse`) |
+| Description | `text-secondary` (`tone="inverse"`: `text-inverse`) |
+| Label slot | Set by what's passed in (`NlLabel` uses `text-tertiary`) |
+
+#### States
+
+None. Not interactive. A parent that is disabled (a disabled list row, for example) recolours the text through its own state, not through a prop here. See "Mapping notes".
+
+#### Behaviour and accessibility
+
+- The visual type and the document heading level are separate. `type` only sets the look. `headingAs` sets the element, so a page can keep a correct heading outline (one `h1`, no skipped levels).
+- Default element `p`: most text blocks (list rows, cards) are not document headings. Dialogs, side sheets and page headers pass the level they need.
+- Description is a `p`. The label slot renders before the heading in DOM order, so a screen reader reads label, heading, description.
+- No truncation by default. A parent that clamps lines must expose the full text (for example with `title` or a tooltip).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Label | A fixed label component inside the text box, shown or hidden | A slot (`label`), D15 | Approved (D15) |
+| List row text styles | List items override the heading to `Label M` and the description to `Body S` (small rows), or keep `Headline Small-H6` and `Body M` (large rows), all with the label hidden | Overrides can't be done from outside (CLAUDE.md: `className` is for placement only). Proposed: one extra `type="label"` with `Label M` / `Body S` and gap `Space-none`. Large rows use `headline-small` | **Needs approval** |
+| Gap for the label type | List rows show no gap between title and description | `Space-none` | **Needs approval** |
+| Disabled text colour | Disabled list rows recolour the text | Proposed: a `disabled?: boolean` prop that switches heading and description to `text-disabled`. A parent can't restyle internals | **Needs approval** |
+| Heading element | The reference only sets the look | `headingAs`, default `p` | **Needs approval** |
+| Inverse colours | The rich tooltip overrides both texts to `text-inverse` | `tone="inverse"` | Approved |
+| Gaps per type | `Space-M` (H1 to H4), `Space-XS` (H5, H6), `Space-none` between label and content | Same | Matches |
+
+---
+
+### NlMenu
+
+**Level** Atom L0 (D15: rows, header and footer are slots) · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-17, OD-18, OD-19, OD-20, OD-21.
+
+The floating surface for every menu: action menus, select options, filters and navigation. It draws the panel, an optional sticky header and footer, and the scrolling content between them. What goes inside is passed in.
+
+#### Anatomy
+
+```
+NlMenu (floating panel, clipped)
+├── header (optional, sticky at the top)
+│   └── header slot (for example NlSearchField)
+├── content slot (scrolls; rows such as NlListItem, NlDivider between groups, or buttons)
+└── footer (optional, sticky at the bottom)
+    └── footer slot (for example two NlButtons, right aligned)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Content | rows | `children` (slot) |
+| Show header | off (default) or on | `header?: ReactNode` (slot) |
+| Show footer | off (default) or on | `footer?: ReactNode` (slot) |
+| Kind | action, select, filter, navigation | `kind`, default `action`, also `data-kind`. Sets role and keyboard (see below) |
+| Open | shown or hidden | `open: boolean`, `onOpenChange(open)` |
+| Anchor | the trigger element | `anchorRef` |
+| Maximum height | up to the window | `maxHeight?` as a `Size-*` token name. See "Mapping notes" |
+| Accessible name | text | `aria-label` or `aria-labelledby` (usually the trigger) |
+
+The reference has one type ("Normal"), so there is no visual variant.
+
+#### Sizes and layout
+
+| Part | Layout |
+|---|---|
+| Panel | Vertical stack, gap `Space-none`, padding `Space-none`. Radius `Radius-M`. Content clipped to the radius |
+| Header | Padding `Space-L` all round. 1px bottom border (§4.2). Stays at the top while the content scrolls |
+| Content | Gap `Space-none`, padding `Space-none`. Scrolls vertically when the panel reaches its maximum height |
+| Footer | Padding `Space-XL` all round. Its slot is a horizontal row, gap `Space-M`, aligned to the end. 1px top border (§4.2). Stays at the bottom |
+
+- Width: fits the content, never narrower than the trigger.
+- Placement: `Space-XS` from the trigger, below it, flipping above when there isn't room. Keeps `Space-M` from the window edge.
+- Height: up to the window height minus the edge gap, or `maxHeight`. The content scrolls, not the header or footer.
+- Layer: `--nl-z-menu` (§4.3).
+- Shadow: `--nl-shadow-menu`.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Panel background | `bg-primary` |
+| Panel border (1px, inside) | `border-subtle` |
+| Header bottom border | `border-subtle` |
+| Footer top border | `border-subtle` |
+
+#### States
+
+| State | Look |
+|---|---|
+| Closed | Not rendered |
+| Open | As above. Opens and closes with an opacity fade, `--nl-duration-base`, `--nl-ease-standard`. Reduced motion: no fade |
+
+Rows inside carry their own hover, selected and disabled states.
+
+#### Behaviour and accessibility
+
+| Kind | Role on the content | Keyboard |
+|---|---|---|
+| action | `role="menu"`, rows `menuitem` | Up and Down move between rows (wrapping), Home and End go to the first and last, Enter or Space activates and closes, typing a letter jumps to the next row starting with it |
+| select | `role="listbox"`, rows `option` with `aria-selected` (multi-select adds `aria-multiselectable`) | As action. Enter or Space selects. Single select closes on select |
+| filter | A non-modal dialog (`role="dialog"`) | Tab moves through the header, rows and footer. The menu stays open until the footer's apply or reset, Escape or a click outside |
+| navigation | `role="menu"`, rows are links (`menuitem` on the link) | As action. Enter follows the link |
+
+For all kinds:
+- Escape closes and returns focus to the trigger. A click outside closes.
+- On open, focus goes to the selected row (select), the first row (action, navigation), or the first field in the header (filter).
+- The trigger has `aria-haspopup` (`menu`, `listbox` or `dialog`), `aria-expanded` and `aria-controls`.
+- Dividers between groups are decorative (`NlDivider decorative`). Use `role="group"` with a name for labelled groups.
+- Disabled rows are skipped by the arrow keys and announced as unavailable (`aria-disabled`).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Shadow | A style called "sticky" (0 −2 16, black at 8%). The reference's description says code uses a "menu" shadow with the same values | `--nl-shadow-menu` | **Needs approval** |
+| Placement, flip, edge gap, width, height | From the reference's component description, not drawn: `Space-XS` from the trigger, flips, `Space-M` from the edge, at least the trigger's width, up to the window height | Same | **Needs approval** |
+| Kinds and roles | The reference's description names four kinds (action, select, filter, navigation), set only in code | `kind` prop with the roles and keyboard above | **Needs approval** |
+| Maximum height | "up to the window or a max height" | `maxHeight` takes a `Size-*` token name, so there are no raw numbers | **Needs approval** |
+| Open and close motion | Not in the reference | Fade, `--nl-duration-base` (§5: menus) | **Needs approval** |
+| Layer | Not in the reference | `--nl-z-menu` (§4.3) | Matches §4.3 |
+| Slots | Header, content and footer are slots in the reference | Slots (D15) | Approved |
+
+---
+
+### NlChipGroup
+
+**Level** Atom L0 (D15: chips are slot content) · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-22, OD-23.
+
+Lays out a row of chips with even spacing. Used for filter chips above a table.
+
+#### Anatomy
+
+```
+NlChipGroup (horizontal row)
+└── chips slot (NlFilterChip, NlAssistChip or NlInputChip)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Chips | any chips | `children` (slot) |
+| Wrap | single line (reference) or wrap | `wrap?: boolean`, default `false`. See "Mapping notes" |
+| Group semantics | plain row, or a named group | `aria-label` or `aria-labelledby` (optional). When given, the row gets `role="group"` |
+| Selection model | none, single, multiple | `selection?: 'none' \| 'single' \| 'multiple'`, default `none`. See "Behaviour and accessibility" |
+
+#### Sizes and layout
+
+- Horizontal row, gap `Space-M`, padding `Space-none`.
+- Items centred on the cross axis.
+- Width hugs the chips. With `wrap`, rows wrap and the gap between rows is `Space-M` too.
+
+#### Colours
+
+None of its own. Transparent background.
+
+#### States
+
+None of its own. Each chip has its own states.
+
+#### Behaviour and accessibility
+
+- `selection="none"`: chips are independent toggle buttons (`aria-pressed`). Tab moves through each chip.
+- `selection="single"`: the group is `role="radiogroup"` and chips act as radios. Arrow keys move and select. One tab stop.
+- `selection="multiple"`: chips are toggle buttons with `aria-pressed`. Tab moves through each.
+- With a name, a screen reader hears it when entering the group, for example "Status filters, group".
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Gap | `Space-M` | `Space-M` | Matches |
+| Wrap | Single line, no wrap | Single line by default. `wrap` is an added option for narrow tables | **Needs approval** |
+| Selection model | Not in the reference (the chips only show selected or not) | `selection` prop above | **Needs approval** |
+| Variant property | One meaningless "Default" variant | No variant prop | Matches |
+
+---
+
+### NlAppShell
+
+**Level** Atom L0 (D15: nav, header and content are slots) · **Base** none · **Depends on** nothing · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-24, OD-25, OD-26.
+
+The page frame for every admin screen: side nav on the left, and on the right a rounded content panel holding the page header and the scrolling page content. It also provides the skip link.
+
+#### Anatomy
+
+```
+NlAppShell (full window, horizontal)
+├── skip link (hidden until focused)
+├── nav slot (NlSideNav, full height)
+└── panel area
+    └── panel (rounded, clipped)
+        ├── header slot (NlPageHeader, stays at the top)
+        └── content slot (the page; the only part that scrolls)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Nav | slot | `nav: ReactNode` |
+| Header | slot | `header?: ReactNode` |
+| Content | slot | `children` |
+| Skip link | off (default) or on | `skipLink?: boolean` |
+| Skip link text | text | `skipLinkLabel?: string`, default "Skip to content" |
+
+#### Sizes and layout
+
+| Part | Layout |
+|---|---|
+| Shell | Fills the window. Horizontal, gap `Space-none`. The window itself never scrolls |
+| Nav slot | Full height. Width is set by the nav (expanded or minimized), not by the shell |
+| Panel area | Fills the remaining width. Padding `Space-M` top, right and bottom, `Space-none` on the left |
+| Panel | Fills the panel area. Radius `Radius-L`, content clipped. Vertical stack: header slot, then content slot |
+| Content slot | Fills the rest of the panel and scrolls vertically. Padding `Space-3XL` all round. Page blocks are `Space-4XL` apart (the page sets that gap) |
+| Skip link | Positioned at the top left above everything. Pill: padding `Space-M` (block) and `Space-XL` (inline), `Radius-Full`, text `Label M`, shadow `--nl-shadow-menu` |
+
+- Widths (§3.7): from `Breakpoint-1280` the nav is expanded; below it the nav is minimized. The nav owns this. The shell only gives it full height.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Page background (behind nav and panel) | `bg-secondary` |
+| Panel | `bg-primary` |
+| Skip link pill | `bg-primary` |
+| Skip link text | `text-action` |
+| Skip link focus ring | `border-focused` |
+| Content focus ring (when the scrolling content takes focus) | `border-focused` |
+
+#### States
+
+| Part | State | Look |
+|---|---|---|
+| Skip link | Not focused | Visually hidden (still in the tab order) |
+| Skip link | Focused | Shown as the pill, with the standard focus ring |
+| Content | Focused (keyboard) | 2px ring drawn **inside** the panel, `border-focused`, because the content scrolls |
+
+#### Behaviour and accessibility
+
+- Landmarks: the nav slot is wrapped in `<nav>` only if the nav doesn't render its own (NlSideNav does). The header slot sits in `<header>`, the content in `<main id>`.
+- Skip link: the first tab stop. Activating it moves focus to `<main>` (which has `tabIndex={-1}`).
+- Only the content scrolls. The header and nav stay in place. The scrolling content is focusable by keyboard (`tabIndex={0}` with a name, or the `<main>` itself) so keyboard users can scroll it, and it shows the inside focus ring.
+- No layout shift when the nav changes width. The panel area flexes.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Nav and header | Fixed side menu and page header inside the shell | Slots (D15) | Approved (D15) |
+| Content padding and block gap | From the reference's component description: `Space-3XL` padding, `Space-4XL` between blocks | Same | **Needs approval** |
+| Skip link focus ring | 2px `border-focused`, drawn 2 outside the pill (an outer frame with `Space-XS` padding) | The standard ring from CLAUDE.md (2px, offset −1), as for the switch | **Needs approval** |
+| Content focus ring | From the description: 2px `border-focused` inside | Same, using Tailwind's 2px inset ring (§4.2) | **Needs approval** |
+| Nav widths and breakpoint | The description gives nav widths and switches at 1280 | The nav's own spec. The shell only uses `Breakpoint-1280` as guidance | Matches §3.7 |
+| Skip link text | Reference copy | "Skip to content" (generic, sentence case) | Matches |
+| Shadow | A "menu" shadow | `--nl-shadow-menu` | Matches |
+
+---
+
+### NlCalendarDay
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlCalendar`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-27, OD-28.
+
+One day cell in the calendar grid: a 40 × 40 button with the day number. It also draws the range band when it is part of a selected range.
+
+#### Anatomy
+
+```
+NlCalendarDay (cell, 40 × 40; draws the range band)
+└── day (button, 40 × 40, rounded)
+    └── number
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Day | number | `day: number` |
+| Type | default, today, outside, selected, range-start, range-middle, range-end, disabled | `type`, also `data-type` |
+| Today | combines with the other types | `today?: boolean` (see "Mapping notes") |
+| Date | the full date, for the accessible name | `date: string` (ISO), formatted by `NlCalendar` |
+| Select | callback | `onSelect(date)` |
+
+Hover and pressed are CSS states, not props (§7.3).
+
+#### Sizes and layout
+
+| Part | Size | Radius | Other |
+|---|---|---|---|
+| Cell | `Size-40` × `Size-40` | none, except range-start (`Radius-S` on the start corners) and range-end (`Radius-S` on the end corners) | Padding `Space-none` |
+| Day | `Size-40` × `Size-40` | `Radius-S` | Number centred. Today: 1px inside border (§4.2) |
+| Number | – | – | Text style `Body M` |
+
+#### Colours
+
+**Cell (range band)**
+
+| Type | Cell background |
+|---|---|
+| range-start, range-middle, range-end | `bg-active` |
+| all others | none |
+
+**Day**
+
+| Type | Enabled | Hover | Pressed | Number |
+|---|---|---|---|---|
+| default | none | `bg-secondary` | `bg-tertiary` | `text-primary` |
+| today | none, border `border-strong` | `bg-secondary`, border `border-strong` | `bg-tertiary`, border `border-strong` | `text-primary` |
+| outside (another month) | none | `bg-secondary` | `bg-tertiary` | `text-tertiary` |
+| selected | `bg-action-primary` | `bg-action-primary_hovered` | `bg-action-primary_pressed` | `text-white_both` |
+| range-start | `bg-action-primary` | `bg-action-primary_hovered` | `bg-action-primary_pressed` | `text-white_both` |
+| range-middle | none (on the band) | `bg-active-hover` | `bg-active-hover` | `text-primary` |
+| range-end | `bg-action-primary` | `bg-action-primary_hovered` | `bg-action-primary_pressed` | `text-white_both` |
+| disabled | none | none | none | `text-disabled` |
+
+**Focus (any enabled type):** the standard ring from CLAUDE.md, `border-focused`, keyboard only.
+
+#### States
+
+Enabled, hover, pressed and focus for every type except disabled. Disabled has only its resting look.
+
+#### Behaviour and accessibility
+
+- The day is a `<button>` inside a grid cell (`role="gridcell"`). `NlCalendar` owns the grid, the roving tab index and arrow-key movement.
+- Accessible name: the full date, for example "Monday 3 March". Selected days add `aria-selected="true"` on the cell. Today adds `aria-current="date"`.
+- Disabled: `aria-disabled="true"` and not selectable. It stays reachable by arrow keys so the grid has no holes (the calendar decides this; see `NlCalendar`).
+- Range middle: announced as selected, part of the range.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Today combined with selected or in-range | The reference draws "today" only as its own type | Proposed: `today` is a separate boolean, so today can also be selected or in a range. The border shows on top of any type except selected (where the fill is enough) | **Needs approval** |
+| Focus ring | From the description: 2px `border-focused`, 2 outside | The standard ring from CLAUDE.md (offset −1), as for the switch and app shell | **Needs approval** |
+| Range-middle pressed | Same as hover (`bg-active-hover`) | Same | Matches |
+| Size | `Size-40` | `Size-40` | Matches |
+| Radius | `Radius-S` | `Radius-S` | Matches |
+
+---
+
+### NlListCaption
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlListItem`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-29.
+
+Short trailing text in a list row, such as a date, a count or a points value.
+
+#### Anatomy
+
+```
+NlListCaption
+└── text
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | small, medium, large | `size`, also `data-size` |
+| Weight | heavy, light | `weight: 'heavy' \| 'light'`, also `data-weight` |
+| Text | text | `children` |
+
+#### Sizes and layout
+
+| Size | Heavy text style | Light text style |
+|---|---|---|
+| small | `Label S` | `Body S` |
+| medium | `Label M` | `Body M` |
+| large | `Label L` | `Body L` |
+
+- Padding `Space-none`. Single line, no wrapping. Width hugs the text. Vertically centred in the row.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Text | `text-tertiary` |
+
+#### States
+
+None of its own. In a disabled row, the row switches it to `text-disabled` (see `NlListItem`).
+
+#### Behaviour and accessibility
+
+- Plain text (`<span>`). Read after the row's title and description.
+- Don't use it as the only place important information appears. It's tertiary, lower-emphasis text.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Gap | A raw 10 gap with a single child (no effect) | No gap | Matches |
+| Disabled colour | Not drawn | `text-disabled` when the row is disabled, set through a `disabled` prop passed by the row | **Needs approval** |
+| Text styles and colour | As in the table | Same | Matches |
+
+---
+
+### NlNavSubItem
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlNavItem`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-30a, OD-30b.
+
+A page link under an expanded section in the side nav. In the tree style, a thin line connects it to its section.
+
+#### Anatomy
+
+```
+NlNavSubItem (link, full width, rounded)
+├── tree line (optional, decorative)
+└── text
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | not selected, selected (current page) | `current?: boolean` |
+| Tree | none, middle, last | `tree: 'none' \| 'middle' \| 'last'`, default `none`, also `data-tree` |
+| Text | text | `children` |
+| Link | any link component | `as` (CLAUDE.md: link-like components take an `as` prop), `href` |
+
+Hover and pressed are CSS states (§7.3).
+
+#### Sizes and layout
+
+- Horizontal, items centred. Width fills the nav.
+- Padding: `Space-M` top and bottom, `Space-XL` right, `Space-6XL` left (the text lines up under the section's text).
+- Radius `Radius-M`.
+- Text style `Label M`, single line, truncated with an ellipsis if too long.
+- Height comes from the padding and line height (no fixed height).
+- Tree line: 1px (§4.2), runs down from `Space-XS` above the item to its vertical middle, then curves with `Radius-S` towards the text, ending `Space-XS` before it. "Middle" continues down to the next item. "Last" stops at the curve. Its horizontal position is under the centre of the section icon in `NlNavItem` (see "Mapping notes").
+
+#### Colours
+
+| State | Background | Text | Tree line |
+|---|---|---|---|
+| Default | `bg-secondary` | `text-secondary` | `border-default` |
+| Hover | `bg-tertiary` | `text-secondary` | `border-default` |
+| Pressed | `bg-neutral` | `text-secondary` | `border-default` |
+| Selected | `bg-primary` | `text-action` | `border-default` |
+| Focus (keyboard) | as the state, plus the standard focus ring from CLAUDE.md (`border-focused`) | | |
+
+#### States
+
+Default, hover, pressed, selected, focus. There is no disabled state in the reference.
+
+#### Behaviour and accessibility
+
+- A link. `aria-current="page"` when selected.
+- Keyboard: Tab reaches it; Enter follows it.
+- The tree line is `aria-hidden`.
+- Truncated text gets a tooltip, or the full text as `title`, so it isn't lost.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Tree line horizontal position | From the reference's description: under the section icon centre, given as raw distances from the left edge | No token covers those offsets. Proposed: work it out from `NlNavItem`'s padding and icon size (icon centre = item padding + half of `Size-20`), and settle it in the `NlNavItem` spec | **Needs approval** |
+| Tree line ends | `Space-XS` above, `Space-XS` before the text, `Radius-S` curve | Same | Matches |
+| Width | Drawn 280 wide | Fills the nav | Matches |
+| Selected background | `bg-primary` (a white chip on the grey nav) | Same | Matches |
+| Pressed background | `bg-neutral` | Same. In Light it equals `bg-tertiary` today, so hover and pressed look the same (K1) | Known issue K1 |
+| Focus | Not drawn | Standard ring from CLAUDE.md | **Needs approval** |
+
+---
+
+### NlPaginationItem
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlPagination`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-32, OD-33, OD-34, OD-35.
+
+One page number button in the table pagination, or the "…" gap between page ranges.
+
+#### Anatomy
+
+```
+NlPaginationItem (square button)
+└── page number, or "…"
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Kind | page, ellipsis | `kind: 'page' \| 'ellipsis'`, default `page`, also `data-kind` |
+| Page | number | `page: number` |
+| Selected | not selected, selected (current page) | `current?: boolean` |
+| Select | callback | `onSelect(page)` |
+
+Hover is a CSS state (§7.3).
+
+#### Sizes and layout
+
+- `Size-32` × `Size-32`. Padding `Space-XS`. Content centred.
+- Radius `Radius-S`. 1px inside border (§4.2).
+- Page number: text style `Label M`. Ellipsis: text style `Label L`, no border, no fill.
+- Wider page numbers (3 digits and over): see "Mapping notes".
+
+#### Colours
+
+| State | Background | Border | Text |
+|---|---|---|---|
+| Default | `bg-secondary` | `border-subtle` | `text-secondary` |
+| Hover | `bg-tertiary` | `border-default` | `text-primary` |
+| Selected | `bg-active` | `border-active` | `text-action` |
+| Ellipsis | none | none | `text-secondary` |
+| Focus (keyboard) | as the state, plus the standard focus ring from CLAUDE.md (`border-focused`) | | |
+
+#### States
+
+Default, hover, focus, selected. The ellipsis has no states.
+
+#### Behaviour and accessibility
+
+- Page: a `<button>`. Accessible name "Page 3". Selected adds `aria-current="page"`.
+- Ellipsis: plain text, `aria-hidden="true"`. The pagination `<nav>` around it has the name ("Pagination").
+- Keyboard: Tab through the buttons; Enter or Space selects.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Width for long numbers | Fixed 32 square | Proposed: minimum width `Size-32`, width hugs the number, so "100" and over still fit | **Needs approval** |
+| Pressed state | Not drawn | Proposed: same as hover | **Needs approval** |
+| Focus | Not drawn | Standard ring from CLAUDE.md | **Needs approval** |
+| Ellipsis text | Three full stops | One ellipsis character "…" | **Needs approval** |
+| Sizes, radius, colours | As above | Same | Matches |
+
+---
+
+### NlPageDot
+
+**Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlPageDots`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-36, OD-37, OD-38, OD-39.
+
+One dot in a page indicator. The current page shows as a longer pill.
+
+#### Anatomy
+
+```
+NlPageDot (dot or pill)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | default, selected | `current?: boolean` |
+
+#### Sizes and layout
+
+| Type | Width | Height | Radius |
+|---|---|---|---|
+| default | `Size-6` | `Size-6` | `Radius-Full` |
+| selected | see "Mapping notes" | `Size-6` | `Radius-Full` |
+
+- Width changes between the two with `--nl-duration-base`, `--nl-ease-standard`. Reduced motion: no animation.
+
+#### Colours
+
+| Type | Fill |
+|---|---|
+| default | `fg-placeholder` |
+| selected | `fg-brand` |
+
+#### States
+
+None. Not interactive in the reference.
+
+#### Behaviour and accessibility
+
+- Decorative: `aria-hidden="true"`. `NlPageDots` gives the indicator its accessible text ("Page 2 of 5").
+- Colour isn't the only signal: the selected dot is also longer.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Selected width | Raw 22 | No `Size-22` token. Proposed: `Size-24` (closest; 2 wider) | **Needs approval** |
+| Radius | Raw 8 on a 6-tall shape (fully round) | `Radius-Full` | **Needs approval** |
+| Width animation | Not in the reference | `--nl-duration-base`, none under reduced motion | **Needs approval** |
+| Clickable dots | Not in the reference | Not interactive. If dots must move between pages, that needs a new spec | Open |
+
+---
+
+### NlIconContainer
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-45, OD-46.
+
+An icon centred on a round tinted background. Used in empty states, file upload and list rows.
+
+#### Anatomy
+
+```
+NlIconContainer (circle)
+└── NlIcon (centred)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | 40, 48, 64 | `size: 40 \| 48 \| 64`, default 48, also `data-size` |
+| Colour | primary, secondary, disabled, success, warning, error, info | `tone`, default `primary` |
+| Icon | registry name | `icon: NlIconName` |
+| Accessible name | none (decorative) or text | `label?: string`, passed to `NlIcon` |
+
+#### Sizes and layout
+
+| Size | Container | Icon size |
+|---|---|---|
+| 40 | `Size-40` | 24 (`NlIcon size={24}`) |
+| 48 | `Size-48` | 24 |
+| 64 | `Size-64` | 36 |
+
+- Shape `Radius-Full`. The icon is centred. No padding is needed because the container size is fixed.
+- No border, no shadow.
+
+#### Colours
+
+| Tone | Background | Icon |
+|---|---|---|
+| primary | `bg-icons` | `fg-primary` |
+| secondary | `bg-secondary` | `fg-secondary` |
+| disabled | `bg-disabled` | `fg-disabled-on_bg` |
+| success | `bg-success_secondary` | `fg-success` |
+| warning | `bg-warning_secondary` | `fg-warning` |
+| error | `bg-error_secondary` | `fg-error` |
+| info | `bg-info_secondary` | `fg-info` |
+
+- The icon colour is set by the container (`NlIcon` with `tone="inherit"`).
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- Decorative by default (the text next to it carries the meaning). With `label`, the icon gets `role="img"` and the name.
+- Contrast: icons on their tints need 3 to 1 in every brand and theme (D7, token audit).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Padding and gap | `Space-M` padding and a raw 10 gap on the 40 size. They have no effect on the fixed 48 and 64 sizes | Dropped. Fixed size, icon centred | **Needs approval** |
+| Icon nesting | Some variants put the icon straight in; others wrap it in an icon-size component | One `NlIcon` in every case | Matches |
+| Disabled icon | `fg-disabled-on_bg` | Same | Matches |
+| Default size and tone | Not set | `48`, `primary` | **Needs approval** |
+
+---
+
+### NlAvatar
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon`, `NlStatusDot` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-47, OD-48.
+
+A round picture of a person or account: a photo, initials or a default icon, with an optional online dot.
+
+#### Anatomy
+
+```
+NlAvatar (circle, 1px border inside)
+├── content (one of: image, initials, NlIcon)
+└── NlStatusDot (optional, bottom-right)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | image, text (initials), icon | Derived: `src` gives image; `initials` gives text; neither gives icon. Also `data-type` |
+| Size | xsmall, small, medium, large, xlarge, xxlarge, xxxlarge | `size`, default `medium`, also `data-size` |
+| Online | off, on | `online?: boolean` |
+| Online label | text | `onlineLabel?: string`, default "Online" |
+| Image | URL and alt text | `src?: string`, `alt?: string` |
+| Initials | up to 2 characters | `initials?: string` |
+| Icon | registry name | `icon?: NlIconName`, default `person` (see "Mapping notes") |
+
+#### Sizes and layout
+
+| Size | Avatar | Icon (`NlIcon`) | Initials text style | Status dot size |
+|---|---|---|---|---|
+| xsmall | `Size-24` | 16 | `Label S` | xsmall (`Size-6`) |
+| small | `Size-32` | 20 | `Label M` | small (`Size-8`) |
+| medium | `Size-40` | 24 | `Label L` | medium (`Size-12`) |
+| large | `Size-48` | 24 | `Title L` | medium (`Size-12`) |
+| xlarge | `Size-56` | 36 | `Headline Medium-H5` | large (`Size-16`) |
+| xxlarge | `Size-64` | 48 | `Headline Large-H4` | large (`Size-16`) |
+| xxxlarge | `Size-96` | 64 | `Display Medium-H2` | xlarge (`Size-24`) |
+
+- Shape `Radius-Full`. 1px inside border (§4.2). Content centred. The image covers the circle (object-fit cover).
+- Status dot: bottom-right. Its outer ring (1px, see `NlStatusDot`) touches the avatar's bounding box for xsmall to xlarge, and sits `Space-XXS` further in for xxlarge and xxxlarge.
+- The avatar doesn't clip the status dot.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Border (all types) | `border-subtle` |
+| Background (icon and text types) | `bg-icons` |
+| Initials | `text-secondary` |
+| Icon | `fg-secondary` |
+| Image | the photo |
+
+#### States
+
+None. Not interactive. An avatar inside a button or link gets its states from that parent.
+
+#### Behaviour and accessibility
+
+- Image: `<img alt>`. Give the person's name in `alt` when the avatar is the only place the name appears. Use `alt=""` when the name is shown next to it.
+- Initials and icon: decorative by default (`aria-hidden`). Pass `alt` to name it, which renders `role="img"` with `aria-label`.
+- Initials: at most 2 characters, uppercase, letters only. With no name, use the icon type rather than empty initials.
+- Online: `NlStatusDot` with `onlineLabel`, so a screen reader hears, for example, "Member 0042, online". Colour isn't the only signal when presence matters: show the status in text nearby too.
+- Image fails to load: fall back to initials, then to the icon.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Shape | Round in the component. The reference's documentation also mentions an octagon brand shape, which no component uses | Round | Matches |
+| Largest size | 96 in the component (the documentation says 100) | `Size-96` | Matches the component |
+| Status dot inset | Raw 1 (xsmall to xlarge) and 3 (xxlarge, xxxlarge) | 1 is the dot's own 1px ring. The extra 2 is `Space-XXS` | Matches |
+| Default icon | A person outline from the reference's icon set | Material Symbols `person` | **Needs approval** |
+| Initials text colour | `text-secondary` | Same | Matches |
+| Fallback order | From the reference's documentation: photo, then initials, then icon | Same | Matches |
+| Default size | Not set | `medium` | **Needs approval** |
+
+---
+
+### NlBadgeBase
+
+**Level** Atom L1 · **Base** – (this is the base) · **Depends on** `NlIcon` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-49.
+
+The shared shape of every badge: a small rounded tag with a label and optional leading and trailing icons. It holds every option as props (§7.2). `NlBadge` maps tones onto it.
+
+#### Anatomy
+
+```
+NlBadgeBase (rounded tag, horizontal)
+├── leading NlIcon (optional)
+├── label
+└── trailing NlIcon (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | small, large | `size: 'small' \| 'large'`, also `data-size` |
+| Label | text | `children` |
+| Leading icon | off or a registry name | `leadingIcon?: NlIconName` |
+| Trailing icon | off or a registry name | `trailingIcon?: NlIconName` |
+| Colours | background, border, text and icon tokens | Set by `NlBadge` through a fixed lookup per tone |
+
+#### Sizes and layout
+
+| Size | Padding (block / inline) | Gap | Icon size | Text style | Radius |
+|---|---|---|---|---|---|
+| small | `Space-XS` / `Space-M` | `Space-XS` | 16 | `Label S` | `Radius-S` |
+| large | `Space-XS` / `Space-M` | `Space-XS` | 20 | `Label M` | `Radius-S` |
+
+- Height hugs the content. Width hugs the content. Items centred. Single line, no wrapping.
+- Border: 1px inside (§4.2), only for the tones that have one (see `NlBadge`).
+
+#### Colours
+
+The base has no colours of its own. `NlBadge` sets them per tone.
+
+#### States
+
+None (§7.2: bases have no interaction states).
+
+#### Behaviour and accessibility
+
+- A `<span>`. Not interactive, not focusable.
+- Icons are decorative (`NlIcon` with no label). The label carries the meaning.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Padding, gap, radius | `Space-XS`, `Space-M`, `Radius-S` | Same | Matches |
+| Rendered heights | 26 (small) and 32 (large) | Hug the content. No fixed height, because neither value is a `Size-*` token | **Needs approval** |
+| Icon sizes | 16 and 20 | `NlIcon` 16 and 20 | Matches |
+
+---
+
+### NlBadge
+
+**Level** Atom L1 (mapped, takes its base's level) · **Base** `NlBadgeBase` · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-51, OD-52, OD-53.
+
+A status tag, such as "Active", "Pending" or "Tier 2", in one of eight tones.
+
+#### Anatomy
+
+As `NlBadgeBase`: label, with optional leading and trailing icons.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Tone | primary, secondary, success, error, info, warning, neutral, disabled | `tone`, default `neutral`, also `data-tone` |
+| Size | small, large | `size`, default `small`. See "Mapping notes" |
+| Label | text | `children` |
+| Icons | optional | `leadingIcon?`, `trailingIcon?`. See "Mapping notes" |
+
+#### Sizes and layout
+
+As `NlBadgeBase`.
+
+#### Colours
+
+| Tone | Background | Border (1px, inside) | Text | Icon |
+|---|---|---|---|---|
+| primary | `bg-brand` | none | `text-white_both` | `fg-white_both` |
+| secondary | none | `border-strong` | `text-secondary` | `fg-secondary` |
+| success | `bg-success_secondary` | `border-success` | `text-success` | `fg-success` |
+| error | `bg-error_secondary` | `border-error` | `text-error` | `fg-error` |
+| info | `bg-info_secondary` | `border-info` | `text-info` | `fg-info` |
+| warning | `bg-warning_secondary` | `border-warning` | `text-warning` | `fg-warning` |
+| neutral | `bg-neutral` | none | `text-secondary` | `fg-secondary` |
+| disabled | `bg-disabled` | none | `text-disabled-on_bg` | `fg-disabled-on_bg` |
+
+#### States
+
+None. Not interactive. "Disabled" is a tone (a status that is switched off), not an interaction state.
+
+#### Behaviour and accessibility
+
+- Plain text in a `<span>`. A screen reader reads the label.
+- Colour isn't the only signal: the label must say the status.
+- Contrast: text on each tint needs 4.5 to 1, and borders on `bg-primary` need 3 to 1, in every brand and theme (token audit). Check `text-white_both` on `bg-brand` for Voltic in Light.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Size | The mapped badge only exists in the small size. The base has small and large | `size` passed through to the base, default `small` | **Needs approval** |
+| Icons | The mapped badge hides both icons and doesn't expose them | `leadingIcon` and `trailingIcon` passed through. Icon colours as in the table (the matching `fg-*` token) | **Needs approval** |
+| Icon colours | Not drawn on the mapped badge | `fg-*` matching each text token | **Needs approval** |
+| Default tone | Not set | `neutral` | **Needs approval** |
+| Tone names | Primary, secondary, success, error, info, warning, disabled, neutral | Same, as `tone` (§7.3) | Matches |
+
+---
+
+### NlButtonBase
+
+**Level** Atom L1 · **Base** – (one of the three button bases, D12) · **Depends on** `NlIcon` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-1, OD-40.
+
+The base for normal-tone buttons: primary, secondary and tertiary. It holds the shared anatomy, sizes and icon options. `NlButton` uses it when `tone="normal"`. `NlWhiteButton` and `NlDestructiveButton` share the same anatomy and sizes.
+
+#### Anatomy
+
+```
+NlButtonBase (native button, rounded)
+└── content (horizontal, centred)
+    ├── leading NlIcon (optional)
+    ├── label (visible, or visually hidden for icon-only)
+    └── trailing NlIcon (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Variant | primary, secondary, tertiary, link | `variant`, also `data-variant` |
+| Size | large, medium, small, xsmall | `size`, also `data-size` |
+| Icon | none, leading, trailing, only-icon | `icon`, also `data-icon` |
+| Icon name | registry name | `iconName?: NlIconName` (required unless `icon="none"`) |
+| Label | text | `children` (always required, also for icon-only) |
+
+#### Sizes and layout
+
+| Size | Height | Padding (block / inline) | Radius | Icon size | Text style | Icon-only (square) |
+|---|---|---|---|---|---|---|
+| large | `Size-56` | `Space-XL` / `Space-3XL` | `Radius-M` | 24 | `Button XL` (new, see "Mapping notes") | `Size-56` |
+| medium | `Size-48` | `Space-L` / `Space-3XL` | `Radius-M` | 24 | `Button L` | `Size-48` |
+| small | `Size-40` | `Space-M` / `Space-XL` | `Radius-S` | 20 | `Button M` | `Size-36` (see "Mapping notes") |
+| xsmall | `Size-36` | `Space-S` / `Space-XL` | `Radius-S` | 20 | `Button M` | `Size-32` (see "Mapping notes") |
+
+- Content gap between icon and label: `Space-M`.
+- Width hugs the content. Single-line label, no wrapping.
+- Icon-only: square, padding `Space-none`, the icon centred, the label kept as visually hidden text.
+- Border: secondary has a 2px inside border (§4.2). Primary, tertiary and link have none.
+- Link: tertiary's sizes and padding. No icon-only form.
+
+#### Colours (resting)
+
+| Variant | Background | Border (2px, inside) | Label | Icon |
+|---|---|---|---|---|
+| primary | `bg-action-primary` | none | `text-white_both` | `fg-white_both` |
+| secondary | none | `border-active` | `text-action` | `fg-action` |
+| tertiary | none | none | `text-action` | `fg-action` |
+| link | none | none | `text-action` | `fg-action` |
+
+Hover, pressed, focus and disabled colours are in `NlButton` (§7.2: state styling belongs to the component built on the base).
+
+#### States
+
+None of its own (§7.2).
+
+#### Behaviour and accessibility
+
+- Renders a native `<button type="button">` by default. `NlButton` can pass `as` for a link (CLAUDE.md: link-like components take an `as` prop).
+- Icons are decorative. The label is the accessible name, visible or visually hidden.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Large text style | 18/24 semibold | New text style `Button XL` (600, 18, 24). Added to DESIGN.md §3.4 and the token JSON | Approved |
+| Medium, small, xsmall text styles | 16/24, 14/24, 14/24 | `Button L`, `Button M`, `Button M`. `Button S` stays unused by buttons | Approved |
+| Icon-only small and xsmall | 36 and 32 square, smaller than the labelled heights (40 and 36) | Kept as in the reference: `Size-36`, `Size-32` | Approved |
+| Link variant | A fourth type in the reference's button set | Included as `variant="link"` | Approved. **D12 in DESIGN.md lists only three variants and needs updating** |
+| Heights | Come from padding plus the 24 line height | Fixed `Size-*` heights as well, so icon-only and labelled buttons line up | Matches |
+| Spacing, radius, gap | As in the table | Same | Matches |
+
+---
+
+### NlWhiteButton
+
+**Level** Atom L1 · **Base** – (one of the three button bases, D12) · **Depends on** `NlIcon` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-54.
+
+The base for the white button that sits on brand-coloured backgrounds. Same anatomy, sizes and icon options as `NlButtonBase`. `NlButton` uses it when `tone="white"`.
+
+#### Anatomy
+
+As `NlButtonBase`.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, medium, small, xsmall | `size` |
+| Icon | none, leading, trailing, only-icon | `icon`, `iconName` |
+| Label | text | `children` |
+
+The reference has a single look for the white button, so there is no `variant`. See "Mapping notes".
+
+#### Sizes and layout
+
+Identical to `NlButtonBase` (heights, padding, radius, gap, icon sizes, text styles, icon-only squares).
+
+- Border: 1px inside (§4.2), in every size and state. See "Mapping notes".
+
+#### Colours (resting)
+
+| Part | Token |
+|---|---|
+| Background | `bg-action-inverse` |
+| Border (1px, inside) | `border-subtle` |
+| Label | `text-dark_both` |
+| Icon | `fg-dark_both` |
+
+Hover, pressed, focus and disabled colours are in `NlButton` (§7.2).
+
+#### States
+
+None of its own (§7.2).
+
+#### Behaviour and accessibility
+
+As `NlButtonBase`.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Variants | One look only. D12 gives `NlButton` a `variant` for every tone | With `tone="white"`, `variant` is ignored (always this look). Alternatively, restrict `variant` to `primary` for white | **Needs approval** |
+| Border on small and xsmall | Present at rest, missing on hover, pressed and disabled in small and xsmall. Present in every state for large and medium | 1px `border-subtle` in every size and state (treated as a drawing slip) | Approved |
+| Large text style | 18/24 | `Button XL`, as `NlButtonBase` | Approved |
+
+---
+
+### NlDestructiveButton
+
+**Level** Atom L1 · **Base** – (one of the three button bases, D12) · **Depends on** `NlIcon` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The base for buttons that delete or remove something. Same anatomy, sizes and icon options as `NlButtonBase`. `NlButton` uses it when `tone="destructive"`.
+
+#### Anatomy
+
+As `NlButtonBase`.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Variant | primary, secondary, tertiary | `variant`. Tertiary is new (see "Mapping notes") |
+| Size | large, medium, small, xsmall | `size` |
+| Icon | none, leading, trailing, only-icon | `icon`, `iconName` |
+| Label | text | `children` |
+
+#### Sizes and layout
+
+Identical to `NlButtonBase`. Secondary has a 2px inside border (§4.2).
+
+#### Colours (resting)
+
+| Variant | Background | Border (2px, inside) | Label | Icon |
+|---|---|---|---|---|
+| primary | `bg-action-destructive` | none | `text-white_both` | `fg-white_both` |
+| secondary | none | `border-error` | `text-error` | `fg-error` |
+| tertiary | none | none | `text-error` | `fg-error` |
+
+Hover, pressed, focus and disabled colours are in `NlButton` (§7.2).
+
+#### States
+
+None of its own (§7.2).
+
+#### Behaviour and accessibility
+
+As `NlButtonBase`. A destructive action should name what it removes in its label ("Delete reward"). A confirmation step is the caller's job (for example `NlDialog`).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Tertiary | Not in the reference (primary and secondary only). D12 lists tertiary for every tone | Tertiary destructive = no background, no border, `text-error` / `fg-error`, with hover and pressed using the secondary destructive backgrounds | Approved |
+| Large text style | 18/24 | `Button XL`, as `NlButtonBase` | Approved |
+| Colours | As in the table | Same | Matches |
+
+---
+
+### NlButton
+
+**Level** Atom L1 (built from its bases, takes their level) · **Base** `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` (D12) · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-1, OD-31, OD-40, OD-55, OD-56, OD-57, OD-58, OD-59, OD-117.
+
+The only public button. It picks the base by `tone`, passes `variant`, `size` and `icon` to it, and owns every interaction state.
+
+#### Anatomy
+
+As `NlButtonBase`: leading icon, label, trailing icon, or a single icon with a visually hidden label.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Tone | normal, white, destructive | `tone`, default `normal`, also `data-tone`. Picks the base |
+| Variant | primary, secondary, tertiary, link | `variant`, default `primary`, also `data-variant`. Link: normal tone only, no icon-only |
+| Content tone | default, inverse, primary, secondary, info, success, error, warning | `contentTone`, default `default`. Tertiary only, normal tone only. Recolours label and icon (see below) |
+| Size | large, medium, small, xsmall | `size`, default `medium`, also `data-size` |
+| Icon | none, leading, trailing, only-icon | `icon`, default `none`, also `data-icon` |
+| Icon name | registry name | `iconName?: NlIconName` |
+| Label | text | `children` (required, also for icon-only, where it is visually hidden) |
+| Disabled | on or off | `disabled` (native) |
+| Element | button or link | `as` (for example a router link), `href` |
+| Expanded | for buttons that open something | `aria-expanded` (passed through) |
+
+#### Sizes and layout
+
+From the base (see `NlButtonBase`).
+
+#### Colours by state
+
+**tone="normal"** (`NlButtonBase`)
+
+| Variant | State | Background | Border | Label / icon |
+|---|---|---|---|---|
+| primary | enabled | `bg-action-primary` | – | `text-white_both` / `fg-white_both` |
+| primary | hover | `bg-action-primary_hovered` | – | same |
+| primary | pressed | `bg-action-primary_pressed` | – | same |
+| primary | disabled | `bg-disabled` | – | `text-disabled-on_bg` / `fg-disabled-on_bg` |
+| secondary | enabled | none | `border-active` | `text-action` / `fg-action` |
+| secondary | hover | `bg-action-secondary_hovered` | `border-hovered` | `text-hovered` / `fg-hovered` |
+| secondary | pressed | `bg-action-secondary_pressed` | `border-pressed` | `text-pressed` / `fg-pressed` |
+| secondary | disabled | none | `border-disabled` | `text-disabled` / `fg-disabled` |
+| tertiary | enabled | none | – | `text-action` / `fg-action` |
+| tertiary | hover | `bg-action-secondary_hovered` | – | `text-hovered` / `fg-hovered` |
+| tertiary | pressed | `bg-action-secondary_pressed` | – | `text-pressed` / `fg-pressed` |
+| tertiary | disabled | none | – | `text-disabled` / `fg-disabled` |
+| link | enabled | none | – | `text-action` / `fg-action` |
+| link | hover | none | – | `text-action`, label underlined / `fg-action` |
+| link | pressed | none | – | `text-pressed`, label underlined / `fg-pressed` |
+| link | disabled | none | – | `text-disabled` / `fg-disabled` |
+
+- Link underline: on the label only, never under the icon. Thickness uses Tailwind's 1px decoration (§4.2).
+
+**Content tones** (tertiary, normal tone only)
+
+| `contentTone` | Label / icon (every state except disabled) | Hover background | Pressed background |
+|---|---|---|---|
+| default | as tertiary above | as tertiary | as tertiary |
+| inverse | `text-inverse` / `fg-inverse` | `Alpha-light` | `Alpha-light` |
+| primary | `text-primary` / `fg-primary` | `Alpha-sm` | `Alpha-sm` |
+| secondary | `text-secondary` / `fg-secondary` | `Alpha-sm` | `Alpha-sm` |
+| info | `text-info` / `fg-info` | `Alpha-sm` | `Alpha-sm` |
+| success | `text-success` / `fg-success` | `Alpha-sm` | `Alpha-sm` |
+| error | `text-error` / `fg-error` | `Alpha-sm` | `Alpha-sm` |
+| warning | `text-warning` / `fg-warning` | `Alpha-sm` | `Alpha-sm` |
+
+- Disabled with any content tone: `text-disabled` / `fg-disabled`, no background.
+- Used by the snackbar (inverse, on `bg-direct`), banners (the matching status tone) and the side sheet close button (secondary).
+
+**tone="white"** (`NlWhiteButton`, one look)
+
+| State | Background | Border (1px) | Label / icon |
+|---|---|---|---|
+| enabled | `bg-action-inverse` | `border-subtle` | `text-dark_both` / `fg-dark_both` |
+| hover | `bg-active` | `border-subtle` | `text-hovered` / `fg-hovered` |
+| pressed | `bg-action-secondary_pressed` | `border-subtle` | `text-pressed` / `fg-pressed` |
+| disabled | `bg-disabled` | `border-subtle` | `text-disabled-on_bg` / `fg-disabled-on_bg` |
+
+**tone="destructive"** (`NlDestructiveButton`)
+
+| Variant | State | Background | Border | Label / icon |
+|---|---|---|---|---|
+| primary | enabled | `bg-action-destructive` | – | `text-white_both` / `fg-white_both` |
+| primary | hover | `bg-action-destructive_hovered` | – | same |
+| primary | pressed | `bg-action-destructive_pressed` | – | same |
+| primary | disabled | `bg-disabled` | – | `text-disabled-on_bg` / `fg-disabled-on_bg` |
+| secondary | enabled | none | `border-error` | `text-error` / `fg-error` |
+| secondary | hover | `bg-action-destructive-secondary_hovered` | `border-error` | `text-error` / `fg-error` |
+| secondary | pressed | `bg-action-destructive-secondary_pressed` | `border-error` | `text-error` / `fg-error` |
+| secondary | disabled | none | `border-disabled` | `text-disabled` / `fg-disabled` |
+| tertiary | enabled | none | – | `text-error` / `fg-error` |
+| tertiary | hover | `bg-action-destructive-secondary_hovered` | – | `text-error` / `fg-error` |
+| tertiary | pressed | `bg-action-destructive-secondary_pressed` | – | `text-error` / `fg-error` |
+| tertiary | disabled | none | – | `text-disabled` / `fg-disabled` |
+
+**Focus (every tone and variant):** the standard ring from CLAUDE.md (2px, offset −1, `border-focused`), keyboard only.
+
+#### States
+
+Enabled, hover, pressed, focus, disabled. `aria-expanded="true"` (a button that opened a menu) uses the pressed look. See "Mapping notes".
+
+#### Behaviour and accessibility
+
+- Native `<button type="button">`. Enter and Space activate it. With `as`, a link: Enter activates.
+- Disabled: native `disabled`, not focusable, no hover or press (§7.3). For a link, no `href` and `aria-disabled="true"`.
+- Icon-only: the label stays in the DOM as visually hidden text, so the button always has a name (D12). A tooltip with the same text is recommended for sighted users.
+- A screen reader hears the label and "button", for example "Add reward, button". With `aria-expanded`, it also hears "collapsed" or "expanded".
+- Colour changes use `--nl-duration-fast`; none under reduced motion.
+- Pointer target: every size meets 24 × 24.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Link variant | The reference's button set has a fourth type, "link": tertiary sizes, no background in any state, label underlined on hover and press, `text-pressed` when pressed, normal tone only, no icon-only | Included as in the reference | Approved. **D12 in DESIGN.md lists only three variants and needs updating** |
+| Content tones on tertiary | The reference's description says code lets tertiary buttons recolour their label and icon (on snackbars, banners and side sheet close), with hover and press tinted by `Alpha-light` (on inverse) or `Alpha-sm` | `contentTone` prop, tertiary and normal tone only, values and colours as above | Approved. **Not in D12 yet** |
+| Separate icon tone | The reference's description also has a code-only option that recolours only the icon (secondary, for a close button) | Not added. An icon-only close button has no visible label, so `contentTone="secondary"` gives the same result | **Needs approval** |
+| Destructive tertiary | Not in the reference | As in the table above | Approved |
+| Secondary pressed (medium and xsmall) | `bg-active-hover`, while large and small use `bg-action-secondary_pressed` | `bg-action-secondary_pressed` for every size (treated as a drawing slip) | Approved |
+| Pressed and hover with the same token | Content tones use the same alpha for hover and press | Kept as in the reference's description | **Needs approval** |
+| Focus ring | 2px outside, 1 away from the edge | Standard ring from CLAUDE.md | Matches the rule |
+| Expanded look | The reference's "row actions" button has an "open" state | Pressed look when `aria-expanded="true"` | **Needs approval** |
+| Large text style | 18/24 | `Button XL` (see `NlButtonBase`) | Approved. **To be added to DESIGN.md §3.4** |
+| Defaults | Not set | `tone="normal"`, `variant="primary"`, `size="medium"`, `icon="none"` | **Needs approval** |
+| Loading state | Not in the reference | Not specified | Open |
+
+---
+
+### NlCheckboxControl
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used by `NlCheckbox`, checkbox list items and table cells)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-60.
+
+The bare checkbox: a rounded square that is empty, ticked or shows a dash (indeterminate).
+
+#### Anatomy
+
+```
+NlCheckboxControl (24 × 24 hit area)
+└── box (rounded square)
+    └── NlIcon (tick or dash; selected and indeterminate only)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | unselected, selected, indeterminate | `checked` / `defaultChecked` (native), `indeterminate?: boolean` |
+| Disabled | on or off | `disabled` (native) |
+| Accessible name | text | `aria-label`, `aria-labelledby` or a wrapping `<label>` (required) |
+| Change | callback | `onChange` (native) |
+
+Hover, pressed and focus are CSS states (§7.3).
+
+#### Sizes and layout
+
+| Part | Size | Radius | Border |
+|---|---|---|---|
+| Hit area | `Size-24` | – | – |
+| Box | `Size-20`, centred | `Radius-XS` | 2px inside (§4.2), unselected only |
+| Icon | `NlIcon` 16: `check` (selected) or `remove` (indeterminate) | – | – |
+
+#### Colours
+
+| Type | State | Box fill | Box border | Icon |
+|---|---|---|---|---|
+| unselected | enabled | none | `border-strong` | – |
+| unselected | hover | `bg-active-hover` | `border-hovered` | – |
+| unselected | pressed | `bg-active-hover` | `border-pressed` | – |
+| unselected | disabled | none | `fg-disabled` | – |
+| selected / indeterminate | enabled | `bg-action-primary` | – | `fg-white_both` |
+| selected / indeterminate | hover | `fg-hovered` | – | `fg-white_both` |
+| selected / indeterminate | pressed | `fg-pressed` | – | `fg-white_both` |
+| selected / indeterminate | disabled | `fg-disabled` | – | `fg-disabled-on_bg` |
+| any | focus | as above, plus the standard focus ring from CLAUDE.md (`border-focused`) | | |
+
+#### States
+
+Enabled, hover, pressed, focus, disabled, for each of unselected, selected and indeterminate.
+
+#### Behaviour and accessibility
+
+- Native `<input type="checkbox">`, visually replaced. `indeterminate` is set on the element through a ref (it has no HTML attribute).
+- Keyboard: Tab to focus, Space toggles. Indeterminate becomes checked on activation.
+- A screen reader hears the name, "checkbox", and "checked", "not checked" or "mixed".
+- Disabled: native, not focusable (§7.3).
+- Contrast: the unselected border on `bg-primary` must reach 3 to 1 in every brand and theme (see "Mapping notes").
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Box size | Raw 18 (no `Size-18` token) | `Size-20`, the same as the radio ring, inside the `Size-24` hit area | Approved |
+| Unselected border | `border-default` (Neutral-100 in Light), which is too faint for a control outline (3 to 1 needed) | `border-strong`, as used for the radio and described in §3.3 | Approved |
+| Unselected pressed fill | `bg-action-primary_pressed`, a dark brand fill with no tick, which looks like a selected box with the tick missing | `bg-active-hover` (as hover) with `border-pressed` | Approved |
+| Selected hover and pressed fills | `fg-hovered` and `fg-pressed` (foreground tokens used as fills) | Kept | Matches |
+| Focus ring | 2px outside, `border-focused`, `Radius-XS` | Standard ring from CLAUDE.md | Matches the rule |
+| Icons | `check` and `remove` from the reference's icon set | Material Symbols `check` and `remove` | **Needs approval** |
+
+---
+
+### NlSpinner
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-61, OD-62, OD-63, OD-64.
+
+A round loading indicator. It can end in a success tick or an error mark. The "with text" version is left out (D13).
+
+#### Anatomy
+
+```
+NlSpinner (48 × 48 box)
+├── track (full ring)                 ─┐ loading
+├── arc (part of the ring, brand)     ─┘
+└── result: circle with NlIcon        ── success or error
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Status | loading, success, error | `status`, default `loading`, also `data-status` |
+| Progress | none (spinning) or 0 to 100 | `value?: number`. See "Mapping notes" |
+| Accessible name | text | `label: string` (required), for example "Loading rewards" |
+
+#### Sizes and layout
+
+| Part | Size | Other |
+|---|---|---|
+| Box | `Size-48` | Content centred |
+| Ring (track and arc) | `Size-40` diameter | Ring thickness: see "Mapping notes" (4 in the reference) |
+| Result circle | `Size-48`, `Radius-Full` | `NlIcon` 24, centred |
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Track | `bg-active-hover` |
+| Arc | `fg-brand` |
+| Success circle / icon | `bg-success_secondary` / `fg-success` (`check`) |
+| Error circle / icon | `bg-error_secondary` / `fg-error` (`warning`) |
+
+#### States
+
+Loading, success, error. Not interactive.
+
+#### Behaviour and accessibility
+
+- Loading: `role="progressbar"`, `aria-label={label}`, and `aria-valuenow` only when `value` is set. A spinning ring has no value.
+- Success and error: `role="status"`, so the change is announced politely. The accessible text is the label plus the status ("Upload complete", "Upload failed"), passed by the caller through `label`.
+- Animation: the arc turns continuously, one turn per `--nl-duration-pulse`, linear. Reduced motion: no rotation, the arc stays still and the label carries the meaning.
+- Contrast: the arc against the track needs 3 to 1 (token audit).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Ring thickness | Raw 4 (stroke and arc) | §4.2 allows only 1px and 2px borders. The ring is drawn as an SVG stroke, not a border. Proposed: keep 4 as the SVG `stroke-width`, treated as artwork (§2.1 exception), with a comment | **Needs approval** |
+| 25%, 50%, 75% variants | Three arcs of different lengths. They could be animation frames or progress values | Proposed: by default an indeterminate spinner (a quarter arc that turns), plus an optional `value` that sets the arc length for a determinate ring | **Needs approval** |
+| Rotation speed | Not in the reference | One turn per `--nl-duration-pulse` (1600ms), linear | **Needs approval** |
+| Error icon | A warning triangle (outlined) from the reference's icon set | Material Symbols `warning` | **Needs approval** |
+| Success icon | `check` | Material Symbols `check` | Matches |
+| Sizes | Only 48 | Only 48 (`Size-48`). Add sizes only if a component needs one | Matches |
+
+---
+
+### NlLabel
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlCountBadge` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-65, OD-66.
+
+A small, low-emphasis label, optionally followed by a dot badge. Used above headings (in the `NlTextBlock` label slot), in list rows, the calendar header, steps and table headers.
+
+#### Anatomy
+
+```
+NlLabel (horizontal)
+├── text
+└── NlCountBadge (optional; dot form)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | medium, small | `size`, default `medium`, also `data-size` |
+| Text | text | `children` |
+| Show badge | off (default) or on | `badge?: boolean` |
+| Badge tone | error (reference), warning, success | `badgeTone?`, default `error` |
+| Badge meaning | text for screen readers | `badgeLabel?: string` (required when `badge` is on) |
+| Element | span or a form label | `as?: 'span' \| 'label'`, with `htmlFor` when it is a label |
+
+#### Sizes and layout
+
+| Size | Text style | Badge |
+|---|---|---|
+| medium | `Label M` | `NlCountBadge` small, dot form |
+| small | `Label S` | `NlCountBadge` small, dot form |
+
+- Horizontal, gap `Space-M`, padding `Space-none`, items centred vertically, aligned to the start.
+- Width hugs the content.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Text | `text-tertiary` |
+| Badge | from `NlCountBadge` (`badgeTone`) |
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- A `<span>` by default. As a form label (`as="label"`), it names its control.
+- The dot badge has no text of its own. `badgeLabel` gives it hidden text (for example "New"), read after the label.
+- Colour isn't the only signal: when the dot means something, the meaning is in `badgeLabel`.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Badge form | Always the small dot, red, hidden by default | `NlCountBadge` small dot, `tone="error"` by default | Matches |
+| Badge tone option | Only red in the reference | `badgeTone` added for warning and success | **Needs approval** |
+| Gap | `Space-M` | Same | Matches |
+| `as="label"` | Not in the reference | Added so the label can name form controls | **Needs approval** |
+
+---
+
+### NlChipBase
+
+**Level** Atom L1 · **Base** – (this is the base) · **Depends on** `NlIcon` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The shared shape of every chip: a compact rounded control with an optional leading item, a label and an optional trailing icon. It holds every option as props (§7.2). `NlFilterChip`, `NlAssistChip` and `NlInputChip` map onto it.
+
+#### Anatomy
+
+```
+NlChipBase (rounded, horizontal)
+└── content
+    ├── leading slot (optional; usually NlIcon)
+    ├── label
+    └── trailing NlIcon (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Look | unselected, unselected-bordered, selected | `look`, also `data-look` |
+| Size | xsmall, small, large | `size`, also `data-size` |
+| Label | text | `children` |
+| Leading | off, or a slot | `leading?: ReactNode` |
+| Trailing icon | off, or a registry name | `trailingIcon?: NlIconName` |
+
+#### Sizes and layout
+
+| Size | Padding (block / inline) | Gap | Icon size | Text style | Rendered height |
+|---|---|---|---|---|---|
+| xsmall | `Space-XS` / `Space-M` | `Space-XS` | 16 | `Label S` | 26 (hugs) |
+| small | `Space-S` / `Space-L` | `Space-M` | 16 | `Label M` | 33 (hugs) |
+| large | `Space-M` / `Space-L` | `Space-M` | 20 | `Label L` | 40 (hugs) |
+
+- Radius `Radius-S`. 1px inside border (§4.2).
+- Height and width hug the content. Single line.
+
+#### Colours (resting)
+
+| Look | Background | Border (1px) | Shadow | Leading icon | Label | Trailing icon |
+|---|---|---|---|---|---|---|
+| unselected | `bg-primary` | `border-subtle` | none | `fg-secondary` | `text-primary` | `fg-secondary` |
+| unselected-bordered | `bg-primary` | `border-default` | `--nl-shadow-resting` | `fg-secondary` | `text-primary` | `fg-secondary` |
+| selected | `bg-active` | `border-active` | none | `fg-brand` | `text-action` | `fg-secondary` |
+
+Hover, pressed, disabled and focus belong to the mapped chips (§7.2).
+
+#### States
+
+None of its own (§7.2).
+
+#### Behaviour and accessibility
+
+The element and role come from the mapped chip: a toggle button (filter), a button (assist) or a group with a remove button (input).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Heights | 26, 33 and 40 from padding plus line height. 26 and 33 aren't `Size-*` tokens | Hug the content, no fixed height | Approved |
+| Leading slot gap | A raw 10 gap in one size's leading slot, with a single child | No gap | Matches |
+| Shadow | A "resting cards" shadow (0 1 3, black at 5%) | `--nl-shadow-resting` | Matches |
+| Padding, gaps, radius, text styles | As in the table | Same | Matches |
+
+---
+
+### NlFilterChip
+
+**Level** Atom L1 (mapped) · **Base** `NlChipBase` · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+An on/off filter, for example above a table. Several can be on at once.
+
+#### Anatomy
+
+As `NlChipBase`. The label only by default. A leading icon is optional.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | off, on | `selected` / `defaultSelected`, `onSelectedChange(selected)` |
+| Size | xsmall, small, large | `size`, default `small` |
+| Disabled | on or off | `disabled` (native) |
+| Label | text | `children` |
+| Leading icon | optional | `leadingIcon?: NlIconName` |
+
+Hover and pressed are CSS states (§7.3).
+
+#### Sizes and layout
+
+As `NlChipBase`. Base look: `unselected` when off, `selected` when on.
+
+#### Colours by state
+
+| Selected | State | Background | Border (1px) | Label |
+|---|---|---|---|---|
+| off | enabled | `bg-primary` | `border-subtle` | `text-primary` |
+| off | hover | `bg-active-hover` | none | `text-primary` |
+| off | pressed | `bg-action-primary_pressed` | none | `text-white_both` |
+| off | disabled | `bg-disabled` | none | `text-disabled-on_bg` |
+| on | enabled | `bg-active` | `border-active` | `text-action` |
+| on | hover | `bg-active-hover` | `border-active` | `text-action` |
+| on | pressed | `bg-action-primary_pressed` | `border-pressed` | `text-white_both` |
+| on | disabled | `bg-disabled` | `border-disabled` | `text-disabled-on_bg` |
+| any | focus | as above, plus the standard focus ring from CLAUDE.md (`border-focused`) | | |
+
+A leading icon follows the label colour, except when on and enabled or hovered, where it uses `fg-brand`.
+
+#### States
+
+Enabled, hover, pressed, focus, disabled, each off and on.
+
+#### Behaviour and accessibility
+
+- A native `<button type="button" aria-pressed>`. Space or Enter toggles.
+- A screen reader hears the label, "toggle button", and "pressed" or "not pressed", for example "Active members, toggle button, pressed".
+- In an `NlChipGroup` with `selection="single"`, the group turns the chips into radios (see `NlChipGroup`).
+- Disabled: native, not focusable (§7.3).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Pressed label colour | `text-inverse` on `bg-action-primary_pressed`. In Dark, `text-inverse` is `Neutral-900`, which puts dark text on a mid-brand fill | `text-white_both` (icon `fg-white_both`), white on the pressed brand fill in both themes, like a primary button | Approved |
+| Off-state hover border | The border disappears on hover | Kept as in the reference | Matches |
+| Focus | Not drawn | Standard ring from CLAUDE.md | Matches the rule |
+| Default size | Not set | `small` | Approved |
+
+---
+
+### NlAssistChip
+
+**Level** Atom L1 (mapped) · **Base** `NlChipBase` · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+A chip that runs an action or opens a menu or picker, for example a date range or a "more filters" menu.
+
+#### Anatomy
+
+As `NlChipBase`: optional leading icon, label, and a dropdown arrow when it opens something.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Dropdown | off, on | `dropdown?: boolean`. On adds the arrow and `aria-haspopup` |
+| Open | closed, open (dropdown only) | `open?: boolean`, controlled by the menu it opens |
+| Size | xsmall, small, large | `size`, default `small` |
+| Disabled | on or off | `disabled` (native) |
+| Label | text | `children` |
+| Leading icon | optional | `leadingIcon?: NlIconName` |
+| Click | callback | `onClick` |
+
+#### Sizes and layout
+
+As `NlChipBase`. Base look: `unselected-bordered` (closed) or `selected` (open). Arrow: `keyboard_arrow_down` when closed, `keyboard_arrow_up` when open.
+
+#### Colours by state
+
+| State | Background | Border | Shadow | Leading icon | Label | Arrow |
+|---|---|---|---|---|---|---|
+| enabled | `bg-primary` | `border-default` | `--nl-shadow-resting` | `fg-secondary` | `text-primary` | `fg-secondary` |
+| hover | `bg-active-hover` | none | none | `fg-secondary` | `text-primary` | `fg-secondary` |
+| pressed | `bg-action-primary_pressed` | none | none | `fg-white_both` | `text-white_both` | `fg-white_both` |
+| open | `bg-active` | `border-active` | none | `fg-brand` | `text-action` | `fg-secondary` |
+| disabled | `bg-disabled` | none | none | `fg-disabled-on_bg` | `text-disabled-on_bg` | `fg-disabled-on_bg` |
+| focus | as the state, plus the standard focus ring from CLAUDE.md | | | | | |
+
+Pressed uses `text-white_both` and `fg-white_both` instead of the reference's inverse tokens, as for `NlFilterChip`.
+
+#### States
+
+Enabled, hover, pressed, focus, disabled, and open for dropdown chips.
+
+#### Behaviour and accessibility
+
+- A native `<button type="button">`. Enter or Space activates.
+- With `dropdown`: `aria-haspopup` (`menu`, `listbox` or `dialog`, matching what it opens), `aria-expanded`, `aria-controls`. Down arrow also opens the menu. Escape in the menu returns focus to the chip.
+- A screen reader hears, for example, "Date range, button, collapsed, has popup".
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Pressed text and icon colour | `text-inverse` and `fg-inverse` (dark in Dark) on the pressed brand fill | `text-white_both` and `fg-white_both`, as for `NlFilterChip` | Approved |
+| Hover drops border and shadow | As in the reference's description | Same | Matches |
+| Open look | Selected look with the up arrow | Same | Matches |
+| Arrow icons | From the reference's icon set | Material Symbols `keyboard_arrow_down` and `keyboard_arrow_up` | Approved |
+
+---
+
+### NlInputChip
+
+**Level** Atom L1 (mapped) · **Base** `NlChipBase` · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+A chosen value shown as a chip, with a remove button. Used in `NlMultiSelect`.
+
+#### Anatomy
+
+```
+NlInputChip (NlChipBase, bordered look)
+├── leading slot (optional, off by default)
+├── label
+└── remove button (NlIcon close)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | xsmall, small, large | `size`, default `small` |
+| Disabled | on or off | `disabled?: boolean` |
+| Label | text | `children` |
+| Leading | optional | `leading?: ReactNode` |
+| Remove | callback | `onRemove()` |
+| Remove name | text | `removeLabel?: string`, default "Remove {label}" |
+
+#### Sizes and layout
+
+As `NlChipBase`, `unselected-bordered` look. The remove icon is `close` at 16 (xsmall, small) or 20 (large).
+
+#### Colours by state
+
+| State | Background | Border | Shadow | Label | Remove icon |
+|---|---|---|---|---|---|
+| enabled | `bg-primary` | `border-default` | `--nl-shadow-resting` | `text-primary` | `fg-secondary` |
+| disabled | `bg-disabled` | none | none | `text-disabled-on_bg` | `fg-disabled-on_bg` |
+| remove button hover and press | unchanged | | | | `fg-primary` |
+| remove button focus | standard focus ring from CLAUDE.md, around the remove button | | | | |
+
+#### States
+
+Enabled and disabled for the chip. The remove button has focus, and see "Mapping notes" for hover and press.
+
+#### Behaviour and accessibility
+
+- The chip itself isn't interactive. It's a `<span>` holding the label and a `<button type="button">` for remove.
+- The remove button's name is "Remove {label}", for example "Remove Tier 2". Enter or Space removes.
+- Backspace or Delete on the focused remove button also removes. After removal, focus moves to the next chip's remove button, or to the field input if none is left (`NlMultiSelect` handles this).
+- Disabled: no remove button.
+- Pointer target: the remove icon is 16. Its button is padded to at least 24 × 24 (CLAUDE.md minimum) without changing the chip's look. See "Mapping notes".
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Remove button hover and press | None drawn (cursor only, per the reference's description) | The icon turns `fg-primary` on hover and press | Approved |
+| Remove button target size | 16 icon with no padding | A 24 × 24 hit area (`Size-24`) centred on the icon, using negative margin so the chip's size doesn't change | Approved |
+| Disabled | No stroke, no shadow, no remove action | Same | Matches |
+| Leading slot | Off by default | Same | Matches |
+
+---
+
+### NlSegment
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used only by `NlSegmentedButton`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-67, OD-68.
+
+One option in a segmented button: a label with an optional leading icon, or an icon on its own.
+
+#### Anatomy
+
+```
+NlSegment (rounded, horizontal)
+└── content
+    ├── leading NlIcon (optional)
+    └── label (visible, or visually hidden for icon-only)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | unselected, selected | `selected: boolean` (set by the group) |
+| Size | medium, small, xsmall | `size` (set by the group) |
+| Icon only | off, on | `iconOnly?: boolean` (set by the group) |
+| Icon | optional | `icon?: NlIconName` |
+| Label | text | `children` (always required; hidden when icon-only) |
+| Disabled | on or off | `disabled` |
+
+#### Sizes and layout
+
+| Size | Height | Padding (block / inline) | Gap | Radius | Icon | Text style | Icon-only square (padding) |
+|---|---|---|---|---|---|---|---|
+| medium | `Size-40` | `Space-M` / `Space-3XL` | `Space-M` | `Radius-M` | 20 | `Button M` | `Size-36` (`Space-M`) |
+| small | `Size-32` | `Space-XS` / `Space-L` | `Space-XS` | `Radius-S` | 20 | `Button S` | see "Mapping notes" (`Space-XS`) |
+| xsmall | `Size-24` | `Space-none` / `Space-M` | `Space-XS` | `Radius-S` | 16 | `Button S` | `Size-24` (`Space-XS`) |
+
+- Width: the group decides (equal widths filling the group, or hugging for icon-only).
+
+#### Colours
+
+| Selected | State | Background | Label | Icon |
+|---|---|---|---|---|
+| selected | enabled | `bg-primary` | `text-primary` | `fg-secondary`, filled |
+| selected | hover | `bg-secondary` | `text-primary` | `fg-secondary`, filled |
+| selected | pressed | `bg-tertiary` | `text-primary` | `fg-secondary`, filled |
+| selected | disabled | `bg-disabled` | `text-disabled-on_bg` | `fg-disabled-on_bg` |
+| unselected | enabled | none | `text-secondary` | `fg-secondary` |
+| unselected | hover | none | `text-tertiary` | `fg-secondary` |
+| unselected | pressed | none | `text-primary` | `fg-secondary` |
+| unselected | disabled | none | `text-disabled` | `fg-disabled` |
+| any | focus | as above, plus the standard focus ring from CLAUDE.md | | |
+
+- Selected icons use the filled glyph (`NlIcon filled`, §6).
+
+#### States
+
+Enabled, hover, pressed, focus, disabled, each selected and unselected.
+
+#### Behaviour and accessibility
+
+- Each segment is a radio in the group's radio group (see `NlSegmentedButton`): `role="radio"` with `aria-checked`, or a native radio input, visually replaced.
+- Icon-only: the label stays as visually hidden text. A tooltip with the same text is recommended.
+- Disabled: not focusable and skipped by the arrow keys.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Text styles | A 14/24 style (medium) and a 12/24 style (small, xsmall) | `Button M` and `Button S` | Matches |
+| Small icon-only square | 28 (20 icon + `Space-XS` all round). No `Size-28` token | Proposed: keep `Space-XS` padding around a 20 icon, so the size comes from padding (no fixed size token) | **Needs approval** |
+| Unselected hover label | `text-tertiary`, which is darker than `text-secondary` in Light but lighter in Dark | Kept as in the reference | **Needs approval** |
+| Filled icon when selected | Code only, per the reference's description | `NlIcon filled` | Matches §6 |
+| Leading slot gap | A raw 10 gap with a single child | No gap | Matches |
+
+---
+
+### NlHelperText
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-43, OD-69, OD-70.
+
+A short line under a form field: a hint, or a success, warning or error message, with an optional leading icon.
+
+#### Anatomy
+
+```
+NlHelperText (horizontal)
+├── leading NlIcon (optional)
+└── text
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| State | default, success, warning, error, disabled | `tone`, default `default`, also `data-tone` |
+| Show leading icon | on (default) or off | `showIcon?: boolean`, default `true` |
+| Text | text | `children` |
+| Id | for the field to point at | `id` (the field uses it in `aria-describedby`) |
+
+#### Sizes and layout
+
+- Horizontal, gap `Space-M`, items centred vertically. Padding `Space-none`.
+- Icon: `NlIcon` 20.
+- Text style `Body S`. Wraps to more lines when needed; the icon stays aligned to the first line.
+- Width fills the field.
+
+#### Colours
+
+| Tone | Icon | Icon glyph | Text |
+|---|---|---|---|
+| default | `fg-secondary` | `info` | `text-secondary` |
+| success | `fg-success` | `check_circle` | `text-success` |
+| warning | `fg-warning` | `warning` | `text-warning` |
+| error | `fg-error` | `warning` (see "Mapping notes") | `text-error` |
+| disabled | `fg-disabled` | `info` | `text-disabled` |
+
+#### States
+
+The five tones above. Not interactive.
+
+#### Behaviour and accessibility
+
+- The field references it with `aria-describedby`, so a screen reader reads it after the field's name.
+- Error tone: the field also sets `aria-invalid="true"`. When the error first appears it is announced through a polite live region in the field (owned by `NlInputBase`), not by this component.
+- Colour isn't the only signal: the icon shape and the text differ by tone.
+- The icon is decorative.
+
+#### Mapping notes
+
+| Item | Reference | Note | Status |
+|---|---|---|---|
+| Gap | `Space-M` | Same | Matches |
+| Icon glyphs | Default and disabled use an info icon, success a check-circle, warning and error a warning icon | Material Symbols `info`, `check_circle`, `warning`. Error could use `error` (a circle with "!") so it differs from warning in shape | **Needs approval** |
+| Multi-line alignment | Not drawn (single line only) | Icon aligned to the first line | **Needs approval** |
+
+---
+
+### NlRowsPerPage
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Public** (used in the `NlTable` footer)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The table footer control that shows and changes how many rows a page holds, for example "Rows per page: 10".
+
+#### Anatomy
+
+```
+NlRowsPerPage (pill button)
+├── label ("Rows per page")
+├── value ("10")
+└── NlIcon (keyboard_arrow_down)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Value | number | `value: number`, `onValueChange(value)` |
+| Options | list of numbers | `options: number[]`, default `[10, 25, 50, 100]` |
+| Label | text | `label?: string`, default "Rows per page" |
+| Disabled | on or off | `disabled` |
+
+#### Sizes and layout
+
+- Horizontal, gap `Space-M`, padding `Space-XS` (block) / `Space-L` (inline). Items centred.
+- Radius `Radius-Full`. 1px inside border (§4.2).
+- Label text `Body S`. Value text `Label S`. Icon `NlIcon` 24.
+- Height hugs (32 in the reference: 24 icon + padding).
+
+#### Colours
+
+| State | Background | Border | Label | Value | Icon |
+|---|---|---|---|---|---|
+| enabled | `bg-secondary` | `border-subtle` | `text-tertiary` | `text-primary` | `fg-secondary` |
+| hover | `bg-tertiary` | `border-subtle` | `text-tertiary` | `text-primary` | `fg-secondary` |
+| pressed / open | `bg-tertiary` | `border-subtle` | `text-tertiary` | `text-primary` | `fg-secondary` (arrow up when open) |
+| disabled | `bg-disabled` | none | `text-disabled-on_bg` | `text-disabled-on_bg` | `fg-disabled-on_bg` |
+| focus | as the state, plus the standard focus ring from CLAUDE.md | | | | |
+
+#### States
+
+Enabled, hover, pressed / open, focus, disabled. Pressed, open and disabled are added (not in the reference).
+
+#### Behaviour and accessibility
+
+- The trigger only. It doesn't render the options menu. `NlTable` opens an `NlMenu` (`kind="select"`) under it, with one `NlListItem` per option, so the menu is built from the list component.
+- `aria-haspopup="listbox"`, `aria-expanded`. Its name includes the current value: "Rows per page, 10".
+- Choosing an option closes the menu, updates the value and returns focus to the trigger.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| What it opens | Only the trigger is drawn | `NlRowsPerPage` stays the L1 trigger. `NlTable` renders `NlMenu` with `NlListItem` options under it, so `NlTable` contains only molecules and atoms (§7.1) | Approved |
+| Arrow icons | Two 24 icons in the reference (one may be hidden in use) | One `keyboard_arrow_down`, `keyboard_arrow_up` when open | Approved |
+| Pressed and open | Not drawn | `bg-tertiary`, as hover, with the arrow turned up when open | Approved |
+| Disabled | Not drawn | `bg-disabled`, `text-disabled-on_bg`, `fg-disabled-on_bg`, no border | Approved |
+| Variant property name | A generic "Property 1" | Not used | Matches |
+
+---
+
+### NlNavIcon
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used only by `NlNavItem`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-71.
+
+The icon of a side nav section, which changes colour (and fill) when its section is current.
+
+#### Anatomy
+
+```
+NlNavIcon
+└── NlIcon (20)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | unselected, selected | `selected: boolean` (set by `NlNavItem`) |
+| Icon | registry name | `name: NlIconName` |
+
+#### Sizes and layout
+
+- `Size-20`. `NlIcon` at 20. No padding.
+
+#### Colours
+
+| Selected | Icon | Fill |
+|---|---|---|
+| unselected | `fg-secondary` | outlined |
+| selected | `fg-active` | filled (§6) |
+
+#### States
+
+Unselected and selected. Hover and pressed come from `NlNavItem`, which may change the icon's colour through `tone="inherit"`. See `NlNavItem`.
+
+#### Behaviour and accessibility
+
+- Decorative (`aria-hidden`). The nav item's text names the link.
+- In the minimized nav, the item shows only this icon. The item keeps its name as visually hidden text and shows a tooltip (see `NlNavItem`).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Selected fill | Colour change only in the drawing | Filled glyph when selected, as §6 asks for active states | **Needs approval** |
+| Colours | `fg-secondary`, `fg-active` | Same | Matches |
+| Size | 20 | `Size-20` | Matches |
+
+---
+
+### NlPageDots
+
+**Level** Atom L1 · **Base** none · **Depends on** `NlPageDot` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-72.
+
+A row of 3 to 5 dots showing which page or step of a short sequence is current, for example in an onboarding panel or a card carousel.
+
+#### Anatomy
+
+```
+NlPageDots (horizontal row)
+└── NlPageDot × count (one is current)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Count | 3, 4, 5 | `count: 3 \| 4 \| 5` |
+| Current | 1 to count | `current: number` (1-based) |
+| Size | small | No prop: the reference has one size |
+| Accessible text | template | `label?: string`, default "Page {current} of {count}" |
+
+#### Sizes and layout
+
+- Horizontal, gap `Space-XS`, padding `Space-none`, items centred.
+- Width hugs: dots plus gaps (the current dot is wider, see `NlPageDot`).
+
+#### Colours
+
+From `NlPageDot`: `fg-brand` (current), `fg-placeholder` (others).
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- The row has `role="img"` and `aria-label` from `label`, for example "Page 2 of 5". The dots inside are `aria-hidden`.
+- When `current` changes, the change isn't announced on its own. The surrounding content (the new page) is what changes for the user.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Gap | `Space-XS` | Same | Matches |
+| Size property | Only "Small" exists | No size prop | Matches |
+| Interactive dots | Not in the reference | Not interactive. A carousel that needs clickable dots needs a new spec | Open |
+| Count limit | 3 to 5 | Same | Matches |
+
+---
+
+### NlTooltip
+
+**Level** Atom L1 (D15: `NlTextBlock` is L0) · **Base** none · **Depends on** `NlTextBlock` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-73, OD-74.
+
+A short dark label that appears next to an element on hover or focus. The rich form adds a heading and a description.
+
+#### Anatomy
+
+```
+NlTooltip (dark rounded box, floating)
+├── single line: text
+└── rich: NlTextBlock (heading + description, inverse colours)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | single line, rich | Derived: `content` only gives single line; `heading` gives rich. Also `data-type` |
+| Content | text | `content: string` (single line), or `description` (rich) |
+| Heading | text | `heading?: string` (rich only) |
+| Trigger | the element it describes | `children` (one focusable element) |
+| Placement | top (default), bottom, start, end | `placement`, flips when there isn't room |
+| Look | dark only | No prop: the reference has one look |
+
+#### Sizes and layout
+
+| Type | Padding (block / inline) | Content |
+|---|---|---|
+| single line | `Space-M` / `Space-XL` | Text `Caption L`, one line, no wrapping |
+| rich | `Space-L` / `Space-XL` | `NlTextBlock type="headline-small"`: heading `Headline Small-H6`, description `Body M`, gap `Space-XS` |
+
+- Radius `Radius-S`. No border. No shadow.
+- Rich width: hugs the content up to a maximum of `Size-320` (new token, see "Mapping notes"); text wraps inside.
+- Distance from the trigger: `Space-XS`. Keeps `Space-M` from the window edge.
+- Layer: `--nl-z-tooltip` (§4.3).
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Background | `bg-direct` |
+| Single-line text | `text-inverse` |
+| Rich heading and description | `text-inverse` (see "Mapping notes") |
+
+#### States
+
+Hidden, shown. Not interactive itself.
+
+#### Behaviour and accessibility
+
+- Appears on pointer hover (after a short delay) and on keyboard focus of the trigger. Disappears on pointer leave, blur, or Escape (WCAG 1.4.13: dismissible without moving focus).
+- Hovering the tooltip itself keeps it open (1.4.13: hoverable).
+- Single line: `role="tooltip"`, and the trigger gets `aria-describedby`. For icon-only buttons, the tooltip repeats the button's hidden label, so it stays a description and the name comes from the button.
+- Rich: the same, with the heading and description both in the described text. Rich tooltips hold no interactive content.
+- Fade in and out with `--nl-duration-base` (§5: tooltips). Reduced motion: no fade.
+- Touch: no hover, so the information must also be available another way.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Rich text colour | The text block's heading and description are overridden to `text-inverse` | `NlTextBlock tone="inverse"` | Approved |
+| Rich width | Drawn at 375 (a mobile width) | Maximum width from a new primitive `Size-320` (320). Added to DESIGN.md §3.5 and the token JSON | Approved |
+| Show delay | Not in the reference | Proposed: `--nl-duration-base` before showing on hover, none on focus | **Needs approval** |
+| Placement and offsets | Not in the reference | `Space-XS` from the trigger, `Space-M` from the window edge, the same as `NlMenu` | **Needs approval** |
+| Arrow | None in the reference | None | Matches |
+| Look | One look ("black") | No `look` prop | Matches |
+
+---
+
+### NlSegmentedButton
+
+**Level** Molecule (contains `NlSegment`, an L1 atom) · **Base** none · **Depends on** `NlSegment` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-75.
+
+A row of 2 or 3 options where exactly one is selected, for example a view switch (list or grid) or a theme switch (system, light, dark).
+
+#### Anatomy
+
+```
+NlSegmentedButton (track)
+└── NlSegment × 2 or 3 (one selected)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Options | 2 or 3 | `options: { value, label, icon? }[]` (2 or 3 items) |
+| Value | the selected option | `value` / `defaultValue`, `onValueChange(value)` |
+| Size | medium, small, xsmall | `size`, default `medium`, also `data-size` |
+| Icon only | off, on | `iconOnly?: boolean` (every option then needs an `icon`) |
+| Disabled | the whole group | `disabled?: boolean` |
+| Accessible name | text | `aria-label` or `aria-labelledby` (required) |
+
+#### Sizes and layout
+
+| Size | Track padding | Gap between segments | Track radius | Track height |
+|---|---|---|---|---|
+| medium | `Space-XS` | `Space-L` | `Radius-L` | `Size-48` |
+| small | `Space-XS` | `Space-XS` | `Radius-M` | `Size-40` |
+| xsmall | `Space-none` | `Space-none` | `Radius-S` | `Size-24` |
+
+- Labelled: the track fills its container and the segments share the width equally.
+- Icon only: the track hugs its segments.
+- Segment sizes, radius and colours: see `NlSegment`.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Track | `bg-tertiary` |
+| Segments | see `NlSegment` |
+
+#### States
+
+The group can be disabled as a whole (every segment uses its disabled look). Other states belong to the segments.
+
+#### Behaviour and accessibility
+
+- `role="radiogroup"` with a name. Each segment is a radio.
+- Keyboard: one tab stop (the selected segment). Arrow keys move and select, wrapping at the ends. Home and End go to the first and last.
+- Icon only: each segment keeps its label as a hidden name, and shows a tooltip with it.
+- Inside a menu (for example a theme row), the segments act as `menuitemradio` instead, following `NlMenu`'s keyboard.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Show button 1, 2, 3 | Three booleans that hide segments | An `options` array of 2 or 3 | **Needs approval** |
+| Track colour | `bg-tertiary` | Same | Matches |
+| Sizes, padding, gaps, radius | From the reference's description and drawing | Same | Matches |
+| Tooltips and menu behaviour | Code only, per the reference's description | As above | Matches |
+
+---
+
+### NlCheckbox
+
+**Level** Molecule (contains `NlCheckboxControl`, L1) · **Base** none · **Depends on** `NlCheckboxControl`, `NlTextBlock` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-15, OD-41.
+
+A checkbox with its text, for single options in forms, such as "Send a welcome email".
+
+#### Anatomy
+
+```
+NlCheckbox (horizontal, top-aligned)
+├── NlCheckboxControl
+└── NlTextBlock (description only; or visually hidden)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | unselected, selected, indeterminate | `checked` / `defaultChecked`, `indeterminate?` (passed to the control) |
+| Disabled | on or off | `disabled` |
+| Text | text | `children` |
+| Show text | on (default) or off | `hideLabel?: boolean`. Off hides the text visually but keeps it as the checkbox's name |
+| Change | callback | `onChange` |
+| Form | name, value | `name`, `value` (native) |
+
+#### Sizes and layout
+
+- Horizontal, gap `Space-L`, items aligned to the top, padding `Space-none`.
+- Text: `NlTextBlock` with only a description, in `Body L` (see "Mapping notes" for which type gives it).
+- Width fills its container. The text wraps.
+
+#### Colours
+
+| State | Text |
+|---|---|
+| Enabled | `text-secondary` |
+| Disabled | `text-disabled` (through `NlTextBlock disabled`) |
+
+The control's colours are in `NlCheckboxControl`.
+
+#### States
+
+Enabled, hover, pressed, focus and disabled for each type. Hover and pressed are the control's. The focus ring is the control's own ring, not one around the whole row.
+
+#### Behaviour and accessibility
+
+- The control is a native checkbox. The whole row is a `<label>`, so clicking the text toggles it.
+- The text names the checkbox. With `hideLabel`, the text is visually hidden but stays the name.
+- Keyboard: Tab to the control, Space toggles.
+- A screen reader hears the text, "checkbox" and its state.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Text style | A text block set to its largest display type with only the description shown, which is a roundabout way to get `Body L` | Options: (a) do the same, `NlTextBlock type="display-large"` with only a description; (b) add `type="body"` to `NlTextBlock`: no heading style, description in `Body L`. I recommend (b), because the code then says what it means | **Needs approval** |
+| Disabled text | `text-disabled` | `NlTextBlock disabled` (proposed in `NlTextBlock`) | **Needs approval** |
+| Focus ring | Around the control only | Same | Matches |
+| Checkbox position | Always on the left | Same | Matches |
+
+---
+
+### NlNotificationButton
+
+**Level** Molecule or L1, see "Mapping notes" · **Base** none · **Depends on** `NlIcon`, `NlCountBadge` (and `NlButton`, see "Mapping notes") · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-40.
+
+The bell button in the page header, with a dot or a number when there are unread notifications.
+
+#### Anatomy
+
+```
+NlNotificationButton (40 circle button)
+├── NlIcon (notifications, 20, centred)
+└── NlCountBadge (optional; dot or number)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Notification | none, dot, number | Derived: `count` of 0 gives none; `count` with `showCount={false}` gives the dot; otherwise the number |
+| Count | number | `count?: number` (shows "99+" over 99) |
+| Disabled | on or off | `disabled` (native) |
+| Label | text | `label?: string`, default "Notifications" |
+| Expanded | when it opens a panel | `aria-expanded` |
+
+#### Sizes and layout
+
+- `Size-40` circle, `Radius-Full`, padding `Space-M`, icon `NlIcon` 20 centred.
+- Dot: `NlCountBadge` small dot, its top edge `Space-M` below the button's top and its right edge `Space-M` in from the right.
+- Number: `NlCountBadge` small double, starting at the button's vertical centre line and growing to the right. Its top edge sits `Space-XS` above the button's top.
+- The badge isn't clipped by the circle.
+
+#### Colours
+
+| State | Circle | Icon |
+|---|---|---|
+| Default | `bg-action-secondary` | `fg-action` |
+| Hover | `bg-action-secondary_hovered` | `fg-hovered` |
+| Pressed | `bg-action-secondary_pressed` | `fg-pressed` |
+| Disabled | `bg-disabled` | `fg-disabled-on_bg` (no badge) |
+| Focus | standard focus ring from CLAUDE.md | |
+
+Badge: `NlCountBadge tone="error"`.
+
+#### States
+
+Default, hover, pressed, focus, disabled. A disabled button shows no badge.
+
+#### Behaviour and accessibility
+
+- A native button. Its name includes the count: "Notifications, 3 unread" (or "Notifications, new" for the dot). The badge itself is `aria-hidden`.
+- When the count changes while the page is open, the page header announces it politely (not this component).
+- Enter or Space opens what it controls.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Built from `NlButton` | The inventory planned it on `NlButton` (D12: one public button). But its look, a filled light-brand circle (`bg-action-secondary`), matches no `NlButton` variant: secondary has a 2px border and no fill, tertiary has no fill | Options: (a) its own native button (L1: `NlIcon` + `NlCountBadge`), an exception to D12 for this one component; (b) a new `NlButton` look, for example `variant="soft"` (filled `bg-action-secondary`, no border), and build this on it (molecule). I recommend (b): other places may want a soft button too | **Designer to decide** |
+| Badge positions | From the reference's description: dot 8 from the top and right; number from the centre line, 4 above the top | `Space-M` and `Space-XS`, as above | Matches |
+| Disabled hides the badge | As in the reference | Same | Matches |
+
+---
+
+### NlInputBase
+
+**Level** Molecule (contains `NlHelperText`, L1) · **Base** – (this is the base) · **Depends on** `NlHelperText`, `NlIcon` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-44, OD-76, OD-77, OD-78.
+
+The shared field: an outlined box with a floating label, optional leading and trailing items, and a helper line below. `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect` and `NlDateField` map onto it.
+
+#### Anatomy
+
+```
+NlInputBase (vertical)
+├── field box (outlined, rounded)
+│   ├── floating label (sits on the top border when the field is focused or filled)
+│   └── content (horizontal)
+│       ├── leading slot (optional; icon, prefix)
+│       ├── value area (input, or chips, or a selected value)
+│       └── trailing slot (optional; icon, button, suffix)
+└── NlHelperText (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large`, also `data-size` |
+| Type | default, select | `type` (select makes the whole box a trigger with a chevron). Payment and mobile-number types are left out |
+| Error | off, on | `error?: boolean` (the reference's "destructive") |
+| Label | text | `label: string` (required) |
+| Placeholder | text | `placeholder?: string` |
+| Prefix, suffix | short text | `prefix?`, `suffix?` |
+| Leading, trailing | slots | `leading?: ReactNode`, `trailing?: ReactNode` |
+| Helper text | text | `helperText?: string` |
+| Disabled | on or off | `disabled` |
+| Required | on or off | `required` |
+
+#### Sizes and layout
+
+| Size | Box height | Content padding (block / inline) | Gap | Icon size |
+|---|---|---|---|---|
+| large | `Size-48` | `Space-L` / `Space-XL` | `Space-M` | 24 |
+| small | `Size-40` | `Space-M` / `Space-XL` | `Space-M` | 20 |
+
+- Box: radius `Radius-M`, 1px inside border (§4.2).
+- Value and placeholder text: `Body L`.
+- Floating label: `Label S`, on a `bg-primary` patch with `Space-XS` inline padding, centred on the top border, starting at the content's inline padding.
+- Gap box → helper: `Space-M`. Helper text indented by `Space-XL` to line up with the value.
+- Width fills its container.
+
+#### Colours
+
+| State | Box fill | Border | Label | Value / placeholder |
+|---|---|---|---|---|
+| Enabled (empty) | none | `border-default` | in the value position, as placeholder | `text-placeholder` |
+| Hover | `bg-secondary` | `border-default` | as above | as above |
+| Focused / typing | none | `border-default`, plus the focus ring (`border-focused`) | floating, `text-tertiary` | `text-primary` |
+| Complete (filled, not focused) | none | `border-strong` | floating, `text-tertiary` | `text-primary` |
+| Error (any state) | as the state | `border-error`; focus ring `border-error` | as the state | as the state |
+| Disabled | none | `border-disabled` | `text-disabled` | `text-disabled` |
+
+- Icons in the slots: `fg-secondary`; disabled `fg-disabled`.
+- Helper text: `NlHelperText`, tone `error` when `error` is on, `disabled` when disabled.
+
+#### States
+
+Enabled, hover, focused, typing, complete, disabled, each with and without error.
+
+#### Behaviour and accessibility
+
+- A native `<input>` with a real `<label>` (the floating label), so the name never depends on the placeholder.
+- `aria-describedby` points to the helper text. `aria-invalid="true"` with an error. `required` adds `aria-required` and a visible marker in the label (see "Mapping notes").
+- Error text appearing is announced through a polite live region in the helper area.
+- The focus ring shows whenever the input has focus (`:focus`, not only keyboard focus), as is usual for text inputs.
+- The label floats with `--nl-duration-fast`. Reduced motion: it jumps.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. The `placeholder` hint then shows only while focused and empty | **Needs approval** |
+| Focus ring | A 2px ring outside, inset 1 (equivalent to the standard ring) | Standard ring from CLAUDE.md, shown on any focus | Matches |
+| Error focus ring | `border-error` | Same | **Needs approval** (CLAUDE.md fixes the ring colour to `border-focused`) |
+| Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | Proposed: `NlHelperText` default tone uses `text-tertiary` everywhere (update `NlHelperText`) | **Needs approval** |
+| Helper icon | Hidden for default, shown for error in text areas but not in single-line fields | Hidden for default, shown for success, warning and error everywhere | **Needs approval** |
+| Floating label colour | `text-tertiary` in fields, `text-primary` in text areas | `text-tertiary` everywhere | **Needs approval** |
+| Required marker | Not in the reference | Not specified | Open |
+| Types left out | Payment and mobile number | Left out | Matches |
+
+---
+
+### NlTextField
+
+**Level** Molecule (mapped, takes its base's level) · **Base** `NlInputBase` · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-79.
+
+A single-line text input, for names, codes, amounts and search terms that need a label.
+
+#### Anatomy
+
+As `NlInputBase`, with `type="default"`.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large` |
+| Trailing icon | off, on | `trailingIcon?: NlIconName` (decorative) |
+| Error | off, on | `error?: boolean` |
+| Input type | text, email, number, tel, url | `inputType`, default `text` |
+| Value | text | `value` / `defaultValue`, `onChange` |
+| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `ref` |
+
+#### Sizes, layout, colours and states
+
+As `NlInputBase`. The trailing icon, when shown, is `fg-secondary` (`fg-disabled` when disabled).
+
+#### Behaviour and accessibility
+
+As `NlInputBase`. A decorative trailing icon is `aria-hidden`. If an icon needs to do something, it is an `NlButton` in the trailing slot, not an icon.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Types | Default, mobile number, payment | Default only (D13 leaves out the others) | Matches |
+| Trailing icon | An info icon in the reference | Any registry icon, decorative | **Needs approval** |
+
+---
+
+### NlPasswordField
+
+**Level** Molecule (mapped; also contains `NlButton`, L1) · **Base** `NlInputBase` · **Depends on** `NlButton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-31, OD-80, OD-81.
+
+A password input with a show/hide toggle.
+
+#### Anatomy
+
+As `NlInputBase`, with a show/hide `NlButton` in the trailing slot.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large` |
+| Show password | off (default), on | `showPassword` / `defaultShowPassword`, `onShowPasswordChange` |
+| Error | off, on | `error?: boolean` |
+| Everything else | as `NlInputBase` | `label`, `helperText`, `disabled`, `required`, `autoComplete`, `ref` |
+
+#### Sizes and layout
+
+As `NlInputBase`. Toggle: `NlButton variant="tertiary" icon="only-icon" contentTone="secondary"`, icon `visibility_off` (hidden) or `visibility` (shown). See "Mapping notes" for its size.
+
+#### Colours and states
+
+As `NlInputBase`. The toggle has the button's own states. Disabled field: the toggle is disabled too.
+
+#### Behaviour and accessibility
+
+- The input switches between `type="password"` and `type="text"`. The caret position and value stay.
+- The toggle's name is "Show password" or "Hide password", with `aria-pressed`. It is a separate tab stop after the input.
+- `autoComplete` defaults to `current-password`. Pass `new-password` when creating one.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Toggle | A bare eye icon (24 on large, 20 on small) | An `NlButton` icon-only, tertiary, `contentTone="secondary"`. The smallest icon-only button is 32 square with a 20 icon, so the large field's eye becomes 20, not 24. To keep 24, the field would use the small button (36 square) and the box stays 48 tall | **Needs approval** |
+| Icons | Eye and crossed eye from the reference's icon set | Material Symbols `visibility`, `visibility_off` | **Needs approval** |
+
+---
+
+### NlSearchField
+
+**Level** Molecule (mapped; also contains `NlButton`, L1) · **Base** `NlInputBase` · **Depends on** `NlButton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-31, OD-82, OD-83, OD-84.
+
+A search input with a search icon and a clear button. Used in table toolbars and menu headers.
+
+#### Anatomy
+
+As `NlInputBase`: a leading search icon, the value, and a clear `NlButton` in the trailing slot once there is text. No floating label and no helper text.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large` |
+| Value | text | `value` / `defaultValue`, `onChange` |
+| Submit | callback | `onSearch(value)` (Enter) |
+| Clear | callback | `onClear()` |
+| Accessible name | text | `aria-label` (required; there is no visible label), default "Search" |
+| Placeholder | text | `placeholder`, default "Search" |
+
+#### Sizes and layout
+
+As `NlInputBase`. Leading icon `search` (24 large, 20 small) in `fg-secondary`. Clear button: `NlButton` tertiary icon-only, `contentTone="secondary"`, icon `cancel`.
+
+#### Colours by state
+
+| State | Border | Value | Clear button |
+|---|---|---|---|
+| Enabled (empty) | `border-default` | placeholder `text-placeholder` | hidden |
+| Focus (empty) | `border-default` + focus ring | – | hidden |
+| Typing | `border-default` + focus ring | `text-primary` | shown |
+| Complete (filled, not focused) | `border-strong` | `text-primary` | shown |
+
+#### States
+
+Enabled, focus, typing, complete. See "Mapping notes" for hover and disabled.
+
+#### Behaviour and accessibility
+
+- `<input type="search">` inside `role="search"` when it searches the page or a table.
+- Enter calls `onSearch`. Escape clears the text (and calls `onClear`) when there is text.
+- The clear button's name is "Clear search". After clearing, focus returns to the input.
+- Results that update while typing are announced by the results region ("12 results"), not by this field.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Hover and disabled | Not drawn for search | As `NlInputBase` (hover `bg-secondary`; disabled colours) | **Needs approval** |
+| Clear button | A bare cancel icon | `NlButton` icon-only, tertiary, `contentTone="secondary"` (same size note as `NlPasswordField`) | **Needs approval** |
+| No visible label | As in the reference | `aria-label` required | Matches |
+| Icons | Search and cancel from the reference's icon set | Material Symbols `search`, `cancel` | **Needs approval** |
+
+---
+
+### NlTextAreaBase
+
+**Level** Molecule (contains `NlHelperText`, L1) · **Base** – (this is the base) · **Depends on** `NlHelperText` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-85, OD-86, OD-87.
+
+The multi-line version of the field box. `NlTextArea` maps onto it.
+
+#### Anatomy
+
+```
+NlTextAreaBase (vertical)
+├── field box (outlined, rounded)
+│   ├── floating label
+│   └── content (the text area)
+└── NlHelperText (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Error | off, on | `error?: boolean` (the reference's "destructive") |
+| Label | text | `label` (required) |
+| Placeholder | text | `placeholder?` |
+| Helper text | text | `helperText?` |
+| Rows | number | `rows`, default 4 |
+
+#### Sizes and layout
+
+- Box: radius `Radius-M`, 1px inside border (§4.2), padding `Space-XL` all round.
+- Height: `rows` lines of `Body L` plus padding. Four rows give the reference's 128.
+- Floating label, helper gap and helper indent: as `NlInputBase`.
+- Width fills its container.
+
+#### Colours
+
+As `NlInputBase` (enabled, hover, focused/typing, complete, error, disabled).
+
+#### States
+
+As `NlInputBase`.
+
+#### Behaviour and accessibility
+
+- A native `<textarea>` with a real `<label>`, `aria-describedby` to the helper, `aria-invalid` with an error.
+- Resizable vertically only (see "Mapping notes").
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Height | Fixed 128 (no `Size-128` token) | From `rows` (default 4) | **Needs approval** |
+| Resize | Not in the reference | Vertical resize allowed, no horizontal | **Needs approval** |
+| Floating label colour | `text-primary` here, `text-tertiary` in single-line fields | `text-tertiary`, as `NlInputBase` | **Needs approval** |
+| Type name | "Distructive" (spelling) | `error` | Matches |
+
+---
+
+### NlTextArea
+
+**Level** Molecule (mapped) · **Base** `NlTextAreaBase` · **Depends on** – · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-88, OD-89.
+
+A multi-line text input, for notes, descriptions and messages.
+
+#### Anatomy
+
+As `NlTextAreaBase`.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Error | off, on | `error?: boolean` |
+| Rows | number | `rows`, default 4 |
+| Maximum length | number | `maxLength?` (see "Mapping notes") |
+| Value | text | `value` / `defaultValue`, `onChange` |
+| Everything else | as `NlTextAreaBase` | `label`, `placeholder`, `helperText`, `disabled`, `required`, `ref` |
+
+#### Sizes, layout, colours and states
+
+As `NlTextAreaBase`. States: default, hover, focused, typing, complete, disabled, each with and without error.
+
+#### Behaviour and accessibility
+
+As `NlTextAreaBase`. Enter adds a new line, it never submits a form.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Complete state value colour | `text-placeholder` (a drawing slip: the entered text looks like a placeholder) | `text-primary` | **Needs approval** |
+| Character count | Not in the reference | With `maxLength`, a count ("120 / 500") at the end of the helper line, `Body S` `text-tertiary`, announced politely near the limit | **Needs approval** |
+
+---
+
+### NlCalendar
+
+**Level** Molecule (contains `NlCalendarDay` L0, `NlButton` L1, `NlLabel` L1) · **Base** none · **Depends on** `NlCalendarDay`, `NlButton`, `NlLabel` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-90.
+
+A month grid for picking one date or a date range. Used inside `NlDateField`'s menu and on its own.
+
+#### Anatomy
+
+```
+NlCalendar (horizontal; one month, or two for a range)
+└── month (vertical)
+    ├── header: previous NlButton · month and year · next NlButton
+    ├── weekday row: NlLabel × 7
+    └── weeks: 6 rows × 7 NlCalendarDay
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | single, range | `mode: 'single' \| 'range'`, also `data-mode` |
+| Value | a date, or a start and end | `value` / `defaultValue`, `onValueChange` |
+| Month shown | a month | `month` / `defaultMonth`, `onMonthChange` |
+| Limits | earliest and latest dates | `minDate?`, `maxDate?` |
+| Disabled dates | a test | `isDateDisabled?(date)` |
+| Week start | Monday | `weekStartsOn`, default Monday (1) |
+| Locale | for names | `locale`, default the app's |
+
+#### Sizes and layout
+
+- Padding `Space-L`. Range: two months side by side, `Space-2XL` apart.
+- Month: vertical, gap `Space-S` between header, weekday row and weeks.
+- Header: height `Size-40`. Month and year centred in `Title S`. Previous and next: `NlButton variant="tertiary" size="small" icon="only-icon" contentTone="secondary"` with `chevron_left` and `chevron_right`. In a range, the left month has only "previous" and the right month only "next". A same-size empty space keeps the title centred.
+- Weekday row: 7 cells of `Size-40`, each an `NlLabel size="small"` with the short day name, centred.
+- Weeks: always 6 rows of 7 `NlCalendarDay` (`Size-40` each). Single: days of other months show as "outside". Range: days of other months are left empty.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Background | `bg-primary` |
+| Month title | `text-primary` |
+| Weekday names | see "Mapping notes" |
+| Days | see `NlCalendarDay` |
+
+#### States
+
+From the parts. While choosing the end of a range, hovering a day previews the range (range-middle look up to the hovered day).
+
+#### Behaviour and accessibility
+
+- The days form a `role="grid"` labelled with the month and year, with weekday column headers (`columnheader`, full day names as their accessible text).
+- Keyboard (one tab stop in the grid, roving focus):
+  - Arrow keys move by a day or a week, crossing into the next or previous month.
+  - Home and End go to the start and end of the week.
+  - Page Up and Page Down go to the previous and next month. With Shift, the previous and next year.
+  - Enter or Space selects. In range mode the first choice sets the start, the second the end.
+- Previous and next buttons: named "Previous month" and "Next month".
+- The month and year title is a polite live region, so changing month is announced.
+- Disabled dates are announced as unavailable and can't be selected, but stay reachable by arrow keys.
+- No locale formatting during render (CLAUDE.md, §7.4): dates are formatted with a stable, injected formatter so server and client output match.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Background | Raw white fills on the month, header and rows | `bg-primary` | **Needs approval** |
+| Weekday names colour | `text-secondary` per the reference's description, but `NlLabel` is `text-tertiary` | `NlLabel` as it is (`text-tertiary`). Otherwise `NlLabel` needs a tone option | **Needs approval** |
+| Previous and next icon colour | Icon secondary (from the description) | `contentTone="secondary"` | Matches |
+| Keyboard and range preview | From the reference's description (code only) | As above | Matches |
+| Six weeks per month | As in the reference | Same, so the height doesn't jump between months | Matches |
+| Gaps and padding | `Space-L`, `Space-2XL`, `Space-S` | Same | Matches |
+
+---
+
+### NlStep
+
+**Level** Molecule (contains `NlLabel`, L1) · **Base** none · **Depends on** `NlIcon`, `NlLabel` · **Internal** (used only by `NlStepper`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-94, OD-95, OD-96.
+
+One step in a stepper: a numbered box, a label under it, and a line to the next step.
+
+#### Anatomy
+
+```
+NlStep (vertical, centred, fixed column)
+├── box (number, or a tick when done)
+├── NlLabel (step name)
+└── line (to the next step; off for the last step)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| State | done, current, upcoming | `state`, also `data-state` |
+| Number | number | `number: number` |
+| Label | text | `children` |
+| Line | on, off (last step) | `last?: boolean` |
+| Go back | done steps can be buttons | `onSelect?()` (done steps only) |
+
+#### Sizes and layout
+
+- Column width `Space-10XL` (80). Vertical, items centred, gap `Space-M` between box and label.
+- Box: `Size-36`, `Radius-S`, 2px inside border (§4.2). Content centred: number in `Title M`, or `NlIcon check` 20.
+- Label: `NlLabel size="medium"`, centred, wrapping inside the column.
+- Line: 2px (§4.2), from the box's right edge to the next box's left edge, vertically centred on the box. Its length comes from the stepper's spacing (see `NlStepper`).
+
+#### Colours
+
+| State | Box fill | Box border | Number / tick | Label | Line |
+|---|---|---|---|---|---|
+| done | `bg-success_secondary` | `border-success` | tick `fg-success` | `text-primary` | `border-success` |
+| current | `bg-active` | `border-active` | `text-action` | `text-action` | `border-active` |
+| upcoming | `bg-secondary` | `border-default` | `text-secondary` | `text-secondary` | `border-default` |
+
+- Focus (done steps that are buttons): the standard ring from CLAUDE.md around the box.
+
+#### States
+
+Done, current, upcoming. Done steps that go back also have hover and focus (see "Mapping notes").
+
+#### Behaviour and accessibility
+
+- Steps are list items in an ordered list (`NlStepper`). Current has `aria-current="step"`.
+- Each step's accessible text includes its state: "Step 2 of 4, Details, current" / "completed" / "not started".
+- Done steps with `onSelect` are buttons ("Go back to step 1, Basics"). Others aren't focusable.
+- The line is decorative.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Label colour per state | `NlLabel` with its colour overridden (primary, action, secondary). `NlLabel` is fixed to `text-tertiary` and can't be restyled from outside | Proposed: add a `tone` prop to `NlLabel` (tertiary default, primary, secondary, action). The calendar's weekday names need the same (OD-50) | **Needs approval** |
+| Column width | `Space-10XL` used as a width | Same token. It's a spacing token used for a size; no `Size-80` exists | **Needs approval** |
+| Line length | Raw 124 for steps 80 apart | Set by the stepper's layout, not a number (see `NlStepper`) | **Needs approval** |
+| Hover on done steps | Not drawn | Proposed: box fill `bg-success_secondary` stays; label underlined | **Needs approval** |
+| Box, number, colours | As in the table | Same | Matches |
+
+---
+
+### NlListItemBase
+
+**Level** Molecule (contains `NlLabel`, L1) · **Base** – (this is the base) · **Depends on** `NlLabel`, `NlTextBlock`, `NlDivider` · **Internal**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-14, OD-15, OD-97, OD-119.
+
+The shared list row: leading item, title and description, trailing item, and a divider (plain) or a card (filled). Every list item maps onto it.
+
+#### Anatomy
+
+```
+NlListItemBase (vertical)
+├── content (horizontal)
+│   ├── leading slot (optional: icon, avatar, checkbox, radio)
+│   ├── text column (vertical)
+│   │   ├── top label (optional, NlLabel)
+│   │   ├── title row: NlTextBlock heading + extra icon slot (optional)
+│   │   └── body slot (optional; default NlTextBlock description)
+│   └── trailing slot (optional: caption, chevron, switch, checkbox, radio)
+└── NlDivider (plain appearance only, optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Appearance | plain (rows with dividers), filled (separate cards) | `appearance`, default `plain`, also `data-appearance` |
+| Size | large, small | `size`, default `large` |
+| Density | default, compact | `density`, default `default` |
+| Title, description | text | `title`, `description?` |
+| Top label | optional | `topLabel?: string` |
+| Leading, trailing, extra icon, body | slots | `leading?`, `trailing?`, `extraIcon?`, `body?` |
+| Divider | on (default) or off (plain only) | `divider?: boolean` |
+| Selected, disabled | set by the mapped item | `selected?`, `disabled?` |
+
+#### Sizes and layout
+
+| Part | Plain | Filled |
+|---|---|---|
+| Padding (default density) | `Space-XL` top and sides; bottom `Space-none` with a divider, `Space-XL` without | `Space-XL` all round |
+| Padding (compact) | `Space-M` top and sides; bottom as above with `Space-M` | `Space-M` all round |
+| Gap content → divider | `Space-XL` (compact `Space-M`) | – |
+| Card | – | `Radius-L`, 1px inside border (§4.2); cards `Space-L` apart (set by the list) |
+
+- Content: horizontal, gap `Space-L`, items centred vertically.
+- Text column: gap `Space-XS`. Title row: gap `Space-M`.
+- Trailing slot: gap `Space-S`.
+- Text styles: large = `NlTextBlock type="headline-small"` (title `Headline Small-H6`, description `Body M`); small = `type="label"` (title `Label M`, description `Body S`) (OD-14).
+- Leading avatars are 40, icons 24. Trailing icons 24.
+
+#### Colours
+
+| State | Plain row fill | Filled card fill | Filled card border |
+|---|---|---|---|
+| default | none | `bg-primary` | `border-subtle` |
+| hover | `bg-secondary` | `bg-secondary` | `border-subtle` |
+| selected | `bg-active` | `bg-primary` | `border-active` |
+| selected + hover | `bg-active-hover` | `bg-secondary` | `border-active` |
+| disabled | none | `bg-primary` | `border-disabled` |
+
+| Part | Enabled | Disabled |
+|---|---|---|
+| Title | `text-primary` | see "Mapping notes" |
+| Description | `text-secondary` | `text-disabled` |
+| Leading and trailing icons | `fg-primary` (leading), `fg-secondary` (trailing) | `fg-disabled` |
+| Divider | `border-default` | `border-disabled` |
+
+- Focus: the standard ring from CLAUDE.md around the whole row (or card, following its corners).
+
+#### States
+
+Default, hover, selected, selected + hover, focus, disabled. The mapped items decide which apply.
+
+#### Behaviour and accessibility
+
+The role comes from the mapped item (link, button, option, checkbox, radio, switch). The base renders the layout only.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Plain and filled | Two separate bases | One base with `appearance` | Matches inventory |
+| Disabled title | `text-disabled-on_bg`, while the description is `text-disabled` | Both `text-disabled` through `NlTextBlock disabled` (OD-15) | **Needs approval** |
+| Small-row text | Overrides on the text block | `NlTextBlock type="label"` (OD-14) | **Needs approval** |
+| Pressed | Not drawn | Proposed: same as hover | **Needs approval** |
+| Focus ring | Code only: around the row, following card corners | Same | Matches |
+| Card gap | `Space-L`, from the reference's description | Set by the parent list, not the item | Matches |
+
+---
+
+### NlListItem
+
+**Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlAvatar`, `NlListCaption`, `NlIcon` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-98, OD-99.
+
+The standard list row: something to open, choose or read, such as a member, a reward or a menu option.
+
+#### Anatomy
+
+As `NlListItemBase`, with these slots filled:
+- leading: none, an `NlIcon` (24), or an `NlAvatar` (medium, 40)
+- trailing: an optional `NlListCaption` and an optional chevron (`chevron_right`, 24)
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Appearance | plain, filled | `appearance`, default `plain` |
+| Size | large, small | `size`, default `large` |
+| Density | default, compact | `density` |
+| Leading | none, icon, avatar | `icon?: NlIconName` or `avatar?: NlAvatarProps` |
+| Description | on or off | `description?` |
+| Caption | on or off | `caption?: string` (`NlListCaption size="small" weight="heavy"`) |
+| Chevron | on or off | `chevron?: boolean`. Always on for filled |
+| Selected | on or off | `selected?` |
+| Disabled | on or off | `disabled?` |
+| Element | link, button, option, or static | `as`, `href`, `onClick`; inside `NlMenu`, the menu sets the role |
+
+#### Sizes, layout and colours
+
+As `NlListItemBase`. The leading icon is `fg-primary`; the chevron is `fg-secondary`; the caption is `text-tertiary` (disabled: see `NlListCaption`).
+
+#### States
+
+Default, hover, selected, selected + hover, focus, disabled.
+
+#### Behaviour and accessibility
+
+- As a link or button: the whole row is the control. Its name is the title; the description and caption are read after it (`aria-describedby`).
+- Inside `NlMenu`: `role="menuitem"` (action menus) or `role="option"` with `aria-selected` (select menus).
+- Selected (outside menus): `aria-current` when it marks the current page or item.
+- A static row (no action) has no hover and no focus.
+- The chevron and leading icon are decorative.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Leading accessories | None, icon, flag, payment, avatar | None, icon, avatar (flag and payment left out) | Matches |
+| Trailing accessories | None or caption, plus chevron | Same | Matches |
+| Chevron on filled rows | Always shown, per the reference's description | Same | Matches |
+| Static rows | Not described | No hover or focus when there's no action | **Needs approval** |
+| Chevron icon | From the reference's icon set | Material Symbols `chevron_right` | **Needs approval** |
+
+---
+
+### NlCheckboxListItem
+
+**Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlCheckboxControl` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-100, OD-101, OD-102.
+
+A list row with a checkbox, for picking several items from a list (for example in a multi-select menu or a filter).
+
+#### Anatomy
+
+As `NlListItemBase`, with `NlCheckboxControl` in the leading slot (default) or the trailing slot.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Checked | unchecked, checked, indeterminate | `checked` / `defaultChecked`, `indeterminate?`, `onCheckedChange` |
+| Checkbox side | leading (default), trailing | `controlSide` |
+| Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
+| Description | on or off | `description?` |
+| Disabled | on or off | `disabled?` |
+| Value | for forms and menus | `value` |
+
+#### Sizes, layout and colours
+
+As `NlListItemBase`. Checked rows use the "selected" row colours (`bg-active`, or the card's `border-active` when filled). The checkbox has its own colours.
+
+#### States
+
+Default, hover, checked, checked + hover, focus, disabled. The checkbox follows the row: hovering the row shows the checkbox's hover look.
+
+#### Behaviour and accessibility
+
+- The whole row toggles. It is a `<label>` around a native checkbox, or `role="option"` with `aria-selected` inside a multi-select listbox.
+- Keyboard: Space toggles. The focus ring goes around the row, not the box.
+- Indeterminate is for a "select all" row above a group.
+- A group of these takes a group label (`role="group"` with a name), for example "Tiers".
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Types | Default, country, payment | Default only | Matches |
+| Indeterminate | Code only (select all), per the reference's description | Same | Matches |
+| Focus ring on the row | Code only, per the reference's description | Same | Matches |
+| Checkbox hover follows the row | Not drawn | As above | **Needs approval** |
+
+---
+
+### NlRadioListItem
+
+**Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlRadio` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-100, OD-101, OD-102.
+
+A list row with a radio, for picking exactly one item from a short list.
+
+#### Anatomy
+
+As `NlListItemBase`, with `NlRadio` in the leading slot (default) or the trailing slot.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Selected | set by the group | `value`; the group holds the selected value |
+| Radio side | leading (default), trailing | `controlSide` |
+| Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
+| Description | on or off | `description?` |
+| Disabled | on or off | `disabled?` |
+
+#### Sizes, layout and colours
+
+As `NlListItemBase`. The selected row uses the "selected" row colours. The radio has its own colours.
+
+#### States
+
+Default, hover, selected, selected + hover, focus, disabled.
+
+#### Behaviour and accessibility
+
+- Rows sit in a radio group (`role="radiogroup"` with a name) that owns the value.
+- Keyboard: one tab stop; arrow keys move and select (native radio behaviour). Focus ring around the row.
+- Inside a single-select `NlMenu`, rows become `role="option"` instead.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Types | Default, country, payment | Default only | Matches |
+| Group wrapper | Not a separate component in the reference | The group is a plain `role="radiogroup"` container, written in place by the caller, or provided as `NlRadioListItem.Group` | **Needs approval** |
+| Focus ring on the row | As for checkbox rows | Same | Matches |
+
+---
+
+### NlSwitchListItem
+
+**Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlSwitch`, `NlIcon` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-100, OD-101, OD-102.
+
+A settings row with a switch at the end, such as "Email updates".
+
+#### Anatomy
+
+As `NlListItemBase`: optional leading `NlIcon` (24), title, description, and `NlSwitch size="small"` in the trailing slot.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| On | off, on | `checked` / `defaultChecked`, `onCheckedChange` |
+| Leading | none, icon | `icon?: NlIconName` |
+| Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
+| Description | on or off | `description?` |
+| Disabled | on or off | `disabled?` |
+
+#### Sizes and layout
+
+As `NlListItemBase`. The switch is the small size.
+
+#### Colours
+
+| State | Row fill (plain) |
+|---|---|
+| off or on, default | none |
+| off or on, hover | `bg-secondary` |
+| disabled | none |
+
+Unlike checkbox and radio rows, an "on" row isn't highlighted: the switch shows the state. Text and icon colours are as `NlListItemBase`.
+
+#### States
+
+Default, hover, focus, disabled, each off and on.
+
+#### Behaviour and accessibility
+
+- The whole row toggles. The row is the switch's label: one control, `role="switch"`, named by the title, described by the description.
+- Keyboard: Space toggles. Focus ring around the row.
+- A screen reader hears "Email updates, switch, on".
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| No highlight when on | As in the reference | Same | Matches |
+| Switch size | Small | Same | Matches |
+| Focus on the row | Not drawn | Standard ring around the row, as for checkbox rows | **Needs approval** |
+
+---
+
+### NlAccordion
+
+**Level** Molecule (contains `NlLabel`, `NlBadge`, L1) · **Base** `NlAccordionBase` (internal, holds both appearances) · **Depends on** `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-14, OD-103a, OD-103b, OD-103c, OD-103d, OD-103e.
+
+A section with a header that shows or hides its content, for FAQs, settings groups and long forms.
+
+#### Anatomy
+
+```
+NlAccordion (vertical)
+├── header (button, horizontal)
+│   ├── leading slot (optional; icon)
+│   ├── title (+ optional help icon, optional NlBadge)
+│   └── trailing chevron
+├── body slot (shown when open; default NlTextBlock description)
+└── NlDivider (bare appearance only)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Appearance | frame (card), bare (divider below) | `appearance`, default `frame`, also `data-appearance` |
+| Size | large, small | `size`, default `large` |
+| Open | closed, open | `open` / `defaultOpen`, `onOpenChange` |
+| Title | text | `title` |
+| Leading | optional | `icon?: NlIconName` |
+| Help icon | optional | `help?: ReactNode` (shows an info icon with a tooltip) |
+| Badge | optional | `badge?: ReactNode` (`NlBadge`) |
+| Body | slot | `children` |
+| Heading level | for the title | `headingAs`, default `h3` |
+
+#### Sizes and layout
+
+| Part | Frame | Bare |
+|---|---|---|
+| Container | Padding `Space-XL` all round; `Radius-L`; 1px inside border (§4.2) | Padding `Space-XL` top and sides, `Space-none` bottom; divider below, `Space-XL` after the content |
+| Header → body gap | `Space-L` | `Space-L` |
+
+- Header: horizontal, gap `Space-L`, items centred. Leading and trailing icons 24. Title row gap `Space-M`.
+- Title: large = `NlTextBlock type="headline-small"`; small = see "Mapping notes".
+- Body: `NlTextBlock` description (`Body M`) by default, or any content.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Frame fill / border | `bg-primary` / `border-subtle` |
+| Title | `text-primary` |
+| Body text | `text-secondary` |
+| Leading and chevron icons | `fg-secondary` |
+| Divider (bare) | `border-default` |
+
+#### States
+
+Closed, open, header hover, header focus, disabled (see "Mapping notes" for hover and disabled).
+
+#### Behaviour and accessibility
+
+- The header is a `<button aria-expanded aria-controls>` inside a heading element (`headingAs`). The body is a region labelled by the header.
+- Enter or Space toggles. The chevron turns (down when closed, up when open) with `--nl-duration-fast`; none under reduced motion.
+- The body opens and closes with a height transition, `--nl-duration-base`; none under reduced motion.
+- Several accordions in a group act independently. An "only one open" group isn't in the reference.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Open and closed | Not drawn as states; the body is shown or hidden with a boolean | `open` prop with the behaviour above | **Needs approval** |
+| Small title | `NlLabel` (medium) recoloured to `text-primary` | Proposed: `NlTextBlock type="label"` (OD-14), whose title is `Label M` `text-primary`, so nothing is overridden | **Needs approval** |
+| Header hover and focus | Not drawn | Proposed: header text and icons unchanged, frame fill `bg-secondary` on hover; standard focus ring around the header | **Needs approval** |
+| Disabled | Not drawn | Not specified | Open |
+| Chevron | `keyboard_arrow_down` | Material Symbols `keyboard_arrow_down` / `keyboard_arrow_up` | **Needs approval** |
+| Two bases | Frame and bare are separate bases | One base with `appearance` | Matches inventory |
+
+---
+
+### NlBanner
+
+**Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlIcon`, `NlButton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-93, OD-106, OD-107, OD-108, OD-109.
+
+An inline message in the page about something the user should know, such as a sync warning or a successful import, with an optional action and close.
+
+#### Anatomy
+
+```
+NlBanner (rounded, tinted, horizontal)
+├── leading NlIcon (optional)
+├── text column
+│   ├── title (optional)
+│   ├── description (optional)
+│   └── action NlButton (optional)
+└── close NlButton (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | info, success, error, warning, neutral | `tone`, default `info`, also `data-tone` |
+| Title | optional | `title?` |
+| Description | optional | `children` |
+| Leading icon | on (default) or off | `showIcon?` |
+| Action | optional | `action?: { label, onClick }` |
+| Close | optional | `onClose?()` (shows the close button) |
+
+#### Sizes and layout
+
+- Padding `Space-XL` all round, `Radius-M`. Width fills its container.
+- Content: horizontal, gap `Space-M`, aligned to the top.
+- Leading icon 20. Close button: `NlButton` icon-only, tertiary, `contentTone` matching the tone, icon `close`.
+- Text column: gap `Space-XS`. Title `Headline Small-H6`, description `Body M`, then the action button.
+
+#### Colours
+
+| Tone | Background | Icon | Title | Description | Action and close (`contentTone`) |
+|---|---|---|---|---|---|
+| info | `bg-info_secondary` | `fg-info` (`info`) | `text-info` | `text-info` | info |
+| success | `bg-success_secondary` | `fg-success` (`check_circle`) | `text-success` | `text-success` | success |
+| error | `bg-error_secondary` | `fg-error` (`error`) | `text-error` | `text-error` | error |
+| warning | `bg-warning_secondary` | `fg-warning` (`warning`) | `text-warning` | `text-warning` | warning |
+| neutral | `bg-neutral` | `fg-secondary` (`info`) | `text-primary` | `text-secondary` | primary (close: secondary) |
+
+#### States
+
+None of its own. The buttons have theirs.
+
+#### Behaviour and accessibility
+
+- Static banners present on load: no role, just content in the page.
+- Banners added after load: `role="status"` (info, success, neutral) or `role="alert"` (error, warning), so they are announced.
+- The close button's name is "Dismiss" (or "Dismiss {title}"). After closing, focus moves to a sensible place set by the caller.
+- Colour isn't the only signal: the icon and the text carry the meaning.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Title and description | Plain text inside the banner, coloured by tone | Plain text in the banner, not `NlTextBlock` (whose colours are fixed). A short title and paragraph aren't a reuse of the text block's layout | **Needs approval** |
+| Action button size | A small tertiary button squeezed to 24 tall (no padding) | No `NlButton` is 24 tall, and `variant="link"` is normal tone only, so it can't take the banner's colour. Proposed: `NlButton variant="tertiary" size="xsmall" contentTone`, 36 tall, so the banner grows slightly | **Needs approval** |
+| Close icon | A bare 24 icon | `NlButton` icon-only, tertiary, `contentTone`, so it's a real button | **Needs approval** |
+| Error icon | The warning triangle, the same as warning | `error` (a circle with "!"), so error and warning differ in shape | **Needs approval** |
+| Live announcement | Not in the reference | Roles as above | **Needs approval** |
+
+---
+
+### NlSnackbar
+
+**Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlIcon`, `NlButton`, `NlTextBlock` (see "Mapping notes") · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-91, OD-92, OD-93, OD-104, OD-105, OD-110, OD-111.
+
+A short message that appears at the edge of the screen after an action ("Reward saved"), with an optional action ("Undo") and close.
+
+#### Anatomy
+
+```
+NlSnackbar (rounded)
+├── leading NlIcon (optional)
+├── message
+└── trailing: action NlButton (optional) + close NlButton (optional)
+```
+
+Two-line layout: icon and message on top, the buttons on a row of their own below, aligned to the end.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| State | neutral, success, warning, error | `tone`, default `neutral`, also `data-tone` |
+| Lines | single, two lines | Derived from the message length, or `layout?: 'single' \| 'stacked'` |
+| Message | text | `children` |
+| Leading icon | on (default) or off | `showIcon?` |
+| Action | optional | `action?: { label, onClick }` |
+| Close | on (default) or off | `onClose?()` |
+| Duration | auto-dismiss time | See "Mapping notes" |
+
+#### Sizes and layout
+
+- `Radius-M`. Single line: height `Size-48`, horizontal, gap `Space-M`, items centred.
+  - Leading part: padding `Space-XL` at the start, icon 24, gap `Space-M`, message.
+  - Trailing part: action `NlButton variant="tertiary" size="small"`, close `NlButton variant="tertiary" size="medium" icon="only-icon"` (`close`), padding `Space-XS` at the end.
+- Two lines: vertical, gap `Space-M`. Top row padding `Space-XL` (top and sides). Button row aligned to the end, padding `Space-XS` (end and bottom).
+- Message text `Body M`.
+- Position: see "Mapping notes". Layer `--nl-z-snackbar` (§4.3).
+
+#### Colours
+
+| Tone | Background | Icon | Message | Buttons (`contentTone`) |
+|---|---|---|---|---|
+| neutral | `bg-direct` | `fg-inverse` (`info`) | `text-inverse` | inverse |
+| success | `bg-success_secondary` | `fg-success` (`check_circle`) | `text-primary` | primary |
+| warning | `bg-warning_secondary` | `fg-warning` (`warning`) | `text-primary` | primary |
+| error | `bg-error_secondary` | `fg-error` (`error`) | `text-primary` | primary |
+
+#### States
+
+Hidden, entering, shown, leaving. The buttons have their own states.
+
+#### Behaviour and accessibility
+
+- Rendered into a live region that exists from page load: `role="status"` (polite) for neutral and success; `role="alert"` for warning and error.
+- Doesn't take focus. The action is reachable by keyboard: a shortcut (F6) or the next Tab moves into the snackbar region (see "Mapping notes").
+- Snackbars with an action don't auto-dismiss (WCAG 2.2.1); they stay until closed or acted on. Without an action they dismiss after the duration, pausing while hovered or focused.
+- Enters and leaves with a fade and slide, `--nl-duration-base`; reduced motion: fade only.
+- One at a time. A new one replaces the old.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Message colour on status tints | `text-primary` (the text block's description recoloured from `text-secondary`) | `NlTextBlock`'s description is fixed to `text-secondary` (or `text-inverse` with `tone="inverse"`). Proposed: the message is plain text in the snackbar, not `NlTextBlock`, so the inventory dependency on `NlTextBlock` goes | **Needs approval** |
+| Status snackbars on light tints | Success, warning and error use the light tinted backgrounds, not dark ones | Kept as in the reference | Matches |
+| Position and width | Not in the reference (drawn at a 343 mobile width) | Proposed: bottom-centre of the content panel, `Space-3XL` from the bottom. Width hugs the content. `Size-320` is too narrow for a message plus two buttons on one line, so the maximum width needs a new size token (for example 560) | **Designer to decide** |
+| Auto-dismiss duration | Not in the reference | Needs a motion/time token that doesn't exist (for example 6 s) | **Designer to decide** |
+| Keyboard access to the action | Not in the reference | As above | **Needs approval** |
+| Error icon | The warning triangle | `error`, as `NlBanner` | **Needs approval** |
+
+---
+
+### NlButtonDock
+
+**Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlButton`, `NlTextBlock` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The row of actions at the bottom of a form, dialog or side sheet: an optional note above, a tertiary button at the start, and secondary and primary buttons at the end.
+
+#### Anatomy
+
+```
+NlButtonDock (vertical)
+├── accessory slot (optional; default NlTextBlock description)
+└── button row (horizontal, space between)
+    ├── tertiary NlButton (optional, start)
+    └── end group: secondary NlButton (optional) + primary NlButton (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Sticky | off, on | `sticky?: boolean` (look only; the container pins it) |
+| Primary | optional | `primary?: NlButtonProps` |
+| Secondary | optional | `secondary?: NlButtonProps` |
+| Tertiary | optional | `tertiary?: NlButtonProps` |
+| Accessory | optional | `accessory?: ReactNode` |
+
+#### Sizes and layout
+
+- Padding: `Space-XL` top, `Space-3XL` sides, `Space-6XL` bottom. Gap accessory → buttons `Space-3XL`.
+- Button row: horizontal, tertiary at the start, the end group at the end. Gap between buttons `Space-XL`.
+- All buttons `size="small"`, each as wide as its label.
+- Width fills its container.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Background | `bg-primary` |
+| Accessory text | `text-secondary` (`NlTextBlock` description) |
+| Sticky shadow | `--nl-shadow-sticky` |
+
+#### States
+
+Sticky or not. The buttons have their own states.
+
+#### Behaviour and accessibility
+
+- DOM order matches visual order: tertiary, secondary, primary. Tab follows it.
+- When sticky, the scrolling content above has bottom padding so nothing is hidden behind the dock.
+- Primary is the form's submit button when used in a form (`type="submit"`).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Accessory text type | A text block set to a heading type with only the description shown (`Body M`) | `NlTextBlock` description at `headline-large`/`headline-small` gives `Body M`; any type with `Body M` works | Matches |
+| Sticky shadow | A "sticky" shadow style | `--nl-shadow-sticky` | Matches |
+| Bottom padding | `Space-6XL` (40) | Same | Matches |
+| Button sizes | Small, sized to their labels | Same | Matches |
+
+---
+
+### NlEmptyState
+
+**Level** Molecule (contains `NlIconContainer`, `NlButton`, L1) · **Base** none · **Depends on** `NlIconContainer`, `NlTextBlock`, `NlButton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-112.
+
+What a list, table or page shows when there is nothing in it yet, with an optional action ("Add reward").
+
+#### Anatomy
+
+```
+NlEmptyState (vertical, centred)
+├── top group (vertical, centred)
+│   ├── icon slot (default NlIconContainer)
+│   └── NlTextBlock (heading + description, centred)
+└── action (optional NlButton, or a group of buttons)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | small, medium | `size`, default `medium`, also `data-size` |
+| Icon | registry name, or a custom slot | `icon?: NlIconName` or `iconSlot?: ReactNode` |
+| Heading | text | `heading` |
+| Description | text | `description?` |
+| Action | optional | `action?: ReactNode` (usually one `NlButton variant="primary" size="small"`) |
+
+#### Sizes and layout
+
+| Size | Icon | Text type |
+|---|---|---|
+| small | `NlIconContainer size={48}` | `NlTextBlock type="headline-small" align="center"` |
+| medium | `NlIconContainer size={64}` | `NlTextBlock type="headline-medium" align="center"` |
+
+- Vertical, items centred, gap `Space-3XL` between the top group and the action.
+- Top group: gap `Space-XL` between icon and text.
+- Width fills its container; text centred.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Icon container | `tone="primary"` (`bg-icons`, `fg-primary`) |
+| Heading / description | `text-primary` / `text-secondary` (from `NlTextBlock`) |
+
+#### States
+
+None of its own.
+
+#### Behaviour and accessibility
+
+- The heading uses `headingAs` matching the page outline (usually `h2` or `h3`).
+- The icon is decorative.
+- When an empty state replaces content after a filter or search, the result region announces it ("No results").
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Show button group | A boolean | `action` slot (absent = no button) | Matches |
+| Icon slot | A slot holding a 48 or 64 icon container | `icon` (container built in) or `iconSlot` for anything else | **Needs approval** |
+| Gaps and sizes | `Space-3XL`, `Space-XL`, 48 / 64 | Same | Matches |
+
+---
+
+### NlStatCard
+
+**Level** Molecule (contains `NlLabel`, L1) · **Base** none · **Depends on** `NlLabel` (see "Mapping notes") · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-113.
+
+A summary number with its label, for dashboards and report headers ("Total points: 806,400").
+
+#### Anatomy
+
+```
+NlStatCard (rounded tinted card)
+├── NlLabel (what the number is)
+└── value (the number)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Label | text | `label` |
+| Value | a formatted string | `value: string` (the page formats it, so output matches on server and client) |
+| Element | for grouping | `as`, default `div` |
+
+#### Sizes and layout
+
+- Padding `Space-2XL` all round, `Radius-L`. Vertical, gap `Space-none` between label and value. Content centred vertically.
+- Label: `NlLabel size="medium"`.
+- Value: text style `Data M` (tabular figures, §3.4). See "Mapping notes".
+- Width fills its grid column. Cards in a row sit `Space-4XL` apart (set by the page).
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Card | `bg-active` |
+| Label | `text-secondary` (see "Mapping notes") |
+| Value | `text-primary` |
+
+#### States
+
+None. Not interactive.
+
+#### Behaviour and accessibility
+
+- The label and value are read together ("Total points, 806,400"). Use a description list (`<dl>`) when several cards form a group.
+- No live announcement when values change; dashboards that refresh announce through their own region.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Value text style | `Headline Large-H4` (24) inside a text block | `Data M` (24, tabular figures), the style §3.4 made for stat cards. The card renders the value itself, so it no longer depends on `NlTextBlock` | **Needs approval** |
+| Label colour | `NlLabel` recoloured to `text-secondary` (the reference's own note: the default label is too light on `bg-active` in Dark) | Needs `NlLabel tone="secondary"` (OD-50) | **Needs approval** |
+| Card gap and width | From the reference's description | Set by the page | Matches |
+| Card colour, padding, radius | As in the table | Same | Matches |
+
+---
+
+### NlFileUpload
+
+**Level** Molecule (contains `NlIconContainer`, `NlButton`, L1) · **Base** none · **Depends on** `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-114, OD-122, OD-123, OD-124.
+
+A drop zone for one file, which also shows the upload's progress, success or error.
+
+#### Anatomy
+
+```
+NlFileUpload (dashed card)
+├── NlIconContainer
+├── NlTextBlock (file name or prompt + details)
+├── NlProgressBar (uploading only)
+└── NlButton (choose, cancel, delete or retry)
+```
+
+Large: everything stacked and centred. Small: icon, text and button in a row, with the progress bar below while uploading.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large`, also `data-size` |
+| State | enabled (empty), uploading, complete, error | `state`, also `data-state` |
+| Progress | 0 to 100 | `progress?: number` (uploading) |
+| Accept | file types | `accept?: string` |
+| Max size | for the hint text | `maxSizeLabel?: string` |
+| Text | prompt, file name, error | `title`, `description` |
+| Events | choose, cancel, delete, retry | `onFileSelect(file)`, `onCancel()`, `onDelete()`, `onRetry()` |
+| Disabled | on or off | `disabled?` |
+
+#### Sizes and layout
+
+- Card: padding `Space-XL`, `Radius-L`, 1px **dashed** inside border (§4.2), gap `Space-XL`.
+- Large: vertical, centred. Icon `NlIconContainer size={48}`. Text `NlTextBlock type="headline-small" align="center"`. Progress bar fills the width.
+- Small: horizontal, items centred. Icon `NlIconContainer size={40}`, text `align="start"` filling the space, button at the end. While uploading, the progress bar sits below the row.
+- Button: `NlButton variant="tertiary" size="xsmall" icon="leading"`.
+
+#### Colours by state
+
+| State | Border | Icon container | Button |
+|---|---|---|---|
+| enabled | `border-default` | `tone="info"`, `cloud_upload` | normal tone: "Choose file" |
+| uploading | `border-active` | `tone="info"`, `cloud_upload` | normal tone: "Cancel" |
+| complete | `border-strong` | `tone="success"`, `check` | `tone="destructive"`: "Delete" (`delete`) |
+| error | `border-error` | `tone="error"`, `error` | normal tone: "Try again" |
+
+Card background `bg-primary`. Title `text-primary`, description `text-secondary`.
+
+#### States
+
+Enabled, uploading, complete, error. Drag-over and disabled: see "Mapping notes".
+
+#### Behaviour and accessibility
+
+- A native `<input type="file">`, visually hidden, triggered by the button and by clicking the card. The card is also a drop target.
+- The input has a label ("Upload a file") and `aria-describedby` pointing at the hint (types, size).
+- Uploading: the progress bar has a name ("Uploading reward-image.png"). Completion and errors are announced through a polite live region in the component.
+- After delete or cancel, focus returns to the choose button.
+- One file at a time.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Dashed border | 1px dashed with raw 4/4 dashes | Tailwind's `border-dashed` with the 1px width (§4.2). The browser draws the dash length, so it won't be exactly 4/4 | **Needs approval** |
+| Delete button | Tertiary with the label and icon in error colour | `NlButton tone="destructive" variant="tertiary"` (approved destructive tertiary) | Matches |
+| Drag-over look | Code only, not drawn | Proposed: border `border-active`, card `bg-active` | **Needs approval** |
+| Disabled | Code only, not drawn | Proposed: border `border-disabled`, icon `tone="disabled"`, button disabled | **Needs approval** |
+| Icons | Upload, check, delete, warning from the reference's icon set | Material Symbols `cloud_upload`, `check`, `delete`, `error` | **Needs approval** |
+| Button labels | Reference copy | Generic labels as above | Matches |
+
+---
+
+### NlDialog
+
+**Level** Molecule (all parts are atoms) · **Base** none · **Depends on** `NlTextBlock`, `NlButton`, `NlOverlay` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-16, OD-41, OD-115, OD-121, OD-125.
+
+A modal window for a short task or a confirmation ("Delete this reward?").
+
+#### Anatomy
+
+```
+NlOverlay
+└── NlDialog (rounded panel, centred)
+    ├── header: NlTextBlock title + close NlButton
+    ├── body slot (default NlTextBlock description)
+    └── footer: optional start NlButton · end group (secondary + primary NlButton)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Open | closed, open | `open`, `onOpenChange` |
+| Title | text | `title` |
+| Body | slot | `children` |
+| Close button | on (default) or off | `hideClose?` |
+| Buttons | optional | `primaryAction?`, `secondaryAction?`, `startAction?` (each `NlButtonProps`) |
+| Destructive | confirmation of a destructive action | Pass `tone="destructive"` on the primary action |
+| Width | see "Mapping notes" | `size?` |
+
+#### Sizes and layout
+
+- Panel: `Radius-L`, `bg-primary`. Padding `Space-XL` top, `Space-3XL` sides.
+- Header: horizontal, gap `Space-3XL`; title `NlTextBlock type="headline-large"` filling the space; close button `NlButton variant="tertiary" size="medium" icon="only-icon" contentTone="secondary"` (`close`).
+- Header → body gap `Space-XL`. Body → footer gap `Space-3XL`.
+- Body: `NlTextBlock` description in `Body L` (see `NlCheckbox` and OD-41 for the type that gives `Body L`), or any content.
+- Footer: padding `Space-3XL` sides and bottom. Horizontal: start action, then the end group (gap `Space-L`). Buttons `size="medium"`.
+- Centred in the viewport, layer `--nl-z-modal` (§4.3), above `NlOverlay`.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Panel | `bg-primary` |
+| Title / body | `text-primary` / `text-secondary` |
+
+#### States
+
+Closed, open. The buttons have their own states.
+
+#### Behaviour and accessibility
+
+- `role="dialog"` with `aria-modal="true"`, labelled by the title (`aria-labelledby`) and described by the body text (`aria-describedby`).
+- On open, focus goes to the first focusable element in the body, or to the primary action for confirmations (to the secondary/cancel action when the primary is destructive). Focus is trapped inside. On close, focus returns to the element that opened it.
+- Escape and the close button close it. A click on the overlay closes it unless the dialog is a required confirmation (`dismissible={false}`).
+- The page behind is inert and doesn't scroll.
+- Opens with a fade and slight scale, `--nl-duration-slow` (§5: dialogs); reduced motion: fade only.
+- For a destructive confirmation, use `role="alertdialog"`.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Width | Raw 696 | No size token is near 696. Proposed: two widths, small and large, from new size tokens (for example 480 and 720), added to §3.5 | **Designer to decide** |
+| Footer | A row of medium buttons, not the button dock | A plain row of `NlButton`s in the dialog, not `NlButtonDock` (which has small buttons and different padding) | Matches |
+| Shadow | None in the reference | None (the overlay separates it) | Matches |
+| Start action | A hidden "leading button" option | `startAction` | Matches |
+| Heading level | Not in the reference | Title as `h2` (`headingAs`) | **Needs approval** |
+| Open motion | Not in the reference | As above | **Needs approval** |
+
+---
+
+### NlPagination
+
+**Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlPaginationItem`, `NlButton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-126, OD-127, OD-128.
+
+Page numbers with previous and next buttons, used in the table footer.
+
+#### Anatomy
+
+```
+NlPagination (nav, horizontal)
+├── previous NlButton (icon only)
+├── pages: NlPaginationItem × n (with "…" gaps)
+└── next NlButton (icon only)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Page | current page (1-based) | `page`, `onPageChange(page)` |
+| Page count | number | `pageCount` |
+| Visible pages | how many numbers before "…" is used | `siblingCount?`, default 1 (see "Mapping notes") |
+| Accessible name | text | `aria-label`, default "Pagination" |
+
+The reference's three variants (limited, more than limit, only one) are results of `pageCount`, not props.
+
+#### Sizes and layout
+
+- Horizontal, gap `Space-M`, items centred.
+- Previous and next: `NlButton variant="secondary" size="xsmall" icon="only-icon"` (`Size-32` square), icons `chevron_left` and `chevron_right`.
+- Pages: `NlPaginationItem`, gap `Space-M`.
+- Ellipsis rule: always show the first and last page, the current page and `siblingCount` pages either side; replace any other run with one "…" item.
+
+#### Colours
+
+From the parts. Previous is disabled on page 1, next on the last page (`NlButton` disabled look).
+
+#### States
+
+From the parts.
+
+#### Behaviour and accessibility
+
+- A `<nav aria-label="Pagination">` containing a list.
+- Previous and next are named "Previous page" and "Next page". Disabled at the ends (native `disabled`, not focusable).
+- The current page has `aria-current="page"`. Changing page moves focus to the new current page button, or keeps it on previous/next if that was used.
+- With one page, previous and next are both disabled and one page item shows.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Disabled previous at page 1 | Drawn as an enabled button with a grey icon | The real disabled state | **Needs approval** |
+| Number of visible pages | Four numbers, or three with "…" | `siblingCount` 1 (first, last, current ±1) | **Needs approval** |
+| Previous and next style | Secondary xsmall icon-only | Same | Matches |
+| Chevron icons | From the reference's icon set | Material Symbols `chevron_left`, `chevron_right` | **Needs approval** |
+
+---
+
+### NlTableHeaderCell
+
+**Level** Molecule (contains `NlCheckboxControl`, `NlLabel`, L1) · **Base** none · **Depends on** `NlCheckboxControl`, `NlLabel`, `NlIcon` · **Public** (used by `NlTable`; exported for custom tables)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-116, OD-129.
+
+A column header: the column name, with optional sort and filter controls, or a "select all" checkbox.
+
+#### Anatomy
+
+```
+NlTableHeaderCell (th, horizontal)
+├── NlCheckboxControl (optional; select all)
+├── title button (or plain title)
+│   ├── NlLabel (column name)
+│   └── sort NlIcon (optional)
+└── filter button with NlIcon (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Background | white, grey | `appearance: 'plain' \| 'grey'`, default `plain` |
+| Sort | none, unsorted, ascending, descending | `sort?: 'none' \| 'ascending' \| 'descending'`, `sortable?`, `onSortChange` |
+| Filter | none, default, open, applied | `filter?: 'available' \| 'open' \| 'applied'`, `onFilterClick` |
+| Narrow | off, on | `narrow?: boolean` (checkbox and row-action columns) |
+| Select all | optional | `selectAll?: { checked, indeterminate, onChange }` |
+| Title | text | `children` |
+| Show title | on (default) or off | `hideTitle?` (visually hidden, still the column's name) |
+
+#### Sizes and layout
+
+- Height `Size-40`. Padding `Space-3XL` inline (narrow: `Space-XL`), `Space-none` block. Gap `Space-L`. Items centred.
+- Title: `NlLabel size="medium"`. Sort icon 20, `Space-XS` after the title; title and sort icon are one button.
+- Filter icon 24 (`keyboard_arrow_down`, `keyboard_arrow_up` when open), its own button.
+
+#### Colours
+
+| Part | State | Token |
+|---|---|---|
+| Cell | plain / grey | none / `bg-tertiary` |
+| Title | – | `text-tertiary` (`NlLabel`) |
+| Sort icon | unsorted (`unfold_more`) | `fg-secondary` |
+| Sort icon | ascending (`arrow_upward`), descending (`arrow_downward`) | `fg-action` |
+| Filter icon | available | `fg-secondary` |
+| Filter icon | open, applied | `fg-action` |
+| Sort and filter icons | hover / pressed | `fg-hovered` / `fg-pressed` |
+| Buttons | focus | standard ring from CLAUDE.md |
+
+#### States
+
+Sort none, unsorted, ascending, descending; filter available, open, applied; icon hover, pressed and focus. The cell itself has no hover.
+
+#### Behaviour and accessibility
+
+- A `<th scope="col">` with `aria-sort` (`ascending`, `descending`, or `none` when sortable).
+- The sort button's name is the column name; clicking cycles none → ascending → descending → none. The new order is announced politely ("Sorted by points, ascending").
+- The filter button's name is "Filter {column}", with `aria-haspopup="dialog"` and `aria-expanded`. It opens `NlTableColumnFilter`.
+- Select all: the checkbox is named "Select all rows" and shows indeterminate when some rows are selected.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Sort and filter buttons | Bare icons (and title) that act as buttons, no button chrome | Native buttons styled as plain text and icon, inside the cell. They aren't `NlButton` because they have no button look. Treated as part of the cell, not a separate button (D12 is about button components) | **Needs approval** |
+| Hover and pressed on icons | Code only, per the reference's description | `fg-hovered` / `fg-pressed` | Matches |
+| Background names | White and grey | `plain` and `grey` | Matches |
+| Icons | From the reference's icon set | Material Symbols `unfold_more`, `arrow_upward`, `arrow_downward`, `keyboard_arrow_down`, `keyboard_arrow_up` | **Needs approval** |
+
+---
+
+### NlTableCell
+
+**Level** Molecule (contains `NlCheckboxControl`, `NlBadge`, `NlButton`, L1) · **Base** none · **Depends on** `NlCheckboxControl`, `NlBadge`, `NlButton` · **Public** (used by `NlTable`; exported for custom tables)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-117.
+
+One body cell: text, a badge, a link, a row-actions button, or a checkbox.
+
+#### Anatomy
+
+```
+NlTableCell (td, horizontal)
+├── leading slot (optional; NlCheckboxControl for row selection)
+└── content (text, NlBadge, link NlButton, or row-actions NlButton)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | default (text), badge, link, row actions, checkbox | `type`, default `default`, also `data-type` |
+| Narrow | off, on | `narrow?: boolean` |
+| Content | text or node | `children` |
+| Leading checkbox | optional | `select?: { checked, onChange, label }` |
+| Row actions | for `type="row-actions"` | `onActionsClick`, `actionsExpanded` |
+
+#### Sizes and layout
+
+- Height `Size-40`. Padding `Space-3XL` inline (narrow: `Space-XL`), `Space-none` block. Gap `Space-M`. Items centred.
+- Default: text `Body M`, single line, truncated with an ellipsis (full text in a tooltip).
+- Badge: `NlBadge size="small"`.
+- Link: `NlButton variant="link" size="xsmall"` with no inline padding (see "Mapping notes").
+- Row actions: `NlButton variant="tertiary" size="xsmall" icon="only-icon" contentTone="secondary"` (`more_vert`, `Size-32`), in a narrow column `Size-64` wide.
+- Checkbox: only an `NlCheckboxControl` (a per-row value, for example a permission).
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Text | `text-secondary` |
+| Cell background | none (the row sets hover and selected colours) |
+
+#### States
+
+From the parts. Row hover and selected belong to the row (`NlTable`).
+
+#### Behaviour and accessibility
+
+- A `<td>`. The first meaningful cell in a row can be a row header (`<th scope="row">`) so screen readers name the row.
+- Row-select checkbox: named "Select {row name}". Value checkbox: named "{row}, {column}".
+- Row actions: named "Actions for {row name}", `aria-haspopup="menu"`, `aria-expanded`. Its column stays fixed when the table scrolls sideways (shadow `--nl-shadow-sticky-end`, layer `--nl-z-sticky`).
+- Truncated text keeps its full text available (tooltip or `title`).
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Link padding | A tertiary xsmall button with its side padding set to 0, so the text lines up with the header | `NlButton variant="link"` with no inline padding. Needs the link variant to have 0 inline padding (it currently follows tertiary padding) | **Needs approval** |
+| Dedicated row-actions button | A dedicated "row actions" button (enabled, hovered, pressed, open) | `NlButton` icon-only (D12), open = pressed look (OD-57) | Matches D12 |
+| Row-actions column width | 64 (32 + 16 either side) | `Size-64` | Matches |
+| Sticky row-actions column | Code only; the shadow isn't drawn | `--nl-shadow-sticky-end`, `--nl-z-sticky` | Matches §4.1, §4.3 |
+| Checkbox type | Unselected, selected, disabled (no indeterminate) | Same | Matches |
+| Text colour | `text-secondary` | Same | Matches |
+
+---
+
+### NlNavItem
+
+**Level** Molecule (contains `NlNavIcon`, L1) · **Base** none · **Depends on** `NlNavIcon`, `NlNavSubItem`, `NlIcon` · **Public** (used by `NlSideNav`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-118, OD-130, OD-131.
+
+A section in the side nav: an icon and name, which either links to a page or expands to show its pages.
+
+#### Anatomy
+
+```
+NlNavItem (vertical)
+├── row (link or button, rounded)
+│   ├── NlNavIcon
+│   ├── label (full nav only)
+│   └── chevron NlIcon (when the section has pages; full nav only)
+└── pages slot (when expanded): NlNavSubItem × n
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | full, minimized | `minimized?: boolean` (set by `NlSideNav`) |
+| State | default, selected (this section's page is open), current (the section itself is the current page) | `current?: 'section' \| 'page'` |
+| Expanded | closed, open (sections with pages) | `expanded` / `defaultExpanded`, `onExpandedChange` |
+| Icon | registry name | `icon: NlIconName` |
+| Label | text | `children` |
+| Pages | optional | `pages?: { label, href, current? }[]` |
+| Link | for sections without pages | `as`, `href` |
+
+#### Sizes and layout
+
+- Row: padding `Space-M` block, `Space-L` inline; `Radius-M`; gap `Space-L`; items centred; width fills the nav.
+- Icon `NlNavIcon` (20). Label `Label M`, single line, truncated. Chevron 20 (`keyboard_arrow_down`, `keyboard_arrow_up` when expanded).
+- Minimized: only the icon, the row is a square-ish button (padding as above).
+- Pages: below the row, `Space-XS` apart and `Space-XS` below the row.
+- Tree line position for `NlNavSubItem`: the icon's centre, `Space-L` + half of `Size-20` from the row's start (resolves OD-30a).
+
+#### Colours
+
+| State | Row fill | Label | Icon and chevron |
+|---|---|---|---|
+| default | `bg-secondary` | `text-secondary` | `fg-secondary` |
+| hover | `bg-tertiary` | `text-secondary` | `fg-secondary` |
+| pressed | `bg-neutral` | `text-secondary` | `fg-secondary` |
+| current = page (this row is the open page) | `bg-primary` | `text-action` | `fg-active` (icon filled) |
+| current = section (a page inside is open) | `bg-secondary` | `text-action` | `fg-active` (icon filled) |
+| focus | standard ring from CLAUDE.md | | |
+
+#### States
+
+Default, hover, pressed, focus, current (page or section), expanded.
+
+#### Behaviour and accessibility
+
+- Without pages: a link with `aria-current="page"` when current.
+- With pages: a `<button aria-expanded aria-controls>` that shows the pages, which are links. A section containing the current page opens by default.
+- Minimized: the label stays as visually hidden text and shows in a tooltip; a section with pages opens its pages in a menu to the right (see "Mapping notes").
+- Keyboard: Tab through rows and open pages; Enter or Space toggles a section.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| State names | "Selected - BG" (white row) and "Selected" (grey row) | `current="page"` and `current="section"` | **Needs approval** |
+| Pages gap | `Space-XS` in one variant, `Space-M` in another | `Space-XS` (as the reference's description says) | **Needs approval** |
+| Minimized with pages | Not drawn | Pages in an `NlMenu` (`kind="navigation"`) to the right of the nav | **Needs approval** |
+| Tree line position | Raw 21–22 from the start | `Space-L` + half `Size-20` = the icon centre | Resolves OD-30a |
+| Pressed `bg-neutral` | Same as `bg-tertiary` in Light today | Kept; hover and pressed look the same in Light (K1) | Known issue K1 |
+
+---
+
+### NlSideNavUser
+
+**Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlAvatar` · **Public** (used by `NlSideNav`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-119, OD-120, OD-132.
+
+The signed-in user at the bottom of the side nav, which opens the account menu.
+
+#### Anatomy
+
+As `NlListItemBase` (small): `NlAvatar` (40), name, email, and a chevron. Minimized: the avatar only.
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | expanded, minimized | `minimized?: boolean` (set by `NlSideNav`) |
+| Open | closed, open | `open`, set by the menu it opens |
+| Name, email | text | `name`, `email` |
+| Avatar | as `NlAvatar` | `avatar` |
+| Menu | the account menu | `menu: ReactNode` (an `NlMenu`), or `onClick` |
+
+#### Sizes and layout
+
+- Expanded: width fills the nav column. Padding `Space-L` block, `Space-XL` inline; `Radius-M`. Avatar 40, gap `Space-L`. Name `Label M`, email `Body M`. Chevron 24 (`keyboard_arrow_down`, `keyboard_arrow_up` while open).
+- Minimized: the avatar alone, padding `Space-L` block.
+- The account menu opens above it (expanded), as wide as the user area, `Space-XS` away; or to the right of the nav, along its bottom (minimized).
+
+#### Colours
+
+| State | Fill |
+|---|---|
+| default | none |
+| hover, open | `bg-tertiary` |
+| pressed | `bg-neutral` |
+| focus | standard ring from CLAUDE.md |
+
+Name `text-primary`, email `text-secondary`, chevron `fg-secondary`.
+
+#### States
+
+Default, hover, pressed, open, focus. A user row with no menu has no hover and no side padding.
+
+#### Behaviour and accessibility
+
+- A `<button aria-haspopup="menu" aria-expanded>`, named "{name}, account menu".
+- Minimized: the avatar is the button; the name is a visually hidden label and a tooltip.
+- Escape in the menu closes it and returns focus here.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Padding | `Space-L` block, `Space-XL` inline, and `Radius-M`, unlike list rows | `NlListItemBase` needs a third density (for example `density="nav"`) with this padding and radius; a mapped component can't change its base's padding | **Needs approval** |
+| Email text style | `Body M`, while small list rows use `Body S` (OD-14) | Needs `NlTextBlock` to allow `Label M` + `Body M`, or a second small type | **Needs approval** |
+| Avatar size | Set to the xsmall variant but drawn 40 | `NlAvatar size="medium"` (40) | **Needs approval** |
+| Standalone | Placed into the side nav where needed (reference decision) | Same: `NlSideNav` takes it in a slot or prop | Matches |
+
+---
+
+### NlSelect
+
+**Level** Organism (contains `NlListItem`, a molecule) · **Base** `NlInputBase` (`type="select"`) · **Depends on** `NlInputBase`, `NlMenu`, `NlListItem` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-139, OD-140.
+
+A field that opens a list of options and shows the chosen one, such as "Tier" or "Status".
+
+#### Anatomy
+
+```
+NlSelect
+├── NlInputBase (type select): floating label, selected value, chevron, helper text
+└── NlMenu (kind select), under the field
+    └── NlListItem × n (one per option, small)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large` |
+| Options | list | `options: { value, label, description?, disabled? }[]` |
+| Value | one option | `value` / `defaultValue`, `onValueChange` |
+| Error | off, on | `error?` |
+| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `disabled`, `required`, `name` |
+
+#### Sizes and layout
+
+- Field: as `NlInputBase`. Trailing chevron `keyboard_arrow_down` (24 large, 20 small) in `fg-secondary`; `keyboard_arrow_up` while open.
+- Menu: `NlMenu kind="select"`, `Space-XS` below the field, at least as wide as the field. Options are `NlListItem size="small"` (plain), the selected one in the "selected" look.
+
+#### Colours and states
+
+As `NlInputBase`: enabled, hover, focused, complete, disabled, each with and without error. "Open" uses the focused look. The chevron is `fg-disabled` when disabled.
+
+#### Behaviour and accessibility
+
+- The field is a button-like combobox: `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`, named by the label. The value text is its current value.
+- Keyboard: Enter, Space or Down opens; arrows move; Enter selects and closes; Escape closes without changing; typing a letter jumps to the next option starting with it (on the closed field too).
+- A native `<select>` is not used, so the menu can match the design. The value is submitted through a hidden input with `name`.
+- The selected option has `aria-selected="true"`. Disabled options are skipped.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Typing state | Drawn (value text in the field while focused) | Means type-ahead on the focused field, no free text | **Needs approval** |
+| Helper text colour | `text-secondary` here, `text-tertiary` in other fields | Follows OD-43 (one colour for all fields) | **Needs approval** |
+| Option rows | Not drawn for select (only the menu's standard rows) | `NlListItem size="small"` | **Needs approval** |
+| States | As in the table | Same | Matches |
+
+---
+
+### NlMultiSelect
+
+**Level** Organism (contains `NlCheckboxListItem`, a molecule) · **Base** `NlInputBase` (`type="select"`) · **Depends on** `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-136.
+
+A field for choosing several options, shown as chips in the field.
+
+#### Anatomy
+
+```
+NlMultiSelect
+├── NlInputBase (type select)
+│   └── value area: NlInputChip (xsmall) × visible, then a "+N" chip
+└── NlMenu (kind select, multiple)
+    ├── header (optional): NlSearchField
+    └── NlCheckboxListItem × n (small)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Size | large, small | `size`, default `large` |
+| Options | list | `options` |
+| Value | several options | `value` / `defaultValue` (array), `onValueChange` |
+| Search | off, on (for long lists) | `searchable?` |
+| Error | off, on | `error?` |
+| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `disabled`, `required`, `name` |
+
+#### Sizes and layout
+
+- Field: as `NlInputBase`, with chevron as in `NlSelect`.
+- Chips: `NlInputChip size="xsmall"` in a single row, gap `Space-XS`. Chips that don't fit are replaced by one "+N" chip (same look, no remove button). Chips stay xsmall in both field sizes.
+- Menu: as `NlSelect`, with `NlCheckboxListItem size="small"` rows and an optional search header.
+
+#### Colours and states
+
+As `NlInputBase`. Complete shows the chips.
+
+#### Behaviour and accessibility
+
+- The field is a combobox (`aria-haspopup="listbox"`, `aria-expanded`); the menu is a listbox with `aria-multiselectable="true"`.
+- Space toggles the focused option; the menu stays open while choosing. Escape or Tab closes it.
+- Each chip's remove button is reachable by Tab after the field ("Remove Tier 2"). Backspace in an empty search removes the last chip.
+- The "+N" chip is announced as "and N more"; activating it opens the menu.
+- Searching filters the rows; "No results" is announced politely.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Typing state | Drawn in the field, but the reference's description says code uses a button and puts search in the menu | Search in the menu header (`searchable`) | Matches the description |
+| "+N" overflow chip | Code only, per the reference's description | As above | **Needs approval** |
+| Chip gap | Not given | `Space-XS` | **Needs approval** |
+| Helper text colour | `text-secondary` | Follows OD-43 | **Needs approval** |
+
+---
+
+### NlDateField
+
+**Level** Organism (contains `NlCalendar`, a molecule) · **Base** `NlInputBase` · **Depends on** `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-31, OD-137, OD-141.
+
+A date input that accepts typing and opens a calendar.
+
+#### Anatomy
+
+```
+NlDateField
+├── NlInputBase: floating label, masked date input, calendar NlButton, helper text
+└── NlMenu (under the field)
+    └── NlCalendar (single)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Value | a date | `value` / `defaultValue` (ISO string), `onValueChange` |
+| Format | display pattern | `format?`, default `DD/MM/YYYY` (see "Mapping notes") |
+| Limits | earliest and latest | `minDate?`, `maxDate?` |
+| Error | off, on | `error?` |
+| Everything else | as `NlInputBase` | `label`, `helperText`, `disabled`, `required`, `name` |
+
+The reference has one size (large).
+
+#### Sizes and layout
+
+- Field: as `NlInputBase` (large). Trailing calendar button: `NlButton variant="tertiary" icon="only-icon" contentTone="secondary"`, icon `calendar_today` (see OD-31 for its size).
+- Placeholder: the format pattern ("DD/MM/YYYY") in `text-placeholder`. It stays visible while focused (unlike other fields), and while typing, the rest of the pattern shows after the typed digits ("01/0" + "M/YYYY").
+- Menu: `NlMenu`, `Space-XS` below the field, as wide as the calendar, holding `NlCalendar mode="single"` opened on the typed date or today.
+
+#### Colours and states
+
+As `NlInputBase`: enabled, hover, focused, typing, complete, disabled, each with and without error.
+
+#### Behaviour and accessibility
+
+- A text input with a digit mask; slashes are inserted automatically. Invalid or out-of-range dates show an error ("Enter a date as DD/MM/YYYY", "Choose a date from {min}", "Choose a date until {max}").
+- The calendar button's name is "Choose date" (or "Change date, {current}"), `aria-haspopup="dialog"`, `aria-expanded`. The calendar menu is a dialog; choosing a date fills the field, closes it and returns focus to the input. Escape closes it.
+- `aria-describedby` includes the format hint, so screen reader users know the pattern.
+- Dates outside the limits are disabled in the calendar.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Date format | Day/month/year with slashes | `format` prop, default `DD/MM/YYYY`. Locale-aware formats are left for later; no locale formatting during render (§7.4) | **Needs approval** |
+| Placeholder visible while focused | As in the reference | Same | Matches |
+| Mask, caret, keyboard, limits | Code only, per the reference's description | As above | Matches |
+| Calendar in a menu | From the reference's description | `NlMenu` holding `NlCalendar` | Matches |
+| Helper text colour | `text-tertiary` here | Follows OD-43 | **Needs approval** |
+| Small size | Not in the reference | Not specified | Open |
+
+---
+
+### NlStepper
+
+**Level** Organism (contains `NlStep`, a molecule) · **Base** none · **Depends on** `NlStep` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-142.
+
+The progress row of a multi-step form: 3 to 5 steps, the current one highlighted.
+
+#### Anatomy
+
+```
+NlStepper (ordered list, horizontal)
+└── NlStep × 3 to 5 (done before the current, upcoming after)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Steps | 3, 4, 5 | `steps: { label }[]` |
+| Current | 1 to the number of steps | `current: number` (1-based) |
+| Width | fixed spacing, or fill the container | `fill?: boolean` |
+| Go back | done steps as buttons | `onStepSelect?(index)` |
+| Accessible name | text | `aria-label`, default "Progress" |
+
+#### Sizes and layout
+
+- Horizontal. Each step is `Space-10XL` wide; steps are `Space-10XL` apart, so box centres are 160 apart.
+- `fill`: the stepper fills its container and the space between steps grows; only the connecting lines get longer.
+- Lines: drawn by each step to the next (see `NlStep`); the last step has none.
+
+#### Colours
+
+From `NlStep`.
+
+#### States
+
+From `NlStep`: done, current, upcoming.
+
+#### Behaviour and accessibility
+
+- An `<ol>` with a name. The current step has `aria-current="step"`.
+- With `onStepSelect`, done steps are buttons; upcoming steps are never interactive.
+- When `current` changes, the form announces the new step (for example by moving focus to the step's heading), not the stepper.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Spacing | Steps 80 wide and 80 apart (`Space-10XL`) | Same | Matches |
+| Fill mode | Code only, per the reference's description | `fill` | Matches |
+| Clickable done steps | Code only | `onStepSelect` | Matches |
+| More than 5 steps | Not in the reference | Not supported | Open |
+
+---
+
+### NlTableColumnFilter
+
+**Level** Organism (contains list items and `NlSearchField`, molecules) · **Base** none · **Depends on** `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` · **Internal to tables** (exported for custom tables)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+
+The menu that opens from a column header's filter button, to filter the table by that column's values.
+
+#### Anatomy
+
+```
+NlMenu (kind filter)
+├── header (optional): NlSearchField ("Search {column}")
+├── content: NlCheckboxListItem × n, or NlRadioListItem × n ("All" first)
+└── footer (checkbox only): Reset (tertiary) + Apply (primary)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | checkbox (multiple), radio (single) | `multiple?: boolean`, default `true` |
+| Search | off, on | Shown automatically when the column has more than 8 values; `searchable?` to force |
+| Column | name | `column: string` |
+| Values | list | `options: { value, label }[]` |
+| Applied | the current filter | `value`, `onApply(value)` |
+
+#### Sizes and layout
+
+- `NlMenu`, opening `Space-XS` below the header cell's filter button.
+- Rows: `NlCheckboxListItem` / `NlRadioListItem`, `size="small"`, no description, dividers between rows; the last row has no divider and `Space-XL` bottom padding.
+- Header (search): as `NlMenu`'s header (padding `Space-L`).
+- Footer (checkbox): as `NlMenu`'s footer (padding `Space-XL`, gap `Space-M`, aligned to the end); buttons `size="small"`.
+
+#### Colours
+
+From the parts.
+
+#### States
+
+From the parts. Opening always starts from the applied values with an empty search.
+
+#### Behaviour and accessibility
+
+- A non-modal dialog named "Filter {column}" (`NlMenu kind="filter"`).
+- Checkbox: changes apply only with Apply. Reset clears the choice. Escape or a click outside closes without applying.
+- Radio: "All" first (clears the filter; chosen when no filter is applied). Choosing applies and closes. Arrow keys between radios apply and keep it open.
+- While searching, "All" is hidden. "No results" is announced politely.
+- On close, focus returns to the filter button.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Behaviour (apply, reset, radio applies at once, search threshold 8) | From the reference's description (code only) | As above | Matches |
+| Width | Drawn at 377 | `NlMenu` sizing (fits the content, at least the trigger) | Matches |
+| Button labels | Reset and Apply | Same | Matches |
+
+---
+
+### NlSideSheet
+
+**Level** Organism (contains `NlButtonDock`, a molecule) · **Base** none · **Depends on** `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-16, OD-133, OD-143.
+
+A full-height panel that slides in from the right, for creating or editing something without leaving the page ("Edit reward").
+
+#### Anatomy
+
+```
+NlOverlay
+└── NlSideSheet (full-height panel, right edge)
+    ├── header: back NlButton (optional) · title slot · close NlButton (optional)
+    ├── NlDivider (optional)
+    ├── body slot (scrolls)
+    └── NlButtonDock (optional, sticky at the bottom)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Open | closed, open | `open`, `onOpenChange` |
+| Title | text or slot | `title` (default `NlTextBlock type="headline-large"`), or a slot |
+| Back button | optional | `onBack?()` |
+| Close button | on (default) or off | `hideClose?` |
+| Divider under the header | off (default) or on | `divider?` |
+| Body | slot | `children` |
+| Footer | optional | `footer?: NlButtonDockProps` |
+| Width | see "Mapping notes" | `size?` |
+
+#### Sizes and layout
+
+- Fixed to the right edge, full viewport height, `bg-primary`, layer `--nl-z-modal` above `NlOverlay`.
+- Vertical, gap `Space-3XL`.
+- Header: padding `Space-4XL` top, `Space-3XL` sides. Row: back button, title (fills), close button; gap `Space-XS` between back button and title. Buttons: `NlButton variant="tertiary" size="medium" icon="only-icon" contentTone="secondary"` (`arrow_back`, `close`).
+- Body: padding `Space-3XL` sides, gap `Space-3XL` between blocks; scrolls when long.
+- Footer: `NlButtonDock` with `sticky` when the body scrolls.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Panel | `bg-primary` |
+| Title | `text-primary` |
+
+#### States
+
+Closed, open.
+
+#### Behaviour and accessibility
+
+- `role="dialog"`, `aria-modal="true"`, labelled by the title. Focus moves into the sheet on open (first field, or the close button), is trapped, and returns to the trigger on close.
+- Escape and the close button close it; a click on the overlay closes it unless there are unsaved changes (the caller confirms).
+- The back button returns to the previous step inside the sheet; it doesn't close it.
+- Slides in from the right with `--nl-duration-slow`, `--nl-ease-standard` (§5: side sheets); reduced motion: fade only.
+- The page behind is inert and doesn't scroll.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Width | Raw 600 | No size token near 600. Proposed: a width token added to §3.5 (with the dialog widths, OD-121) | **Designer to decide** |
+| Gap between back button and title | `Space-XS` | Same | Matches |
+| Title as a slot | The reference has a title slot | Default `NlTextBlock`, or any slot content | Matches |
+| Shadow | None | None (the overlay separates it) | Matches |
+| Motion | Not in the reference | As above | **Needs approval** |
+
+---
+
+### NlPageHeader
+
+**Level** Organism (contains `NlNotificationButton`, a molecule) · **Base** none · **Depends on** `NlTextBlock`, `NlButton`, `NlNotificationButton` · **Public** (goes in `NlAppShell`'s header slot)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-16, OD-135, OD-144.
+
+The bar at the top of the content panel: optional back button, page title with an optional line under it, and the notification button.
+
+#### Anatomy
+
+```
+NlPageHeader (horizontal)
+├── start group
+│   ├── back NlButton (optional)
+│   └── text column: NlTextBlock title + body slot (optional)
+└── NlNotificationButton (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Title | text | `title` |
+| Body | optional slot | `children` (default `NlTextBlock` description in `Body M`) |
+| Back button | optional | `onBack?()` or `backHref?` |
+| Notifications | optional | `notifications?: NlNotificationButtonProps` |
+| Heading level | for the title | `headingAs`, default `h1` |
+
+#### Sizes and layout
+
+- Padding `Space-L` block, `Space-3XL` inline; gap `Space-XL`; items centred. Width fills the panel.
+- Start group: gap `Space-L`. Back button `NlButton variant="tertiary" size="xsmall" icon="only-icon"` (`arrow_back`, 20).
+- Text column: gap `Space-XS`. Title `NlTextBlock type="headline-small"`, one line, truncated with an ellipsis. Body in `Body M` below.
+- Bottom edge: see "Mapping notes".
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Background | `bg-primary` |
+| Bottom edge | `bg-secondary` (see "Mapping notes") |
+| Title / body | `text-primary` / `text-secondary` |
+
+#### States
+
+None of its own.
+
+#### Behaviour and accessibility
+
+- A `<header>` (the app shell provides it). The title is the page's `h1`.
+- The back button is named "Back" (or "Back to {page}"). It is a link when `backHref` is given.
+- A truncated title has its full text available (tooltip or `title`).
+- New notifications are announced politely from here ("3 new notifications").
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Bottom edge | A 4px bottom stroke in `bg-secondary` (the page background showing as a gap) | §4.2 allows only 1px and 2px borders. Proposed: no border; the header sits `Space-XS` above the content instead, so the panel's background shows through, or use a 1px `border-default` divider | **Designer to decide** |
+| Title truncation | One line with "…", per the reference's description | Same | Matches |
+| Title heading level | Not in the reference | `h1` | **Needs approval** |
+| Back button size | XSmall, icon 20 | Same | Matches |
+
+---
+
+### NlTable
+
+**Level** Organism · **Base** none · **Depends on** `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` · **Public**
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-138, OD-145.
+
+A data table with an optional toolbar (search, filters, main action), selectable rows, sorting, filtering and a footer with pagination. The toolbar, header row, body rows and footer are internal parts (D15).
+
+#### Anatomy
+
+```
+NlTable (vertical)
+├── toolbar (optional, internal): NlSearchField · filter slot (NlChipGroup) · primary NlButton
+├── table frame
+│   ├── header row (internal): select-all NlTableHeaderCell · NlTableHeaderCell × columns · row-actions header
+│   └── body rows (internal): select NlTableCell · NlTableCell × columns · row-actions NlTableCell
+└── footer (optional, internal): summary text · NlRowsPerPage (+ NlMenu of NlListItem) · NlPagination
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Style | default (no outer border), bordered | `variant`, default `default`, also `data-variant` |
+| Columns | definitions | `columns: { key, header, width?, sortable?, filter?, render? }[]` |
+| Rows | data | `rows`, `getRowId` |
+| Selection | off, on | `selectable?`, `selectedIds`, `onSelectionChange` (kept across pages) |
+| Row actions | off, on | `rowActions?: (row) => menu items` |
+| Toolbar | on (default), off | `toolbar?: { search?, filters?: ReactNode, action?: NlButtonProps }` or `false` |
+| Footer | on (default), off | `pagination?: { page, pageCount, pageSize, pageSizes, total }` or `false` |
+| Sort | current sort | `sort`, `onSortChange` |
+| Loading | on or off | `loading?` |
+| Empty | content when there are no rows | `empty?: NlEmptyStateProps` |
+| Caption | accessible name | `caption` (visually hidden by default) |
+
+#### Sizes and layout
+
+- Vertical: toolbar, table, footer, each `Space-XL` apart.
+- Toolbar: horizontal, space between: `NlSearchField` (fills the free space), then the filter slot and the primary button (`size="small"`), `Space-L` apart.
+- Header row: `NlTableHeaderCell appearance="grey"`; the select column is narrow and `Size-56` wide; the row-actions column is narrow, `Size-64` wide, empty header.
+- Body rows: `NlTableCell`s, height `Size-40`; 1px bottom border (§4.2) on every row except the last.
+- Bordered: 1px border around the header and rows (not the toolbar or footer), `Radius-S`, clipped.
+- Footer: horizontal, space between: summary text ("Showing 1–10 of 120") on the left; `NlRowsPerPage` and `NlPagination` on the right, `Space-L` apart. Footer height `Size-32`.
+- Width fills its container. Columns can be fixed, flexible or have a minimum width; wide tables scroll sideways with the row-actions column fixed (`--nl-shadow-sticky-end`, `--nl-z-sticky`).
+
+#### Colours
+
+| Part | State | Token |
+|---|---|---|
+| Body row | default | none |
+| Body row | hover | `bg-secondary` |
+| Body row | selected | `bg-active` |
+| Body row | selected + hover | `bg-active-hover` |
+| Row divider | – | `border-default` |
+| Bordered frame | – | `border-subtle` |
+| Footer summary | – | `text-tertiary` (`Body S`) |
+
+#### States
+
+Default, loading (skeleton rows, no footer), empty (`NlEmptyState` replaces the rows and footer), and the row states above.
+
+#### Behaviour and accessibility
+
+- A real `<table>` with `<caption>`, `<thead>`, `<tbody>`, `<th scope="col">`. The first data column can be a row header.
+- Sorting and filtering from the header cells (see `NlTableHeaderCell`, `NlTableColumnFilter`). Results changes are announced politely ("Showing 12 results").
+- Selection: select-all reflects the current page (indeterminate when some rows are selected); the selected count is announced and shown in the toolbar or footer.
+- Rows-per-page opens `NlMenu kind="select"` with `NlListItem` options under `NlRowsPerPage` (approved approach).
+- Loading: `aria-busy="true"` on the table; skeleton rows match the column layout.
+- Row click (if used) is never the only way to act on a row; the row-actions button is always available.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Toolbar, header row, rows, footer as parts | Separate components in the reference | Internal parts of `NlTable` (D15) | Approved |
+| Empty and loading | Code only, per the reference's description | `NlEmptyState` and `NlSkeleton` rows; both added to the dependencies | **Needs approval** |
+| Toolbar spacing | The search fills the space between (the reference's raw 80 gap is a "space between" layout) | Space between; filter slot and action `Space-L` apart | Matches |
+| Select column width | 56 | `Size-56` | Matches |
+| Row-actions column | 64, fixed when scrolling sideways | `Size-64`, sticky | Matches |
+| Footer summary text | Reference copy | "Showing {from}–{to} of {total}" | Matches |
+| Column widths and sideways scrolling | Code only | As above | **Needs approval** |
+
+---
+
+### NlSideNav
+
+**Level** Organism (contains `NlNavItem`, `NlSideNavUser`, molecules) · **Base** none · **Depends on** `NlNavItem`, `NlSideNavUser`, `NlButton` · **Public** (goes in `NlAppShell`'s nav slot)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-134, OD-146, OD-147.
+
+The app's main navigation: a logo and collapse button at the top, the sections, and the signed-in user at the bottom.
+
+#### Anatomy
+
+```
+NlSideNav (nav, full height, vertical, space between)
+├── top group
+│   ├── header row: logo slot · collapse NlButton
+│   └── sections: NlNavItem × n
+└── NlSideNavUser (optional)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Type | expanded, minimized | `minimized` / `defaultMinimized`, `onMinimizedChange` |
+| Style | default, tree | `variant`, default `default`, also `data-variant` (tree draws lines from an open section to its pages) |
+| Sections | data | `items: { icon, label, href?, pages? }[]` |
+| Current | the current page | `currentHref` (marks the section and page as current) |
+| Logo | slot | `logo: ReactNode` (hidden when minimized) |
+| User | optional | `user?: NlSideNavUserProps` |
+| Accessible name | text | `aria-label`, default "Main" |
+
+#### Sizes and layout
+
+| Part | Expanded | Minimized |
+|---|---|---|
+| Nav width | content column + `Space-XL` either side (see "Mapping notes") | `Size-80` |
+| Padding | `Space-3XL` top and bottom, `Space-XL` sides | same |
+| Header row | logo slot (fills) + collapse button at the end | collapse button only, centred |
+| Sections | full rows, `Space-XS` apart | icon-only rows, centred, `Space-XS` apart |
+
+- Top group: header row, then the sections, `Space-L` apart.
+- The user sits at the bottom (the nav is a space-between column).
+- Collapse button: `NlButton variant="tertiary" size="medium" icon="only-icon" contentTone="secondary"` (`dock_to_right`).
+- Background `bg-secondary`.
+- Width changes animate with `--nl-duration-slow`; none under reduced motion.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Background | `bg-secondary` |
+| Items, user | see `NlNavItem`, `NlSideNavUser` |
+
+#### States
+
+Expanded, minimized; default or tree style.
+
+#### Behaviour and accessibility
+
+- A `<nav aria-label="Main">` with a list of sections.
+- Collapse button: "Collapse navigation" / "Expand navigation", `aria-expanded`.
+- From `Breakpoint-1280` the nav is expanded; below it, minimized. The user can toggle it until the window crosses 1280 again (from the reference's app shell description).
+- Minimized: section names are tooltips and visually hidden labels; sections with pages open them in a menu (OD-118). Tree lines show only when expanded.
+- The section holding the current page opens by default.
+
+#### Mapping notes
+
+| Item | Reference | Northline | Status |
+|---|---|---|---|
+| Expanded width | 272 (a 240 content column + 16 either side) | No `Size-240` or `Size-272` token. Proposed: a nav-column size token (240) added to §3.5 | **Designer to decide** |
+| Minimized width | 80 | `Size-80` | Matches |
+| Menu variants | Eight variants named after the reference product's sections | Left out; sections come from `items` data | Matches inventory |
+| Logo | A linked logo component with placeholder text | Generic `logo` slot | Matches inventory |
+| Header row gap | A raw 62 gap (space between) | Space between: logo fills, button at the end | Matches |
+| Collapse icon | `dock_to_right` | Material Symbols `dock_to_right` | **Needs approval** |
+| Width animation | Not in the reference | `--nl-duration-slow` | **Needs approval** |
+
+---
+
+## 10. Decisions and known issues
+
+| # | Date | Decision |
+|---|---|---|
+| D1 | 17 Nov 2026 | Public demo with fictional brands. No real company, client or product names anywhere |
+| D2 | 17 Nov 2026 | No Figma file. The token JSON, in TokensBrücke shape, is the source of values |
+| D3 | 17 Nov 2026 | One primary colour per brand. Secondary and tertiary can be added later in the alias layer |
+| D4 | 17 Nov 2026 | `Primary light` alias group added, because Voltic needs a darker Light step than the other brands |
+| D5 | 17 Nov 2026 | Info has its own scale, so info stays blue in every brand |
+| D6 | 17 Nov 2026 | One shared grey (`Neutral`) for all brands. No per-brand neutral groups for now |
+| D7 | 17 Nov 2026 | Alert text uses 700 (warning 800) and icons 600 (warning 700) on the 100 tints. Solid alert fills use 600 with white text. Solid warning uses 500 with dark text |
+| D8 | 17 Nov 2026 | No "text on primary" token. The future colour picker rejects colours that fail with white text |
+| D9 | 17 Nov 2026 | Chart tokens are deferred to the dashboard stage |
+| D10 | 17 Nov 2026 | React components that run in Next.js. Tailwind CSS 4 for styling from the start |
+| D11 | 17 Nov 2026 | Component specs extracted once from the designer's reference library, outside this repo, as neutral specs. Spacing, radius, type and shadow scales match the reference system so the specs map one to one |
+| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button |
+| D13 | 17 Nov 2026 | Left out of the demo: one-time code input, profile image, avatar group, the "with text" progress and spinner versions, labels on radio and switch, and the reference library's unused pages (notes, image ratios, tabs) |
+| D14 | 17 Nov 2026 | Menu and calendar are their own components. Select and date fields use them, so they sit at the level the composition rule gives them |
+| D15 | 17 Nov 2026 | Slot content doesn't count toward a component's level (§7.1). `NlTextBlock` takes its label as a slot. Table toolbar, header row, row and footer are internal parts of `NlTable`. `NlAppShell` takes nav, header and content as slots |
+| D16 | 17 Nov 2026 | Border widths use Tailwind's 1px and 2px utilities (§4.2). New z-index scale (§4.3) and a pulse duration for skeletons (§5) |
+| D17 | 17 Nov 2026 | Token file (S0). Colours stay hex strings, as TokensBrücke exports them. Alpha tokens are an alias reference plus the opacity in `$extensions["com.northline.alpha"]`, applied by the token build. White and black primitives sit at `Primitives.Colors.base.white` and `.black`. Decimal line heights use an underscore in their names (`Line Height-62_4`). Two contrast results are accepted: `text-action` on `bg-active-hover` in Voltic (a chip hover state only), and `border-warning` as a decorative outline beside text, never a control's only outline. Hover and pressed states aren't flagged in contrast audits |
+
+Known issues
+
+| # | Issue | Status |
+|---|---|---|
+| K1 | The grey scale has two light steps, so `bg-tertiary`, `bg-neutral`, `bg-icons` and `bg-disabled` share Neutral-100 in Light. A grey-25 step would separate them | Open |
+
+---
+
+## 11. Changelog
+
+| Date | Change |
+|---|---|
+| 17 Nov 2026 | First draft. Token plan, architecture and setup tasks |
+| 17 Nov 2026 | `Button XL` text style added (§3.4). D12 updated: link variant, destructive tertiary, `contentTone` |
+| 17 Nov 2026 | `Size-320` added to `Primitives.Sizes` (§3.5), for the rich tooltip's maximum width |
+| 17 Nov 2026 | S-1: 78 components added to §8.1 to §8.4 and their specs to §9. Open items tracked in `docs/DEPENDENCIES.md` |
+| 17 Nov 2026 | S0: `tokens/design.tokens.json` (425 tokens) and `docs/TOKEN_AUDIT.md`. D17 records the token file decisions. S-1 and S0 approved |
