@@ -1,0 +1,4688 @@
+{
+  "Primitives": {
+    "Colors": {
+      "royal-blue": {
+        "royal-blue-50": {
+          "$type": "color",
+          "$value": "#E8EAFD",
+          "$description": "Royal blue, step 50, #E8EAFD. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-100": {
+          "$type": "color",
+          "$value": "#D0D6FB",
+          "$description": "Royal blue, step 100, #D0D6FB. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-200": {
+          "$type": "color",
+          "$value": "#A1ADF7",
+          "$description": "Royal blue, step 200, #A1ADF7. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-300": {
+          "$type": "color",
+          "$value": "#7384F3",
+          "$description": "Royal blue, step 300, #7384F3. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-400": {
+          "$type": "color",
+          "$value": "#445BEE",
+          "$description": "Royal blue, step 400, #445BEE. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-500": {
+          "$type": "color",
+          "$value": "#1532EA",
+          "$description": "Royal blue, step 500, #1532EA. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-600": {
+          "$type": "color",
+          "$value": "#1128BB",
+          "$description": "Royal blue, step 600, #1128BB. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-700": {
+          "$type": "color",
+          "$value": "#0D1E8D",
+          "$description": "Royal blue, step 700, #0D1E8D. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-800": {
+          "$type": "color",
+          "$value": "#08145E",
+          "$description": "Royal blue, step 800, #08145E. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "royal-blue-900": {
+          "$type": "color",
+          "$value": "#040A2F",
+          "$description": "Royal blue, step 900, #040A2F. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "garnet-green": {
+        "garnet-green-50": {
+          "$type": "color",
+          "$value": "#E8EFEC",
+          "$description": "Garnet green, step 50, #E8EFEC. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-100": {
+          "$type": "color",
+          "$value": "#D0DED9",
+          "$description": "Garnet green, step 100, #D0DED9. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-200": {
+          "$type": "color",
+          "$value": "#A1BEB2",
+          "$description": "Garnet green, step 200, #A1BEB2. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-300": {
+          "$type": "color",
+          "$value": "#729D8C",
+          "$description": "Garnet green, step 300, #729D8C. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-400": {
+          "$type": "color",
+          "$value": "#437D65",
+          "$description": "Garnet green, step 400, #437D65. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-500": {
+          "$type": "color",
+          "$value": "#145C3F",
+          "$description": "Garnet green, step 500, #145C3F. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-600": {
+          "$type": "color",
+          "$value": "#104A32",
+          "$description": "Garnet green, step 600, #104A32. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-700": {
+          "$type": "color",
+          "$value": "#0C3726",
+          "$description": "Garnet green, step 700, #0C3726. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-800": {
+          "$type": "color",
+          "$value": "#082519",
+          "$description": "Garnet green, step 800, #082519. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "garnet-green-900": {
+          "$type": "color",
+          "$value": "#04120D",
+          "$description": "Garnet green, step 900, #04120D. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "pink": {
+        "pink-50": {
+          "$type": "color",
+          "$value": "#FDE8F5",
+          "$description": "Pink, step 50, #FDE8F5. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-100": {
+          "$type": "color",
+          "$value": "#FCD1EA",
+          "$description": "Pink, step 100, #FCD1EA. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-200": {
+          "$type": "color",
+          "$value": "#F9A3D5",
+          "$description": "Pink, step 200, #F9A3D5. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-300": {
+          "$type": "color",
+          "$value": "#F576C0",
+          "$description": "Pink, step 300, #F576C0. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-400": {
+          "$type": "color",
+          "$value": "#F248AB",
+          "$description": "Pink, step 400, #F248AB. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-500": {
+          "$type": "color",
+          "$value": "#EF1A96",
+          "$description": "Pink, step 500, #EF1A96. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-600": {
+          "$type": "color",
+          "$value": "#BF1578",
+          "$description": "Pink, step 600, #BF1578. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-700": {
+          "$type": "color",
+          "$value": "#8F105A",
+          "$description": "Pink, step 700, #8F105A. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-800": {
+          "$type": "color",
+          "$value": "#600A3C",
+          "$description": "Pink, step 800, #600A3C. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "pink-900": {
+          "$type": "color",
+          "$value": "#30051E",
+          "$description": "Pink, step 900, #30051E. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "grey": {
+        "grey-50": {
+          "$type": "color",
+          "$value": "#EDEDEF",
+          "$description": "Grey, step 50, #EDEDEF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-100": {
+          "$type": "color",
+          "$value": "#DBDBDF",
+          "$description": "Grey, step 100, #DBDBDF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-200": {
+          "$type": "color",
+          "$value": "#B7B7BF",
+          "$description": "Grey, step 200, #B7B7BF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-300": {
+          "$type": "color",
+          "$value": "#94949E",
+          "$description": "Grey, step 300, #94949E. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-400": {
+          "$type": "color",
+          "$value": "#70707E",
+          "$description": "Grey, step 400, #70707E. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-500": {
+          "$type": "color",
+          "$value": "#4C4C5E",
+          "$description": "Grey, step 500, #4C4C5E. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-600": {
+          "$type": "color",
+          "$value": "#3D3D4B",
+          "$description": "Grey, step 600, #3D3D4B. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-700": {
+          "$type": "color",
+          "$value": "#2E2E38",
+          "$description": "Grey, step 700, #2E2E38. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-800": {
+          "$type": "color",
+          "$value": "#1E1E26",
+          "$description": "Grey, step 800, #1E1E26. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "grey-900": {
+          "$type": "color",
+          "$value": "#0F0F13",
+          "$description": "Grey, step 900, #0F0F13. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "blue": {
+        "blue-50": {
+          "$type": "color",
+          "$value": "#E8F3FC",
+          "$description": "Blue, step 50, #E8F3FC. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-100": {
+          "$type": "color",
+          "$value": "#D1E7FA",
+          "$description": "Blue, step 100, #D1E7FA. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-200": {
+          "$type": "color",
+          "$value": "#A3CFF4",
+          "$description": "Blue, step 200, #A3CFF4. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-300": {
+          "$type": "color",
+          "$value": "#74B8EF",
+          "$description": "Blue, step 300, #74B8EF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-400": {
+          "$type": "color",
+          "$value": "#46A0E9",
+          "$description": "Blue, step 400, #46A0E9. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-500": {
+          "$type": "color",
+          "$value": "#1888E4",
+          "$description": "Blue, step 500, #1888E4. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-600": {
+          "$type": "color",
+          "$value": "#136DB6",
+          "$description": "Blue, step 600, #136DB6. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-700": {
+          "$type": "color",
+          "$value": "#0E5289",
+          "$description": "Blue, step 700, #0E5289. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-800": {
+          "$type": "color",
+          "$value": "#0A365B",
+          "$description": "Blue, step 800, #0A365B. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "blue-900": {
+          "$type": "color",
+          "$value": "#051B2E",
+          "$description": "Blue, step 900, #051B2E. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "green": {
+        "green-50": {
+          "$type": "color",
+          "$value": "#E7F6E8",
+          "$description": "Green, step 50, #E7F6E8. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-100": {
+          "$type": "color",
+          "$value": "#CFEDD0",
+          "$description": "Green, step 100, #CFEDD0. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-200": {
+          "$type": "color",
+          "$value": "#9EDAA1",
+          "$description": "Green, step 200, #9EDAA1. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-300": {
+          "$type": "color",
+          "$value": "#6EC872",
+          "$description": "Green, step 300, #6EC872. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-400": {
+          "$type": "color",
+          "$value": "#3DB643",
+          "$description": "Green, step 400, #3DB643. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-500": {
+          "$type": "color",
+          "$value": "#0DA314",
+          "$description": "Green, step 500, #0DA314. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-600": {
+          "$type": "color",
+          "$value": "#0A8310",
+          "$description": "Green, step 600, #0A8310. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-700": {
+          "$type": "color",
+          "$value": "#08620C",
+          "$description": "Green, step 700, #08620C. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-800": {
+          "$type": "color",
+          "$value": "#054108",
+          "$description": "Green, step 800, #054108. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "green-900": {
+          "$type": "color",
+          "$value": "#032104",
+          "$description": "Green, step 900, #032104. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "yellow": {
+        "yellow-50": {
+          "$type": "color",
+          "$value": "#FCF8E7",
+          "$description": "Yellow, step 50, #FCF8E7. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-100": {
+          "$type": "color",
+          "$value": "#F9F0CF",
+          "$description": "Yellow, step 100, #F9F0CF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-200": {
+          "$type": "color",
+          "$value": "#F4E19F",
+          "$description": "Yellow, step 200, #F4E19F. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-300": {
+          "$type": "color",
+          "$value": "#EED26F",
+          "$description": "Yellow, step 300, #EED26F. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-400": {
+          "$type": "color",
+          "$value": "#E9C33F",
+          "$description": "Yellow, step 400, #E9C33F. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-500": {
+          "$type": "color",
+          "$value": "#E3B510",
+          "$description": "Yellow, step 500, #E3B510. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-600": {
+          "$type": "color",
+          "$value": "#B6900C",
+          "$description": "Yellow, step 600, #B6900C. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-700": {
+          "$type": "color",
+          "$value": "#886C09",
+          "$description": "Yellow, step 700, #886C09. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-800": {
+          "$type": "color",
+          "$value": "#5B4806",
+          "$description": "Yellow, step 800, #5B4806. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "yellow-900": {
+          "$type": "color",
+          "$value": "#2D2403",
+          "$description": "Yellow, step 900, #2D2403. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "red": {
+        "red-50": {
+          "$type": "color",
+          "$value": "#FDEAE8",
+          "$description": "Red, step 50, #FDEAE8. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-100": {
+          "$type": "color",
+          "$value": "#FAD6D1",
+          "$description": "Red, step 100, #FAD6D1. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-200": {
+          "$type": "color",
+          "$value": "#F5ADA4",
+          "$description": "Red, step 200, #F5ADA4. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-300": {
+          "$type": "color",
+          "$value": "#F18476",
+          "$description": "Red, step 300, #F18476. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-400": {
+          "$type": "color",
+          "$value": "#EC5B49",
+          "$description": "Red, step 400, #EC5B49. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-500": {
+          "$type": "color",
+          "$value": "#E7321B",
+          "$description": "Red, step 500, #E7321B. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-600": {
+          "$type": "color",
+          "$value": "#B92816",
+          "$description": "Red, step 600, #B92816. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-700": {
+          "$type": "color",
+          "$value": "#8B1E10",
+          "$description": "Red, step 700, #8B1E10. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-800": {
+          "$type": "color",
+          "$value": "#5C140B",
+          "$description": "Red, step 800, #5C140B. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "red-900": {
+          "$type": "color",
+          "$value": "#2E0A05",
+          "$description": "Red, step 900, #2E0A05. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "base": {
+        "white": {
+          "$type": "color",
+          "$value": "#FFFFFF",
+          "$description": "Pure white, #FFFFFF. Raw palette colour behind the White and Black aliases.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "black": {
+          "$type": "color",
+          "$value": "#000000",
+          "$description": "Pure black, #000000. Raw palette colour behind the White and Black aliases.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      }
+    },
+    "Typography": {
+      "Font style": {
+        "Inter": {
+          "$type": "fontFamily",
+          "$value": "Inter",
+          "$description": "Inter, the Northline brand's typeface (self-hosted, weights 400 to 700). The token build adds the system-ui fallback.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "IBM Plex Sans": {
+          "$type": "fontFamily",
+          "$value": "IBM Plex Sans",
+          "$description": "IBM Plex Sans, the Garnet brand's typeface (self-hosted, weights 400 to 700). The token build adds the system-ui fallback.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Space Grotesk": {
+          "$type": "fontFamily",
+          "$value": "Space Grotesk",
+          "$description": "Space Grotesk, the Voltic brand's typeface (self-hosted, weights 400 to 700). The token build adds the system-ui fallback.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "Font Weight": {
+        "Font Weight-400": {
+          "$type": "fontWeight",
+          "$value": 400,
+          "$description": "Font weight 400 (regular).",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Weight-500": {
+          "$type": "fontWeight",
+          "$value": 500,
+          "$description": "Font weight 500 (medium).",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Weight-600": {
+          "$type": "fontWeight",
+          "$value": 600,
+          "$description": "Font weight 600 (semibold).",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Weight-700": {
+          "$type": "fontWeight",
+          "$value": 700,
+          "$description": "Font weight 700 (bold).",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "Font Size": {
+        "Font Size-10": {
+          "$type": "dimension",
+          "$value": {
+            "value": 10,
+            "unit": "px"
+          },
+          "$description": "Font size of 10 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-11": {
+          "$type": "dimension",
+          "$value": {
+            "value": 11,
+            "unit": "px"
+          },
+          "$description": "Font size of 11 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-12": {
+          "$type": "dimension",
+          "$value": {
+            "value": 12,
+            "unit": "px"
+          },
+          "$description": "Font size of 12 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-14": {
+          "$type": "dimension",
+          "$value": {
+            "value": 14,
+            "unit": "px"
+          },
+          "$description": "Font size of 14 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-16": {
+          "$type": "dimension",
+          "$value": {
+            "value": 16,
+            "unit": "px"
+          },
+          "$description": "Font size of 16 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-18": {
+          "$type": "dimension",
+          "$value": {
+            "value": 18,
+            "unit": "px"
+          },
+          "$description": "Font size of 18 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-20": {
+          "$type": "dimension",
+          "$value": {
+            "value": 20,
+            "unit": "px"
+          },
+          "$description": "Font size of 20 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-24": {
+          "$type": "dimension",
+          "$value": {
+            "value": 24,
+            "unit": "px"
+          },
+          "$description": "Font size of 24 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-28": {
+          "$type": "dimension",
+          "$value": {
+            "value": 28,
+            "unit": "px"
+          },
+          "$description": "Font size of 28 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-32": {
+          "$type": "dimension",
+          "$value": {
+            "value": 32,
+            "unit": "px"
+          },
+          "$description": "Font size of 32 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-36": {
+          "$type": "dimension",
+          "$value": {
+            "value": 36,
+            "unit": "px"
+          },
+          "$description": "Font size of 36 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Font Size-48": {
+          "$type": "dimension",
+          "$value": {
+            "value": 48,
+            "unit": "px"
+          },
+          "$description": "Font size of 48 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "Line Height": {
+        "Line Height-15": {
+          "$type": "dimension",
+          "$value": {
+            "value": 15,
+            "unit": "px"
+          },
+          "$description": "Line height of 15 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-16_5": {
+          "$type": "dimension",
+          "$value": {
+            "value": 16.5,
+            "unit": "px"
+          },
+          "$description": "Line height of 16.5 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-18": {
+          "$type": "dimension",
+          "$value": {
+            "value": 18,
+            "unit": "px"
+          },
+          "$description": "Line height of 18 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-21": {
+          "$type": "dimension",
+          "$value": {
+            "value": 21,
+            "unit": "px"
+          },
+          "$description": "Line height of 21 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-24": {
+          "$type": "dimension",
+          "$value": {
+            "value": 24,
+            "unit": "px"
+          },
+          "$description": "Line height of 24 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-25_2": {
+          "$type": "dimension",
+          "$value": {
+            "value": 25.2,
+            "unit": "px"
+          },
+          "$description": "Line height of 25.2 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-28": {
+          "$type": "dimension",
+          "$value": {
+            "value": 28,
+            "unit": "px"
+          },
+          "$description": "Line height of 28 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-31_2": {
+          "$type": "dimension",
+          "$value": {
+            "value": 31.2,
+            "unit": "px"
+          },
+          "$description": "Line height of 31.2 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-33_6": {
+          "$type": "dimension",
+          "$value": {
+            "value": 33.6,
+            "unit": "px"
+          },
+          "$description": "Line height of 33.6 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-39_2": {
+          "$type": "dimension",
+          "$value": {
+            "value": 39.2,
+            "unit": "px"
+          },
+          "$description": "Line height of 39.2 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-41_6": {
+          "$type": "dimension",
+          "$value": {
+            "value": 41.6,
+            "unit": "px"
+          },
+          "$description": "Line height of 41.6 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-46_8": {
+          "$type": "dimension",
+          "$value": {
+            "value": 46.8,
+            "unit": "px"
+          },
+          "$description": "Line height of 46.8 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "Line Height-62_4": {
+          "$type": "dimension",
+          "$value": {
+            "value": 62.4,
+            "unit": "px"
+          },
+          "$description": "Line height of 62.4 px.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      }
+    },
+    "Sizes": {
+      "Size-0": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "Size of 0 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-2": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        },
+        "$description": "Size of 2 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-4": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        },
+        "$description": "Size of 4 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-6": {
+        "$type": "dimension",
+        "$value": {
+          "value": 6,
+          "unit": "px"
+        },
+        "$description": "Size of 6 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-8": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        },
+        "$description": "Size of 8 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-12": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
+        "$description": "Size of 12 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-16": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
+        "$description": "Size of 16 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-20": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "Size of 20 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-24": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "Size of 24 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-32": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        },
+        "$description": "Size of 32 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-36": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        },
+        "$description": "Size of 36 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-40": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "$description": "Size of 40 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-48": {
+        "$type": "dimension",
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        },
+        "$description": "Size of 48 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-56": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        },
+        "$description": "Size of 56 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-64": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        },
+        "$description": "Size of 64 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-80": {
+        "$type": "dimension",
+        "$value": {
+          "value": 80,
+          "unit": "px"
+        },
+        "$description": "Size of 80 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-96": {
+        "$type": "dimension",
+        "$value": {
+          "value": 96,
+          "unit": "px"
+        },
+        "$description": "Size of 96 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-120": {
+        "$type": "dimension",
+        "$value": {
+          "value": 120,
+          "unit": "px"
+        },
+        "$description": "Size of 120 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-320": {
+        "$type": "dimension",
+        "$value": {
+          "value": 320,
+          "unit": "px"
+        },
+        "$description": "Size of 320 px. Used only as a maximum width (rich tooltip), never as spacing.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Size-full": {
+        "$type": "dimension",
+        "$value": {
+          "value": 9999,
+          "unit": "px"
+        },
+        "$description": "Size of 9999 px, large enough to round any corner fully (pill shape).",
+        "$extensions": {
+          "mode": {}
+        }
+      }
+    },
+    "Breakpoints": {
+      "Breakpoint-1024": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1024,
+          "unit": "px"
+        },
+        "$description": "Viewport width 1024 px. Narrowest supported width. Side nav collapsed.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Breakpoint-1280": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1280,
+          "unit": "px"
+        },
+        "$description": "Viewport width 1280 px. Side nav expanded from here.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Breakpoint-1440": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1440,
+          "unit": "px"
+        },
+        "$description": "Viewport width 1440 px. Main design width.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Breakpoint-1920": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1920,
+          "unit": "px"
+        },
+        "$description": "Viewport width 1920 px. Large desktop.",
+        "$extensions": {
+          "mode": {}
+        }
+      }
+    }
+  },
+  "Alias Typography": {
+    "Display Large-H1": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Display Large-H1 text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-700}",
+        "$description": "Weight of the Display Large-H1 text style: 700 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-700}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-48}",
+        "$description": "Size of the Display Large-H1 text style: 48 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-48}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-48}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-48}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-62_4}",
+        "$description": "Line height of the Display Large-H1 text style: 62.4 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-62_4}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-62_4}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-62_4}"
+          }
+        }
+      }
+    },
+    "Display Medium-H2": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Display Medium-H2 text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-700}",
+        "$description": "Weight of the Display Medium-H2 text style: 700 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-700}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-36}",
+        "$description": "Size of the Display Medium-H2 text style: 36 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-36}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-36}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-36}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-46_8}",
+        "$description": "Line height of the Display Medium-H2 text style: 46.8 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-46_8}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-46_8}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-46_8}"
+          }
+        }
+      }
+    },
+    "Display Small-H3": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Display Small-H3 text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-700}",
+        "$description": "Weight of the Display Small-H3 text style: 700 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-700}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-28}",
+        "$description": "Size of the Display Small-H3 text style: 28 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-28}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-28}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-28}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-39_2}",
+        "$description": "Line height of the Display Small-H3 text style: 39.2 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-39_2}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-39_2}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-39_2}"
+          }
+        }
+      }
+    },
+    "Headline Large-H4": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Headline Large-H4 text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-700}",
+        "$description": "Weight of the Headline Large-H4 text style: 700 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-700}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-700}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-24}",
+        "$description": "Size of the Headline Large-H4 text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-24}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-24}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-24}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-33_6}",
+        "$description": "Line height of the Headline Large-H4 text style: 33.6 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-33_6}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-33_6}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-33_6}"
+          }
+        }
+      }
+    },
+    "Headline Medium-H5": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Headline Medium-H5 text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Headline Medium-H5 text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-20}",
+        "$description": "Size of the Headline Medium-H5 text style: 20 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-20}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-20}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-20}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-28}",
+        "$description": "Line height of the Headline Medium-H5 text style: 28 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-28}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-28}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-28}"
+          }
+        }
+      }
+    },
+    "Headline Small-H6": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Headline Small-H6 text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Headline Small-H6 text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-16}",
+        "$description": "Size of the Headline Small-H6 text style: 16 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-16}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Headline Small-H6 text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Title XL": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Title XL text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Title XL text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-32}",
+        "$description": "Size of the Title XL text style: 32 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-32}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-32}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-32}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-41_6}",
+        "$description": "Line height of the Title XL text style: 41.6 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-41_6}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-41_6}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-41_6}"
+          }
+        }
+      }
+    },
+    "Title L": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Title L text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Title L text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-18}",
+        "$description": "Size of the Title L text style: 18 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-18}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-18}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-18}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-25_2}",
+        "$description": "Line height of the Title L text style: 25.2 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-25_2}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-25_2}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-25_2}"
+          }
+        }
+      }
+    },
+    "Title M": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Title M text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Title M text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-16}",
+        "$description": "Size of the Title M text style: 16 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-16}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Title M text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Title S": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Title S text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Title S text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-14}",
+        "$description": "Size of the Title S text style: 14 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-14}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-21}",
+        "$description": "Line height of the Title S text style: 21 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-21}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-21}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-21}"
+          }
+        }
+      }
+    },
+    "Body L": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Body L text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-400}",
+        "$description": "Weight of the Body L text style: 400 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-400}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-400}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-400}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-16}",
+        "$description": "Size of the Body L text style: 16 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-16}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Body L text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Body M": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Body M text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-400}",
+        "$description": "Weight of the Body M text style: 400 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-400}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-400}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-400}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-14}",
+        "$description": "Size of the Body M text style: 14 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-14}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-21}",
+        "$description": "Line height of the Body M text style: 21 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-21}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-21}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-21}"
+          }
+        }
+      }
+    },
+    "Body S": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Body S text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-400}",
+        "$description": "Weight of the Body S text style: 400 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-400}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-400}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-400}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-12}",
+        "$description": "Size of the Body S text style: 12 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-12}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-18}",
+        "$description": "Line height of the Body S text style: 18 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-18}"
+          }
+        }
+      }
+    },
+    "Label L": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Label L text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-500}",
+        "$description": "Weight of the Label L text style: 500 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-500}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-16}",
+        "$description": "Size of the Label L text style: 16 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-16}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Label L text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Label M": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Label M text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-500}",
+        "$description": "Weight of the Label M text style: 500 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-500}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-14}",
+        "$description": "Size of the Label M text style: 14 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-14}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-21}",
+        "$description": "Line height of the Label M text style: 21 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-21}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-21}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-21}"
+          }
+        }
+      }
+    },
+    "Label S": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Label S text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-500}",
+        "$description": "Weight of the Label S text style: 500 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-500}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-12}",
+        "$description": "Size of the Label S text style: 12 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-12}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-18}",
+        "$description": "Line height of the Label S text style: 18 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-18}"
+          }
+        }
+      }
+    },
+    "Caption L": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Caption L text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-500}",
+        "$description": "Weight of the Caption L text style: 500 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-500}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-12}",
+        "$description": "Size of the Caption L text style: 12 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-12}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-18}",
+        "$description": "Line height of the Caption L text style: 18 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-18}"
+          }
+        }
+      }
+    },
+    "Caption M": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Caption M text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-500}",
+        "$description": "Weight of the Caption M text style: 500 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-500}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-11}",
+        "$description": "Size of the Caption M text style: 11 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-11}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-11}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-11}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-16_5}",
+        "$description": "Line height of the Caption M text style: 16.5 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-16_5}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-16_5}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-16_5}"
+          }
+        }
+      }
+    },
+    "Caption S": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Caption S text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Caption S text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-10}",
+        "$description": "Size of the Caption S text style: 10 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-10}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-10}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-10}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-15}",
+        "$description": "Line height of the Caption S text style: 15 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-15}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-15}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-15}"
+          }
+        }
+      }
+    },
+    "Button XL": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Button XL text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Button XL text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-18}",
+        "$description": "Size of the Button XL text style: 18 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-18}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-18}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-18}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Button XL text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Button L": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Button L text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Button L text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-16}",
+        "$description": "Size of the Button L text style: 16 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-16}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-16}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Button L text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Button M": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Button M text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Button M text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-14}",
+        "$description": "Size of the Button M text style: 14 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-14}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-14}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Button M text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Button S": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Button S text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Button S text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-12}",
+        "$description": "Size of the Button S text style: 12 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-12}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-24}",
+        "$description": "Line height of the Button S text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-24}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-24}"
+          }
+        }
+      }
+    },
+    "Data L": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Data L text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Data L text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-32}",
+        "$description": "Size of the Data L text style: 32 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-32}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-32}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-32}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-41_6}",
+        "$description": "Line height of the Data L text style: 41.6 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-41_6}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-41_6}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-41_6}"
+          }
+        }
+      }
+    },
+    "Data M": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Data M text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-600}",
+        "$description": "Weight of the Data M text style: 600 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-600}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-600}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-24}",
+        "$description": "Size of the Data M text style: 24 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-24}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-24}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-24}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-31_2}",
+        "$description": "Line height of the Data M text style: 31.2 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-31_2}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-31_2}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-31_2}"
+          }
+        }
+      }
+    }
+  },
+  "Alias Colors": {
+    "Colors": {
+      "Brand": {
+        "Primary": {
+          "Primary-50": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-50}",
+            "$description": "Primary scale, step 50, for the brand's primary colour (Northline: royal blue 50; Garnet: garnet green 50; Voltic: pink 50). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-50}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-50}",
+                "Voltic": "{Primitives.Colors.pink.pink-50}"
+              }
+            }
+          },
+          "Primary-100": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-100}",
+            "$description": "Primary scale, step 100, for the brand's primary colour (Northline: royal blue 100; Garnet: garnet green 100; Voltic: pink 100). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-100}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-100}",
+                "Voltic": "{Primitives.Colors.pink.pink-100}"
+              }
+            }
+          },
+          "Primary-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-200}",
+            "$description": "Primary scale, step 200, for the brand's primary colour (Northline: royal blue 200; Garnet: garnet green 200; Voltic: pink 200). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-200}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-200}",
+                "Voltic": "{Primitives.Colors.pink.pink-200}"
+              }
+            }
+          },
+          "Primary-300": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-300}",
+            "$description": "Primary scale, step 300, for the brand's primary colour (Northline: royal blue 300; Garnet: garnet green 300; Voltic: pink 300). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-300}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-300}",
+                "Voltic": "{Primitives.Colors.pink.pink-300}"
+              }
+            }
+          },
+          "Primary-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-400}",
+            "$description": "Primary scale, step 400, for the brand's primary colour (Northline: royal blue 400; Garnet: garnet green 400; Voltic: pink 400). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-400}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-400}",
+                "Voltic": "{Primitives.Colors.pink.pink-400}"
+              }
+            }
+          },
+          "Primary-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-500}",
+            "$description": "Primary scale, step 500, for the brand's primary colour (Northline: royal blue 500; Garnet: garnet green 500; Voltic: pink 500). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-500}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-500}",
+                "Voltic": "{Primitives.Colors.pink.pink-500}"
+              }
+            }
+          },
+          "Primary-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-600}",
+            "$description": "Primary scale, step 600, for the brand's primary colour (Northline: royal blue 600; Garnet: garnet green 600; Voltic: pink 600). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-600}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-600}",
+                "Voltic": "{Primitives.Colors.pink.pink-600}"
+              }
+            }
+          },
+          "Primary-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-700}",
+            "$description": "Primary scale, step 700, for the brand's primary colour (Northline: royal blue 700; Garnet: garnet green 700; Voltic: pink 700). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-700}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-700}",
+                "Voltic": "{Primitives.Colors.pink.pink-700}"
+              }
+            }
+          },
+          "Primary-800": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-800}",
+            "$description": "Primary scale, step 800, for the brand's primary colour (Northline: royal blue 800; Garnet: garnet green 800; Voltic: pink 800). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-800}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-800}",
+                "Voltic": "{Primitives.Colors.pink.pink-800}"
+              }
+            }
+          },
+          "Primary-900": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.royal-blue.royal-blue-900}",
+            "$description": "Primary scale, step 900, for the brand's primary colour (Northline: royal blue 900; Garnet: garnet green 900; Voltic: pink 900). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.royal-blue.royal-blue-900}",
+                "Garnet": "{Primitives.Colors.garnet-green.garnet-green-900}",
+                "Voltic": "{Primitives.Colors.pink.pink-900}"
+              }
+            }
+          }
+        },
+        "Neutral": {
+          "Neutral-50": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-50}",
+            "$description": "Neutral scale, step 50, for the shared grey (grey 50 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-50}",
+                "Garnet": "{Primitives.Colors.grey.grey-50}",
+                "Voltic": "{Primitives.Colors.grey.grey-50}"
+              }
+            }
+          },
+          "Neutral-100": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-100}",
+            "$description": "Neutral scale, step 100, for the shared grey (grey 100 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-100}",
+                "Garnet": "{Primitives.Colors.grey.grey-100}",
+                "Voltic": "{Primitives.Colors.grey.grey-100}"
+              }
+            }
+          },
+          "Neutral-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-200}",
+            "$description": "Neutral scale, step 200, for the shared grey (grey 200 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-200}",
+                "Garnet": "{Primitives.Colors.grey.grey-200}",
+                "Voltic": "{Primitives.Colors.grey.grey-200}"
+              }
+            }
+          },
+          "Neutral-300": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-300}",
+            "$description": "Neutral scale, step 300, for the shared grey (grey 300 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-300}",
+                "Garnet": "{Primitives.Colors.grey.grey-300}",
+                "Voltic": "{Primitives.Colors.grey.grey-300}"
+              }
+            }
+          },
+          "Neutral-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-400}",
+            "$description": "Neutral scale, step 400, for the shared grey (grey 400 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-400}",
+                "Garnet": "{Primitives.Colors.grey.grey-400}",
+                "Voltic": "{Primitives.Colors.grey.grey-400}"
+              }
+            }
+          },
+          "Neutral-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-500}",
+            "$description": "Neutral scale, step 500, for the shared grey (grey 500 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-500}",
+                "Garnet": "{Primitives.Colors.grey.grey-500}",
+                "Voltic": "{Primitives.Colors.grey.grey-500}"
+              }
+            }
+          },
+          "Neutral-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-600}",
+            "$description": "Neutral scale, step 600, for the shared grey (grey 600 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-600}",
+                "Garnet": "{Primitives.Colors.grey.grey-600}",
+                "Voltic": "{Primitives.Colors.grey.grey-600}"
+              }
+            }
+          },
+          "Neutral-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-700}",
+            "$description": "Neutral scale, step 700, for the shared grey (grey 700 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-700}",
+                "Garnet": "{Primitives.Colors.grey.grey-700}",
+                "Voltic": "{Primitives.Colors.grey.grey-700}"
+              }
+            }
+          },
+          "Neutral-800": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-800}",
+            "$description": "Neutral scale, step 800, for the shared grey (grey 800 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-800}",
+                "Garnet": "{Primitives.Colors.grey.grey-800}",
+                "Voltic": "{Primitives.Colors.grey.grey-800}"
+              }
+            }
+          },
+          "Neutral-900": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-900}",
+            "$description": "Neutral scale, step 900, for the shared grey (grey 900 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-900}",
+                "Garnet": "{Primitives.Colors.grey.grey-900}",
+                "Voltic": "{Primitives.Colors.grey.grey-900}"
+              }
+            }
+          }
+        },
+        "Info": {
+          "Info-50": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-50}",
+            "$description": "Info scale, step 50, for information messages (blue 50 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-50}",
+                "Garnet": "{Primitives.Colors.blue.blue-50}",
+                "Voltic": "{Primitives.Colors.blue.blue-50}"
+              }
+            }
+          },
+          "Info-100": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-100}",
+            "$description": "Info scale, step 100, for information messages (blue 100 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-100}",
+                "Garnet": "{Primitives.Colors.blue.blue-100}",
+                "Voltic": "{Primitives.Colors.blue.blue-100}"
+              }
+            }
+          },
+          "Info-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-200}",
+            "$description": "Info scale, step 200, for information messages (blue 200 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-200}",
+                "Garnet": "{Primitives.Colors.blue.blue-200}",
+                "Voltic": "{Primitives.Colors.blue.blue-200}"
+              }
+            }
+          },
+          "Info-300": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-300}",
+            "$description": "Info scale, step 300, for information messages (blue 300 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-300}",
+                "Garnet": "{Primitives.Colors.blue.blue-300}",
+                "Voltic": "{Primitives.Colors.blue.blue-300}"
+              }
+            }
+          },
+          "Info-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-400}",
+            "$description": "Info scale, step 400, for information messages (blue 400 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-400}",
+                "Garnet": "{Primitives.Colors.blue.blue-400}",
+                "Voltic": "{Primitives.Colors.blue.blue-400}"
+              }
+            }
+          },
+          "Info-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-500}",
+            "$description": "Info scale, step 500, for information messages (blue 500 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-500}",
+                "Garnet": "{Primitives.Colors.blue.blue-500}",
+                "Voltic": "{Primitives.Colors.blue.blue-500}"
+              }
+            }
+          },
+          "Info-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-600}",
+            "$description": "Info scale, step 600, for information messages (blue 600 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-600}",
+                "Garnet": "{Primitives.Colors.blue.blue-600}",
+                "Voltic": "{Primitives.Colors.blue.blue-600}"
+              }
+            }
+          },
+          "Info-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-700}",
+            "$description": "Info scale, step 700, for information messages (blue 700 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-700}",
+                "Garnet": "{Primitives.Colors.blue.blue-700}",
+                "Voltic": "{Primitives.Colors.blue.blue-700}"
+              }
+            }
+          },
+          "Info-800": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-800}",
+            "$description": "Info scale, step 800, for information messages (blue 800 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-800}",
+                "Garnet": "{Primitives.Colors.blue.blue-800}",
+                "Voltic": "{Primitives.Colors.blue.blue-800}"
+              }
+            }
+          },
+          "Info-900": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.blue.blue-900}",
+            "$description": "Info scale, step 900, for information messages (blue 900 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.blue.blue-900}",
+                "Garnet": "{Primitives.Colors.blue.blue-900}",
+                "Voltic": "{Primitives.Colors.blue.blue-900}"
+              }
+            }
+          }
+        },
+        "Success": {
+          "Success-50": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-50}",
+            "$description": "Success scale, step 50, for success messages (green 50 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-50}",
+                "Garnet": "{Primitives.Colors.green.green-50}",
+                "Voltic": "{Primitives.Colors.green.green-50}"
+              }
+            }
+          },
+          "Success-100": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-100}",
+            "$description": "Success scale, step 100, for success messages (green 100 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-100}",
+                "Garnet": "{Primitives.Colors.green.green-100}",
+                "Voltic": "{Primitives.Colors.green.green-100}"
+              }
+            }
+          },
+          "Success-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-200}",
+            "$description": "Success scale, step 200, for success messages (green 200 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-200}",
+                "Garnet": "{Primitives.Colors.green.green-200}",
+                "Voltic": "{Primitives.Colors.green.green-200}"
+              }
+            }
+          },
+          "Success-300": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-300}",
+            "$description": "Success scale, step 300, for success messages (green 300 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-300}",
+                "Garnet": "{Primitives.Colors.green.green-300}",
+                "Voltic": "{Primitives.Colors.green.green-300}"
+              }
+            }
+          },
+          "Success-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-400}",
+            "$description": "Success scale, step 400, for success messages (green 400 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-400}",
+                "Garnet": "{Primitives.Colors.green.green-400}",
+                "Voltic": "{Primitives.Colors.green.green-400}"
+              }
+            }
+          },
+          "Success-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-500}",
+            "$description": "Success scale, step 500, for success messages (green 500 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-500}",
+                "Garnet": "{Primitives.Colors.green.green-500}",
+                "Voltic": "{Primitives.Colors.green.green-500}"
+              }
+            }
+          },
+          "Success-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-600}",
+            "$description": "Success scale, step 600, for success messages (green 600 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-600}",
+                "Garnet": "{Primitives.Colors.green.green-600}",
+                "Voltic": "{Primitives.Colors.green.green-600}"
+              }
+            }
+          },
+          "Success-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-700}",
+            "$description": "Success scale, step 700, for success messages (green 700 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-700}",
+                "Garnet": "{Primitives.Colors.green.green-700}",
+                "Voltic": "{Primitives.Colors.green.green-700}"
+              }
+            }
+          },
+          "Success-800": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-800}",
+            "$description": "Success scale, step 800, for success messages (green 800 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-800}",
+                "Garnet": "{Primitives.Colors.green.green-800}",
+                "Voltic": "{Primitives.Colors.green.green-800}"
+              }
+            }
+          },
+          "Success-900": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.green.green-900}",
+            "$description": "Success scale, step 900, for success messages (green 900 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.green.green-900}",
+                "Garnet": "{Primitives.Colors.green.green-900}",
+                "Voltic": "{Primitives.Colors.green.green-900}"
+              }
+            }
+          }
+        },
+        "Warning": {
+          "Warning-50": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-50}",
+            "$description": "Warning scale, step 50, for warnings (yellow 50 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-50}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-50}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-50}"
+              }
+            }
+          },
+          "Warning-100": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-100}",
+            "$description": "Warning scale, step 100, for warnings (yellow 100 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-100}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-100}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-100}"
+              }
+            }
+          },
+          "Warning-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-200}",
+            "$description": "Warning scale, step 200, for warnings (yellow 200 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-200}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-200}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-200}"
+              }
+            }
+          },
+          "Warning-300": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-300}",
+            "$description": "Warning scale, step 300, for warnings (yellow 300 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-300}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-300}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-300}"
+              }
+            }
+          },
+          "Warning-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-400}",
+            "$description": "Warning scale, step 400, for warnings (yellow 400 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-400}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-400}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-400}"
+              }
+            }
+          },
+          "Warning-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-500}",
+            "$description": "Warning scale, step 500, for warnings (yellow 500 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-500}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-500}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-500}"
+              }
+            }
+          },
+          "Warning-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-600}",
+            "$description": "Warning scale, step 600, for warnings (yellow 600 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-600}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-600}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-600}"
+              }
+            }
+          },
+          "Warning-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-700}",
+            "$description": "Warning scale, step 700, for warnings (yellow 700 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-700}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-700}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-700}"
+              }
+            }
+          },
+          "Warning-800": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-800}",
+            "$description": "Warning scale, step 800, for warnings (yellow 800 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-800}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-800}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-800}"
+              }
+            }
+          },
+          "Warning-900": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-900}",
+            "$description": "Warning scale, step 900, for warnings (yellow 900 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-900}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-900}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-900}"
+              }
+            }
+          }
+        },
+        "Error": {
+          "Error-50": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-50}",
+            "$description": "Error scale, step 50, for errors and destructive actions (red 50 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-50}",
+                "Garnet": "{Primitives.Colors.red.red-50}",
+                "Voltic": "{Primitives.Colors.red.red-50}"
+              }
+            }
+          },
+          "Error-100": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-100}",
+            "$description": "Error scale, step 100, for errors and destructive actions (red 100 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-100}",
+                "Garnet": "{Primitives.Colors.red.red-100}",
+                "Voltic": "{Primitives.Colors.red.red-100}"
+              }
+            }
+          },
+          "Error-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-200}",
+            "$description": "Error scale, step 200, for errors and destructive actions (red 200 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-200}",
+                "Garnet": "{Primitives.Colors.red.red-200}",
+                "Voltic": "{Primitives.Colors.red.red-200}"
+              }
+            }
+          },
+          "Error-300": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-300}",
+            "$description": "Error scale, step 300, for errors and destructive actions (red 300 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-300}",
+                "Garnet": "{Primitives.Colors.red.red-300}",
+                "Voltic": "{Primitives.Colors.red.red-300}"
+              }
+            }
+          },
+          "Error-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-400}",
+            "$description": "Error scale, step 400, for errors and destructive actions (red 400 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-400}",
+                "Garnet": "{Primitives.Colors.red.red-400}",
+                "Voltic": "{Primitives.Colors.red.red-400}"
+              }
+            }
+          },
+          "Error-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-500}",
+            "$description": "Error scale, step 500, for errors and destructive actions (red 500 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-500}",
+                "Garnet": "{Primitives.Colors.red.red-500}",
+                "Voltic": "{Primitives.Colors.red.red-500}"
+              }
+            }
+          },
+          "Error-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-600}",
+            "$description": "Error scale, step 600, for errors and destructive actions (red 600 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-600}",
+                "Garnet": "{Primitives.Colors.red.red-600}",
+                "Voltic": "{Primitives.Colors.red.red-600}"
+              }
+            }
+          },
+          "Error-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-700}",
+            "$description": "Error scale, step 700, for errors and destructive actions (red 700 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-700}",
+                "Garnet": "{Primitives.Colors.red.red-700}",
+                "Voltic": "{Primitives.Colors.red.red-700}"
+              }
+            }
+          },
+          "Error-800": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-800}",
+            "$description": "Error scale, step 800, for errors and destructive actions (red 800 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-800}",
+                "Garnet": "{Primitives.Colors.red.red-800}",
+                "Voltic": "{Primitives.Colors.red.red-800}"
+              }
+            }
+          },
+          "Error-900": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.red.red-900}",
+            "$description": "Error scale, step 900, for errors and destructive actions (red 900 in every brand). Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.red.red-900}",
+                "Garnet": "{Primitives.Colors.red.red-900}",
+                "Voltic": "{Primitives.Colors.red.red-900}"
+              }
+            }
+          }
+        },
+        "Base": {
+          "White": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.base.white}",
+            "$description": "White in every brand, for text and icons on brand fills, light surfaces. Use only to build semantic tokens.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.base.white}",
+                "Garnet": "{Primitives.Colors.base.white}",
+                "Voltic": "{Primitives.Colors.base.white}"
+              }
+            }
+          },
+          "Black": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.base.black}",
+            "$description": "Black in every brand, for the Dark theme scrim and other full-black needs. Use only to build semantic tokens.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.base.black}",
+                "Garnet": "{Primitives.Colors.base.black}",
+                "Voltic": "{Primitives.Colors.base.black}"
+              }
+            }
+          }
+        },
+        "Primary light": {
+          "Primary-light-action": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+            "$description": "Light theme: Links, action text, icons, active borders (Northline Primary-500, Garnet Primary-500, Voltic Primary-600).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-600}"
+              }
+            }
+          },
+          "Primary-light-hovered": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+            "$description": "Light theme: Hover of action text, icons, borders (Northline Primary-600, Garnet Primary-600, Voltic Primary-700).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-700}"
+              }
+            }
+          },
+          "Primary-light-pressed": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-700}",
+            "$description": "Light theme: Pressed of action text, icons, borders (Northline Primary-700, Garnet Primary-700, Voltic Primary-800).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-700}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-700}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-800}"
+              }
+            }
+          },
+          "Primary-light-focus": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-400}",
+            "$description": "Light theme: Focus ring (Northline Primary-400, Garnet Primary-400, Voltic Primary-500).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-400}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-400}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-500}"
+              }
+            }
+          },
+          "Primary-light-fill": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+            "$description": "Light theme: Primary buttons and brand backgrounds (Northline Primary-500, Garnet Primary-500, Voltic Primary-600).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-600}"
+              }
+            }
+          },
+          "Primary-light-fill-hovered": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+            "$description": "Light theme: Hover of primary buttons (Northline Primary-600, Garnet Primary-600, Voltic Primary-700).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-700}"
+              }
+            }
+          },
+          "Primary-light-fill-pressed": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-700}",
+            "$description": "Light theme: Pressed of primary buttons (Northline Primary-700, Garnet Primary-700, Voltic Primary-800).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-700}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-700}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-800}"
+              }
+            }
+          }
+        },
+        "Primary dark": {
+          "Primary-dark-action": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-300}",
+            "$description": "Dark theme: Links, action text, icons, active borders (Northline Primary-300, Garnet Primary-300, Voltic Primary-400).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-300}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-300}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-400}"
+              }
+            }
+          },
+          "Primary-dark-hovered": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-200}",
+            "$description": "Dark theme: Hover of action text, icons, borders (Northline Primary-200, Garnet Primary-200, Voltic Primary-300).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-200}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-200}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-300}"
+              }
+            }
+          },
+          "Primary-dark-pressed": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+            "$description": "Dark theme: Pressed of action text, icons, borders (Northline Primary-100, Garnet Primary-100, Voltic Primary-200).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-200}"
+              }
+            }
+          },
+          "Primary-dark-focus": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-300}",
+            "$description": "Dark theme: Focus ring (Northline Primary-300, Garnet Primary-300, Voltic Primary-400).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-300}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-300}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-400}"
+              }
+            }
+          },
+          "Primary-dark-fill": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-400}",
+            "$description": "Dark theme: Primary buttons and brand backgrounds (Northline Primary-400, Garnet Primary-400, Voltic Primary-600).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-400}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-400}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-600}"
+              }
+            }
+          },
+          "Primary-dark-fill-hovered": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+            "$description": "Dark theme: Hover of primary buttons (Northline Primary-500, Garnet Primary-500, Voltic Primary-700).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-700}"
+              }
+            }
+          },
+          "Primary-dark-fill-pressed": {
+            "$type": "color",
+            "$value": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+            "$description": "Dark theme: Pressed of primary buttons (Northline Primary-600, Garnet Primary-600, Voltic Primary-800).",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+                "Garnet": "{Alias Colors.Colors.Brand.Primary.Primary-600}",
+                "Voltic": "{Alias Colors.Colors.Brand.Primary.Primary-800}"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "Color collection": {
+    "Background": {
+      "bg-primary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Main background of screens, dialogs and side sheets. Light: White; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "bg-secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}",
+        "$description": "Side nav and grey panels. Light: Neutral-50; Dark: Neutral-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-800}"
+          }
+        }
+      },
+      "bg-tertiary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Callouts and nested surfaces. Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "bg-neutral": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Neutral badge background. Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "bg-icons": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Icon and default avatar backgrounds. Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "bg-disabled": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Disabled backgrounds. Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "bg-direct": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Snackbar and tooltip backgrounds. Text on it uses `text-inverse`. Light: Neutral-900; Dark: Neutral-50.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}"
+          }
+        }
+      },
+      "bg-brand": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+        "$description": "Brand backgrounds. Light: Primary-light-fill; Dark: Primary-dark-fill.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-fill}"
+          }
+        }
+      },
+      "bg-active": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary.Primary-50}",
+        "$description": "Active or selected backgrounds. Light: Primary-50; Dark: Primary-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary.Primary-50}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary.Primary-900}"
+          }
+        }
+      },
+      "bg-active-hover": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+        "$description": "Hover of active backgrounds. Light: Primary-100; Dark: Primary-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary.Primary-800}"
+          }
+        }
+      },
+      "bg-action-primary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+        "$description": "Primary button. Light: Primary-light-fill; Dark: Primary-dark-fill.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-fill}"
+          }
+        }
+      },
+      "bg-action-primary_hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill-hovered}",
+        "$description": "Primary button, hover. Light: Primary-light-fill-hovered; Dark: Primary-dark-fill-hovered.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill-hovered}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-fill-hovered}"
+          }
+        }
+      },
+      "bg-action-primary_pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill-pressed}",
+        "$description": "Primary button, pressed. Light: Primary-light-fill-pressed; Dark: Primary-dark-fill-pressed.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill-pressed}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-fill-pressed}"
+          }
+        }
+      },
+      "bg-action-secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary.Primary-50}",
+        "$description": "Secondary button. Light: Primary-50; Dark: Primary-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary.Primary-50}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary.Primary-900}"
+          }
+        }
+      },
+      "bg-action-secondary_hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+        "$description": "Secondary button, hover. Light: Primary-100; Dark: Primary-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary.Primary-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary.Primary-800}"
+          }
+        }
+      },
+      "bg-action-secondary_pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary.Primary-200}",
+        "$description": "Secondary button, pressed. Light: Primary-200; Dark: Primary-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary.Primary-200}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary.Primary-700}"
+          }
+        }
+      },
+      "bg-action-inverse": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "White call to action on brand. Light: White; Dark: White.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          }
+        }
+      },
+      "bg-action-destructive": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-600}",
+        "$description": "Destructive button. Light: Error-600; Dark: Error-600.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-600}"
+          }
+        }
+      },
+      "bg-action-destructive_hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-700}",
+        "$description": "Destructive button, hover. Light: Error-700; Dark: Error-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-700}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-700}"
+          }
+        }
+      },
+      "bg-action-destructive_pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-800}",
+        "$description": "Destructive button, pressed. Light: Error-800; Dark: Error-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-800}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-800}"
+          }
+        }
+      },
+      "bg-action-destructive-secondary_hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-50}",
+        "$description": "Secondary destructive button, hover. Light: Error-50; Dark: Error-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-50}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-900}"
+          }
+        }
+      },
+      "bg-action-destructive-secondary_pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-100}",
+        "$description": "Secondary destructive button, pressed. Light: Error-100; Dark: Error-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-800}"
+          }
+        }
+      },
+      "bg-info": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Info.Info-600}",
+        "$description": "Solid info background, white text. Light: Info-600; Dark: Info-600.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Info.Info-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Info.Info-600}"
+          }
+        }
+      },
+      "bg-info_secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Info.Info-100}",
+        "$description": "Tinted info background. Light: Info-100; Dark: Info-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Info.Info-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Info.Info-900}"
+          }
+        }
+      },
+      "bg-success": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-600}",
+        "$description": "Solid success background, white text. Light: Success-600; Dark: Success-600.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-600}"
+          }
+        }
+      },
+      "bg-success_secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-100}",
+        "$description": "Tinted success background. Light: Success-100; Dark: Success-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-900}"
+          }
+        }
+      },
+      "bg-warning": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Warning.Warning-500}",
+        "$description": "Solid warning background, dark text (`text-dark_both`). Light: Warning-500; Dark: Warning-500.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Warning.Warning-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Warning.Warning-500}"
+          }
+        }
+      },
+      "bg-warning_secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Warning.Warning-100}",
+        "$description": "Tinted warning background. Light: Warning-100; Dark: Warning-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Warning.Warning-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Warning.Warning-900}"
+          }
+        }
+      },
+      "bg-error": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-600}",
+        "$description": "Solid error background, white text. Light: Error-600; Dark: Error-600.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-600}"
+          }
+        }
+      },
+      "bg-error_secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-100}",
+        "$description": "Tinted error background. Light: Error-100; Dark: Error-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-900}"
+          }
+        }
+      }
+    },
+    "Text": {
+      "text-primary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Titles and headings. Light: Neutral-900; Dark: White.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          }
+        }
+      },
+      "text-secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}",
+        "$description": "Body text and descriptions. Light: Neutral-500; Dark: Neutral-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-200}"
+          }
+        }
+      },
+      "text-tertiary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-600}",
+        "$description": "Captions, overlines, hints. Light: Neutral-600; Dark: Neutral-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}"
+          }
+        }
+      },
+      "text-placeholder": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+        "$description": "Input placeholder text. Light: Neutral-400; Dark: Neutral-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}"
+          }
+        }
+      },
+      "text-disabled": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}",
+        "$description": "Disabled text. Light: Neutral-300; Dark: Neutral-600.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-600}"
+          }
+        }
+      },
+      "text-disabled-on_bg": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+        "$description": "Disabled text on a filled background. Light: Neutral-400; Dark: Neutral-500.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}"
+          }
+        }
+      },
+      "text-inverse": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Text on `bg-direct`. Flips with the theme. Light: White; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "text-white_both": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "White text in both themes (primary and destructive buttons). Light: White; Dark: White.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          }
+        }
+      },
+      "text-white_subtle": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Secondary text on brand backgrounds. Light: Neutral-100; Dark: Neutral-100.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}"
+          }
+        }
+      },
+      "text-dark_both": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Dark text in both themes (solid warning backgrounds). Light: Neutral-900; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "text-action": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+        "$description": "Text links and secondary buttons. Light: Primary-light-action; Dark: Primary-dark-action.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-action}"
+          }
+        }
+      },
+      "text-hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+        "$description": "Text link, hover. Light: Primary-light-hovered; Dark: Primary-dark-hovered.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-hovered}"
+          }
+        }
+      },
+      "text-pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-pressed}",
+        "$description": "Text link, pressed. Light: Primary-light-pressed; Dark: Primary-dark-pressed.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-pressed}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-pressed}"
+          }
+        }
+      },
+      "text-info": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Info.Info-700}",
+        "$description": "Info text. Light: Info-700; Dark: Info-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Info.Info-700}",
+            "Dark": "{Alias Colors.Colors.Brand.Info.Info-200}"
+          }
+        }
+      },
+      "text-success": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-700}",
+        "$description": "Success text. Light: Success-700; Dark: Success-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-700}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-200}"
+          }
+        }
+      },
+      "text-warning": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Warning.Warning-800}",
+        "$description": "Warning text. Light: Warning-800; Dark: Warning-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Warning.Warning-800}",
+            "Dark": "{Alias Colors.Colors.Brand.Warning.Warning-200}"
+          }
+        }
+      },
+      "text-error": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-700}",
+        "$description": "Error text. Light: Error-700; Dark: Error-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-700}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-200}"
+          }
+        }
+      }
+    },
+    "Border": {
+      "border-default": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Default border and dividers. Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}",
+        "$description": "Subtle border. Light: Neutral-50; Dark: Neutral-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-800}"
+          }
+        }
+      },
+      "border-strong": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+        "$description": "Checkbox, radio and other control outlines. Light: Neutral-400; Dark: Neutral-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}"
+          }
+        }
+      },
+      "border-disabled": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Disabled borders. Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "border-inverse": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Borders on brand colour. Light: White; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "border-active": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+        "$description": "Active, selected and typing states. Light: Primary-light-action; Dark: Primary-dark-action.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-action}"
+          }
+        }
+      },
+      "border-hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+        "$description": "Hover. Light: Primary-light-hovered; Dark: Primary-dark-hovered.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-hovered}"
+          }
+        }
+      },
+      "border-pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-pressed}",
+        "$description": "Pressed. Light: Primary-light-pressed; Dark: Primary-dark-pressed.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-pressed}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-pressed}"
+          }
+        }
+      },
+      "border-focused": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-focus}",
+        "$description": "Focus ring. Light: Primary-light-focus; Dark: Primary-dark-focus.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-focus}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-focus}"
+          }
+        }
+      },
+      "border-action-primary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+        "$description": "Outline buttons. Light: Primary-light-fill; Dark: Primary-dark-fill.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-fill}"
+          }
+        }
+      },
+      "border-info": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Info.Info-500}",
+        "$description": "Info border. Light: Info-500; Dark: Info-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Info.Info-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Info.Info-400}"
+          }
+        }
+      },
+      "border-success": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-500}",
+        "$description": "Success border. Light: Success-500; Dark: Success-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-400}"
+          }
+        }
+      },
+      "border-warning": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Warning.Warning-500}",
+        "$description": "Warning border. Light: Warning-500; Dark: Warning-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Warning.Warning-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Warning.Warning-400}"
+          }
+        }
+      },
+      "border-error": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-500}",
+        "$description": "Error border. Light: Error-500; Dark: Error-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-400}"
+          }
+        }
+      }
+    },
+    "Foreground": {
+      "fg-primary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Primary icons. Light: Neutral-900; Dark: White.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          }
+        }
+      },
+      "fg-secondary": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}",
+        "$description": "Secondary icons (fields, close, chevron). Light: Neutral-500; Dark: Neutral-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-200}"
+          }
+        }
+      },
+      "fg-placeholder": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+        "$description": "Input field icons. Light: Neutral-400; Dark: Neutral-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}"
+          }
+        }
+      },
+      "fg-disabled": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}",
+        "$description": "Disabled icons. Light: Neutral-300; Dark: Neutral-600.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-600}"
+          }
+        }
+      },
+      "fg-disabled-on_bg": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+        "$description": "Disabled icons on a filled background. Light: Neutral-400; Dark: Neutral-500.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}"
+          }
+        }
+      },
+      "fg-inverse": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Icons on `bg-direct`. Flips with the theme. Light: White; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "fg-white_both": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "White icons in both themes. Light: White; Dark: White.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          }
+        }
+      },
+      "fg-dark_both": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Dark icons in both themes. Light: Neutral-900; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "fg-brand": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+        "$description": "Brand icons. Light: Primary-light-action; Dark: Primary-dark-action.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-action}"
+          }
+        }
+      },
+      "fg-action": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+        "$description": "Action icons. Light: Primary-light-action; Dark: Primary-dark-action.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-action}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-action}"
+          }
+        }
+      },
+      "fg-hovered": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+        "$description": "Action icon, hover. Light: Primary-light-hovered; Dark: Primary-dark-hovered.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-hovered}"
+          }
+        }
+      },
+      "fg-pressed": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-pressed}",
+        "$description": "Action icon, pressed. Light: Primary-light-pressed; Dark: Primary-dark-pressed.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-pressed}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-pressed}"
+          }
+        }
+      },
+      "fg-active": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+        "$description": "Icons in the active state. Light: Primary-light-hovered; Dark: Primary-dark-hovered.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-hovered}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-hovered}"
+          }
+        }
+      },
+      "fg-info": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Info.Info-600}",
+        "$description": "Info icons. Light: Info-600; Dark: Info-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Info.Info-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Info.Info-300}"
+          }
+        }
+      },
+      "fg-success": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-600}",
+        "$description": "Success icons. Light: Success-600; Dark: Success-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-300}"
+          }
+        }
+      },
+      "fg-warning": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Warning.Warning-700}",
+        "$description": "Warning icons. Light: Warning-700; Dark: Warning-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Warning.Warning-700}",
+            "Dark": "{Alias Colors.Colors.Brand.Warning.Warning-300}"
+          }
+        }
+      },
+      "fg-error": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-600}",
+        "$description": "Error icons. Light: Error-600; Dark: Error-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-300}"
+          }
+        }
+      }
+    },
+    "Alpha": {
+      "Alpha-sm": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Small call to action inside brand cards. Light: Neutral-900 at 16%; Dark: Neutral-900 at 16%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.16,
+            "Dark": 0.16
+          }
+        }
+      },
+      "Alpha-md": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Overlay (scrim) behind dialogs and side sheets. Light: Neutral-900 at 40%; Dark: Black at 60%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.Black}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.4,
+            "Dark": 0.6
+          }
+        }
+      },
+      "Alpha-light": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Depth on brand backgrounds. Light: White at 12%; Dark: White at 12%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.12,
+            "Dark": 0.12
+          }
+        }
+      },
+      "Alpha-nav": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Navigation backgrounds and loading overlay. Light: White at 75%; Dark: White at 6%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.75,
+            "Dark": 0.06
+          }
+        }
+      },
+      "Alpha-border": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Subtle borders on icon circles and avatars. Light: Neutral-900 at 8%; Dark: White at 8%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.08,
+            "Dark": 0.08
+          }
+        }
+      },
+      "Alpha-brand": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+        "$description": "Brand tint. Light: Primary-500 at 16%; Dark: Primary-500 at 16%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary.Primary-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary.Primary-500}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.16,
+            "Dark": 0.16
+          }
+        }
+      },
+      "Alpha-success": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-500}",
+        "$description": "Success tint. Light: Success-500 at 16%; Dark: Success-500 at 16%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-500}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.16,
+            "Dark": 0.16
+          }
+        }
+      },
+      "Alpha-error": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-500}",
+        "$description": "Error tint. Light: Error-500 at 16%; Dark: Error-500 at 16%.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-500}"
+          },
+          "com.northline.alpha": {
+            "Light": 0.16,
+            "Dark": 0.16
+          }
+        }
+      }
+    }
+  },
+  "Alias Spacing & Radius": {
+    "Spacing": {
+      "Space-none": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-0}",
+        "$description": "Spacing step none: 0 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-XXS": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-2}",
+        "$description": "Spacing step XXS: 2 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-XS": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-4}",
+        "$description": "Spacing step XS: 4 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-S": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-6}",
+        "$description": "Spacing step S: 6 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-M": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-8}",
+        "$description": "Spacing step M: 8 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-L": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-12}",
+        "$description": "Spacing step L: 12 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-16}",
+        "$description": "Spacing step XL: 16 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-2XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-20}",
+        "$description": "Spacing step 2XL: 20 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-3XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-24}",
+        "$description": "Spacing step 3XL: 24 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-4XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-32}",
+        "$description": "Spacing step 4XL: 32 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-5XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-36}",
+        "$description": "Spacing step 5XL: 36 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-6XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-40}",
+        "$description": "Spacing step 6XL: 40 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-7XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-48}",
+        "$description": "Spacing step 7XL: 48 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-8XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-56}",
+        "$description": "Spacing step 8XL: 56 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-9XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-64}",
+        "$description": "Spacing step 9XL: 64 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-10XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-80}",
+        "$description": "Spacing step 10XL: 80 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-11XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-96}",
+        "$description": "Spacing step 11XL: 96 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Space-12XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-120}",
+        "$description": "Spacing step 12XL: 120 px, for padding, gaps and margins.",
+        "$extensions": {
+          "mode": {}
+        }
+      }
+    },
+    "Radius": {
+      "Radius-none": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-0}",
+        "$description": "Corner radius step none: 0 px. Square corners.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Radius-XS": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-4}",
+        "$description": "Corner radius step XS: 4 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Radius-S": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-8}",
+        "$description": "Corner radius step S: 8 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Radius-M": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-12}",
+        "$description": "Corner radius step M: 12 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Radius-L": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-16}",
+        "$description": "Corner radius step L: 16 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Radius-XL": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-24}",
+        "$description": "Corner radius step XL: 24 px.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
+      "Radius-Full": {
+        "$type": "dimension",
+        "$value": "{Primitives.Sizes.Size-full}",
+        "$description": "Fully rounded corners (pill or circle), for avatars, badges, switches and pill buttons.",
+        "$extensions": {
+          "mode": {}
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "tokens-bruecke-meta": {
+      "useDTCG": true,
+      "colorMode": "hex",
+      "variableCollections": [
+        "Primitives",
+        "Alias Typography",
+        "Alias Colors",
+        "Color collection",
+        "Alias Spacing & Radius"
+      ],
+      "spec": "https://www.designtokens.org/tr/2025.10/format/",
+      "source": "Generated from DESIGN.md §3.1 to §3.7 for the Northline demo"
+    }
+  }
+}
