@@ -1,0 +1,19 @@
+/*
+ * Base styles on top of Tailwind's preflight. Page defaults only; components set their own text style and colours.
+ */
+@layer base {
+  html {
+    color-scheme: light;
+    background-color: var(--nl-bg-primary);
+    color: var(--nl-text-primary);
+    font: var(--nl-font-body-m);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizelegibility;
+  }
+
+  /* Native controls and scrollbars follow the theme. */
+  [data-theme='dark'] {
+    color-scheme: dark;
+  }
+}

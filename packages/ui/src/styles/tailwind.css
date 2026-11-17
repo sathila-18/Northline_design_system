@@ -1,0 +1,14 @@
+/*
+ * Tailwind CSS 4 for @northline/ui (DESIGN.md §3.11, CLAUDE.md "Tailwind rules").
+ * Every class has the nl: prefix. The theme comes from the tokens; Tailwind's defaults are removed there.
+ * Only the library's own source files are scanned. Stories and tests never add classes to the library CSS.
+ * Named variants and utilities that classes can't express go at the end of this file, each with a comment (rule 8).
+ */
+/* stylelint-disable-next-line at-rule-prelude-no-invalid -- Tailwind 4 import options, not plain CSS */
+@import 'tailwindcss' prefix(nl) source(none);
+@import '@northline/tokens/tailwind-theme.css';
+
+@source '../';
+@source not '../**/*.stories.tsx';
+@source not '../**/*.test.tsx';
+@source not '../__fixtures__';

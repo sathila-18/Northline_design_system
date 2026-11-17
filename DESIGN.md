@@ -562,7 +562,7 @@ Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, c
 | S1 | pnpm monorepo scaffold (`packages/tokens`, `packages/ui`, `apps/storybook`), TypeScript, Vite, ESLint, Stylelint | repo root | ✅ |
 | S2 | Token build with Style Dictionary, brand and theme scoping, Tailwind theme | `packages/tokens/dist/` | ✅ |
 | S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ✅ |
-| S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ⬜ |
+| S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ✅ |
 | S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | ⬜ |
 | S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ⬜ |
 | S7 | Next.js check app and `pnpm nextjs-check` | `apps/nextjs-check` | ⬜ |
@@ -5986,3 +5986,4 @@ Known issues
 | 17 Nov 2026 | S1: pnpm 12 workspaces (`@northline/tokens`, `@northline/ui`, `apps/storybook`), Node 24, TypeScript 6.0.3 strict, Vite 8 library build with `preserveModules` and a `'use client'` check, ESLint, Stylelint, Prettier, `pnpm scrub` and a pre-push hook that runs it |
 | 18 Nov 2026 | S2: token build with Style Dictionary 5.8 (`packages/tokens/build.ts`). CSS variables per layer, brand and theme, Alpha tokens as `color-mix`, TypeScript constants and the Tailwind 4 theme. Utility names per group added to §3.8. Tests: every token in the CSS, every semantic token and text style resolved in 3 brands × 2 themes, and the Tailwind utilities |
 | 18 Nov 2026 | S3: `packages/tokens/src/styles.css` with shadows (black from `--nl-palette-black` via `color-mix`), layers, grid (`--nl-grid-columns`, `--nl-grid-gutter`, `--nl-grid-margin`) and motion. Reduced motion sets every duration to 0ms. Tests check every value against §4.1, §4.3 and §5 |
+| 18 Nov 2026 | S4: self-hosted fonts through `@fontsource` (Inter, IBM Plex Sans, Space Grotesk; 400 to 700; Latin and Latin Extended) and `material-symbols` (Rounded). `packages/ui/src/styles/` holds `index.css`, `fonts.css`, `tailwind.css` and `reset.css`; the build writes `dist/index.css` with the font files beside it. Page default: Body M, `text-primary` on `bg-primary`; `color-scheme` follows the theme. Data L and Data M use tabular figures (S2) |
