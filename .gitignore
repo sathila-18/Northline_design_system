@@ -1,0 +1,8 @@
+# Private: names that must never appear in the repo (CLAUDE.md, "Scrub check")
+scripts/scrub-words.txt
+
+# Private: extracted specs waiting to be copied into DESIGN.md §9
+incoming/
+
+# OS files
+.DS_Store
