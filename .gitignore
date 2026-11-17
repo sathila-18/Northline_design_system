@@ -11,5 +11,10 @@ storybook-static/
 coverage/
 *.tsbuildinfo
 
+# Next.js check output, if apps/nextjs-check is ever built in place (pnpm nextjs-check builds a copy)
+.next/
+next-env.d.ts
+apps/nextjs-check/packs/
+
 # OS files
 .DS_Store

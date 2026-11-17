@@ -565,7 +565,7 @@ Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, c
 | S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ✅ |
 | S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | ✅ |
 | S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ✅ |
-| S7 | Next.js check app and `pnpm nextjs-check` | `apps/nextjs-check` | ⬜ |
+| S7 | Next.js check app and `pnpm nextjs-check` | `apps/nextjs-check` | ✅ |
 | S8 | Vercel deploy of Storybook | `vercel.json` | ⬜ |
 
 ### 8.1 Atoms L0
@@ -5990,3 +5990,4 @@ Known issues
 | 18 Nov 2026 | S4: self-hosted fonts through `@fontsource` (Inter, IBM Plex Sans, Space Grotesk; 400 to 700; Latin and Latin Extended) and `material-symbols` (Rounded). `packages/ui/src/styles/` holds `index.css`, `fonts.css`, `tailwind.css` and `reset.css`; the build writes `dist/index.css` with the font files beside it. Page default: Body M, `text-primary` on `bg-primary`; `color-scheme` follows the theme. Data L and Data M use tabular figures (S2) |
 | 18 Nov 2026 | S5: Storybook 10.6 (`@storybook/react-vite`, a11y and docs addons) with a Brand and Theme toolbar that sets `data-brand` and `data-theme` on `<html>`. Foundations pages: Token pipeline, Colours (primitives, aliases, semantic tokens), Typography, Spacing and sizes, Radius, Shadows, Layers, Motion, Icons. Approved by the designer, including the §3.8 utility names, the documentation-only dynamic class on the Token pipeline page, and Northline and Light as the `:root` defaults |
 | 18 Nov 2026 | S6: Vitest, Testing Library and jsdom in `@northline/ui`. `pnpm test:a11y` runs axe (WCAG 2.2 AA) on every story in 3 brands × 2 themes; contrast skips anything inside `data-a11y-state="hover"` or `"pressed"` (D17) and accepted known issues marked `data-a11y-known-issue`. ESLint is type-aware, and `scripts/lint/` adds the CLAUDE.md rules: `nl:` prefix, theme classes only, no arbitrary values, `!`, `dark:` or raw colours and pixels, no `outline-none` beside a focus ring width, whole literal class strings. Each rule has tests. Found and accepted K2 |
+| 18 Nov 2026 | S7: `apps/nextjs-check`, a Next.js 16 App Router app (outside the pnpm workspace) that imports `@northline/ui/index.css` and sets `data-brand` and `data-theme` on `<html>` in the root layout. `pnpm nextjs-check` packs both libraries, installs the tarballs into a copy of the app with npm, runs `next build` and checks the CSS and fonts in the output. Must pass before every release |

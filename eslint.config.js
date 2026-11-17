@@ -9,7 +9,8 @@ import northline from './scripts/lint/eslint-plugin-northline.mjs';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/storybook-static/**', '**/coverage/**', '**/node_modules/**'],
+    // apps/nextjs-check is outside the workspace and is type-checked by next build (pnpm nextjs-check).
+    ignores: ['**/dist/**', '**/storybook-static/**', '**/coverage/**', '**/node_modules/**', 'apps/nextjs-check/**'],
   },
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,

@@ -1,6 +1,8 @@
 packages:
   - packages/*
   - apps/*
+  # Installs the packed libraries like a real app would (pnpm nextjs-check), so it stays outside the workspace.
+  - '!apps/nextjs-check'
 
 # Dependencies allowed to run install scripts. simple-git-hooks installs the pre-push hook (pnpm scrub);
 # esbuild (used by Storybook) checks its native binary.
