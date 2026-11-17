@@ -206,3 +206,41 @@ describe('tailwind-theme.css', () => {
     expect(declared.filter((name) => tokenVars.has(name))).toEqual([]);
   });
 });
+
+describe('styles.css (hand-written, S3)', () => {
+  const styles = read('../dist/styles.css');
+  const theme = read('../dist/tailwind-theme.css');
+  const design = read('../../../DESIGN.md');
+  const rootBlock = styles.slice(0, styles.indexOf('@media'));
+  const reduced = styles.slice(styles.indexOf('@media (prefers-reduced-motion: reduce)'));
+  const defined = new Set([...styles.matchAll(/(--nl-[\w-]+):/g), ...css.matchAll(/(--nl-[\w-]+):/g)].map((m) => m[1]));
+
+  it('has every shadow, layer and motion value from DESIGN.md §4.1, §4.3 and §5', () => {
+    const rows = [...design.matchAll(/^\| `(--nl-(?:shadow|z|duration|ease)-[\w-]+)` \| ([^|]+) \|/gm)];
+    expect(rows.length).toBe(17);
+    for (const [, name = '', value = ''] of rows) {
+      const actual = new RegExp(`${name}: ([^;]+);`).exec(rootBlock)?.[1] ?? '';
+      const expected = value
+        .trim()
+        .replace(/black at (\d+)%/, 'color-mix(in srgb, var(--nl-palette-black) $1%, transparent)');
+      expect(actual, name).toBe(expected);
+    }
+  });
+
+  it('only uses variables that exist', () => {
+    const used = [...styles.matchAll(/var\((--nl-[\w-]+)\)/g)].map((m) => m[1]);
+    expect(used.filter((name) => !defined.has(name))).toEqual([]);
+  });
+
+  it('defines every shadow and layer the Tailwind theme points at', () => {
+    const used = [...theme.matchAll(/var\((--nl-(?:shadow|z)-[\w-]+)\)/g)].map((m) => m[1]);
+    expect(used.length).toBe(12);
+    expect(used.filter((name) => !defined.has(name))).toEqual([]);
+  });
+
+  it('turns every duration off for prefers-reduced-motion', () => {
+    const durations = [...rootBlock.matchAll(/(--nl-duration-[\w-]+):/g)].map((m) => m[1]);
+    expect(durations.length).toBe(4);
+    for (const name of durations) expect(reduced, name).toContain(`${name}: 0ms;`);
+  });
+});
