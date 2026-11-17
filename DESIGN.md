@@ -561,7 +561,7 @@ Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, c
 | S0 | Token JSON built from §3, plus the audit report | `tokens/design.tokens.json`, `docs/TOKEN_AUDIT.md` | ✅ |
 | S1 | pnpm monorepo scaffold (`packages/tokens`, `packages/ui`, `apps/storybook`), TypeScript, Vite, ESLint, Stylelint | repo root | ✅ |
 | S2 | Token build with Style Dictionary, brand and theme scoping, Tailwind theme | `packages/tokens/dist/` | ✅ |
-| S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ⬜ |
+| S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ✅ |
 | S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ⬜ |
 | S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | ⬜ |
 | S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ⬜ |
@@ -5985,3 +5985,4 @@ Known issues
 | 17 Nov 2026 | S0: `tokens/design.tokens.json` (425 tokens) and `docs/TOKEN_AUDIT.md`. D17 records the token file decisions. S-1 and S0 approved |
 | 17 Nov 2026 | S1: pnpm 12 workspaces (`@northline/tokens`, `@northline/ui`, `apps/storybook`), Node 24, TypeScript 6.0.3 strict, Vite 8 library build with `preserveModules` and a `'use client'` check, ESLint, Stylelint, Prettier, `pnpm scrub` and a pre-push hook that runs it |
 | 18 Nov 2026 | S2: token build with Style Dictionary 5.8 (`packages/tokens/build.ts`). CSS variables per layer, brand and theme, Alpha tokens as `color-mix`, TypeScript constants and the Tailwind 4 theme. Utility names per group added to §3.8. Tests: every token in the CSS, every semantic token and text style resolved in 3 brands × 2 themes, and the Tailwind utilities |
+| 18 Nov 2026 | S3: `packages/tokens/src/styles.css` with shadows (black from `--nl-palette-black` via `color-mix`), layers, grid (`--nl-grid-columns`, `--nl-grid-gutter`, `--nl-grid-margin`) and motion. Reduced motion sets every duration to 0ms. Tests check every value against §4.1, §4.3 and §5 |

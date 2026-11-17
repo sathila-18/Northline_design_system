@@ -1,0 +1,46 @@
+/*
+ * Hand-written foundation styles (S3): shadows (DESIGN.md §4.1), layers (§4.3), grid (§4.4) and motion (§5).
+ * These are token definitions, so their values are written here once. Components use them through the
+ * Tailwind theme (nl:shadow-*, nl:z-*) or the variables, never as raw values.
+ * build.ts copies this file to dist/styles.css.
+ */
+
+:root {
+  /* Shadows (§4.1). Black at a low opacity, the same in both themes. */
+  --nl-shadow-resting: 0 1px 3px 0 color-mix(in srgb, var(--nl-palette-black) 5%, transparent);
+  --nl-shadow-panel: 0 2px 10px 0 color-mix(in srgb, var(--nl-palette-black) 4%, transparent);
+  --nl-shadow-menu: 0 -2px 16px 0 color-mix(in srgb, var(--nl-palette-black) 8%, transparent);
+  --nl-shadow-sticky: 0 -2px 16px 0 color-mix(in srgb, var(--nl-palette-black) 8%, transparent);
+  --nl-shadow-sticky-end: -2px 0 16px 0 color-mix(in srgb, var(--nl-palette-black) 8%, transparent);
+
+  /* Layers (§4.3) */
+  --nl-z-base: 0;
+  --nl-z-sticky: 10;
+  --nl-z-overlay: 100;
+  --nl-z-modal: 110;
+  --nl-z-menu: 200;
+  --nl-z-tooltip: 300;
+  --nl-z-snackbar: 400;
+
+  /* Grid and page widths (§4.4): 12 columns, 24 gutter, 24 margin */
+  --nl-grid-columns: 12;
+  --nl-grid-gutter: var(--nl-space-3xl);
+  --nl-grid-margin: var(--nl-space-3xl);
+
+  /* Motion (§5) */
+  --nl-duration-fast: 120ms;
+  --nl-duration-base: 200ms;
+  --nl-duration-slow: 300ms;
+  --nl-duration-pulse: 1600ms;
+  --nl-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Every animation has a reduced-motion alternative (§5): transitions become instant and the skeleton stops pulsing. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --nl-duration-fast: 0ms;
+    --nl-duration-base: 0ms;
+    --nl-duration-slow: 0ms;
+    --nl-duration-pulse: 0ms;
+  }
+}

@@ -4,7 +4,7 @@
 //   tokens.js, .d.ts     semantic token names and the full chain (for Storybook's Token pipeline page)
 //   tailwind-theme.css   the Tailwind 4 theme: semantic colours, text styles, spacing, radius, sizes, shadows, z-index
 // Run: node build.ts (Node 24 runs TypeScript directly). Never edit dist/ by hand.
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import StyleDictionary from 'style-dictionary';
 import type { DesignTokens, TransformedToken } from 'style-dictionary/types';
@@ -261,6 +261,7 @@ await Promise.all([
   writeFile(`${DIST}tailwind-theme.css`, theme.join('\n')),
   writeFile(`${DIST}tokens.js`, js),
   writeFile(`${DIST}tokens.d.ts`, dts),
+  copyFile(fileURLToPath(new URL('src/styles.css', import.meta.url)), `${DIST}styles.css`), // hand-written (S3)
 ]);
 console.log(
   `Tokens built: ${reference.length} tokens, ${semantic.size} semantic, ${textStyles.length} text styles → packages/tokens/dist/`,
