@@ -13,3 +13,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | S5 | 2026-11-18 00:06 | 2026-11-18 00:27 | Storybook. Reviewed and approved by the designer |
 | S6 | 2026-11-18 00:29 | 2026-11-18 00:41 | Checks. K2 accepted by the designer; merged without a separate review (setup S1 to S8) |
 | S7 | 2026-11-18 00:42 | 2026-11-18 00:44 | Next.js check. Merged without a separate review (setup S1 to S8) |
+| S8 | 2026-11-18 00:45 | 2026-11-18 01:07 | Vercel. Dashboard set up by the designer; production checked in a browser, preview build succeeded |
