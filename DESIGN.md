@@ -563,7 +563,7 @@ Status ⬜ Not started · 🟨 In progress · ✅ Done (built, stories, tests, c
 | S2 | Token build with Style Dictionary, brand and theme scoping, Tailwind theme | `packages/tokens/dist/` | ✅ |
 | S3 | Hand-written styles (§4, §5) | `packages/tokens/src/styles.css` | ✅ |
 | S4 | Fonts (Inter, IBM Plex Sans, Space Grotesk, Material Symbols Rounded), reset, app stylesheet | `packages/ui/src/styles/` | ✅ |
-| S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | ⬜ |
+| S5 | Storybook with theme and brand toolbar and Foundations pages (colours, typography, spacing, radius, shadows) | `apps/storybook` | 🟨 |
 | S6 | Tests, a11y checks in every brand and theme, lint rules for tokens and Tailwind | repo root | ⬜ |
 | S7 | Next.js check app and `pnpm nextjs-check` | `apps/nextjs-check` | ⬜ |
 | S8 | Vercel deploy of Storybook | `vercel.json` | ⬜ |

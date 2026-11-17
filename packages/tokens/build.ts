@@ -229,6 +229,19 @@ export const textStyleNames = ${JSON.stringify(textStyles)};
 export const semanticTokens = ${JSON.stringify(Object.fromEntries(entries.map((e) => [e.name, e])), null, 2)};
 export const aliasChains = ${JSON.stringify(brandChains, null, 2)};
 export const primitiveColors = ${JSON.stringify(primitives, null, 2)};
+export const tokenList = ${JSON.stringify(
+  reference.map((t) => ({
+    path: t.path.join('.'),
+    collection: t.path[0],
+    group: t.path.length > 2 ? t.path.at(-2) : '',
+    name: t.path.at(-1),
+    cssVar: `--${t.name}`,
+    type: t.$type,
+    description: String(t.$description ?? ''),
+  })),
+  null,
+  2,
+)};
 `;
 const union = (values: readonly string[]) => values.map((v) => JSON.stringify(v)).join(' | ');
 const dts = `${HEADER.replace('/*', '//').replace(' */', '')}
@@ -253,6 +266,19 @@ export declare const semanticTokens: Readonly<Record<SemanticTokenName, Semantic
 export declare const aliasChains: Readonly<Record<string, Record<'Northline' | 'Garnet' | 'Voltic', string>>>;
 /** Primitive colour CSS variable → hex. */
 export declare const primitiveColors: Readonly<Record<string, string>>;
+export interface TokenListItem {
+  /** JSON path in tokens/design.tokens.json */
+  path: string;
+  collection: 'Primitives' | 'Alias Typography' | 'Alias Colors' | 'Color collection' | 'Alias Spacing & Radius';
+  /** The group the token sits in (for example "Primary", "Spacing", "Font Size") */
+  group: string;
+  name: string;
+  cssVar: \`--nl-\${string}\`;
+  type: 'color' | 'dimension' | 'fontFamily' | 'fontWeight';
+  description: string;
+}
+/** Every token in the JSON, in file order. */
+export declare const tokenList: readonly TokenListItem[];
 `;
 
 await mkdir(DIST, { recursive: true });

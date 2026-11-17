@@ -1,0 +1,14 @@
+/*
+ * Storybook's stylesheet: the library's index.css, built from source so Tailwind sees the components,
+ * plus Storybook's own sources (Foundations and Pages).
+ */
+@import '../../../packages/ui/src/styles/index.css';
+
+@source '.';
+
+/* The Token pipeline page renders each semantic token's Tailwind class, which tokens.js lists per token. */
+@source '../../../packages/tokens/dist/tokens.js';
+
+body {
+  background-color: var(--nl-bg-primary);
+}
