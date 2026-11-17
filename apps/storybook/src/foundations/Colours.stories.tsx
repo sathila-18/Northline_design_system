@@ -9,6 +9,7 @@ import {
   TokenTable,
   Value,
   brandLabel,
+  fromGlobals,
   useCssValues,
   type BrandTheme,
 } from './docs';
@@ -99,11 +100,27 @@ function AliasesPage(context: BrandTheme) {
   );
 }
 
+// Text tokens meant for a filled surface are shown on that surface (DESIGN.md §3.3).
+const textSurface: Partial<Record<string, string>> = {
+  'text-white_both': '--nl-bg-action-primary',
+  'text-white_subtle': '--nl-bg-brand',
+  'text-dark_both': '--nl-bg-warning',
+  'text-inverse': '--nl-bg-direct',
+  'text-disabled-on_bg': '--nl-bg-disabled',
+};
+// Disabled text is exempt from contrast (WCAG 1.4.3), so its samples are marked disabled.
+const disabledText = new Set(['text-disabled', 'text-disabled-on_bg']);
+
 function SemanticSample({ token }: { token: SemanticToken }) {
   const color = `var(${token.cssVar})`;
   if (token.group === 'Text') {
+    const surface = textSurface[token.name];
     return (
-      <span className="nl:text-title-l" style={{ color }}>
+      <span
+        className="nl:inline-block nl:rounded-xs nl:px-xs nl:text-title-l"
+        style={{ color, backgroundColor: surface ? `var(${surface})` : undefined }}
+        aria-disabled={disabledText.has(token.name) || undefined}
+      >
         Aa
       </span>
     );
@@ -160,12 +177,12 @@ function SemanticPage(context: BrandTheme) {
 }
 
 export const Primitives: Story = {
-  render: (_, { globals }) => <PrimitivesPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <PrimitivesPage {...fromGlobals(globals)} />,
 };
 export const Aliases: Story = {
-  render: (_, { globals }) => <AliasesPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <AliasesPage {...fromGlobals(globals)} />,
 };
 export const SemanticTokens: Story = {
   name: 'Semantic tokens',
-  render: (_, { globals }) => <SemanticPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <SemanticPage {...fromGlobals(globals)} />,
 };

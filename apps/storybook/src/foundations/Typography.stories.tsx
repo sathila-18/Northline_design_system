@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { textStyleNames, tokenList } from '@northline/tokens';
-import { Code, Page, Row, Section, TokenTable, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Row, Section, TokenTable, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 
 const meta: Meta = { title: 'Foundations/Typography', parameters: { layout: 'fullscreen' } };
 export default meta;
@@ -41,5 +41,5 @@ function TypographyPage(context: BrandTheme) {
 }
 
 export const Typography: StoryObj = {
-  render: (_, { globals }) => <TypographyPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <TypographyPage {...fromGlobals(globals)} />,
 };

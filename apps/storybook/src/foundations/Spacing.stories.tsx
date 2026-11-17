@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { tokenList } from '@northline/tokens';
-import { Code, Page, Row, Section, TokenTable, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Row, Section, TokenTable, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 
 const meta: Meta = { title: 'Foundations/Spacing and sizes', parameters: { layout: 'fullscreen' } };
 export default meta;
@@ -64,5 +64,5 @@ function SpacingPage(context: BrandTheme) {
 
 export const SpacingAndSizes: StoryObj = {
   name: 'Spacing and sizes',
-  render: (_, { globals }) => <SpacingPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <SpacingPage {...fromGlobals(globals)} />,
 };

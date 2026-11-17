@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Code, Page, Row, Section, TokenTable, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Row, Section, TokenTable, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 import { layers } from './data';
 
 const meta: Meta = { title: 'Foundations/Layers', parameters: { layout: 'fullscreen' } };
@@ -36,5 +36,5 @@ function LayersPage(context: BrandTheme) {
 }
 
 export const Layers: StoryObj = {
-  render: (_, { globals }) => <LayersPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <LayersPage {...fromGlobals(globals)} />,
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Code, Page, Section, Value, useCssValues, type BrandTheme } from './docs';
+import { Code, Page, Section, Value, fromGlobals, useCssValues, type BrandTheme } from './docs';
 import { shadows } from './data';
 
 const meta: Meta = { title: 'Foundations/Shadows', parameters: { layout: 'fullscreen' } };
@@ -35,5 +35,5 @@ function ShadowsPage(context: BrandTheme) {
 }
 
 export const Shadows: StoryObj = {
-  render: (_, { globals }) => <ShadowsPage brand={globals.brand} theme={globals.theme} />,
+  render: (_, { globals }) => <ShadowsPage {...fromGlobals(globals)} />,
 };

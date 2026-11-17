@@ -55,9 +55,15 @@ async function tokensFor(source: Json, brand: Brand, theme: Theme): Promise<Tran
 
 const collection = (token: TransformedToken) => token.path[0];
 
+/** The opacity an Alpha token has in a theme (com.northline.alpha), or undefined. */
+const alphaOf = (token: TransformedToken, theme: Theme) =>
+  (
+    (token.$extensions as Record<string, unknown> | undefined)?.[ALPHA_EXTENSION] as Record<Theme, number> | undefined
+  )?.[theme];
+
 /** The CSS value of a token: a var() for a reference, otherwise the raw value in CSS form. */
 function cssValue(token: TransformedToken, names: Map<string, string>, theme: Theme): string {
-  const original = token.original.$value;
+  const original: unknown = token.original.$value;
   const match = typeof original === 'string' ? REFERENCE.exec(original) : null;
   let value: string;
   if (match?.[1]) {
@@ -72,7 +78,7 @@ function cssValue(token: TransformedToken, names: Map<string, string>, theme: Th
   } else {
     value = String(original);
   }
-  const alpha = (token.$extensions?.[ALPHA_EXTENSION] as Record<Theme, number> | undefined)?.[theme];
+  const alpha = alphaOf(token, theme);
   if (alpha !== undefined) value = `color-mix(in srgb, ${value} ${+(alpha * 100).toFixed(2)}%, transparent)`;
   return value;
 }
@@ -114,7 +120,7 @@ for (const brand of BRANDS) {
   }
   for (const token of tokens) {
     const match = REFERENCE.exec(String(token.original.$value));
-    (brandChains[`--${token.name}`] ??= {} as Record<Brand, string>)[brand] = `--${names.get(match?.[1] ?? '')}`;
+    (brandChains[`--${token.name}`] ??= {} as Record<Brand, string>)[brand] = `--${names.get(match?.[1] ?? '') ?? ''}`;
   }
   const selector = brand === 'Northline' ? ':root,\n[data-brand="northline"]' : `[data-brand="${brand.toLowerCase()}"]`;
   css.push(block(selector, lines));
@@ -139,12 +145,12 @@ for (const theme of THEMES) {
       group: token.path[1] ?? '',
       cssVar: `--${token.name}`,
       tailwind: tailwindKeys(name).map((k) => `nl:${k.utility}`),
-      description: String(token.$description ?? ''),
+      description: token.$description ?? '',
       modes: {} as SemanticEntry['modes'],
     };
     const match = REFERENCE.exec(String(token.original.$value));
-    const alpha = (token.$extensions?.[ALPHA_EXTENSION] as Record<Theme, number> | undefined)?.[theme];
-    entry.modes[theme] = { alias: `--${names.get(match?.[1] ?? '')}`, ...(alpha === undefined ? {} : { alpha }) };
+    const alpha = alphaOf(token, theme);
+    entry.modes[theme] = { alias: `--${names.get(match?.[1] ?? '') ?? ''}`, ...(alpha === undefined ? {} : { alpha }) };
     semantic.set(name, entry);
   }
   const selector = theme === 'Light' ? ':root,\n[data-theme="light"]' : '[data-theme="dark"]';
@@ -237,7 +243,7 @@ export const tokenList = ${JSON.stringify(
     name: t.path.at(-1),
     cssVar: `--${t.name}`,
     type: t.$type,
-    description: String(t.$description ?? ''),
+    description: t.$description ?? '',
   })),
   null,
   2,
