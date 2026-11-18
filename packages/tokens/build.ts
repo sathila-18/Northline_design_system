@@ -90,6 +90,13 @@ function block(selector: string, lines: string[]): string {
 const source = JSON.parse(await readFile(SOURCE, 'utf8')) as Json;
 const reference = await tokensFor(source, 'Northline', 'Light');
 const names = new Map(reference.map((token) => [token.path.join('.'), token.name]));
+// A text style is an Alias Typography group with a font size. Other groups (Icon: only a weight) are plain aliases
+// and get no font shorthand or text utility.
+const textStyleGroups = new Set(
+  reference.filter((t) => collection(t) === 'Alias Typography' && t.path[2] === 'Font size').map((t) => t.path[1]),
+);
+const isTextStyleToken = (t: TransformedToken) =>
+  collection(t) === 'Alias Typography' && textStyleGroups.has(t.path[1]);
 const declarations = (tokens: TransformedToken[], theme: Theme) =>
   tokens.map((token) => `--${token.name}: ${cssValue(token, names, theme)};`);
 
@@ -113,7 +120,7 @@ for (const brand of BRANDS) {
     ['Alias Colors', 'Alias Typography'].includes(collection(t) ?? ''),
   );
   const lines = declarations(tokens, 'Light');
-  const styles = [...new Set(tokens.filter((t) => collection(t) === 'Alias Typography').map((t) => t.path[1] ?? ''))];
+  const styles = [...new Set(tokens.filter(isTextStyleToken).map((t) => t.path[1] ?? ''))];
   for (const style of styles) {
     const n = `nl-font-${textStyleName(style)}`;
     lines.push(`--${n}: var(--${n}-weight) var(--${n}-size)/var(--${n}-line-height) var(--${n}-family);`);
@@ -166,7 +173,7 @@ const primitives = Object.fromEntries(
 
 // Tailwind theme (DESIGN.md §3.11). "inline reference" makes utilities use var(--nl-…) directly and emit no
 // theme variables, so Tailwind's own prefixed variables can never overwrite a token with the same name.
-const textStyles = [...new Set(reference.filter((t) => collection(t) === 'Alias Typography').map((t) => t.path[1]))]
+const textStyles = [...new Set(reference.filter(isTextStyleToken).map((t) => t.path[1]))]
   .filter((style): style is string => Boolean(style))
   .map(textStyleName);
 const space = reference.filter((t) => t.path[1] === 'Spacing').map((t) => t.name.replace(/^nl-space-/, ''));

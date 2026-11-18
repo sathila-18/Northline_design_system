@@ -704,6 +704,14 @@
         }
       },
       "Font Weight": {
+        "Font Weight-300": {
+          "$type": "fontWeight",
+          "$value": 300,
+          "$description": "Font weight 300 (light). Icons only: the text fonts are not loaded at 300.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
         "Font Weight-400": {
           "$type": "fontWeight",
           "$value": 400,
@@ -2533,6 +2541,20 @@
             "Northline": "{Primitives.Typography.Line Height.Line Height-31_2}",
             "Garnet": "{Primitives.Typography.Line Height.Line Height-31_2}",
             "Voltic": "{Primitives.Typography.Line Height.Line Height-31_2}"
+          }
+        }
+      }
+    },
+    "Icon": {
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-300}",
+        "$description": "Weight of Material Symbols icon glyphs (NlIcon): 300 in every brand. Not a text style; never use it for text.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-300}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-300}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-300}"
           }
         }
       }
