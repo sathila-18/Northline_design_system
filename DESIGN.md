@@ -605,7 +605,7 @@ _The designer adds rows here before each build._
 | 20 | Icon container | `NlIconContainer` | `NlIcon` | [§9](#nliconcontainer) | ✅ |
 | 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ✅ |
 | 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ✅ |
-| 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ⬜ |
+| 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ✅ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlIcon` | [§9](#nlwhitebutton) | ⬜ |
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlIcon` | [§9](#nldestructivebutton) | ⬜ |
@@ -6688,3 +6688,4 @@ Known issues
 | 18 Nov 2026 | NlIconContainer (#20): an `NlIcon` centred on a `Radius-Full` tinted circle, sizes 40, 48 (default) and 64 with a 24 or 36 icon, seven tones (default `primary`), optional label. Fixed size with no padding (OD-45); defaults approved (OD-46). The circle sets the colour and the icon inherits it. K1 accepted for primary and disabled in Light. Approved by the designer |
 | 18 Nov 2026 | NlAvatar (#21): photo, initials or icon in a `Radius-Full` circle with a 1px `border-subtle` inside, seven sizes (`Size-24` to `Size-96`, default `medium`), optional `NlStatusDot` bottom-right. Falls back from the photo to initials, then the icon. `person` added to the icon registry (OD-47, 26 icons); Storybook serves story-only artwork from `apps/storybook/public`. Approved by the designer |
 | 18 Nov 2026 | NlBadgeBase (#22, internal): one-line tag with a label and optional leading and trailing icons, small (`Label S`, hugs to 26) and large (`Label M`, `Size-32` minimum height, OD-49). Colours come from the mapped component through `appearance` (badge and icon class strings); the 1px inside border is an inset ring so every tone is the same size. Approved by the designer |
+| 18 Nov 2026 | NlBadge (#23): status tag mapped on `NlBadgeBase`, eight tones (default `neutral`, OD-53), small (default) and large (OD-51), optional icons off by default in the matching `fg-*` colour (OD-52). Known issue K4 accepted (disabled tone text contrast). Approved by the designer |
