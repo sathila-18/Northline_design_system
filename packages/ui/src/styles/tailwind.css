@@ -62,6 +62,17 @@
   animation: nl-skeleton-pulse var(--nl-duration-pulse) var(--nl-ease-standard) infinite;
 }
 
+/*
+ * nl:progress-fill: the progress bar fill's width (DESIGN.md §9, NlProgressBar). Only NlProgressBar uses it.
+ * The width is data (value%), set by the component as --nl-progress-value on the element; classes can't express it
+ * without an arbitrary value. Also names width as the transitioned property; duration and easing come from
+ * nl:duration-base and nl:ease-standard (OD-7). Approved by the designer, 18 Nov 2026 (rule 9).
+ */
+@utility progress-fill {
+  width: var(--nl-progress-value, 0%);
+  transition-property: width;
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {

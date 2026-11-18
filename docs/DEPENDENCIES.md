@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge, NlDivider, NlSkeleton and NlOverlay approved; OD-4 and OD-6 decided; OD-5 open, horizontal only).
+Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge, NlDivider, NlSkeleton, NlOverlay and NlProgressBar approved; OD-4, OD-6, OD-7 and OD-8 decided; OD-5 and OD-9 open).
 
 ---
 
@@ -32,7 +32,7 @@ Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge, NlDivider, NlSkele
 | 4 | `NlDivider` | yes | – | `NlListItemBase`, `NlAccordion`, `NlSideSheet` | – | ✅ batch 1 | ✅ |
 | 5 | `NlSkeleton` | yes | – | `NlTable` | – | ✅ batch 1 | ✅ |
 | 6 | `NlOverlay` | yes | – | `NlDialog`, `NlSideSheet` | – | ✅ batch 1 | ✅ |
-| 7 | `NlProgressBar` | yes | – | `NlFileUpload` | – | ✅ batch 1 | ⬜ |
+| 7 | `NlProgressBar` | yes | – | `NlFileUpload` | – | ✅ batch 1 | ✅ |
 | 8 | `NlSlider` | yes | – | – | OD-10 (Storybook check) | ✅ batch 1 | ⬜ |
 | 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ⬜ |
 | 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | OD-13b | ✅ batch 1 | ⬜ |
@@ -198,8 +198,8 @@ Decide these before building the components listed under "Affects".
 - OD-6 · Pulse easing: `--nl-ease-standard` · **Decided** 18 Nov 2026: approved
 
 **NlProgressBar**
-- OD-7 · Width animation: `--nl-duration-base`, `--nl-ease-standard`, none under reduced motion · Open
-- OD-8 · Default size: `small` · Open
+- OD-7 · Width animation: `--nl-duration-base`, `--nl-ease-standard`, none under reduced motion · **Decided** 18 Nov 2026: approved
+- OD-8 · Default size: `small` · **Decided** 18 Nov 2026: approved
 - OD-9 · Indeterminate bar: not specified (`NlSpinner` covers unknown duration) · Open
 
 **NlSlider**

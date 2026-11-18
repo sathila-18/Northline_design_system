@@ -261,3 +261,15 @@ The dot against an avatar image or fill is checked when `NlAvatar` is built.
 | `fg-success` | `#0A8310`, 4.92 ✓ | `#6EC872`, 9.26 ✓ |
 
 The spec asked specifically for white on `fg-warning` in Light: 5.00, a pass.
+
+## 11. Contrast added on 18 Nov 2026: progress bar
+
+`NlProgressBar` draws a `fg-brand` fill on a `bg-active-hover` track. The fill is a meaningful graphic and needs 3:1 (WCAG 1.4.11, §2.6). No token changed. Measured in the browser from the built tokens.
+
+| Brand | Light | Dark |
+|---|---|---|
+| Northline | 5.49 ✓ | 4.97 ✓ |
+| Garnet | 5.75 ✓ | 5.37 ✓ |
+| Voltic | 4.30 ✓ | 3.92 ✓ |
+
+All pass. The lowest is Voltic Dark, 3.92.
