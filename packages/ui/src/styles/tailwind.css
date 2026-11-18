@@ -73,6 +73,37 @@
   transition-property: width;
 }
 
+/*
+ * nl:range-thumb:*: styles the browser's own range thumb (DESIGN.md §9, NlSlider). Only NlSlider uses it, on its
+ * transparent native <input type="range">, to size that thumb to the drawn one (Size-24) so a click or drag lands on
+ * the right value. WebKit and Firefox name the thumb differently, and one unknown pseudo-element would drop a combined
+ * rule, so each gets its own. Approved by the designer, 18 Nov 2026 (rule 9).
+ */
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- & is the element the variant applies to (Tailwind 4) */
+@custom-variant range-thumb {
+  &::-webkit-slider-thumb {
+    @slot;
+  }
+
+  &::-moz-range-thumb {
+    @slot;
+  }
+}
+/* stylelint-enable nesting-selector-no-missing-scoping-root */
+
+/*
+ * nl:slider-fill and nl:slider-thumb: the slider's drawn fill width and thumb position (DESIGN.md §9, NlSlider).
+ * Only NlSlider uses them. The value is data, set by the component as --nl-slider-value (a percent of the range) on
+ * its root; classes can't express it without an arbitrary value. From the start edge. Approved, 18 Nov 2026 (rule 9).
+ */
+@utility slider-fill {
+  width: var(--nl-slider-value, 0%);
+}
+
+@utility slider-thumb {
+  inset-inline-start: var(--nl-slider-value, 0%);
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {

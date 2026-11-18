@@ -16,4 +16,7 @@ const stylesDir = `${root}packages/ui/src/styles`;
 const design = await loadDesignSystem(readFileSync(`${stylesDir}/tailwind.css`, 'utf8'), { base: stylesDir });
 const classes = JSON.parse(process.argv[2] ?? '[]');
 const css = design.candidatesToCss(classes);
-process.stdout.write(JSON.stringify(classes.filter((_, index) => !css[index])));
+// group and peer are marker classes: they produce no CSS themselves, they name an element that group-* and peer-*
+// variants follow (CLAUDE.md, Tailwind rule 3). Bare or named (nl:group/row, nl:peer/input).
+const marker = /^nl:(group|peer)(\/[a-z][\w-]*)?$/;
+process.stdout.write(JSON.stringify(classes.filter((name, index) => !css[index] && !marker.test(name))));
