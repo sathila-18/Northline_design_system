@@ -21,9 +21,10 @@
     "./index.css": "./dist/index.css"
   },
   "scripts": {
-    "build": "vite build && vite build --config vite.styles.config.ts && tsc -p tsconfig.build.json",
+    "icons": "node scripts/subset-icons.mjs",
+    "build": "pnpm icons && vite build && vite build --config vite.styles.config.ts && tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run && node scripts/check-directives.mjs && node scripts/check-styles.mjs"
+    "test": "pnpm icons && vitest run && node scripts/check-directives.mjs && node scripts/check-styles.mjs"
   },
   "peerDependencies": {
     "@northline/tokens": "workspace:^",
@@ -42,6 +43,7 @@
     "jsdom": "31.0.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "subset-font": "2.9.0",
     "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
     "vite": "8.3.8",

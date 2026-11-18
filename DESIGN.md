@@ -574,7 +574,7 @@ _The designer adds rows here before each build._
 
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
-| 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ⬜ |
+| 1 | Icon | `NlIcon` | – | [§9](#nlicon) | 🟨 |
 | 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ⬜ |
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ⬜ |
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ⬜ |
@@ -764,6 +764,48 @@ None. `NlIcon` is not interactive. A component that contains an icon sets the ic
 | Default tone | The reference always sets a tone, and every instance in other components overrides it | `tone="inherit"` (uses `currentColor`) is the default, so a parent such as a button or link colours the icon through its own state classes. The 7 named tones stay as options | Approved |
 | Other foreground tokens | Other components colour icons with `fg-action`, `fg-brand`, `fg-hovered`, `fg-pressed`, `fg-inverse`, `fg-white_both`, `fg-disabled-on_bg` | Covered by `tone="inherit"`. The parent sets the colour. No extra tones | Approved |
 | Icon source | Icons come from a linked external icon library | Material Symbols Rounded through the `nlIcons` registry (§6) | Matches §6 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Icon | `name: NlIconName` (required). Renders the glyph at the name's code point from `nlIcons`, also `data-icon` |
+| Size | `size?: 16 \| 20 \| 24 \| 36 \| 48 \| 64`, default `24`, also `data-size`. Box `nl:size-*`, glyph `nl:icon-*` |
+| Colour | `tone?: 'inherit' \| 'primary' \| 'secondary' \| 'disabled' \| 'success' \| 'warning' \| 'error' \| 'info'`, default `inherit`, also `data-tone`. Named tones `nl:text-fg-*` |
+| Fill | `filled?: boolean`, default `false`, also `data-filled`. `nl:icon-filled` |
+| Accessible name | `label?: string`. Without it `aria-hidden="true"`; with it `role="img"` and `aria-label` |
+
+#### API
+
+```tsx
+import { NlIcon, nlIcons, nlIconNames, type NlIconName } from '@northline/ui';
+
+<NlIcon name="warning" />                                  // decorative, 24, parent's colour
+<NlIcon name="warning" size={20} tone="warning" label="Warning" />
+<NlIcon name="check_circle" filled />                      // active or selected
+```
+
+A `<span>`. `className` is added last; other native `<span>` attributes and `ref` go to the root. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Box | `Size-16` … `Size-64` (`nl:size-*`) |
+| Glyph font size | `Size-16` … `Size-64` (`nl:icon-*`, named utility in `tailwind.css`) |
+| Colour | `fg-primary`, `fg-secondary`, `fg-disabled`, `fg-success`, `fg-warning`, `fg-error`, `fg-info`; `inherit` uses `currentColor` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Glyphs by code point | `nlIcons` maps each Material Symbols name to its glyph's code point, and `NlIcon` renders that glyph. Not ligature text: subsetting by ligature would keep the letters a–z and every icon spelled with them, so nearly the whole font. TypeScript checks each name against the `material-symbols` package's own name list |
+| Font subset (§6) | `pnpm icons` (`packages/ui/scripts/subset-icons.mjs`, `subset-font`) subsets Material Symbols Rounded to the registry's code points, keeping all axes (FILL, wght, GRAD, opsz). 25 icons: 5.3 MB → 19 KB. Runs before the build, tests and Storybook; the output is not committed |
+| Named utilities | `nl:font-icon` (family, line height 1, no text transforms), `nl:icon-*` (font size from `Size-*`), `nl:icon-filled` (`FILL` 1), in `packages/ui/src/styles/tailwind.css`. The package's own `.material-symbols-rounded` class is no longer loaded (it hardcodes `24px`) |
+| Optical size | The font's `opsz` axis covers 20 to 48. At 16 and 64 it uses the nearest end; the glyph still fills the box |
+| Weight and grade | Font defaults, weight 400 and grade 0 |
+| Filled forms | Only glyphs with a filled form change (10 of the first 25: `calendar_today`, `cancel`, `check_circle`, `delete`, `dock_to_right`, `error`, `info`, `visibility`, `visibility_off`, `warning`) |
+| Copying text | `nl:select-none`, so the private-use glyph isn't copied with the text around it |
 
 ---
 

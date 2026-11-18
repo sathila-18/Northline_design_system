@@ -12,3 +12,32 @@
 @source not '../**/*.stories.tsx';
 @source not '../**/*.test.tsx';
 @source not '../__fixtures__';
+
+/*
+ * Icons (DESIGN.md §6 and §9, NlIcon). Only NlIcon uses these.
+ * nl:font-icon: the self-hosted Material Symbols Rounded font (subset to the nlIcons registry, see fonts.css),
+ * set so the glyph sits centred in its box with no line-height effect. Weight 400 and grade 0 are the font defaults.
+ */
+@utility font-icon {
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- an icon font has no generic fallback */
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* nl:icon-16 … nl:icon-64: the glyph's font size equals the box, from Size-* (utilities can't set font size from it). */
+@utility icon-* {
+  font-size: --value(--size-*);
+}
+
+/* nl:icon-filled: the font's FILL axis at 1, for active and selected states (§6). Outlined (FILL 0) is the default. */
+@utility icon-filled {
+  font-variation-settings: 'FILL' 1;
+}

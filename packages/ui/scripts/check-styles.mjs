@@ -1,6 +1,6 @@
 // Checks the stylesheet apps import (S4): builds src/styles/index.css with the same settings as the package
 // (vite.styles.config.ts) into a temporary folder and checks fonts, tokens, base styles and font files.
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { build, mergeConfig } from 'vite';
 import stylesConfig from '../vite.styles.config.ts';
@@ -30,7 +30,17 @@ check(
   faces.some((body) => hasFamily(body, 'Material Symbols Rounded')),
   'Material Symbols Rounded @font-face is missing',
 );
-check(css.includes('.material-symbols-rounded {'), '.material-symbols-rounded class is missing');
+// The icon font is the registry subset (DESIGN.md §6), never the full 5 MB font.
+const iconFaces = faces.filter((body) => hasFamily(body, 'Material Symbols Rounded'));
+check(iconFaces.length === 1, `Expected one Material Symbols Rounded face, found ${iconFaces.length}`);
+const iconUrl = iconFaces[0]?.match(/url\("?(\.\/[^")]+)"?\)/)?.[1];
+check(
+  iconUrl !== undefined && existsSync(`${outDir}${iconUrl}`) && statSync(`${outDir}${iconUrl}`).size < 200 * 1024,
+  'The icon font is missing or is not the registry subset (over 200 KB)',
+);
+for (const utility of ['.nl\\:font-icon', '.nl\\:icon-24', '.nl\\:icon-filled']) {
+  check(css.includes(utility), `Icon utility ${utility} is missing`);
+}
 
 for (const url of new Set([...css.matchAll(/url\("?(\.\/[^")]+)"?\)/g)].map((m) => m[1]))) {
   check(existsSync(`${outDir}${url}`), `Font file missing next to index.css: ${url}`);
@@ -49,4 +59,6 @@ if (failures.length > 0) {
   for (const failure of failures) console.error(`  ${failure}`);
   process.exit(1);
 }
-console.log('OK: index.css has every font (3 families × 4 weights × 2 subsets, and icons), tokens and base styles.');
+console.log(
+  'OK: index.css has every font (3 families × 4 weights × 2 subsets, and the icon subset), tokens and base styles.',
+);

@@ -23,6 +23,13 @@ export default tseslint.config(
     },
   },
   {
+    // Component stories sit next to their components but are type-checked by Storybook's tsconfig.
+    files: ['packages/ui/src/**/*.stories.tsx'],
+    languageOptions: {
+      parserOptions: { projectService: false, project: './apps/storybook/tsconfig.json' },
+    },
+  },
+  {
     files: ['**/*.{js,mjs,cjs}'],
     ...tseslint.configs.disableTypeChecked,
   },
@@ -45,7 +52,7 @@ export default tseslint.config(
     ],
     plugins: { northline },
     rules: {
-      'northline/class-prefix': ['error', { allow: ['material-symbols-rounded'] }],
+      'northline/class-prefix': 'error',
       'northline/no-arbitrary-values': 'error',
       'northline/no-important': 'error',
       'northline/no-dark-variant': 'error',

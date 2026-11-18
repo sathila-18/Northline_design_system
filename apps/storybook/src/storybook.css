@@ -6,6 +6,9 @@
 
 @source '.';
 
+/* Component stories live next to their components; the library CSS skips them, so Storybook scans them here. */
+@source '../../../packages/ui/src/**/*.stories.tsx';
+
 /* The Token pipeline page renders each semantic token's Tailwind class, which tokens.js lists per token. */
 @source '../../../packages/tokens/dist/tokens.js';
 
