@@ -16,3 +16,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | S8 | 2026-11-18 00:45 | 2026-11-18 01:07 | Vercel. Dashboard set up by the designer; production checked in a browser, preview build succeeded |
 | NlIcon | 2026-11-18 07:40 | 2026-11-18 08:04 | Includes the icon font subset (§6), option (a), and the Icon font weight token (300). Approved by the designer |
 | NlStatusDot | 2026-11-18 08:15 | 2026-11-18 08:22 | Ring uses border-inverse (same values as fg-inverse), designer's choice. Approved by the designer |
+| NlCountBadge | 2026-11-18 08:26 | 2026-11-18 08:32 | OD-4 approved; fixed height for double digits; count 0 renders nothing. Approved by the designer |

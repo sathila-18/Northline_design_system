@@ -579,7 +579,7 @@ _The designer adds rows here before each build._
 |---|---|---|---|---|---|
 | 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ✅ |
 | 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ✅ |
-| 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ⬜ |
+| 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ✅ |
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ⬜ |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ⬜ |
@@ -919,7 +919,7 @@ An empty `<span>`. `className` is added last; other native `<span>` attributes a
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-4.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none (OD-4 decided).
 
 A small pill that shows a count (1 to 99+), or a plain dot when there is no number. Used on `NlLabel` and the notification button.
 
@@ -946,13 +946,14 @@ NlCountBadge (pill)
 |---|---|---|---|---|---|
 | small | none | `Size-6` | `Size-6` | – | – |
 | small | single | `Size-16` | `Size-16` | `Space-none` | `Caption S` |
-| small | double | hug | hug (line height + padding) | `Space-XXS` / `Space-XS` | `Caption S` |
+| small | double | hug, at least `Size-16` | `Size-16` | – / `Space-XS` | `Caption S` |
 | large | none | `Size-12` | `Size-12` | – | – |
 | large | single | `Size-20` | `Size-20` | `Space-none` | `Caption L` |
-| large | double | hug | hug | `Space-XXS` / `Space-XS` | `Caption L` |
+| large | double | hug, at least `Size-20` | `Size-20` | – / `Space-XS` | `Caption L` |
 
 - Shape `Radius-Full`. Content centred both ways. No border, no shadow.
-- Proposed (**needs approval**): double digits get a minimum width equal to the single-digit size, `Size-16` (small) and `Size-20` (large), so "10" is never narrower than a circle.
+- Double digits have a minimum width equal to the single-digit size, `Size-16` (small) and `Size-20` (large), so "10" is never narrower than a circle (OD-4, approved 18 Nov 2026).
+- Double digits keep the single-digit height, so the pill only grows wider from 9 to 10. The reference hugged the height (19 and 22, from the line height plus `Space-XXS` block padding); the designer chose the fixed height on 18 Nov 2026.
 
 #### Colours
 
@@ -982,9 +983,52 @@ None. Not interactive.
 |---|---|---|---|
 | Large single padding | Raw 3px inline padding | Dropped. The badge is a fixed `Size-20` square with the digit centred | Approved |
 | Gap and padding tokens on the small forms | Bound to a spacing collection from another library ("8px" gap, "0px" padding) | No gap is used (one child). Padding `Space-none`, as with the large form | Follows from the decision above |
-| Minimum width for double digits | Not set in the reference (hug only) | Proposed: `Size-16` (small) and `Size-20` (large), the existing tokens for the single-digit squares | **Needs approval** |
+| Minimum width for double digits | Not set in the reference (hug only) | `Size-16` (small) and `Size-20` (large), the existing tokens for the single-digit squares (OD-4) | Approved |
+| Double-digit height | Hugs: line height + `Space-XXS` block padding (19 small, 22 large) | Fixed `Size-16` / `Size-20`, inline padding only | Approved |
 | Over 99 | Reference shows "99+" | `max` prop, default 99, shows "99+" | Matches |
 | Tone names | Red, yellow, green | `error`, `warning`, `success` | Matches §7.3 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'small' \| 'large'`, default `small`, also `data-size` |
+| Digits | From `count`: none, single (1 to 9), double (10 and over, and `${max}+`). Also `data-digits` |
+| Colour | `tone?: 'error' \| 'warning' \| 'success'`, default `error`, also `data-tone`. `nl:bg-fg-*` |
+| Count | `count?: number`. `0` renders nothing. Negative or non-whole numbers count as no number (the dot) |
+| Maximum | `max?: number`, default 99. Above it shows `${max}+` |
+| Meaning | `label?: string`, visually hidden text (`nl:sr-only`) |
+
+#### API
+
+```tsx
+import { NlCountBadge } from '@northline/ui';
+
+<NlCountBadge count={3} label="3 unread notifications" />  // small, error
+<NlCountBadge size="large" tone="success" count={120} />    // shows 99+
+<NlCountBadge />                                           // the dot, decorative
+```
+
+A `<span>`. `className` is added last; other native `<span>` attributes and `ref` go to the root. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Size | `Size-6`, `Size-12` (dot); `Size-16`, `Size-20` (single, and double height and minimum width) |
+| Padding | `Space-none` (single); `Space-XS` inline (double) |
+| Text | `Caption S` (small), `Caption L` (large); colour `text-inverse` |
+| Background | `fg-error`, `fg-warning`, `fg-success` |
+| Shape | `Radius-Full` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Defaults | `size="small"`, `tone="error"`, the usual notification badge |
+| Count 0 | Renders nothing, so a parent can pass the count straight through (designer's choice, 18 Nov 2026) |
+| What screen readers hear | With a `label`: the label, and the digits are hidden. Without a label: the digits ("3"). The dot without a label is hidden |
+| Contrast | Text on the badge, every brand: error 6.22 (Light) / 7.56 (Dark), warning 5.00 / 12.83, success 4.92 / 9.26. All above 4.5 (token audit §10) |
 
 ---
 
@@ -6077,3 +6121,4 @@ Known issues
 | 18 Nov 2026 | Contents list links to each section |
 | 18 Nov 2026 | NlIcon (#1): Material Symbols Rounded glyphs by code point from the `nlIcons` registry (25 icons), sizes 16 to 64, 7 tones plus inherit, filled, optional label. `pnpm icons` subsets the font to the registry (5.3 MB to 19 KB). New token `Alias Typography.Icon.Font weight` (300) from primitive `Font Weight-300`; only groups with a font size are text styles. Approved by the designer |
 | 18 Nov 2026 | NlStatusDot (#2): presence dot in five sizes (`Size-6` to `Size-24`, default medium), `fg-success` with a 1px `border-inverse` ring outside the diameter, optional label. Approved by the designer |
+| 18 Nov 2026 | NlCountBadge (#3): count pill (1 to 99+) or dot, small and large, `error`, `warning` and `success` tones, optional label. Double digits keep the single-digit height with a minimum width (OD-4). Count 0 renders nothing. Approved by the designer |

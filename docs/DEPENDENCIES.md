@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon and NlStatusDot approved).
+Last updated: 18 Nov 2026 (NlIcon, NlStatusDot and NlCountBadge approved; OD-4 decided).
 
 ---
 
@@ -28,7 +28,7 @@ Last updated: 18 Nov 2026 (NlIcon and NlStatusDot approved).
 |---|---|---|---|---|---|---|---|
 | 1 | `NlIcon` | yes | – | `NlIconContainer`, `NlAvatar`, `NlBadgeBase`, `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton`, `NlCheckboxControl`, `NlSpinner`, `NlChipBase`, `NlSegment`, `NlHelperText`, `NlRowsPerPage`, `NlNavIcon`, `NlNotificationButton`, `NlInputBase`, `NlStep`, `NlListItem`, `NlSwitchListItem`, `NlAccordion`, `NlBanner`, `NlSnackbar` | – | ✅ batch 1 | ✅ |
 | 2 | `NlStatusDot` | yes | – | `NlAvatar` | – | ✅ batch 1 | ✅ |
-| 3 | `NlCountBadge` | yes | – | `NlLabel`, `NlNotificationButton` | – | ✅ batch 1 | ⬜ |
+| 3 | `NlCountBadge` | yes | – | `NlLabel`, `NlNotificationButton` | – | ✅ batch 1 | ✅ |
 | 4 | `NlDivider` | yes | – | `NlListItemBase`, `NlAccordion`, `NlSideSheet` | – | ✅ batch 1 | ⬜ |
 | 5 | `NlSkeleton` | yes | – | `NlTable` | – | ✅ batch 1 | ⬜ |
 | 6 | `NlOverlay` | yes | – | `NlDialog`, `NlSideSheet` | – | ✅ batch 1 | ⬜ |
@@ -189,7 +189,7 @@ Decide these before building the components listed under "Affects".
 #### Atoms L0
 
 **NlCountBadge**
-- OD-4 · Minimum width for two digits: `Size-16` (small), `Size-20` (large) · Open
+- OD-4 · Minimum width for two digits: `Size-16` (small), `Size-20` (large) · **Decided** 18 Nov 2026: approved
 
 **NlDivider**
 - OD-5 · Vertical orientation: not specified; add if a component needs it · Open

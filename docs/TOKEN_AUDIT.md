@@ -249,3 +249,15 @@ Mappings: §3.4 updated to describe the icon weight, and it matches the JSON. Co
 | `fg-success` on `bg-primary` | 4.92 ✓ | 9.26 ✓ |
 
 The dot against an avatar image or fill is checked when `NlAvatar` is built.
+
+## 10. Contrast added on 18 Nov 2026: count badge
+
+`NlCountBadge` puts `Caption S` / `Caption L` text in `text-inverse` on the solid status colours. Small text needs 4.5:1. No token changed. The values are the same in all three brands.
+
+| Text on | Light (`#FFFFFF` text) | Dark (`#0F0F13` text) |
+|---|---|---|
+| `fg-error` | `#B92816`, 6.22 ✓ | `#F18476`, 7.56 ✓ |
+| `fg-warning` | `#886C09`, 5.00 ✓ | `#EED26F`, 12.83 ✓ |
+| `fg-success` | `#0A8310`, 4.92 ✓ | `#6EC872`, 9.26 ✓ |
+
+The spec asked specifically for white on `fg-warning` in Light: 5.00, a pass.
