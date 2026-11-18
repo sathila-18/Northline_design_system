@@ -266,7 +266,7 @@ Decide these before building the components listed under "Affects".
 - OD-48 · Default size `medium` · **Decided** 18 Nov 2026: approved
 
 **NlBadgeBase**
-- OD-49 · Height hugs the content (26 and 32 aren't tokens) · Open
+- OD-49 · Height hugs the content (26 and 32 aren't tokens) · **Decided** 18 Nov 2026: small hugs (26); large has a `Size-32` minimum height
 
 **NlBadge**
 - OD-51 · `size` passed through, default `small` · Open

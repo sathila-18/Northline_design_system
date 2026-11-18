@@ -2867,8 +2867,47 @@ None (§7.2: bases have no interaction states).
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Padding, gap, radius | `Space-XS`, `Space-M`, `Radius-S` | Same | Matches |
-| Rendered heights | 26 (small) and 32 (large) | Hug the content. No fixed height, because neither value is a `Size-*` token | **Needs approval** |
+| Rendered heights | 26 (small) and 32 (large) | Small hugs the content (26). Large hugs to 29 (`Label M` line height 21 + 2 × `Space-XS`), so it has a `Size-32` minimum height to match the reference | Approved (OD-49) |
 | Icon sizes | 16 and 20 | `NlIcon` 16 and 20 | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size`: `small` (default), `large`, also `data-size` |
+| Label | `children` |
+| Leading icon, trailing icon | `leadingIcon?`, `trailingIcon?`: a decorative `NlIcon` in a slot `<span>` (`data-slot="leading"` / `"trailing"`) |
+| Colours | `appearance?: { badge, icon }`: whole class strings from the mapped component's styles file. `badge` carries background, inset ring and text colour; `icon` colours the icon slots, and `NlIcon` inherits it (`tone="inherit"`) |
+
+#### API
+
+```tsx
+import { NlBadgeBase } from '../NlBadgeBase'; // internal, not exported from @northline/ui
+
+<NlBadgeBase size="small" leadingIcon="check_circle" appearance={styles.tone.success}>
+  Active
+</NlBadgeBase>
+```
+
+A `<span>`. `className` (placement only) and other native attributes go to it. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Tag | Padding `Space-XS` / `Space-M`, gap `Space-XS`, `Radius-S` |
+| small | `Label S`, `NlIcon` 16; hugs to 26 |
+| large | `Label M`, `NlIcon` 20; minimum height `Size-32` |
+| Border | 1px inset ring (`nl:inset-ring`) in the colour `NlBadge` passes |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Border as an inset ring | A CSS border would make bordered tones 2px taller than borderless ones. The inset ring stays inside the shape, as the spec's "1px inside" means (designer's choice, 18 Nov 2026) |
+| Colours through `appearance` | Text and icon colours differ for status tones (for example `text-success` is Success-700, `fg-success` Success-600), and `NlIcon` has no `white_both` or `disabled-on_bg` tone. So the icon colour sits on a slot `<span>` and nothing styles `NlIcon`'s internals (designer's choice, 18 Nov 2026) |
+| Long labels | Stay on one line and widen the badge. To be revisited per use if a case needs truncation (designer's choice, 18 Nov 2026) |
+| Stories | Under `Internal/Badge base`, with story-only colours (the neutral tone's tokens, and a success look for the inset ring) |
 
 ---
 
