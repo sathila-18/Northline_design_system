@@ -30,3 +30,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlAvatar | 2026-11-18 16:19 | 2026-11-18 16:35 | OD-47 and OD-48 approved; `person` icon added; bounding box holds circle and dot; image fallback checks after hydration; story placeholder in apps/storybook/public. Approved by the designer |
 | NlBadgeBase | 2026-11-18 16:39 | 2026-11-18 16:47 | OD-49: small hugs (26), large min Size-32; border as inset ring; colours via appearance; long labels widen. Approved by the designer |
 | NlBadge | 2026-11-18 17:00 | 2026-11-18 17:10 | OD-51, OD-52 (icons off by default), OD-53 approved; K4 accepted. Approved by the designer |
+| NlButtonBase | 2026-11-18 17:13 | | |

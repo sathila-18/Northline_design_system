@@ -3081,9 +3081,55 @@ None of its own (§7.2).
 | Large text style | 18/24 semibold | New text style `Button XL` (600, 18, 24). Added to DESIGN.md §3.4 and the token JSON | Approved |
 | Medium, small, xsmall text styles | 16/24, 14/24, 14/24 | `Button L`, `Button M`, `Button M`. `Button S` stays unused by buttons | Approved |
 | Icon-only small and xsmall | 36 and 32 square, smaller than the labelled heights (40 and 36) | Kept as in the reference: `Size-36`, `Size-32` | Approved |
-| Link variant | A fourth type in the reference's button set | Included as `variant="link"` | Approved. **D12 in DESIGN.md lists only three variants and needs updating** |
+| Link variant | A fourth type in the reference's button set | Included as `variant="link"` | Approved. D12 updated to list link |
 | Heights | Come from padding plus the 24 line height | Fixed `Size-*` heights as well, so icon-only and labelled buttons line up | Matches |
 | Spacing, radius, gap | As in the table | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Variant | `variant`: `primary` (default), `secondary`, `tertiary`, `link`, also `data-variant` |
+| Size | `size`: `large`, `medium` (default), `small`, `xsmall`, also `data-size` |
+| Icon | `icon`: `none` (default), `leading`, `trailing`, `only-icon`, also `data-icon`. The types forbid `only-icon` with `link` |
+| Icon name | `iconName`: required by the types unless `icon` is `none` |
+| Label | `children`, always required. Icon-only keeps it as `nl:sr-only` text, the accessible name |
+| Element | `as` (default `'button'`, or `'a'`, or a component such as a router link) and `href`. A native button gets `type="button"` unless the caller passes a type |
+| Colours | The variant's resting colours, or `appearance?: { button, icon }` from `NlButton`, which replaces them (with states and content tones) |
+
+#### API
+
+```tsx
+import { NlButtonBase } from '../NlButtonBase'; // internal, not exported from @northline/ui
+
+<NlButtonBase variant="secondary" size="small" icon="leading" iconName="add" appearance={styles.normal.secondary}>
+  Add member
+</NlButtonBase>
+```
+
+`className` (placement only) and other native attributes, including `ref` and `disabled`, go to the element. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Labelled | Heights `Size-56`, `Size-48`, `Size-40`, `Size-36`; padding as in the table; gap `Space-M` |
+| Icon-only | `Size-56`, `Size-48`, `Size-36`, `Size-32` squares, padding `Space-none` |
+| Radius, text | `Radius-M` / `Radius-S`; `Button XL`, `Button L`, `Button M` |
+| Icon | `NlIcon` 24 (large, medium), 20 (small, xsmall) |
+| Resting colours | primary `bg-action-primary`, `text-white_both`, `fg-white_both`; secondary 2px inset ring `border-active`, `text-action`, `fg-action`; tertiary and link `text-action`, `fg-action` |
+| Focus | The standard ring: `outline-2`, offset −1, `border-focused`, keyboard only |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Colours through `appearance` | `NlButton`'s content tones change resting colours too, so it passes a whole set that replaces the variant's, never adds to it. The root carries the named group `button`, so icon slots can follow hover and pressed (designer's choice, 18 Nov 2026) |
+| Focus ring in the base | The same for every tone and variant, so no button can miss it (designer's choice, 18 Nov 2026) |
+| Border as an inset ring | Secondary's 2px inside border is `inset-ring-2`, so it doesn't change the size |
+| Icon colour | Each icon sits in a slot `<span>` with the icon colour; `NlIcon` inherits it, as in `NlBadgeBase` |
+| Cursor | Pointer, default when disabled or `aria-disabled` |
+| `soft` variant | Left out until OD-40 is decided (OD-1) (designer's choice, 18 Nov 2026) |
 
 ---
 

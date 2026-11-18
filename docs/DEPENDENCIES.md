@@ -154,7 +154,7 @@ Status: **Open** · **Decided** · **Dropped**
 |---|---|---|---|
 | – | `Button XL` text style (§3.4) | Decided | Already in DESIGN.md |
 | – | `Size-320` (§3.5) | Decided | Already in DESIGN.md |
-| OD-1 | `NlButton variant="soft"` (filled `bg-action-secondary`, no border) | Open | Only if OD-40 goes that way. Would change D12 |
+| OD-1 | `NlButton variant="soft"` (filled `bg-action-secondary`, no border) | Open | Only if OD-40 goes that way. Would change D12. Left out of `NlButtonBase` for now (18 Nov 2026); adding it later is not breaking |
 | OD-2 | `NlTextBlock` types `label` and `body` | **Decided** 18 Nov 2026: both added | See OD-14 and OD-41 |
 | OD-3 | Focus ring colour on fields with an error: `border-error` instead of `border-focused` | Open | Would add an exception to CLAUDE.md's focus ring rule. See OD-44 |
 | OD-91 | A maximum-width size token for snackbars (for example `Size-560`) | Open | See OD-104 |
