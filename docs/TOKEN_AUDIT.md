@@ -238,3 +238,14 @@ The token build now treats only `Alias Typography` groups with a font size as te
 | 9 Duplicate names | Pass |
 
 Mappings: §3.4 updated to describe the icon weight, and it matches the JSON. Contrast: no colour changed, so every ratio above still holds. As agreed in §7, the pairing `text-white_subtle` on `bg-brand` is now on the contrast list: unchanged from K2 (Northline Dark 3.82, Garnet Dark 3.49, Voltic Light and Dark 4.23; Northline Light 5.68, Garnet Light 5.78; needs 4.5). Still accepted as K2.
+
+## 9. Contrast added on 18 Nov 2026: status dot
+
+`NlStatusDot` asks for `fg-success` against its ring (a graphic, 3:1). The ring uses `border-inverse`, which has the same values as `fg-inverse` and `bg-primary` in every brand and theme. No token changed.
+
+| Pairing | Light (Northline, Garnet, Voltic) | Dark (Northline, Garnet, Voltic) |
+|---|---|---|
+| `fg-success` on `border-inverse` | `#0A8310` on `#FFFFFF`, 4.92 ✓ | `#6EC872` on `#0F0F13`, 9.26 ✓ |
+| `fg-success` on `bg-primary` | 4.92 ✓ | 9.26 ✓ |
+
+The dot against an avatar image or fill is checked when `NlAvatar` is built.
