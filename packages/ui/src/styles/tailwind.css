@@ -16,12 +16,13 @@
 /*
  * Icons (DESIGN.md §6 and §9, NlIcon). Only NlIcon uses these.
  * nl:font-icon: the self-hosted Material Symbols Rounded font (subset to the nlIcons registry, see fonts.css),
- * set so the glyph sits centred in its box with no line-height effect. Weight 400 and grade 0 are the font defaults.
+ * set so the glyph sits centred in its box with no line-height effect. Weight from the Icon font weight token (300);
+ * grade 0 is the font default.
  */
 @utility font-icon {
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- an icon font has no generic fallback */
   font-family: 'Material Symbols Rounded';
-  font-weight: normal;
+  font-weight: var(--nl-font-icon-weight);
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;

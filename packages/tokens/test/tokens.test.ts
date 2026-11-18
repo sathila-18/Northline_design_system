@@ -28,7 +28,11 @@ const tokens = new Map<string, Token>();
 })(source, []);
 const semantic = [...tokens.keys()].filter((p) => p.startsWith('Color collection.'));
 const textStyles = [
-  ...new Set([...tokens.keys()].filter((p) => p.startsWith('Alias Typography.')).map((p) => p.split('.')[1] ?? '')),
+  ...new Set(
+    [...tokens.keys()]
+      .filter((p) => p.startsWith('Alias Typography.') && p.endsWith('.Font size'))
+      .map((p) => p.split('.')[1] ?? ''),
+  ),
 ];
 
 /** Resolves a token in the JSON to its final value, independently of the build. */
@@ -72,12 +76,20 @@ describe('tokens.css', () => {
   it('declares a CSS variable for every token in the JSON', () => {
     const missing = [...tokens.keys()].filter((path) => !css.includes(`--${cssName(path.split('.'))}:`));
     expect(missing).toEqual([]);
-    expect(tokens.size).toBe(425);
+    expect(tokens.size).toBe(427);
   });
 
   it('declares a font shorthand for every text style', () => {
     const missing = textStyles.filter((style) => !css.includes(`--nl-font-${textStyleName(style)}:`));
     expect(missing).toEqual([]);
+    expect(textStyles).toHaveLength(25);
+  });
+
+  it('gives the icon weight (300) to every brand, with no font shorthand or text utility', () => {
+    expect(css.match(/--nl-font-icon-weight: var\(--nl-font-weight-300\);/g)).toHaveLength(3);
+    expect(css).toContain('--nl-font-weight-300: 300;');
+    expect(css).not.toContain('--nl-font-icon:');
+    expect(textStyles).not.toContain('Icon');
   });
 
   for (const brand of BRANDS) {

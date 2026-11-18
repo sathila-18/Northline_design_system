@@ -216,3 +216,25 @@ These are things in DESIGN.md §3 or in the token file's shape that may cause pr
 | Date | Finding | Decision |
 |---|---|---|
 | 18 Nov 2026 | `pnpm test:a11y` (S6) found a pairing this audit didn't check: `text-white_subtle` on `bg-brand` (the pairing its description names). 3.82:1 in Northline Dark, 3.49:1 in Garnet Dark, 4.23:1 in Voltic Light and Dark; needs 4.5:1. Northline Light (5.68) and Garnet Light (5.78) pass | Accepted for now as known issue K2 (DESIGN.md). Add this pairing to the audit's contrast list next time the JSON changes |
+
+## 8. Change on 18 Nov 2026: icon weight
+
+The designer chose weight 300 for icons (NlIcon) and a separate icon-only token, so text can't pick it up. Added:
+
+| Token | Value | Modes |
+|---|---|---|
+| `Primitives.Typography.Font Weight.Font Weight-300` | 300 | none (primitive) |
+| `Alias Typography.Icon.Font weight` | `{Font Weight-300}` | Northline, Garnet, Voltic, all 300 |
+
+The token build now treats only `Alias Typography` groups with a font size as text styles, so `Icon` gets `--nl-font-icon-weight` in every brand but no font shorthand and no `nl:text-*` utility. Still 25 text styles.
+
+| Rule (§3.9) | Result |
+|---|---|
+| 1 Fields | Pass, all 427 tokens |
+| 3 Descriptions unique | Pass, 427 unique |
+| 4 Weights are numbers | Pass, 5 primitives (300 to 700), 26 alias weights |
+| 6 Layers | Pass. The new alias points at a primitive. (The only alias-to-alias references are `Primary light` and `Primary dark` → `Primary-*`, which rule 7 requires) |
+| 8 Modes | Pass, the new alias has all three brands |
+| 9 Duplicate names | Pass |
+
+Mappings: §3.4 updated to describe the icon weight, and it matches the JSON. Contrast: no colour changed, so every ratio above still holds. As agreed in §7, the pairing `text-white_subtle` on `bg-brand` is now on the contrast list: unchanged from K2 (Northline Dark 3.82, Garnet Dark 3.49, Voltic Light and Dark 4.23; Northline Light 5.68, Garnet Light 5.78; needs 4.5). Still accepted as K2.
