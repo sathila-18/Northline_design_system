@@ -75,6 +75,8 @@ export function tailwindKeys(semantic: string): { key: string; utility: string }
       return [
         { key: `--text-color-fg-${rest}`, utility: `text-fg-${rest}` },
         { key: `--background-color-fg-${rest}`, utility: `bg-fg-${rest}` },
+        // Border too, for controls drawn in a foreground colour (radio ring, DESIGN.md §9 NlRadio).
+        { key: `--border-color-fg-${rest}`, utility: `border-fg-${rest}` },
         { key: `--fill-${rest}`, utility: `fill-${rest}` },
         { key: `--stroke-${rest}`, utility: `stroke-${rest}` },
       ];

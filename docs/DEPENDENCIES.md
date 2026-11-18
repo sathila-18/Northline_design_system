@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon to NlSlider approved; OD-4, OD-6, OD-7, OD-8, OD-10 and OD-11 decided; OD-5, OD-9 and OD-12 open).
+Last updated: 18 Nov 2026 (NlIcon to NlRadio approved; OD-4, OD-6, OD-7, OD-8, OD-10 and OD-11 decided; OD-5, OD-9 and OD-12 open).
 
 ---
 
@@ -34,7 +34,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlSlider approved; OD-4, OD-6, OD-7, OD-8, 
 | 6 | `NlOverlay` | yes | – | `NlDialog`, `NlSideSheet` | – | ✅ batch 1 | ✅ |
 | 7 | `NlProgressBar` | yes | – | `NlFileUpload` | – | ✅ batch 1 | ✅ |
 | 8 | `NlSlider` | yes | – | – | – | ✅ batch 1 | ✅ |
-| 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ⬜ |
+| 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ✅ |
 | 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | OD-13b | ✅ batch 1 | ⬜ |
 | 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-14, OD-15, OD-16, OD-41, OD-120 | ✅ batch 2 | ⬜ |
 | 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | OD-19 | ✅ batch 2 | ⬜ |

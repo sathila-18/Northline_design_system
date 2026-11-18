@@ -285,3 +285,16 @@ All pass. The lowest is Voltic Dark, 3.92.
 | `fg-pressed` (pressed) | 9.26 / 11.55 ✓ | 9.52 / 11.74 ✓ | 9.62 / 6.99 ✓ |
 
 Disabled (`fg-disabled-on_bg` on `bg-disabled`) is exempt from 1.4.11. For the record: 3.53 in Light and 1.60 in Dark, the same in every brand. In Dark the disabled fill is faint against its track; part of the OD-10 Storybook check. The thumb's `border-inverse` ring keeps its outline visible against the track.
+
+## 13. Contrast added on 18 Nov 2026: radio
+
+`NlRadio` draws its ring on the page background. The ring is a meaningful graphic and needs 3:1 (WCAG 1.4.11, §2.6). No token changed. Measured in the browser from the built tokens; the values are the same in all three brands unless noted.
+
+| Ring | Light | Dark |
+|---|---|---|
+| `border-strong` on `bg-primary` (unselected) | 4.87 ✓ | 6.36 ✓ |
+| `fg-action` on `bg-primary` (selected) | Northline 7.85, Garnet 7.98, Voltic 5.84 ✓ | Northline 5.76, Garnet 6.30, Voltic 5.73 ✓ |
+| `border-hovered` on `bg-active` (unselected hover) | 7.55 to 8.79 ✓ | 7.06 to 9.59 ✓ |
+| `border-pressed` on `bg-active-hover` (unselected pressed) | 9.26 to 9.62 ✓ | 6.99 to 11.74 ✓ |
+
+Disabled (`fg-disabled` on `bg-primary`, 3.00 / 1.79) is exempt from 1.4.11.
