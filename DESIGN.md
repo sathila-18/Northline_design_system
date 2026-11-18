@@ -585,7 +585,7 @@ _The designer adds rows here before each build._
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ✅ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ✅ |
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ✅ |
-| 8 | Slider | `NlSlider` | – | [§9](#nlslider) | 🟨 |
+| 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ✅ |
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ⬜ |
 | 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ⬜ |
 | 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ⬜ |
@@ -1442,7 +1442,7 @@ A track `<div>` with a fill `<div>` inside. `className` is added last; other nat
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-10 (Storybook check), OD-12 (OD-11 decided).
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-12 (OD-10 and OD-11 decided).
 
 Picks one value along a range by dragging a thumb or using the keyboard.
 
@@ -1490,7 +1490,7 @@ The reference only shows fill levels (5%, 25%, 50%, 75%, 100%). These are values
 | Thumb shadow | `--nl-shadow-resting` | `--nl-shadow-resting` | `--nl-shadow-resting` | `--nl-shadow-resting` | none |
 | Focus ring | – | – | – | `border-focused` (standard ring on the thumb) | – |
 
-The hover, pressed, focus and disabled columns are **approved for now**. The designer checks them in Storybook before the slider is marked done.
+The hover, pressed, focus and disabled columns were checked by the designer in Storybook and **approved** on 18 Nov 2026 (OD-10).
 
 #### States
 
@@ -1518,7 +1518,7 @@ The hover, pressed, focus and disabled columns are **approved for now**. The des
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Interaction states | Only enabled is drawn | Hover, pressed, focus and disabled proposed above, using existing semantic tokens only | Approved for now, Storybook check |
+| Interaction states | Only enabled is drawn | Hover, pressed, focus and disabled proposed above, using existing semantic tokens only (OD-10) | Approved |
 | Thumb border | 2px stroke, inside | Tailwind's 2px inset ring (§4.2, D16) | Matches |
 | Thumb shadow | A shadow style called "resting cards" (0 1 3, black at 5%) | `--nl-shadow-resting`, same value | Matches |
 | Fill padding | `Space-none` | `Space-none` | Matches |
@@ -6328,3 +6328,4 @@ Known issues
 | 18 Nov 2026 | NlSkeleton (#5): `text`, `rect` and `circle` placeholders in `bg-neutral`, always hidden from screen readers. Pulse 100% → 60% per `--nl-duration-pulse` with `--nl-ease-standard` (OD-6) through the new `nl:animate-skeleton-pulse` utility; static under reduced motion. Width-only resizing; circle fixed at `Size-24` for now. Approved by the designer |
 | 18 Nov 2026 | NlOverlay (#6): scrim on `--nl-z-overlay` with `Alpha-md`, always hidden from screen readers; `open` and `onClick`. Fades in and out in CSS (hidden = `display: none`), static under reduced motion. Motion utilities added to the token build: `nl:duration-*`, `nl:ease-standard`, and `nl:transition-*` defaults (§3.8). Approved by the designer |
 | 18 Nov 2026 | NlProgressBar (#7): `small` (`Size-4`, default) and `large` (`Size-8`) bars, `fg-brand` fill on `bg-active-hover`, `role="progressbar"` named by `label` or `aria-labelledby`. Width animates with Duration base and Ease standard (OD-7), none under reduced motion; fill width through the new `nl:progress-fill` utility. OD-9 (indeterminate) open. Approved by the designer |
+| 18 Nov 2026 | NlSlider (#8): native range input under a drawn track, fill and thumb; controlled or uncontrolled, `onChange(value)`, `min` 0 / `max` 100 / `step` 1 (OD-11). Hover, pressed, focus and disabled colours approved after the Storybook check (OD-10). Named variant `nl:range-thumb:` and utilities `nl:slider-fill` / `nl:slider-thumb`; the class check accepts `nl:group` / `nl:peer` markers. OD-12 open. Approved by the designer |
