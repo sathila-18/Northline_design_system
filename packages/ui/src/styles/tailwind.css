@@ -42,3 +42,12 @@
 @utility icon-filled {
   font-variation-settings: 'FILL' 1;
 }
+
+/*
+ * nl:bg-border-default: the border-default colour as a fill (DESIGN.md §9, NlDivider). Only NlDivider uses it, for
+ * the section band. The theme exposes border-default as a border, outline and ring colour only, so no bg-* utility
+ * can reach it. Exception approved by the designer, 18 Nov 2026 (CLAUDE.md, Tailwind rule 9).
+ */
+@utility bg-border-default {
+  background-color: var(--nl-border-default);
+}
