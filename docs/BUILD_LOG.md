@@ -19,3 +19,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlCountBadge | 2026-11-18 08:26 | 2026-11-18 08:32 | OD-4 approved; fixed height for double digits; count 0 renders nothing. Approved by the designer |
 | NlDivider | 2026-11-18 10:29 | 2026-11-18 11:43 | Horizontal only (OD-5 stays open); section fill via nl:bg-border-default utility, designer's choice. Approved by the designer |
 | NlSkeleton | 2026-11-18 11:48 | 2026-11-18 11:58 | OD-6 approved; pulse via nl:animate-skeleton-pulse utility; width-only resizing, circle fixed at Size-24 for now. Approved by the designer |
+| NlOverlay | 2026-11-18 12:02 | 2026-11-18 12:12 | Motion utilities added to the token build (§3.8); hidden = display none so it fades out. Approved by the designer |

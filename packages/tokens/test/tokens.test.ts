@@ -139,6 +139,12 @@ describe('tailwind-theme.css', () => {
       'nl:rounded-full',
       'nl:shadow-menu',
       'nl:z-modal',
+      'nl:ease-standard',
+      'nl:duration-fast',
+      'nl:duration-base',
+      'nl:duration-slow',
+      'nl:transition',
+      'nl:transition-opacity',
       'nl:text-body-m',
       'nl:text-data-l',
       // must not exist
@@ -153,6 +159,7 @@ describe('tailwind-theme.css', () => {
       'nl:w-full-size',
       'bg-primary',
       'nl:dark:bg-primary',
+      'nl:ease-in-out',
     ];
     output = compiler.build([...all, ...probes]);
   });
@@ -185,6 +192,12 @@ describe('tailwind-theme.css', () => {
     ['nl:rounded-full', 'border-radius: var(--nl-radius-full)'],
     ['nl:shadow-menu', 'var(--nl-shadow-menu)'],
     ['nl:z-modal', 'z-index: var(--nl-z-modal)'],
+    ['nl:ease-standard', 'transition-timing-function: var(--nl-ease-standard)'],
+    ['nl:duration-fast', 'transition-duration: var(--nl-duration-fast)'],
+    ['nl:duration-base', 'transition-duration: var(--nl-duration-base)'],
+    ['nl:duration-slow', 'transition-duration: var(--nl-duration-slow)'],
+    ['nl:transition', 'var(--nl-duration-base)'],
+    ['nl:transition-opacity', 'var(--nl-ease-standard)'],
     ['nl:text-body-m', 'font: var(--nl-font-body-m)'],
     ['nl:text-data-l', 'font-variant-numeric: tabular-nums'],
     ['nl:outline-focused', 'outline-color: var(--nl-border-focused)'],
@@ -202,6 +215,7 @@ describe('tailwind-theme.css', () => {
     'nl:shadow-md',
     'nl:font-bold',
     'nl:max-w-md',
+    'nl:ease-in-out',
     'bg-primary',
   ])('has no Tailwind default or unprefixed utility: %s', (className) => {
     expect(rule(className)).toBeNull();
