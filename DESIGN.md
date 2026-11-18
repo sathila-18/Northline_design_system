@@ -578,7 +578,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ✅ |
-| 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ⬜ |
+| 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ✅ |
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ⬜ |
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ⬜ |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
@@ -876,6 +876,42 @@ None. Not interactive.
 | Ring width | 1px stroke, outside | Tailwind's built-in 1px width (§4.2, D16) | Matches |
 | Tones | The reference only has online (success) | Only success. No `tone` prop until another status (busy, away) is specified | Matches |
 | Sizes | 6, 8, 12, 16, 24 | `Size-6`, `Size-8`, `Size-12`, `Size-16`, `Size-24` | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'xsmall' \| 'small' \| 'medium' \| 'large' \| 'xlarge'`, default `medium`, also `data-size`. `nl:size-6` … `nl:size-24` |
+| Accessible name | `label?: string`. Without it `aria-hidden="true"`; with it `role="img"` and `aria-label` |
+
+#### API
+
+```tsx
+import { NlStatusDot } from '@northline/ui';
+
+<NlStatusDot />                              // decorative, medium
+<NlStatusDot size="small" label="Online" />
+```
+
+An empty `<span>`. `className` is added last; other native `<span>` attributes and `ref` go to the root. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Diameter | `Size-6`, `Size-8`, `Size-12`, `Size-16`, `Size-24` (`nl:size-*`) |
+| Shape | `Radius-Full` (`nl:rounded-full`) |
+| Dot | `fg-success` (`nl:bg-fg-success`) |
+| Ring | `border-inverse` (`nl:border nl:border-inverse`), 1px |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Ring colour | `border-inverse` instead of `fg-inverse`: border classes only come from `border-*` tokens, and `border-inverse` has the same value as `fg-inverse` in every brand and theme (white in Light, `#0F0F13` in Dark). The designer's choice, 18 Nov 2026 |
+| Ring outside | A 1px border with `nl:box-content`, so the ring sits outside the diameter and the outer size is diameter + 2 (8, 10, 14, 18, 26), measured in the browser. A box-shadow ring isn't one of the §4.2 widths |
+| Default size | `medium` (`Size-12`), the size the medium and large avatars use |
+| Contrast | `fg-success` on the ring: 4.92:1 in Light and 9.26:1 in Dark, all brands (needs 3:1). The ring matches `bg-primary`, so the same on the page. Against an avatar: checked with `NlAvatar` |
 
 ---
 
@@ -6040,3 +6076,4 @@ Known issues
 | 18 Nov 2026 | S8: `vercel.json` builds Storybook (`pnpm build-storybook`) and serves `apps/storybook/storybook-static`; pnpm 12 through Corepack (`ENABLE_EXPERIMENTAL_COREPACK=1`), Node 24. Production: https://northline-design-system-blond.vercel.app. Every branch gets a preview (behind Vercel Authentication). Links added to CLAUDE.md and the README. Setup S-1 to S8 complete |
 | 18 Nov 2026 | Contents list links to each section |
 | 18 Nov 2026 | NlIcon (#1): Material Symbols Rounded glyphs by code point from the `nlIcons` registry (25 icons), sizes 16 to 64, 7 tones plus inherit, filled, optional label. `pnpm icons` subsets the font to the registry (5.3 MB to 19 KB). New token `Alias Typography.Icon.Font weight` (300) from primitive `Font Weight-300`; only groups with a font size are text styles. Approved by the designer |
+| 18 Nov 2026 | NlStatusDot (#2): presence dot in five sizes (`Size-6` to `Size-24`, default medium), `fg-success` with a 1px `border-inverse` ring outside the diameter, optional label. Approved by the designer |
