@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge and NlDivider approved; OD-4 decided; OD-5 open, horizontal only).
+Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge, NlDivider and NlSkeleton approved; OD-4 and OD-6 decided; OD-5 open, horizontal only).
 
 ---
 
@@ -30,7 +30,7 @@ Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge and NlDivider appro
 | 2 | `NlStatusDot` | yes | – | `NlAvatar` | – | ✅ batch 1 | ✅ |
 | 3 | `NlCountBadge` | yes | – | `NlLabel`, `NlNotificationButton` | – | ✅ batch 1 | ✅ |
 | 4 | `NlDivider` | yes | – | `NlListItemBase`, `NlAccordion`, `NlSideSheet` | – | ✅ batch 1 | ✅ |
-| 5 | `NlSkeleton` | yes | – | `NlTable` | – | ✅ batch 1 | ⬜ |
+| 5 | `NlSkeleton` | yes | – | `NlTable` | – | ✅ batch 1 | ✅ |
 | 6 | `NlOverlay` | yes | – | `NlDialog`, `NlSideSheet` | – | ✅ batch 1 | ⬜ |
 | 7 | `NlProgressBar` | yes | – | `NlFileUpload` | – | ✅ batch 1 | ⬜ |
 | 8 | `NlSlider` | yes | – | – | OD-10 (Storybook check) | ✅ batch 1 | ⬜ |
@@ -195,7 +195,7 @@ Decide these before building the components listed under "Affects".
 - OD-5 · Vertical orientation: not specified; add if a component needs it · Open. 18 Nov 2026: built horizontal only; look again if a page needs it
 
 **NlSkeleton**
-- OD-6 · Pulse easing: `--nl-ease-standard` · Open
+- OD-6 · Pulse easing: `--nl-ease-standard` · **Decided** 18 Nov 2026: approved
 
 **NlProgressBar**
 - OD-7 · Width animation: `--nl-duration-base`, `--nl-ease-standard`, none under reduced motion · Open

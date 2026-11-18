@@ -581,7 +581,7 @@ _The designer adds rows here before each build._
 | 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ✅ |
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ✅ |
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ✅ |
-| 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
+| 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ✅ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ⬜ |
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ⬜ |
 | 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ⬜ |
@@ -1130,7 +1130,7 @@ An `<hr>`, or a `<div>` when `decorative`. `className` is added last; other nati
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-6.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none (OD-6 decided).
 
 A grey placeholder shown while content loads. Sized to the content it stands in for.
 
@@ -1181,10 +1181,51 @@ None. Not interactive.
 |---|---|---|---|
 | Width | Bound to a size primitive of 343 (a mobile content width) that doesn't exist in Northline | Fills its container | Approved |
 | Pulse animation | The reference describes a pulse from 100% to 60% opacity, 1.6 s per cycle | `--nl-duration-pulse` (§5, D16) | Approved |
-| Pulse easing | Not in the reference | `--nl-ease-standard` | **Needs approval** |
+| Pulse easing | Not in the reference | `--nl-ease-standard` (OD-6) | Approved |
 | Reduced motion | The reference says static | Static (CLAUDE.md, motion-reduce counterpart) | Matches |
 | Text and rect heights | 12 and 24 | `Size-12`, `Size-24` | Matches |
 | Radius | `Radius-XS`, `Radius-S`, `Radius-Full` | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Shape | `shape?: 'text' \| 'rect' \| 'circle'`, default `text`, also `data-shape` |
+| Width | text and rect set no width: as blocks they fill their container. A caller narrows them with a width class in `className` (placement only) |
+| Hidden from screen readers | Always `aria-hidden="true"`, not overridable. The loading region sets `aria-busy` |
+| Pulse | `nl:animate-skeleton-pulse`, with `nl:motion-reduce:animate-none` |
+
+#### API
+
+```tsx
+import { NlSkeleton } from '@northline/ui';
+
+<div aria-busy="true">
+  <NlSkeleton shape="circle" />   // Size-24 circle
+  <NlSkeleton />                  // Size-12 text line, full width
+  <NlSkeleton shape="rect" />     // Size-24 block, full width
+</div>
+```
+
+A `<span>` with `display: block`, so it is valid inside table cells and inline content. `className` is added last; other native `<span>` attributes and `ref` go to the root. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Height | `Size-12` (text), `Size-24` (rect); circle `Size-24` square |
+| Radius | `Radius-XS` (text), `Radius-S` (rect), `Radius-Full` (circle) |
+| Fill | `bg-neutral` |
+| Motion | `--nl-duration-pulse`, `--nl-ease-standard`; opacity 1 → 0.6 → 1 |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Pulse | A named utility `nl:animate-skeleton-pulse` with keyframes in `packages/ui/src/styles/tailwind.css`. The 0.6 is the spec's literal value; there is no opacity token (designer's choice, 18 Nov 2026) |
+| Easing | `--nl-ease-standard`, the only easing token (OD-6, approved 18 Nov 2026) |
+| Width | No width class on text and rect, so a caller's width class never competes with one of ours (two classes setting the same property resolve by CSS order, not class order) |
+| Circle size | Fixed at `Size-24`. Resizing it (for example to an avatar size) would compete with `nl:size-24` the same way. To be decided when `NlAvatar` or `NlTable` needs it |
 
 ---
 
@@ -6159,3 +6200,4 @@ Known issues
 | 18 Nov 2026 | NlStatusDot (#2): presence dot in five sizes (`Size-6` to `Size-24`, default medium), `fg-success` with a 1px `border-inverse` ring outside the diameter, optional label. Approved by the designer |
 | 18 Nov 2026 | NlCountBadge (#3): count pill (1 to 99+) or dot, small and large, `error`, `warning` and `success` tones, optional label. Double digits keep the single-digit height with a minimum width (OD-4). Count 0 renders nothing. Approved by the designer |
 | 18 Nov 2026 | NlDivider (#4): horizontal rule, `divider` (1px) or `section` (`Size-8`) in `border-default`; `<hr>` or a decorative hidden `<div>`. Section fill through the new `nl:bg-border-default` utility. Horizontal only (OD-5 open). Approved by the designer |
+| 18 Nov 2026 | NlSkeleton (#5): `text`, `rect` and `circle` placeholders in `bg-neutral`, always hidden from screen readers. Pulse 100% → 60% per `--nl-duration-pulse` with `--nl-ease-standard` (OD-6) through the new `nl:animate-skeleton-pulse` utility; static under reduced motion. Width-only resizing; circle fixed at `Size-24` for now. Approved by the designer |
