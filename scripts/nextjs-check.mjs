@@ -5,7 +5,7 @@
 //      two tarballs (outside the pnpm workspace, so nothing is linked).
 //   3. Runs next build, then checks the built CSS has the tokens for every brand and theme, and the font files.
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, cpSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
+import { copyFileSync, cpSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -32,6 +32,9 @@ for (const [pkg, name] of [
 }
 
 console.log('2/3 Installing the packed libraries into a copy of apps/nextjs-check');
+// The tarballs keep the same name and version (0.0.0), so npm would call an earlier install "up to date" and keep
+// the old libraries. Remove only those and the last build output from this cache; Next.js stays installed.
+for (const stale of ['node_modules/@northline', '.next']) rmSync(join(work, stale), { recursive: true, force: true });
 cpSync(app, work, {
   recursive: true,
   filter: (source) => !/[/\\](node_modules|\.next|packs)([/\\]|$)/.test(source.slice(app.length)),
