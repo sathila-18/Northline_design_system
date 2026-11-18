@@ -587,7 +587,7 @@ _The designer adds rows here before each build._
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ✅ |
 | 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ✅ |
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ✅ |
-| 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | 🟨 |
+| 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ✅ |
 | 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ⬜ |
 | 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ⬜ |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
@@ -6418,3 +6418,4 @@ Known issues
 | 18 Nov 2026 | NlProgressBar (#7): `small` (`Size-4`, default) and `large` (`Size-8`) bars, `fg-brand` fill on `bg-active-hover`, `role="progressbar"` named by `label` or `aria-labelledby`. Width animates with Duration base and Ease standard (OD-7), none under reduced motion; fill width through the new `nl:progress-fill` utility. OD-9 (indeterminate) open. Approved by the designer |
 | 18 Nov 2026 | NlSlider (#8): native range input under a drawn track, fill and thumb; controlled or uncontrolled, `onChange(value)`, `min` 0 / `max` 100 / `step` 1 (OD-11). Hover, pressed, focus and disabled colours approved after the Storybook check (OD-10). Named variant `nl:range-thumb:` and utilities `nl:slider-fill` / `nl:slider-thumb`; the class check accepts `nl:group` / `nl:peer` markers. OD-12 open. Approved by the designer |
 | 18 Nov 2026 | NlRadio (#9): native radio under a drawn `Size-20` ring and `Size-12` dot in a `Size-24` box, following the input through a named group. All eight state colours per the spec; round focus ring around the box. The token build now maps `fg-*` to border colours (§3.8). Approved by the designer |
+| 18 Nov 2026 | NlSwitch (#10): native `<button role="switch">`, large (default) and small, handle inset `Space-XS`, slides with Duration fast and Ease standard (OD-13a, c, d). No hover or pressed colours (OD-13b). The token build now maps `border-*` to backgrounds (§3.8); the divider's one-off utility was removed. Approved by the designer |
