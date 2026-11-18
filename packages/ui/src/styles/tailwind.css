@@ -95,6 +95,20 @@
   inset-inline-start: var(--nl-slider-value, 0%);
 }
 
+/*
+ * nl:menu-position: where the menu panel sits and how big it may get (DESIGN.md §9, NlMenu). Only NlMenu uses it.
+ * The values are measured at run time by the positioning code (@floating-ui/dom, OD-18) and set as custom properties
+ * on the panel: position, at least the trigger's width, and the room left in the window after the Space-M edge gap.
+ * --nl-menu-max-height is the optional maxHeight token (OD-20). The fallbacks only apply before the first measure.
+ */
+@utility menu-position {
+  top: var(--nl-menu-y, 0);
+  left: var(--nl-menu-x, 0);
+  min-width: var(--nl-menu-min-width, auto);
+  max-width: var(--nl-menu-available-width, none);
+  max-height: min(var(--nl-menu-available-height, 100vh), var(--nl-menu-max-height, 100vh));
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {

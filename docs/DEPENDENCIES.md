@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon to NlTextBlock approved; OD-2, OD-4, OD-6, OD-7, OD-8, OD-10, OD-11, OD-13a to OD-13d, OD-14, OD-15, OD-16 and OD-41 decided; OD-5, OD-9, OD-12 and OD-120 open).
+Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD-8, OD-10, OD-11, OD-13a to OD-13d, OD-14 to OD-21 and OD-41 decided; OD-5, OD-9, OD-12 and OD-120 open).
 
 ---
 
@@ -37,7 +37,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlTextBlock approved; OD-2, OD-4, OD-6, OD-
 | 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ✅ |
 | 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | – | ✅ batch 1 | ✅ |
 | 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-120 | ✅ batch 2 | ✅ |
-| 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | OD-19 | ✅ batch 2 | ⬜ |
+| 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | – | ✅ batch 2 | ✅ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 15 | `NlCalendarDay` | internal | – | `NlCalendar` | OD-27 | ✅ batch 2 | ⬜ |
@@ -217,11 +217,11 @@ Decide these before building the components listed under "Affects".
 - OD-14, OD-15, OD-16: see section 2
 
 **NlMenu**
-- OD-17 · Shadow: `--nl-shadow-menu` · Open
-- OD-18 · Placement: `Space-XS` from the trigger, flips, `Space-M` from the window edge, at least the trigger's width · Open
-- OD-19 · `kind` prop (action, select, filter, navigation) with roles and keyboard · Open
-- OD-20 · `maxHeight` as a `Size-*` token name · Open
-- OD-21 · Open and close: fade, `--nl-duration-base` · Open
+- OD-17 · Shadow: `--nl-shadow-menu` · **Decided** 18 Nov 2026: approved
+- OD-18 · Placement: `Space-XS` from the trigger, flips, `Space-M` from the window edge, at least the trigger's width · **Decided** 18 Nov 2026: approved, built with `@floating-ui/dom`
+- OD-19 · `kind` prop (action, select, filter, navigation) with roles and keyboard · **Decided** 18 Nov 2026: approved; Tab closes action, select and navigation menus
+- OD-20 · `maxHeight` as a `Size-*` token name · **Decided** 18 Nov 2026: approved
+- OD-21 · Open and close: fade, `--nl-duration-base` · **Decided** 18 Nov 2026: approved
 
 **NlChipGroup**
 - OD-22 · `wrap` option · Open
