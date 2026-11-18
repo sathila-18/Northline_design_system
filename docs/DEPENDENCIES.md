@@ -55,7 +55,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 | 22 | `NlBadgeBase` | internal | `NlIcon` | `NlBadge` | – | ✅ batch 3 | ⬜ |
 | 23 | `NlBadge` | yes | `NlBadgeBase` | `NlAccordion`, `NlTableCell` | – | ✅ batch 3 | ⬜ |
 | 24 | `NlButtonBase` | internal | `NlIcon` | `NlButton` | OD-1 / OD-40 (soft variant?) | ✅ batch 3 | ⬜ |
-| 25 | `NlWhiteButton` | internal | `NlIcon` | `NlButton` | OD-54 | ✅ batch 3 | ⬜ |
+| 25 | `NlWhiteButton` | internal | `NlButtonBase` | `NlButton` | OD-54 | ✅ batch 3 | ⬜ |
 | 26 | `NlDestructiveButton` | internal | `NlIcon` | `NlButton` | – | ✅ batch 3 | ⬜ |
 | 27 | `NlButton` | yes | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | `NlNotificationButton`, `NlPasswordField`, `NlSearchField`, `NlCalendar`, `NlBanner`, `NlSnackbar`, `NlButtonDock`, `NlEmptyState`, `NlFileUpload`, `NlDialog`, `NlPagination`, `NlTableCell`, `NlTableColumnFilter`, `NlSideSheet`, `NlPageHeader`, `NlTable`, `NlSideNav` | OD-1 / OD-40, OD-31, OD-117 | ✅ batch 3 | ⬜ |
 | 28 | `NlCheckboxControl` | internal | `NlIcon` | `NlCheckbox`, `NlCheckboxListItem`, `NlTableHeaderCell`, `NlTableCell`, `NlTable` | – | ✅ batch 3 | ⬜ |
@@ -274,7 +274,7 @@ Decide these before building the components listed under "Affects".
 - OD-53 · Default tone `neutral` · **Decided** 18 Nov 2026: approved
 
 **NlWhiteButton**
-- OD-54 · With `tone="white"`, `variant` is ignored (or restricted to `primary`) · Open
+- OD-54 · With `tone="white"`, `variant` is ignored (or restricted to `primary`) · **Decided** 18 Nov 2026: restricted to `primary` in `NlButton`'s types (applied in #27)
 
 **NlButton**
 - OD-55 · No separate icon tone (`contentTone="secondary"` covers close buttons) · Open
