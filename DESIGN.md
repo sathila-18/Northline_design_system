@@ -604,7 +604,7 @@ _The designer adds rows here before each build._
 |---|---|---|---|---|---|
 | 20 | Icon container | `NlIconContainer` | `NlIcon` | [§9](#nliconcontainer) | ✅ |
 | 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ✅ |
-| 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ⬜ |
+| 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ✅ |
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ⬜ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlIcon` | [§9](#nlwhitebutton) | ⬜ |
@@ -2867,8 +2867,47 @@ None (§7.2: bases have no interaction states).
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Padding, gap, radius | `Space-XS`, `Space-M`, `Radius-S` | Same | Matches |
-| Rendered heights | 26 (small) and 32 (large) | Hug the content. No fixed height, because neither value is a `Size-*` token | **Needs approval** |
+| Rendered heights | 26 (small) and 32 (large) | Small hugs the content (26). Large hugs to 29 (`Label M` line height 21 + 2 × `Space-XS`), so it has a `Size-32` minimum height to match the reference | Approved (OD-49) |
 | Icon sizes | 16 and 20 | `NlIcon` 16 and 20 | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size`: `small` (default), `large`, also `data-size` |
+| Label | `children` |
+| Leading icon, trailing icon | `leadingIcon?`, `trailingIcon?`: a decorative `NlIcon` in a slot `<span>` (`data-slot="leading"` / `"trailing"`) |
+| Colours | `appearance?: { badge, icon }`: whole class strings from the mapped component's styles file. `badge` carries background, inset ring and text colour; `icon` colours the icon slots, and `NlIcon` inherits it (`tone="inherit"`) |
+
+#### API
+
+```tsx
+import { NlBadgeBase } from '../NlBadgeBase'; // internal, not exported from @northline/ui
+
+<NlBadgeBase size="small" leadingIcon="check_circle" appearance={styles.tone.success}>
+  Active
+</NlBadgeBase>
+```
+
+A `<span>`. `className` (placement only) and other native attributes go to it. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Tag | Padding `Space-XS` / `Space-M`, gap `Space-XS`, `Radius-S` |
+| small | `Label S`, `NlIcon` 16; hugs to 26 |
+| large | `Label M`, `NlIcon` 20; minimum height `Size-32` |
+| Border | 1px inset ring (`nl:inset-ring`) in the colour `NlBadge` passes |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Border as an inset ring | A CSS border would make bordered tones 2px taller than borderless ones. The inset ring stays inside the shape, as the spec's "1px inside" means (designer's choice, 18 Nov 2026) |
+| Colours through `appearance` | Text and icon colours differ for status tones (for example `text-success` is Success-700, `fg-success` Success-600), and `NlIcon` has no `white_both` or `disabled-on_bg` tone. So the icon colour sits on a slot `<span>` and nothing styles `NlIcon`'s internals (designer's choice, 18 Nov 2026) |
+| Long labels | Stay on one line and widen the badge. To be revisited per use if a case needs truncation (designer's choice, 18 Nov 2026) |
+| Stories | Under `Internal/Badge base`, with story-only colours (the neutral tone's tokens, and a success look for the inset ring) |
 
 ---
 
@@ -6607,3 +6646,4 @@ Known issues
 | 18 Nov 2026 | NlMenu (#12): floating panel with sticky header and footer slots; `kind` action, select (`multiple`), filter, navigation with roles and keyboard (OD-19); positioned with the new dependency `@floating-ui/dom` (OD-18); `maxHeight` as a Size name (OD-20); `shadow-menu` (OD-17); fade (OD-21); `nlMenuTriggerProps` helper. Approved by the designer |
 | 18 Nov 2026 | NlIconContainer (#20): an `NlIcon` centred on a `Radius-Full` tinted circle, sizes 40, 48 (default) and 64 with a 24 or 36 icon, seven tones (default `primary`), optional label. Fixed size with no padding (OD-45); defaults approved (OD-46). The circle sets the colour and the icon inherits it. K1 accepted for primary and disabled in Light. Approved by the designer |
 | 18 Nov 2026 | NlAvatar (#21): photo, initials or icon in a `Radius-Full` circle with a 1px `border-subtle` inside, seven sizes (`Size-24` to `Size-96`, default `medium`), optional `NlStatusDot` bottom-right. Falls back from the photo to initials, then the icon. `person` added to the icon registry (OD-47, 26 icons); Storybook serves story-only artwork from `apps/storybook/public`. Approved by the designer |
+| 18 Nov 2026 | NlBadgeBase (#22, internal): one-line tag with a label and optional leading and trailing icons, small (`Label S`, hugs to 26) and large (`Label M`, `Size-32` minimum height, OD-49). Colours come from the mapped component through `appearance` (badge and icon class strings); the 1px inside border is an inset ring so every tone is the same size. Approved by the designer |
