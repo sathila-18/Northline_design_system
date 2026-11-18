@@ -269,9 +269,9 @@ Decide these before building the components listed under "Affects".
 - OD-49 · Height hugs the content (26 and 32 aren't tokens) · **Decided** 18 Nov 2026: small hugs (26); large has a `Size-32` minimum height
 
 **NlBadge**
-- OD-51 · `size` passed through, default `small` · Open
-- OD-52 · Leading and trailing icons passed through, coloured `fg-*` per tone · Open
-- OD-53 · Default tone `neutral` · Open
+- OD-51 · `size` passed through, default `small` · **Decided** 18 Nov 2026: approved
+- OD-52 · Leading and trailing icons passed through, coloured `fg-*` per tone · **Decided** 18 Nov 2026: approved, off by default
+- OD-53 · Default tone `neutral` · **Decided** 18 Nov 2026: approved
 
 **NlWhiteButton**
 - OD-54 · With `tone="white"`, `variant` is ignored (or restricted to `primary`) · Open
