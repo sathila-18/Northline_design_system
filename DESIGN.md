@@ -605,7 +605,7 @@ _The designer adds rows here before each build._
 | 20 | Icon container | `NlIconContainer` | `NlIcon` | [§9](#nliconcontainer) | ✅ |
 | 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ✅ |
 | 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ✅ |
-| 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ⬜ |
+| 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ✅ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlIcon` | [§9](#nlwhitebutton) | ⬜ |
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlIcon` | [§9](#nldestructivebutton) | ⬜ |
@@ -2963,11 +2963,51 @@ None. Not interactive. "Disabled" is a tone (a status that is switched off), not
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Size | The mapped badge only exists in the small size. The base has small and large | `size` passed through to the base, default `small` | **Needs approval** |
-| Icons | The mapped badge hides both icons and doesn't expose them | `leadingIcon` and `trailingIcon` passed through. Icon colours as in the table (the matching `fg-*` token) | **Needs approval** |
-| Icon colours | Not drawn on the mapped badge | `fg-*` matching each text token | **Needs approval** |
-| Default tone | Not set | `neutral` | **Needs approval** |
+| Size | The mapped badge only exists in the small size. The base has small and large | `size` passed through to the base, default `small` | Approved (OD-51) |
+| Icons | The mapped badge hides both icons and doesn't expose them | `leadingIcon` and `trailingIcon` passed through, off by default; set a name to show one. Icon colours as in the table (the matching `fg-*` token) | Approved (OD-52) |
+| Icon colours | Not drawn on the mapped badge | `fg-*` matching each text token | Approved (OD-52) |
+| Default tone | Not set | `neutral` | Approved (OD-53) |
 | Tone names | Primary, secondary, success, error, info, warning, disabled, neutral | Same, as `tone` (§7.3) | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Tone | `tone`, default `neutral`, also `data-tone`. Picks a fixed `{ badge, icon }` from `NlBadge.styles.ts` and passes it to `NlBadgeBase` as `appearance` |
+| Size | `size`: `small` (default), `large`, passed to the base |
+| Label | `children` |
+| Icons | `leadingIcon?`, `trailingIcon?`, passed to the base. None by default |
+
+#### API
+
+```tsx
+import { NlBadge } from '@northline/ui';
+
+<NlBadge tone="success">Active</NlBadge>
+<NlBadge tone="warning" size="large" leadingIcon="warning">Pending</NlBadge>
+```
+
+Renders `NlBadgeBase` (a `<span>`). `className` and other native attributes go to it. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Tone | Badge | Icon |
+|---|---|---|
+| primary | `bg-brand`, `text-white_both` | `fg-white_both` |
+| secondary | inset ring `border-strong`, `text-secondary`, no fill | `fg-secondary` |
+| success, error, info, warning | `bg-{tone}_secondary`, inset ring `border-{tone}`, `text-{tone}` | `fg-{tone}` |
+| neutral | `bg-neutral`, `text-secondary` | `fg-secondary` |
+| disabled | `bg-disabled`, `text-disabled-on_bg` | `fg-disabled-on_bg` |
+
+Shape, sizes and spacing from `NlBadgeBase`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Contrast | Text on its tint, Light / Dark: primary 5.84–7.98 / 4.82–5.84 (Voltic Light 5.84), secondary 8.39 / 9.60, success 6.04 / 10.63, error 6.81 / 9.81, info 6.39 / 10.63, warning 7.75 / 11.81, neutral 6.08 / 6.74. Icons pass 3:1 in every tone but disabled. `border-warning` on `bg-primary` (1.93, Light) is accepted in D17 |
+| Disabled tone | Text 3.53 / 1.60, under 4.5:1. Accepted as known issue K4 (designer's choice, 18 Nov 2026); the label must still say the status, for example "Inactive". Story samples are marked `data-a11y-known-issue="K4"` |
+| Icons off by default | Icons are only drawn when a name is set (designer's choice, 18 Nov 2026) |
 
 ---
 
@@ -6611,6 +6651,7 @@ Known issues
 | K1 | The grey scale has two light steps, so `bg-tertiary`, `bg-neutral`, `bg-icons` and `bg-disabled` share Neutral-100 in Light. A grey-25 step would separate them | Open |
 | K2 | `text-white_subtle` (Neutral-100) on `bg-brand` is under 4.5:1 in Northline Dark (3.82), Garnet Dark (3.49) and Voltic (4.23, both themes). Found by `pnpm test:a11y` (S6). Accepted for now; decide when a component uses this pairing | Open |
 | K3 | `text-disabled` on `bg-primary` is under 4.5:1 (3.00 Light, 1.79 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control (a disabled list row, checkbox or menu item). axe can't tell from plain text, so story samples of disabled text are marked `data-a11y-known-issue="K3"`. Found by `pnpm test:a11y` with `NlTextBlock`. Accepted by the designer, 18 Nov 2026 | Accepted |
+| K4 | The disabled `NlBadge` tone's text (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (3.53 Light, 1.60 Dark, every brand). A disabled badge is a status, not an inactive control, so WCAG 1.4.3's exemption doesn't strictly apply. Kept as specified; the label must say the status. Story samples are marked `data-a11y-known-issue="K4"`. Found with `NlBadge`. Accepted by the designer, 18 Nov 2026 | Accepted |
 
 ---
 
@@ -6647,3 +6688,4 @@ Known issues
 | 18 Nov 2026 | NlIconContainer (#20): an `NlIcon` centred on a `Radius-Full` tinted circle, sizes 40, 48 (default) and 64 with a 24 or 36 icon, seven tones (default `primary`), optional label. Fixed size with no padding (OD-45); defaults approved (OD-46). The circle sets the colour and the icon inherits it. K1 accepted for primary and disabled in Light. Approved by the designer |
 | 18 Nov 2026 | NlAvatar (#21): photo, initials or icon in a `Radius-Full` circle with a 1px `border-subtle` inside, seven sizes (`Size-24` to `Size-96`, default `medium`), optional `NlStatusDot` bottom-right. Falls back from the photo to initials, then the icon. `person` added to the icon registry (OD-47, 26 icons); Storybook serves story-only artwork from `apps/storybook/public`. Approved by the designer |
 | 18 Nov 2026 | NlBadgeBase (#22, internal): one-line tag with a label and optional leading and trailing icons, small (`Label S`, hugs to 26) and large (`Label M`, `Size-32` minimum height, OD-49). Colours come from the mapped component through `appearance` (badge and icon class strings); the 1px inside border is an inset ring so every tone is the same size. Approved by the designer |
+| 18 Nov 2026 | NlBadge (#23): status tag mapped on `NlBadgeBase`, eight tones (default `neutral`, OD-53), small (default) and large (OD-51), optional icons off by default in the matching `fg-*` colour (OD-52). Known issue K4 accepted (disabled tone text contrast). Approved by the designer |
