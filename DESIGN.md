@@ -584,7 +584,7 @@ _The designer adds rows here before each build._
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ✅ |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ✅ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ✅ |
-| 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ⬜ |
+| 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | 🟨 |
 | 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ⬜ |
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ⬜ |
 | 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ⬜ |
@@ -1332,7 +1332,7 @@ A `<div>`. `className` is added last; other native `<div>` attributes and `ref` 
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-7, OD-8, OD-9.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-9 (OD-7 and OD-8 decided).
 
 A horizontal bar that shows how much of a task is done.
 
@@ -1391,9 +1391,50 @@ None. Not interactive. The only change is the value.
 | Steps 4 and 5 | The reference draws one continuous bar at preset percentages (25, 50, 75, 100 for 4 steps; 20, 40, 60, 80, 100 for 5). There are no visible segments | No `steps` prop. `value` takes any percent. A caller with 4 steps passes 25, 50, 75, 100 | Approved |
 | Fill radius | Bound to a radius token from another library ("4px") | `Radius-XS` (4) | Approved |
 | Track radius | `Radius-XS` | `Radius-XS` | Matches |
-| Indeterminate | Not in the reference | Not specified. `NlSpinner` covers unknown duration | Open |
-| Animation | Not in the reference | `--nl-duration-base`, `--nl-ease-standard`, none under reduced motion | **Needs approval** |
-| Default size | Not set in the reference | `small` | **Needs approval** |
+| Indeterminate | Not in the reference | Not specified. `NlSpinner` covers unknown duration (OD-9) | Open |
+| Animation | Not in the reference | `--nl-duration-base`, `--nl-ease-standard`, none under reduced motion (OD-7) | Approved |
+| Default size | Not set in the reference | `small` (OD-8) | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'large' \| 'small'`, default `small`, also `data-size` |
+| Value | `value: number`, clamped to 0 to 100; anything that isn't a number counts as 0. Sets `aria-valuenow` and the fill width |
+| Accessible name | `label` or `aria-labelledby`. The type requires exactly one |
+| Role | `role="progressbar"`, `aria-valuemin="0"`, `aria-valuemax="100"` |
+| Steps | No prop. A caller with 4 steps passes 25, 50, 75, 100 |
+
+#### API
+
+```tsx
+import { NlProgressBar } from '@northline/ui';
+
+<NlProgressBar value={50} label="Upload" />                      // small
+<NlProgressBar size="large" value={75} label="Upload" />
+<NlProgressBar value={20} aria-labelledby="import-caption" />    // named by visible text
+```
+
+A track `<div>` with a fill `<div>` inside. `className` is added last; other native `<div>` attributes and `ref` go to the track. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Height | `Size-4` (small), `Size-8` (large); the fill is the track's full height |
+| Radius | `Radius-XS` (track and fill); the track clips the fill |
+| Track | `bg-active-hover` |
+| Fill | `fg-brand` |
+| Motion | `--nl-duration-base`, `--nl-ease-standard` (`nl:duration-base`, `nl:ease-standard`) |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Fill width | The width is data, so the component sets it as one custom property, `--nl-progress-value`, on the fill. A named utility `nl:progress-fill` in `packages/ui/src/styles/tailwind.css` reads it and names `width` as the transitioned property (designer's choice, 18 Nov 2026) |
+| Value 0 | The fill stays in the page at width 0, which draws nothing, so 0 to any value animates |
+| Indeterminate | Not built (OD-9 open). `NlSpinner` covers unknown duration |
+| Contrast | `fg-brand` on `bg-active-hover`, all above 3:1. Lowest Voltic Dark 3.92 (token audit §11) |
 
 ---
 
