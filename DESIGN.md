@@ -608,7 +608,7 @@ _The designer adds rows here before each build._
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ✅ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ✅ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlButtonBase` | [§9](#nlwhitebutton) | ✅ |
-| 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ⬜ |
+| 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ✅ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ⬜ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ⬜ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
@@ -6814,3 +6814,4 @@ Known issues
 | 18 Nov 2026 | NlBadge (#23): status tag mapped on `NlBadgeBase`, eight tones (default `neutral`, OD-53), small (default) and large (OD-51), optional icons off by default in the matching `fg-*` colour (OD-52). Known issue K4 accepted (disabled tone text contrast). Approved by the designer |
 | 18 Nov 2026 | NlButtonBase (#24, internal): primary, secondary (2px inset ring), tertiary and link at rest; four sizes with fixed heights (`Size-56` to `Size-36`) and icon-only squares (`Size-56` to `Size-32`); leading, trailing and icon-only icons with a hidden label; `as` and `href` for links. `appearance` replaces the resting colours; standard focus ring in the base; `soft` left out until OD-40 (OD-1). Approved by the designer |
 | 18 Nov 2026 | NlWhiteButton (#25, internal): the white button for brand backgrounds, built on `NlButtonBase` with a fixed `appearance` (`bg-action-inverse`, 1px inset ring `border-subtle`, `text-dark_both`, `fg-dark_both`); no markup or sizes of its own. §8 dependency changed to `NlButtonBase`; D12 updated. OD-54: white takes only `variant="primary"`, applied in `NlButton`. Approved by the designer |
+| 18 Nov 2026 | NlDestructiveButton (#26, internal): primary (`bg-action-destructive`), secondary (2px inset ring `border-error`) and tertiary (`text-error`) at rest, built on `NlButtonBase` with a fixed `appearance` per variant; no link form. §8 dependency changed to `NlButtonBase`; D12 updated. Approved by the designer |
