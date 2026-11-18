@@ -578,7 +578,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ✅ |
-| 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | 🟨 |
+| 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ✅ |
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ⬜ |
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ⬜ |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
@@ -6076,3 +6076,4 @@ Known issues
 | 18 Nov 2026 | S8: `vercel.json` builds Storybook (`pnpm build-storybook`) and serves `apps/storybook/storybook-static`; pnpm 12 through Corepack (`ENABLE_EXPERIMENTAL_COREPACK=1`), Node 24. Production: https://northline-design-system-blond.vercel.app. Every branch gets a preview (behind Vercel Authentication). Links added to CLAUDE.md and the README. Setup S-1 to S8 complete |
 | 18 Nov 2026 | Contents list links to each section |
 | 18 Nov 2026 | NlIcon (#1): Material Symbols Rounded glyphs by code point from the `nlIcons` registry (25 icons), sizes 16 to 64, 7 tones plus inherit, filled, optional label. `pnpm icons` subsets the font to the registry (5.3 MB to 19 KB). New token `Alias Typography.Icon.Font weight` (300) from primitive `Font Weight-300`; only groups with a font size are text styles. Approved by the designer |
+| 18 Nov 2026 | NlStatusDot (#2): presence dot in five sizes (`Size-6` to `Size-24`, default medium), `fg-success` with a 1px `border-inverse` ring outside the diameter, optional label. Approved by the designer |
