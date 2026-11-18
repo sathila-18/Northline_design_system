@@ -26,4 +26,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlSwitch | 2026-11-18 14:57 | 2026-11-18 15:03 | OD-13a/c/d approved; OD-13b: no hover or pressed colours; border-* mapped to backgrounds in the token build. Approved by the designer |
 | NlTextBlock | 2026-11-18 15:07 | 2026-11-18 15:25 | OD-2/14/15/16/41 decided, OD-120 open; K3 accepted; lint and a11y script fixes. Approved by the designer |
 | NlMenu | 2026-11-18 15:31 | 2026-11-18 15:43 | OD-17 to OD-21 approved; @floating-ui/dom added for positioning; Tab closes action, select and navigation menus. Approved by the designer |
-| NlIconContainer | 2026-11-18 16:02 | | |
+| NlIconContainer | 2026-11-18 16:02 | 2026-11-18 16:10 | OD-45 and OD-46 approved; circle sets the colour, icon inherits; K1 accepted for primary and disabled in Light. Approved by the designer |
