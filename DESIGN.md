@@ -580,7 +580,7 @@ _The designer adds rows here before each build._
 | 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ✅ |
 | 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ✅ |
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ✅ |
-| 4 | Divider | `NlDivider` | – | [§9](#nldivider) | 🟨 |
+| 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ✅ |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ⬜ |
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ⬜ |
@@ -6158,3 +6158,4 @@ Known issues
 | 18 Nov 2026 | NlIcon (#1): Material Symbols Rounded glyphs by code point from the `nlIcons` registry (25 icons), sizes 16 to 64, 7 tones plus inherit, filled, optional label. `pnpm icons` subsets the font to the registry (5.3 MB to 19 KB). New token `Alias Typography.Icon.Font weight` (300) from primitive `Font Weight-300`; only groups with a font size are text styles. Approved by the designer |
 | 18 Nov 2026 | NlStatusDot (#2): presence dot in five sizes (`Size-6` to `Size-24`, default medium), `fg-success` with a 1px `border-inverse` ring outside the diameter, optional label. Approved by the designer |
 | 18 Nov 2026 | NlCountBadge (#3): count pill (1 to 99+) or dot, small and large, `error`, `warning` and `success` tones, optional label. Double digits keep the single-digit height with a minimum width (OD-4). Count 0 renders nothing. Approved by the designer |
+| 18 Nov 2026 | NlDivider (#4): horizontal rule, `divider` (1px) or `section` (`Size-8`) in `border-default`; `<hr>` or a decorative hidden `<div>`. Section fill through the new `nl:bg-border-default` utility. Horizontal only (OD-5 open). Approved by the designer |
