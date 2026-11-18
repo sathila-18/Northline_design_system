@@ -31,3 +31,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlBadgeBase | 2026-11-18 16:39 | 2026-11-18 16:47 | OD-49: small hugs (26), large min Size-32; border as inset ring; colours via appearance; long labels widen. Approved by the designer |
 | NlBadge | 2026-11-18 17:00 | 2026-11-18 17:10 | OD-51, OD-52 (icons off by default), OD-53 approved; K4 accepted. Approved by the designer |
 | NlButtonBase | 2026-11-18 17:13 | 2026-11-18 17:22 | appearance replaces resting colours; focus ring in the base; soft variant left out (OD-1/OD-40 open); D12 note updated. Approved by the designer |
+| NlWhiteButton | 2026-11-18 17:29 | | |

@@ -607,7 +607,7 @@ _The designer adds rows here before each build._
 | 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ✅ |
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ✅ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ✅ |
-| 25 | White button (internal) | `NlWhiteButton` | `NlIcon` | [§9](#nlwhitebutton) | ⬜ |
+| 25 | White button (internal) | `NlWhiteButton` | `NlButtonBase` | [§9](#nlwhitebutton) | ⬜ |
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlIcon` | [§9](#nldestructivebutton) | ⬜ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ⬜ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ⬜ |
@@ -3135,7 +3135,7 @@ import { NlButtonBase } from '../NlButtonBase'; // internal, not exported from @
 
 ### NlWhiteButton
 
-**Level** Atom L1 · **Base** – (one of the three button bases, D12) · **Depends on** `NlIcon` · **Internal**
+**Level** Atom L1 · **Base** – (one of the three button bases, D12; built on `NlButtonBase`) · **Depends on** `NlButtonBase` · **Internal**
 
 **Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-54.
 
@@ -3184,9 +3184,47 @@ As `NlButtonBase`.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Variants | One look only. D12 gives `NlButton` a `variant` for every tone | With `tone="white"`, `variant` is ignored (always this look). Alternatively, restrict `variant` to `primary` for white | **Needs approval** |
+| Variants | One look only. D12 gives `NlButton` a `variant` for every tone | `NlButton`'s types allow only `variant="primary"` (or none) with `tone="white"`, so a white secondary is a type error, not a silent change. Applied in `NlButton` (#27) | Approved (OD-54) |
 | Border on small and xsmall | Present at rest, missing on hover, pressed and disabled in small and xsmall. Present in every state for large and medium | 1px `border-subtle` in every size and state (treated as a drawing slip) | Approved |
 | Large text style | 18/24 | `Button XL`, as `NlButtonBase` | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size`, default `medium`, passed to `NlButtonBase` |
+| Icon, icon name | `icon`, `iconName`, passed to `NlButtonBase` (icon-only included) |
+| Label | `children` |
+| Variant | None. Always `variant="primary"` on the base, and `data-tone="white"` |
+| Colours | `appearance` from `NlWhiteButton.styles.ts`; `NlButton` can replace it to add states |
+| Element | `as`, `href`, passed to `NlButtonBase` |
+
+#### API
+
+```tsx
+import { NlWhiteButton } from '../NlWhiteButton'; // internal, not exported from @northline/ui
+
+<NlWhiteButton size="small" icon="trailing" iconName="chevron_right">
+  Join now
+</NlWhiteButton>
+```
+
+Renders `NlButtonBase`. `className` and other native attributes go to it. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Colours | `bg-action-inverse`; 1px inset ring `border-subtle` in every size; `text-dark_both`; icon `fg-dark_both` |
+| Everything else | From `NlButtonBase` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Built on `NlButtonBase` | It passes a fixed white `appearance` and adds no markup or size classes, so the two can't drift apart (composition rule). The §8 dependency is `NlButtonBase` instead of `NlIcon` (designer's choice, 18 Nov 2026) |
+| Contrast | Label and icon on white: 19.12 everywhere. White button against `bg-brand` and `bg-action-primary`: 4.82 (Garnet Dark) to 7.98 |
+| Stories | Under `Internal/White button`, on a `bg-brand` panel. Flat controls, because Storybook's types can't infer through the icon union |
 
 ---
 
@@ -6683,7 +6721,7 @@ Expanded, minimized; default or tree style.
 | D9 | 17 Nov 2026 | Chart tokens are deferred to the dashboard stage |
 | D10 | 17 Nov 2026 | React components that run in Next.js. Tailwind CSS 4 for styling from the start |
 | D11 | 17 Nov 2026 | Component specs extracted once from the designer's reference library, outside this repo, as neutral specs. Spacing, radius, type and shadow scales match the reference system so the specs map one to one |
-| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button |
+| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button Built on `NlButtonBase` (18 Nov 2026): `NlWhiteButton` renders `NlButtonBase` with a fixed `appearance` instead of copying its markup. |
 | D13 | 17 Nov 2026 | Left out of the demo: one-time code input, profile image, avatar group, the "with text" progress and spinner versions, labels on radio and switch, and the reference library's unused pages (notes, image ratios, tabs) |
 | D14 | 17 Nov 2026 | Menu and calendar are their own components. Select and date fields use them, so they sit at the level the composition rule gives them |
 | D15 | 17 Nov 2026 | Slot content doesn't count toward a component's level (§7.1). `NlTextBlock` takes its label as a slot. Table toolbar, header row, row and footer are internal parts of `NlTable`. `NlAppShell` takes nav, header and content as slots |
