@@ -8,4 +8,5 @@ export * from './components/NlRadio';
 export * from './components/NlSkeleton';
 export * from './components/NlSlider';
 export * from './components/NlSwitch';
+export * from './components/NlTextBlock';
 export * from './components/NlStatusDot';

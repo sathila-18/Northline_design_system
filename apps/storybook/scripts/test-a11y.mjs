@@ -71,11 +71,23 @@ for (const story of stories) {
       const found = await page.evaluate(
         async ({ tags, excluded }) => {
           const { axe } = window;
-          const all = await axe.run(
+          // Storybook's a11y addon runs axe in the same window; wait for its run instead of failing on the overlap.
+          const run = async (context, options) => {
+            for (let attempt = 0; attempt < 50; attempt += 1) {
+              try {
+                return await axe.run(context, options);
+              } catch (error) {
+                if (!String(error).includes('already running')) throw error;
+                await new Promise((resolve) => setTimeout(resolve, 100));
+              }
+            }
+            throw new Error('axe stayed busy for 5 s');
+          };
+          const all = await run(
             { include: [['#storybook-root']] },
             { runOnly: { type: 'tag', values: tags }, rules: { 'color-contrast': { enabled: false } } },
           );
-          const contrast = await axe.run(
+          const contrast = await run(
             { include: [['#storybook-root']], exclude: excluded.map((selector) => [selector]) },
             { runOnly: { type: 'rule', values: ['color-contrast'] } },
           );

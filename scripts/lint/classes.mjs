@@ -72,8 +72,12 @@ export function visitClassStrings(context, check) {
       ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration', 'TSLiteralType'].includes(
         node.parent?.type,
       ) && node.parent.source === node;
+    // A quoted object key ('display-large': '…') names a variant; only its value holds classes.
+    const isPropertyKey = (node) =>
+      node.parent?.type === 'Property' && node.parent.key === node && !node.parent.computed;
     visitors.Literal = (node) => {
-      if (typeof node.value === 'string' && !inImportOrType(node)) for (const info of classStrings(node)) check(info);
+      if (typeof node.value === 'string' && !inImportOrType(node) && !isPropertyKey(node))
+        for (const info of classStrings(node)) check(info);
     };
     visitors.TemplateLiteral = (node) => {
       for (const info of classStrings(node)) check(info);
