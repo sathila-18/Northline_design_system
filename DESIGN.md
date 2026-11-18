@@ -606,7 +606,7 @@ _The designer adds rows here before each build._
 | 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ✅ |
 | 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ✅ |
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ✅ |
-| 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
+| 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ✅ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlIcon` | [§9](#nlwhitebutton) | ⬜ |
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlIcon` | [§9](#nldestructivebutton) | ⬜ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ⬜ |
@@ -6735,3 +6735,4 @@ Known issues
 | 18 Nov 2026 | NlAvatar (#21): photo, initials or icon in a `Radius-Full` circle with a 1px `border-subtle` inside, seven sizes (`Size-24` to `Size-96`, default `medium`), optional `NlStatusDot` bottom-right. Falls back from the photo to initials, then the icon. `person` added to the icon registry (OD-47, 26 icons); Storybook serves story-only artwork from `apps/storybook/public`. Approved by the designer |
 | 18 Nov 2026 | NlBadgeBase (#22, internal): one-line tag with a label and optional leading and trailing icons, small (`Label S`, hugs to 26) and large (`Label M`, `Size-32` minimum height, OD-49). Colours come from the mapped component through `appearance` (badge and icon class strings); the 1px inside border is an inset ring so every tone is the same size. Approved by the designer |
 | 18 Nov 2026 | NlBadge (#23): status tag mapped on `NlBadgeBase`, eight tones (default `neutral`, OD-53), small (default) and large (OD-51), optional icons off by default in the matching `fg-*` colour (OD-52). Known issue K4 accepted (disabled tone text contrast). Approved by the designer |
+| 18 Nov 2026 | NlButtonBase (#24, internal): primary, secondary (2px inset ring), tertiary and link at rest; four sizes with fixed heights (`Size-56` to `Size-36`) and icon-only squares (`Size-56` to `Size-32`); leading, trailing and icon-only icons with a hidden label; `as` and `href` for links. `appearance` replaces the resting colours; standard focus ring in the base; `soft` left out until OD-40 (OD-1). Approved by the designer |
