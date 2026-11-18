@@ -203,6 +203,7 @@ describe('tailwind-theme.css', () => {
     ['nl:outline-focused', 'outline-color: var(--nl-border-focused)'],
     ['nl:text-fg-secondary', 'color: var(--nl-fg-secondary)'],
     ['nl:border-fg-action', 'border-color: var(--nl-fg-action)'],
+    ['nl:bg-border-disabled', 'background-color: var(--nl-border-disabled)'],
   ])('%s gives %s', (className, declaration) => {
     expect(rule(className)).toContain(declaration);
   });

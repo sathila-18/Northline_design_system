@@ -298,3 +298,17 @@ Disabled (`fg-disabled-on_bg` on `bg-disabled`) is exempt from 1.4.11. For the r
 | `border-pressed` on `bg-active-hover` (unselected pressed) | 9.26 to 9.62 ✓ | 6.99 to 11.74 ✓ |
 
 Disabled (`fg-disabled` on `bg-primary`, 3.00 / 1.79) is exempt from 1.4.11.
+
+## 14. Contrast added on 18 Nov 2026: switch
+
+`NlSwitch` draws a white handle (`fg-white_both`) on its track, and the off track on the page. Both are meaningful graphics and need 3:1 (WCAG 1.4.11, §2.6). No token changed. Measured in the browser from the built tokens.
+
+| Pair | Northline L / D | Garnet L / D | Voltic L / D |
+|---|---|---|---|
+| Off track `fg-placeholder` on `bg-primary` | 4.87 / 3.92 ✓ | 4.87 / 3.92 ✓ | 4.87 / 3.92 ✓ |
+| Handle on the off track (`fg-placeholder`) | 4.87 / 4.87 ✓ | 4.87 / 4.87 ✓ | 4.87 / 4.87 ✓ |
+| Handle on the on track (`fg-brand`) | 7.85 / 3.32 ✓ | 7.98 / 3.04 ✓ | 5.84 / 3.34 ✓ |
+
+The spec asked for Voltic Light on `fg-brand` especially: 5.84, a pass. The lowest is Garnet Dark, 3.04.
+
+Not built, for the record (OD-13b): the white handle on `fg-hovered` would be 2.14 / 2.00 / 2.55 and on `fg-pressed` 1.43 / 1.39 / 1.87 in Dark (Northline / Garnet / Voltic). Hover and pressed are outside the audit (D17), but the switch has no hover or pressed colours because of this.

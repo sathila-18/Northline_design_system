@@ -23,3 +23,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlProgressBar | 2026-11-18 12:47 | 2026-11-18 13:05 | OD-7 and OD-8 approved; fill width via nl:progress-fill utility; OD-9 open. Approved by the designer |
 | NlSlider | 2026-11-18 13:09 | 2026-11-18 14:10 | OD-10 states approved after Storybook check; OD-11 approved; OD-12 open. Native range input under drawn parts; lint accepts group/peer markers. Approved by the designer |
 | NlRadio | 2026-11-18 14:47 | 2026-11-18 14:54 | Native radio under drawn ring and dot (named group); fg-* border colours added to the token build; round focus ring. Approved by the designer |
+| NlSwitch | 2026-11-18 14:57 | 2026-11-18 15:03 | OD-13a/c/d approved; OD-13b: no hover or pressed colours; border-* mapped to backgrounds in the token build. Approved by the designer |

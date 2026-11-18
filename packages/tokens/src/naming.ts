@@ -70,6 +70,8 @@ export function tailwindKeys(semantic: string): { key: string; utility: string }
         { key: `--border-color-${rest}`, utility: `border-${rest}` },
         { key: `--outline-color-${rest}`, utility: `outline-${rest}` },
         { key: `--ring-color-${rest}`, utility: `inset-ring-${rest}` },
+        // Background too, for fills drawn in a border colour (divider section band, switch disabled track).
+        { key: `--background-color-border-${rest}`, utility: `bg-border-${rest}` },
       ];
     case 'fg':
       return [
