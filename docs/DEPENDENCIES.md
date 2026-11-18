@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge and NlDivider approved; OD-4 and OD-6 decided; OD-5 open, horizontal only; NlSkeleton in progress).
+Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge, NlDivider and NlSkeleton approved; OD-4 and OD-6 decided; OD-5 open, horizontal only).
 
 ---
 
@@ -30,7 +30,7 @@ Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge and NlDivider appro
 | 2 | `NlStatusDot` | yes | – | `NlAvatar` | – | ✅ batch 1 | ✅ |
 | 3 | `NlCountBadge` | yes | – | `NlLabel`, `NlNotificationButton` | – | ✅ batch 1 | ✅ |
 | 4 | `NlDivider` | yes | – | `NlListItemBase`, `NlAccordion`, `NlSideSheet` | – | ✅ batch 1 | ✅ |
-| 5 | `NlSkeleton` | yes | – | `NlTable` | – | ✅ batch 1 | ⬜ |
+| 5 | `NlSkeleton` | yes | – | `NlTable` | – | ✅ batch 1 | ✅ |
 | 6 | `NlOverlay` | yes | – | `NlDialog`, `NlSideSheet` | – | ✅ batch 1 | ⬜ |
 | 7 | `NlProgressBar` | yes | – | `NlFileUpload` | – | ✅ batch 1 | ⬜ |
 | 8 | `NlSlider` | yes | – | – | OD-10 (Storybook check) | ✅ batch 1 | ⬜ |
