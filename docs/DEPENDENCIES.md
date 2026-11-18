@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon, NlStatusDot and NlCountBadge approved; OD-4 decided).
+Last updated: 18 Nov 2026 (NlIcon, NlStatusDot and NlCountBadge approved; OD-4 decided; NlDivider in progress, horizontal only).
 
 ---
 
@@ -192,7 +192,7 @@ Decide these before building the components listed under "Affects".
 - OD-4 · Minimum width for two digits: `Size-16` (small), `Size-20` (large) · **Decided** 18 Nov 2026: approved
 
 **NlDivider**
-- OD-5 · Vertical orientation: not specified; add if a component needs it · Open
+- OD-5 · Vertical orientation: not specified; add if a component needs it · Open. 18 Nov 2026: built horizontal only; look again if a page needs it
 
 **NlSkeleton**
 - OD-6 · Pulse easing: `--nl-ease-standard` · Open

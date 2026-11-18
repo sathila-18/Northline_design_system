@@ -580,7 +580,7 @@ _The designer adds rows here before each build._
 | 1 | Icon | `NlIcon` | – | [§9](#nlicon) | ✅ |
 | 2 | Status dot | `NlStatusDot` | – | [§9](#nlstatusdot) | ✅ |
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ✅ |
-| 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ⬜ |
+| 4 | Divider | `NlDivider` | – | [§9](#nldivider) | 🟨 |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ⬜ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ⬜ |
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ⬜ |
@@ -1085,8 +1085,44 @@ None. Not interactive.
 |---|---|---|---|
 | Divider thickness | 1px | A 1px top border in `border-default`, using Tailwind's built-in 1px width (§4.2, D16) | Matches |
 | Section divider | 8 tall, `border-default` | `Size-8`, `border-default` | Matches |
-| Vertical orientation | Not in the reference | Not specified. Add only if a component needs it | Open |
+| Vertical orientation | Not in the reference | Not specified. Horizontal only for now; look again if a page needs it (OD-5) | Open |
 | Width | Drawn at a 375 mobile width | Fills its container | Matches (desktop, §2.4) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `type?: 'divider' \| 'section'`, default `divider`, also `data-type` |
+| Semantics | `decorative?: boolean`, default `false`. `false`: `<hr>` (role `separator`). `true`: `<div aria-hidden="true">` |
+| Orientation | Horizontal only (OD-5) |
+
+#### API
+
+```tsx
+import { NlDivider } from '@northline/ui';
+
+<NlDivider />                  // 1px separator, <hr>
+<NlDivider type="section" />   // Size-8 band between page sections
+<NlDivider decorative />       // between list rows or menu groups, hidden from screen readers
+```
+
+An `<hr>`, or a `<div>` when `decorative`. `className` is added last; other native attributes and `ref` go to the root. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| divider | 1px top border (Tailwind's built-in width, D16) in `border-default` |
+| section | Height `Size-8`, filled with `border-default` (`nl:bg-border-default`) |
+| Spacing | None. The parent sets it with its gap |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Section fill | The theme only exposes `border-default` as a border, outline and ring colour. A named utility `nl:bg-border-default` in `packages/ui/src/styles/tailwind.css` fills the section band with it, so the spec's token is kept (designer's choice, 18 Nov 2026) |
+| Orientation | Horizontal only; OD-5 stays open until a page needs a vertical rule (designer's choice, 18 Nov 2026) |
+| Contrast | Not checked: the line is decorative and carries no information on its own (WCAG 1.4.11 does not apply) |
 
 ---
 
