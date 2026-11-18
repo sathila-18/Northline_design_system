@@ -2645,10 +2645,46 @@ None. Not interactive.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Padding and gap | `Space-M` padding and a raw 10 gap on the 40 size. They have no effect on the fixed 48 and 64 sizes | Dropped. Fixed size, icon centred | **Needs approval** |
+| Padding and gap | `Space-M` padding and a raw 10 gap on the 40 size. They have no effect on the fixed 48 and 64 sizes | Dropped. Fixed size, icon centred | Approved (OD-45) |
 | Icon nesting | Some variants put the icon straight in; others wrap it in an icon-size component | One `NlIcon` in every case | Matches |
 | Disabled icon | `fg-disabled-on_bg` | Same | Matches |
-| Default size and tone | Not set | `48`, `primary` | **Needs approval** |
+| Default size and tone | Not set | `48`, `primary` | Approved (OD-46) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size`: `40`, `48` (default), `64`, also `data-size`. The icon is `24`, `24`, `36` |
+| Colour | `tone`: `primary` (default), `secondary`, `disabled`, `success`, `warning`, `error`, `info`, also `data-tone` |
+| Icon | `icon: NlIconName`, rendered as one `NlIcon` with `tone="inherit"` |
+| Accessible name | `label?`, passed to `NlIcon` (`role="img"` and `aria-label`); without it the icon is `aria-hidden` |
+
+#### API
+
+```tsx
+import { NlIconContainer } from '@northline/ui';
+
+<NlIconContainer icon="search" />
+<NlIconContainer icon="check_circle" size={64} tone="success" label="Upload complete" />
+```
+
+A `<span>` with the `NlIcon` inside. `className` and other native attributes go to the circle. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Circle | `Size-40`, `Size-48`, `Size-64`; `Radius-Full` |
+| Icon | `NlIcon` sizes `24` and `36` |
+| Colours | As in the table above. Utilities `nl:bg-icons`, `nl:bg-secondary`, `nl:bg-disabled`, `nl:bg-{tone}-secondary`; `nl:text-fg-*`, `nl:text-fg-disabled-on-bg` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Colour on the circle | The circle sets the text colour and the icon inherits it, so the disabled tone can use `fg-disabled-on_bg`, which `NlIcon` has no tone for |
+| Contrast (icon on tint) | The same in every brand. Light / Dark: primary 13.85 / 13.43, secondary 7.18 / 8.31, success 3.91 / 8.31, warning 4.38 / 10.32, error 4.62 / 7.15, info 4.25 / 8.19. Disabled 3.53 / 1.60, exempt from 1.4.11 |
+| Primary and disabled in Light | `bg-icons` and `bg-disabled` are the same grey (K1); the two differ by icon colour only. Accepted by the designer, 18 Nov 2026 |
 
 ---
 

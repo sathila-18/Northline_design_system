@@ -258,8 +258,8 @@ Decide these before building the components listed under "Affects".
 #### Atoms L1
 
 **NlIconContainer**
-- OD-45 · Drop padding and gap (fixed size, icon centred) · Open
-- OD-46 · Defaults: size 48, tone `primary` · Open
+- OD-45 · Drop padding and gap (fixed size, icon centred) · **Decided** 18 Nov 2026: approved
+- OD-46 · Defaults: size 48, tone `primary` · **Decided** 18 Nov 2026: approved
 
 **NlAvatar**
 - OD-47 · Default icon `person` · Open
