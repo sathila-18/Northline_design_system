@@ -12,17 +12,17 @@ Northline is a public demo. It rebuilds a real design-to-code process with ficti
 
 ## Contents
 
-1. Sources of truth
-2. Core rules
-3. Foundations, tokens
-4. Foundations, styles
-5. Motion
-6. Icons
-7. Component architecture
-8. Component inventory and build status
-9. Component specs
-10. Decisions and known issues
-11. Changelog
+1. [Sources of truth](#1-sources-of-truth)
+2. [Core rules](#2-core-rules)
+3. [Foundations, tokens](#3-foundations-tokens)
+4. [Foundations, styles](#4-foundations-styles)
+5. [Motion](#5-motion)
+6. [Icons](#6-icons)
+7. [Component architecture](#7-component-architecture)
+8. [Component inventory and build status](#8-component-inventory-and-build-status)
+9. [Component specs](#9-component-specs)
+10. [Decisions and known issues](#10-decisions-and-known-issues)
+11. [Changelog](#11-changelog)
 
 ---
 
@@ -5992,3 +5992,4 @@ Known issues
 | 18 Nov 2026 | S6: Vitest, Testing Library and jsdom in `@northline/ui`. `pnpm test:a11y` runs axe (WCAG 2.2 AA) on every story in 3 brands × 2 themes; contrast skips anything inside `data-a11y-state="hover"` or `"pressed"` (D17) and accepted known issues marked `data-a11y-known-issue`. ESLint is type-aware, and `scripts/lint/` adds the CLAUDE.md rules: `nl:` prefix, theme classes only, no arbitrary values, `!`, `dark:` or raw colours and pixels, no `outline-none` beside a focus ring width, whole literal class strings. Each rule has tests. Found and accepted K2 |
 | 18 Nov 2026 | S7: `apps/nextjs-check`, a Next.js 16 App Router app (outside the pnpm workspace) that imports `@northline/ui/index.css` and sets `data-brand` and `data-theme` on `<html>` in the root layout. `pnpm nextjs-check` packs both libraries, installs the tarballs into a copy of the app with npm, runs `next build` and checks the CSS and fonts in the output. Must pass before every release |
 | 18 Nov 2026 | S8: `vercel.json` builds Storybook (`pnpm build-storybook`) and serves `apps/storybook/storybook-static`; pnpm 12 through Corepack (`ENABLE_EXPERIMENTAL_COREPACK=1`), Node 24. Production: https://northline-design-system-blond.vercel.app. Every branch gets a preview (behind Vercel Authentication). Links added to CLAUDE.md and the README. Setup S-1 to S8 complete |
+| 18 Nov 2026 | Contents list links to each section |
