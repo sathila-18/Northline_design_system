@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon to NlSlider approved; OD-4, OD-6, OD-7, OD-8, OD-10 and OD-11 decided; OD-5, OD-9 and OD-12 open).
+Last updated: 18 Nov 2026 (NlIcon to NlSlider approved; OD-4, OD-6, OD-7, OD-8, OD-10 and OD-11 decided; OD-5, OD-9 and OD-12 open; NlRadio in progress).
 
 ---
 

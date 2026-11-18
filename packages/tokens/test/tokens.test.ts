@@ -202,6 +202,7 @@ describe('tailwind-theme.css', () => {
     ['nl:text-data-l', 'font-variant-numeric: tabular-nums'],
     ['nl:outline-focused', 'outline-color: var(--nl-border-focused)'],
     ['nl:text-fg-secondary', 'color: var(--nl-fg-secondary)'],
+    ['nl:border-fg-action', 'border-color: var(--nl-fg-action)'],
   ])('%s gives %s', (className, declaration) => {
     expect(rule(className)).toContain(declaration);
   });

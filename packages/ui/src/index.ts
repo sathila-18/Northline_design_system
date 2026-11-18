@@ -4,6 +4,7 @@ export * from './components/NlCountBadge';
 export * from './components/NlDivider';
 export * from './components/NlOverlay';
 export * from './components/NlProgressBar';
+export * from './components/NlRadio';
 export * from './components/NlSkeleton';
 export * from './components/NlSlider';
 export * from './components/NlStatusDot';
