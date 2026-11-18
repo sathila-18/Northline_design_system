@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon to NlSwitch approved; OD-4, OD-6, OD-7, OD-8, OD-10, OD-11 and OD-13a to OD-13d decided; OD-5, OD-9 and OD-12 open).
+Last updated: 18 Nov 2026 (NlIcon to NlSwitch approved; OD-2, OD-4, OD-6, OD-7, OD-8, OD-10, OD-11, OD-13a to OD-13d, OD-14, OD-15, OD-16 and OD-41 decided; OD-5, OD-9, OD-12 and OD-120 open; NlTextBlock in progress).
 
 ---
 
@@ -36,7 +36,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlSwitch approved; OD-4, OD-6, OD-7, OD-8, 
 | 8 | `NlSlider` | yes | – | – | – | ✅ batch 1 | ✅ |
 | 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ✅ |
 | 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | – | ✅ batch 1 | ✅ |
-| 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-14, OD-15, OD-16, OD-41, OD-120 | ✅ batch 2 | ⬜ |
+| 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-120 | ✅ batch 2 | ⬜ |
 | 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | OD-19 | ✅ batch 2 | ⬜ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
@@ -130,7 +130,7 @@ Build and settle these early. A change to them ripples widely.
 |---|---|---|
 | `NlIcon` | 21 | – |
 | `NlButton` | 17 | OD-1 / OD-40, OD-31 |
-| `NlTextBlock` | 11 | OD-14, OD-15, OD-16, OD-41 |
+| `NlTextBlock` | 11 | OD-120 (OD-14, OD-15, OD-16, OD-41 decided) |
 | `NlLabel` | 6 | OD-50 |
 | `NlInputBase` | 6 | OD-42, OD-43, OD-44 |
 | `NlListItemBase` | 5 | OD-14, OD-15 |
@@ -155,7 +155,7 @@ Status: **Open** · **Decided** · **Dropped**
 | – | `Button XL` text style (§3.4) | Decided | Already in DESIGN.md |
 | – | `Size-320` (§3.5) | Decided | Already in DESIGN.md |
 | OD-1 | `NlButton variant="soft"` (filled `bg-action-secondary`, no border) | Open | Only if OD-40 goes that way. Would change D12 |
-| OD-2 | `NlTextBlock` types `label` and `body` | Open | See OD-14 and OD-41 |
+| OD-2 | `NlTextBlock` types `label` and `body` | **Decided** 18 Nov 2026: both added | See OD-14 and OD-41 |
 | OD-3 | Focus ring colour on fields with an error: `border-error` instead of `border-focused` | Open | Would add an exception to CLAUDE.md's focus ring rule. See OD-44 |
 | OD-91 | A maximum-width size token for snackbars (for example `Size-560`) | Open | See OD-104 |
 | OD-92 | A time token for snackbar auto-dismiss (for example 6 s) | Open | See OD-105 |
@@ -169,12 +169,12 @@ Decide these before building the components listed under "Affects".
 
 | ID | Component | Question | Proposal | Affects | Status |
 |---|---|---|---|---|---|
-| OD-14 | `NlTextBlock` | List rows need `Label M` / `Body S` text | Add `type="label"` (gap `Space-none`) | All list items, `NlSideNavUser`, `NlMenu` rows | Open |
-| OD-15 | `NlTextBlock` | Disabled text colour | `disabled` prop → `text-disabled` | `NlCheckbox`, list items, `NlListCaption` | Open |
-| OD-16 | `NlTextBlock` | Heading element | `headingAs`, default `p` | `NlDialog`, `NlSideSheet`, `NlPageHeader`, `NlEmptyState` | Open |
+| OD-14 | `NlTextBlock` | List rows need `Label M` / `Body S` text | Add `type="label"` (gap `Space-none`) | All list items, `NlSideNavUser`, `NlMenu` rows | **Decided** 18 Nov 2026: approved |
+| OD-15 | `NlTextBlock` | Disabled text colour | `disabled` prop → `text-disabled` | `NlCheckbox`, list items, `NlListCaption` | **Decided** 18 Nov 2026: approved (contrast: K3) |
+| OD-16 | `NlTextBlock` | Heading element | `headingAs`, default `p` | `NlDialog`, `NlSideSheet`, `NlPageHeader`, `NlEmptyState` | **Decided** 18 Nov 2026: approved |
 | OD-31 | `NlButton` | Icon-only sizes inside fields | Fields use the xsmall icon-only button (20 icon). Large fields lose the 24 icon | `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlDateField` | Open |
 | OD-40 | `NlNotificationButton` | Its look matches no `NlButton` variant | (b) add `variant="soft"` to `NlButton` (recommended) or (a) its own button as a D12 exception | `NlButton`, `NlPageHeader` | Open |
-| OD-41 | `NlCheckbox` | How to get `Body L` text | (b) `NlTextBlock type="body"` (recommended) or (a) `type="display-large"` | `NlTextBlock` | Open |
+| OD-41 | `NlCheckbox` | How to get `Body L` text | (b) `NlTextBlock type="body"` (recommended) or (a) `type="display-large"` | `NlTextBlock` | **Decided** 18 Nov 2026: (b), built in `NlTextBlock` |
 | OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | Open |
 | OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | Open |
 | OD-44 | `NlInputBase` | Error focus ring colour | `border-error` (reference) vs `border-focused` (CLAUDE.md) | Every field | Open |

@@ -588,7 +588,7 @@ _The designer adds rows here before each build._
 | 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ✅ |
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ✅ |
 | 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ✅ |
-| 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ⬜ |
+| 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | 🟨 |
 | 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ⬜ |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
@@ -1836,7 +1836,7 @@ A native `<button type="button" role="switch">` (the track) with the handle insi
 
 **Level** Atom L0 (D15) · **Base** none · **Depends on** nothing (the label is a slot) · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-2, OD-14, OD-15, OD-16, OD-41, OD-120.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-120 (OD-2, OD-14, OD-15, OD-16 and OD-41 decided).
 
 A heading with an optional description under it, and an optional label slot above. It is the text part of list items, dialogs, empty states, snackbars, tooltips and cards.
 
@@ -1855,7 +1855,8 @@ NlTextBlock (vertical stack)
 | Option | Values | Prop |
 |---|---|---|
 | Type | display-large, display-medium, display-small, headline-large, headline-medium, headline-small | `type`, default `headline-small`, also `data-type` |
-| Extra type for list rows | label (see "Mapping notes") | `type="label"`, **needs approval** |
+| Extra type for list rows | label (see "Mapping notes") | `type="label"` (OD-14) |
+| Body text | body (OD-41) | `type="body"`: description only, in `Body L` |
 | Alignment | left, center, right | `align: 'start' \| 'center' \| 'end'`, default `start`, also `data-align` |
 | Show label | on or off | `label?: ReactNode` (slot, D15). Usually `<NlLabel>` |
 | Show heading | on or off | `heading?: ReactNode` (text) |
@@ -1903,12 +1904,59 @@ None. Not interactive. A parent that is disabled (a disabled list row, for examp
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Label | A fixed label component inside the text box, shown or hidden | A slot (`label`), D15 | Approved (D15) |
-| List row text styles | List items override the heading to `Label M` and the description to `Body S` (small rows), or keep `Headline Small-H6` and `Body M` (large rows), all with the label hidden | Overrides can't be done from outside (CLAUDE.md: `className` is for placement only). Proposed: one extra `type="label"` with `Label M` / `Body S` and gap `Space-none`. Large rows use `headline-small` | **Needs approval** |
-| Gap for the label type | List rows show no gap between title and description | `Space-none` | **Needs approval** |
-| Disabled text colour | Disabled list rows recolour the text | Proposed: a `disabled?: boolean` prop that switches heading and description to `text-disabled`. A parent can't restyle internals | **Needs approval** |
-| Heading element | The reference only sets the look | `headingAs`, default `p` | **Needs approval** |
+| List row text styles | List items override the heading to `Label M` and the description to `Body S` (small rows), or keep `Headline Small-H6` and `Body M` (large rows), all with the label hidden | Overrides can't be done from outside (CLAUDE.md: `className` is for placement only). One extra `type="label"` with `Label M` / `Body S` and gap `Space-none`. Large rows use `headline-small` (OD-14) | Approved |
+| Gap for the label type | List rows show no gap between title and description | `Space-none` (OD-14) | Approved |
+| Disabled text colour | Disabled list rows recolour the text | A `disabled?: boolean` prop that switches heading and description to `text-disabled`. A parent can't restyle internals (OD-15) | Approved |
+| Heading element | The reference only sets the look | `headingAs`, default `p` (OD-16) | Approved |
 | Inverse colours | The rich tooltip overrides both texts to `text-inverse` | `tone="inverse"` | Approved |
 | Gaps per type | `Space-M` (H1 to H4), `Space-XS` (H5, H6), `Space-none` between label and content | Same | Matches |
+| Body type | A checkbox gets `Body L` from the largest display type with only the description | `type="body"`: description in `Body L`, no heading (OD-41, option b) | Approved |
+| Label `Body M` pairing | The side nav user row pairs `Label M` with `Body M` | Not built. Decided with `NlSideNavUser` (OD-120) | Open |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `type`: `display-large`, `display-medium`, `display-small`, `headline-large`, `headline-medium`, `headline-small` (default), `label`, `body`; also `data-type` |
+| Alignment | `align?: 'start' \| 'center' \| 'end'`, default `start`, also `data-align` |
+| Label | `label?: ReactNode` (slot) |
+| Heading | `heading?: ReactNode`. Not accepted with `type="body"` |
+| Description | `description?: ReactNode`, a `<p>` |
+| Tone | `tone?: 'default' \| 'inverse'`, also `data-tone` |
+| Heading element | `headingAs?: 'h1' … 'h6' \| 'p' \| 'span'`, default `p`. Not accepted with `type="body"` |
+| Disabled | `disabled?: boolean`; overrides the tone |
+
+#### API
+
+```tsx
+import { NlTextBlock } from '@northline/ui';
+
+<NlTextBlock heading="Track day voucher" description="Reward X for members in Tier 2." />
+<NlTextBlock type="headline-large" headingAs="h2" heading="Rewards" />
+<NlTextBlock type="label" heading="Member 0042" description="Tier 2" disabled />
+<NlTextBlock type="body" description="Send me offers by email." />
+<NlTextBlock tone="inverse" label={<NlLabel>New</NlLabel>} heading="Tip" description="…" />
+```
+
+A root `<div>` stack: label slot, then a content stack with the heading and the description. Parts that aren't given aren't rendered. `className` and native attributes go to the root. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Heading | `Display Large-H1` … `Headline Small-H6`, `Label M` (label type) |
+| Description | `Body L` (display-large, display-medium, body), `Body M` (display-small to headline-small), `Body S` (label) |
+| Gaps | `Space-M` (H1 to H4), `Space-XS` (H5, H6), `Space-none` (label, body; and label slot → content) |
+| Colour | Heading `text-primary`, description `text-secondary`; inverse `text-inverse`; disabled `text-disabled` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Body type | Option (b) of OD-41: `type="body"` says what it means. The type takes no `heading` or `headingAs`, so no heading style is invented (designer's choice, 18 Nov 2026) |
+| OD-120 | Left open until `NlSideNavUser` (#69), so nothing is built ahead |
+| Disabled text contrast | `text-disabled` is under 4.5:1 by design and exempt as part of an inactive control (WCAG 1.4.3). Accepted as known issue K3; the Disabled story's sample is marked for the contrast check (designer's choice, 18 Nov 2026) |
+| Label slot story | `NlLabel` (#30) isn't built yet, so the stories pass plain text in the slot |
 
 ---
 
@@ -6388,6 +6436,7 @@ Known issues
 |---|---|---|
 | K1 | The grey scale has two light steps, so `bg-tertiary`, `bg-neutral`, `bg-icons` and `bg-disabled` share Neutral-100 in Light. A grey-25 step would separate them | Open |
 | K2 | `text-white_subtle` (Neutral-100) on `bg-brand` is under 4.5:1 in Northline Dark (3.82), Garnet Dark (3.49) and Voltic (4.23, both themes). Found by `pnpm test:a11y` (S6). Accepted for now; decide when a component uses this pairing | Open |
+| K3 | `text-disabled` on `bg-primary` is under 4.5:1 (3.00 Light, 1.79 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control (a disabled list row, checkbox or menu item). axe can't tell from plain text, so story samples of disabled text are marked `data-a11y-known-issue="K3"`. Found by `pnpm test:a11y` with `NlTextBlock`. Accepted by the designer, 18 Nov 2026 | Accepted |
 
 ---
 

@@ -17,6 +17,7 @@ const rule = (name) => plugin.rules[name];
 
 tester.run('class-prefix', rule('class-prefix'), {
   valid: [
+    styles("export const type = { 'display-large': 'nl:text-display-large-h1', small: 'nl:h-4' };"),
     tsx('<div className="nl:flex nl:gap-xl" />'),
     styles("export const root = 'nl:flex nl:hover:bg-active';"),
     {
@@ -27,6 +28,7 @@ tester.run('class-prefix', rule('class-prefix'), {
   invalid: [
     { ...tsx('<div className="flex nl:gap-xl" />'), errors: [{ messageId: 'missing' }] },
     { ...styles("export const size = { large: 'nl:h-48 px-xl' };"), errors: [{ messageId: 'missing' }] },
+    { ...styles("export const type = { 'display-large': 'text-xl' };"), errors: [{ messageId: 'missing' }] },
     { ...tsx("<div className={open ? 'nl:flex' : 'hidden'} />"), errors: [{ messageId: 'missing' }] },
   ],
 });
