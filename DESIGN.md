@@ -583,7 +583,7 @@ _The designer adds rows here before each build._
 | 3 | Count badge | `NlCountBadge` | – | [§9](#nlcountbadge) | ✅ |
 | 4 | Divider | `NlDivider` | – | [§9](#nldivider) | ✅ |
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ✅ |
-| 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | 🟨 |
+| 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ✅ |
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ⬜ |
 | 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ⬜ |
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ⬜ |
@@ -6239,3 +6239,4 @@ Known issues
 | 18 Nov 2026 | NlCountBadge (#3): count pill (1 to 99+) or dot, small and large, `error`, `warning` and `success` tones, optional label. Double digits keep the single-digit height with a minimum width (OD-4). Count 0 renders nothing. Approved by the designer |
 | 18 Nov 2026 | NlDivider (#4): horizontal rule, `divider` (1px) or `section` (`Size-8`) in `border-default`; `<hr>` or a decorative hidden `<div>`. Section fill through the new `nl:bg-border-default` utility. Horizontal only (OD-5 open). Approved by the designer |
 | 18 Nov 2026 | NlSkeleton (#5): `text`, `rect` and `circle` placeholders in `bg-neutral`, always hidden from screen readers. Pulse 100% → 60% per `--nl-duration-pulse` with `--nl-ease-standard` (OD-6) through the new `nl:animate-skeleton-pulse` utility; static under reduced motion. Width-only resizing; circle fixed at `Size-24` for now. Approved by the designer |
+| 18 Nov 2026 | NlOverlay (#6): scrim on `--nl-z-overlay` with `Alpha-md`, always hidden from screen readers; `open` and `onClick`. Fades in and out in CSS (hidden = `display: none`), static under reduced motion. Motion utilities added to the token build: `nl:duration-*`, `nl:ease-standard`, and `nl:transition-*` defaults (§3.8). Approved by the designer |
