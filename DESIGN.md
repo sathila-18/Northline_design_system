@@ -589,7 +589,7 @@ _The designer adds rows here before each build._
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ✅ |
 | 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ✅ |
 | 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ✅ |
-| 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ⬜ |
+| 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | 🟨 |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
 | 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ⬜ |
@@ -1964,7 +1964,7 @@ A root `<div>` stack: label slot, then a content stack with the heading and the 
 
 **Level** Atom L0 (D15: rows, header and footer are slots) · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-17, OD-18, OD-19, OD-20, OD-21.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none (OD-17 to OD-21 decided).
 
 The floating surface for every menu: action menus, select options, filters and navigation. It draws the panel, an optional sticky header and footer, and the scrolling content between them. What goes inside is passed in.
 
@@ -2047,13 +2047,68 @@ For all kinds:
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Shadow | A style called "sticky" (0 −2 16, black at 8%). The reference's description says code uses a "menu" shadow with the same values | `--nl-shadow-menu` | **Needs approval** |
-| Placement, flip, edge gap, width, height | From the reference's component description, not drawn: `Space-XS` from the trigger, flips, `Space-M` from the edge, at least the trigger's width, up to the window height | Same | **Needs approval** |
-| Kinds and roles | The reference's description names four kinds (action, select, filter, navigation), set only in code | `kind` prop with the roles and keyboard above | **Needs approval** |
-| Maximum height | "up to the window or a max height" | `maxHeight` takes a `Size-*` token name, so there are no raw numbers | **Needs approval** |
-| Open and close motion | Not in the reference | Fade, `--nl-duration-base` (§5: menus) | **Needs approval** |
+| Shadow | A style called "sticky" (0 −2 16, black at 8%). The reference's description says code uses a "menu" shadow with the same values | `--nl-shadow-menu` (OD-17) | Approved |
+| Placement, flip, edge gap, width, height | From the reference's component description, not drawn: `Space-XS` from the trigger, flips, `Space-M` from the edge, at least the trigger's width, up to the window height | Same (OD-18) | Approved |
+| Kinds and roles | The reference's description names four kinds (action, select, filter, navigation), set only in code | `kind` prop with the roles and keyboard above (OD-19) | Approved |
+| Maximum height | "up to the window or a max height" | `maxHeight` takes a `Size-*` token name, so there are no raw numbers (OD-20) | Approved |
+| Open and close motion | Not in the reference | Fade, `--nl-duration-base` (§5: menus) (OD-21) | Approved |
 | Layer | Not in the reference | `--nl-z-menu` (§4.3) | Matches §4.3 |
 | Slots | Header, content and footer are slots in the reference | Slots (D15) | Approved |
+| Tab in action, select and navigation menus | Not in the reference | Tab closes the menu and focus moves on | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Content | `children` (slot): rows with `role="menuitem"` (action, navigation) or `role="option"` (select), usually `tabIndex={-1}`. The menu finds rows by role |
+| Header, footer | `header?`, `footer?` (slots). The footer slot is laid out as an end-aligned row |
+| Kind | `kind`: `action` (default), `select`, `filter`, `navigation`, also `data-kind`. Content role `menu`, `listbox`, `menu`; filter makes the panel a non-modal `dialog` |
+| Multiple select | `multiple?: boolean` (select only): `aria-multiselectable`, selecting doesn't close |
+| Open | `open`, `onOpenChange(open)`, also `data-open` |
+| Anchor | `anchorRef` (the trigger). `data-placement` shows `bottom-start` or `top-start` |
+| Maximum height | `maxHeight?`: `'24'` … `'320'` (Size-* names) |
+| Accessible name | `aria-label` or `aria-labelledby`, on the element that carries the role. The type requires one |
+| `id` | On the element that carries the role (default from `useId`), for the trigger's `aria-controls` |
+| Trigger | `nlMenuTriggerProps({ kind, open, menuId })` returns `aria-haspopup`, `aria-expanded`, `aria-controls` |
+
+#### API
+
+```tsx
+import { NlMenu, nlMenuTriggerProps } from '@northline/ui';
+
+const anchorRef = useRef<HTMLButtonElement>(null);
+<button ref={anchorRef} onClick={() => setOpen(!open)} {...nlMenuTriggerProps({ kind: 'action', open, menuId: 'member-menu' })}>
+  Member actions
+</button>
+<NlMenu id="member-menu" aria-label="Member actions" open={open} onOpenChange={setOpen} anchorRef={anchorRef}>
+  {rows}
+</NlMenu>
+```
+
+A panel `<div>` (header, content, footer). Render it right after its trigger, so Tab out of the menu continues from there. `className` and other native attributes go to the panel. `'use client'`.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Panel | `bg-primary`, 1px `border-subtle` (inside), `Radius-M`, `--nl-shadow-menu`, `--nl-z-menu` |
+| Header | Padding `Space-L`, bottom border `border-subtle` |
+| Footer | Padding `Space-XL`, top border `border-subtle`; row gap `Space-M` |
+| Content | Gap and padding `Space-none` |
+| Placement | `Space-XS` from the trigger, `Space-M` from the window edge (read from the tokens at run time) |
+| Maximum height | `maxHeight` (Size-*), and never more than the room left in the window |
+| Motion | Fade with `--nl-duration-base`, `--nl-ease-standard`; none under reduced motion |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Positioning | `@floating-ui/dom` 1.8.0, a new runtime dependency (designer's choice, 18 Nov 2026): below the trigger, flip, shift, size, and it follows scroll and resize. The measured values go to `nl:menu-position` in `tailwind.css` as custom properties. The library build keeps it as an import (not bundled), so consumers install one copy |
+| Rows by role | The menu moves focus between the rows it finds by role, skipping `aria-disabled` rows. Rows don't need to know the menu; `NlListItem` will plug in later |
+| Activation | Enter or Space clicks the focused row. A click on an enabled row closes the menu (action, navigation, single select) and returns focus to the trigger |
+| Trigger helper | `nlMenuTriggerProps` instead of the menu changing the caller's trigger (designer's choice, 18 Nov 2026) |
+| Hidden until positioned | The panel is invisible until its first position is measured, so it never flashes at the window corner. Focus moves in after that, because hidden elements can't take focus |
+| Closed | Stays in the page with `display: none` (like `NlOverlay`), so it fades out as well as in |
 
 ---
 
