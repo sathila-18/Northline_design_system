@@ -273,3 +273,15 @@ The spec asked specifically for white on `fg-warning` in Light: 5.00, a pass.
 | Voltic | 4.30 ✓ | 3.92 ✓ |
 
 All pass. The lowest is Voltic Dark, 3.92.
+
+## 12. Contrast added on 18 Nov 2026: slider
+
+`NlSlider` draws its fill and thumb on a `bg-active-hover` track. They are meaningful graphics and need 3:1 (WCAG 1.4.11, §2.6). No token changed. Measured in the browser from the built tokens.
+
+| Fill and thumb on `bg-active-hover` | Northline L / D | Garnet L / D | Voltic L / D |
+|---|---|---|---|
+| `fg-brand` (enabled) | 5.49 / 4.97 ✓ | 5.75 / 5.37 ✓ | 4.30 / 3.92 ✓ |
+| `fg-hovered` (hover) | 7.19 / 7.73 ✓ | 7.39 / 8.16 ✓ | 6.46 / 5.13 ✓ |
+| `fg-pressed` (pressed) | 9.26 / 11.55 ✓ | 9.52 / 11.74 ✓ | 9.62 / 6.99 ✓ |
+
+Disabled (`fg-disabled-on_bg` on `bg-disabled`) is exempt from 1.4.11. For the record: 3.53 in Light and 1.60 in Dark, the same in every brand. In Dark the disabled fill is faint against its track; part of the OD-10 Storybook check. The thumb's `border-inverse` ring keeps its outline visible against the track.

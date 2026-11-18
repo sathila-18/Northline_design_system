@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon, NlStatusDot, NlCountBadge, NlDivider, NlSkeleton, NlOverlay and NlProgressBar approved; OD-4, OD-6, OD-7 and OD-8 decided; OD-5 and OD-9 open).
+Last updated: 18 Nov 2026 (NlIcon to NlProgressBar approved; OD-4, OD-6, OD-7, OD-8 and OD-11 decided; OD-5, OD-9 and OD-12 open; NlSlider in progress, OD-10 Storybook check).
 
 ---
 
@@ -204,7 +204,7 @@ Decide these before building the components listed under "Affects".
 
 **NlSlider**
 - OD-10 · Hover, pressed, focus, disabled states: approved for now, check in Storybook · Open (Storybook check)
-- OD-11 · Defaults: `min` 0, `max` 100, `step` 1 · Open
+- OD-11 · Defaults: `min` 0, `max` 100, `step` 1 · **Decided** 18 Nov 2026: approved
 - OD-12 · Visible value or ticks: not specified · Open
 
 **NlSwitch**

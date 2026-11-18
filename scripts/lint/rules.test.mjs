@@ -102,9 +102,14 @@ tester.run('theme-classes', rule('theme-classes'), {
     tsx(
       '<div className="nl:bg-primary nl:p-xl nl:text-body-m nl:enabled:hover:bg-action-primary-hovered nl:size-24" />',
     ),
+    tsx('<div className="nl:group nl:group/row nl:peer nl:peer/input nl:peer-hover:bg-fg-hovered" />'),
   ],
   invalid: [
     { ...tsx('<div className="nl:bg-red-500" />'), errors: [{ messageId: 'unknown' }] },
+    {
+      ...tsx('<div className="nl:peerx nl:group/Row" />'),
+      errors: [{ messageId: 'unknown' }, { messageId: 'unknown' }],
+    },
     {
       ...tsx('<div className="nl:p-4 nl:rounded-lg" />'),
       errors: [{ messageId: 'unknown' }, { messageId: 'unknown' }],

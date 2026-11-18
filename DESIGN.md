@@ -585,7 +585,7 @@ _The designer adds rows here before each build._
 | 5 | Skeleton | `NlSkeleton` | – | [§9](#nlskeleton) | ✅ |
 | 6 | Overlay | `NlOverlay` | – | [§9](#nloverlay) | ✅ |
 | 7 | Progress bar | `NlProgressBar` | – | [§9](#nlprogressbar) | ✅ |
-| 8 | Slider | `NlSlider` | – | [§9](#nlslider) | ⬜ |
+| 8 | Slider | `NlSlider` | – | [§9](#nlslider) | 🟨 |
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ⬜ |
 | 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ⬜ |
 | 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ⬜ |
@@ -1442,7 +1442,7 @@ A track `<div>` with a fill `<div>` inside. `className` is added last; other nat
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-10, OD-11, OD-12.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-10 (Storybook check), OD-12 (OD-11 decided).
 
 Picks one value along a range by dragging a thumb or using the keyboard.
 
@@ -1523,8 +1523,54 @@ The hover, pressed, focus and disabled columns are **approved for now**. The des
 | Thumb shadow | A shadow style called "resting cards" (0 1 3, black at 5%) | `--nl-shadow-resting`, same value | Matches |
 | Fill padding | `Space-none` | `Space-none` | Matches |
 | Radius | `Radius-XS` (track, fill), round thumb | `Radius-XS`, `Radius-Full` | Matches |
-| Range and step | Not in the reference | `min` 0, `max` 100, `step` 1 by default | **Needs approval** |
-| Visible value or ticks | Not in the reference | Not specified | Open |
+| Range and step | Not in the reference | `min` 0, `max` 100, `step` 1 by default (OD-11) | Approved |
+| Visible value or ticks | Not in the reference | Not specified. A caller shows the value next to the slider (OD-12) | Open |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Value | `value` (controlled) or `defaultValue` (uncontrolled, default `min`), also `data-value` on the root |
+| Range | `min` (default 0), `max` (default 100) |
+| Step | `step` (default 1) |
+| Disabled | Native `disabled`; not focusable, no pointer events; `data-disabled` on the root |
+| Accessible name | `aria-label` or `aria-labelledby`. The type requires exactly one |
+| Value text | `aria-valuetext`, passed to the input |
+| Change | `onChange(value: number)`. Other native input events (`onInput`, `onBlur` …) pass through |
+
+#### API
+
+```tsx
+import { NlSlider } from '@northline/ui';
+
+<NlSlider aria-label="Points" defaultValue={50} />                               // uncontrolled
+<NlSlider aria-labelledby="points-caption" value={points} onChange={setPoints} />  // controlled
+<NlSlider aria-label="Points" min={0} max={500} step={10} aria-valuetext="250 points" />
+```
+
+A root `<div>` holding a native `<input type="range">` and the drawn track, fill and thumb. `ref`, `id`, `name`, `form`, `aria-*` and other native input attributes go to the input; `className` goes to the root, for placement only. `'use client'`: it keeps state when uncontrolled and handles events.
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Root | Height `Size-24`; full width |
+| Track | Height `Size-8`, `Radius-XS`; `bg-active-hover`, disabled `bg-disabled` |
+| Fill | Height `Size-8`, `Radius-XS`; `fg-brand`, hover `fg-hovered`, pressed `fg-pressed`, disabled `fg-disabled-on_bg` |
+| Thumb | `Size-24`, `Radius-Full`; same colours as the fill; 2px inset ring `border-inverse`; `--nl-shadow-resting`, none when disabled; focus ring `border-focused` |
+| Offsets | Half a thumb, `Space-L` (thumb centring and the input's reach past each end) |
+| Motion | Colour changes `--nl-duration-fast` with `--nl-ease-standard`; none under reduced motion. Value changes don't animate |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Drawn parts over a transparent input | The native input sits on top, invisible, and takes every pointer and key event. The track, fill and thumb are its siblings and follow its state with `peer-hover`, `peer-active`, `peer-focus-visible` and `peer-disabled` (designer's choice, 18 Nov 2026) |
+| Pointer accuracy | The input reaches half a thumb (`Space-L`) past each end of the track and its own thumb is `Size-24`, so its thumb travels exactly the drawn track: a click or drag lands on the value under the pointer. A named variant `nl:range-thumb:` in `tailwind.css` sizes that thumb (WebKit and Firefox rules) |
+| Position | The component sets `--nl-slider-value` (percent of the range) on the root; `nl:slider-fill` and `nl:slider-thumb` in `tailwind.css` read it. From the start edge |
+| `defaultValue` | Defaults to `min` when not given |
+| Peer marker | The class check (`scripts/lint/validate-classes.mjs`) now accepts the `nl:group` and `nl:peer` marker classes, bare or named, which produce no CSS of their own |
+| Contrast | Fill and thumb on the track, all above 3:1: `fg-brand` lowest 3.92, `fg-hovered` 5.13, `fg-pressed` 6.99 (Voltic Dark). Disabled is exempt (token audit §12) |
 
 ---
 
