@@ -603,7 +603,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 20 | Icon container | `NlIconContainer` | `NlIcon` | [§9](#nliconcontainer) | ✅ |
-| 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ⬜ |
+| 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ✅ |
 | 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ⬜ |
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ⬜ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
@@ -6606,3 +6606,4 @@ Known issues
 | 18 Nov 2026 | NlTextBlock (#11): six heading types plus `label` (OD-14) and `body` (OD-41); `align`, label slot, `tone`, `headingAs` (OD-16) and `disabled` (OD-15). Known issue K3 accepted (disabled text contrast). The class check skips quoted object keys; the a11y check waits for the Storybook addon's axe run. OD-120 open. Approved by the designer |
 | 18 Nov 2026 | NlMenu (#12): floating panel with sticky header and footer slots; `kind` action, select (`multiple`), filter, navigation with roles and keyboard (OD-19); positioned with the new dependency `@floating-ui/dom` (OD-18); `maxHeight` as a Size name (OD-20); `shadow-menu` (OD-17); fade (OD-21); `nlMenuTriggerProps` helper. Approved by the designer |
 | 18 Nov 2026 | NlIconContainer (#20): an `NlIcon` centred on a `Radius-Full` tinted circle, sizes 40, 48 (default) and 64 with a 24 or 36 icon, seven tones (default `primary`), optional label. Fixed size with no padding (OD-45); defaults approved (OD-46). The circle sets the colour and the icon inherits it. K1 accepted for primary and disabled in Light. Approved by the designer |
+| 18 Nov 2026 | NlAvatar (#21): photo, initials or icon in a `Radius-Full` circle with a 1px `border-subtle` inside, seven sizes (`Size-24` to `Size-96`, default `medium`), optional `NlStatusDot` bottom-right. Falls back from the photo to initials, then the icon. `person` added to the icon registry (OD-47, 26 icons); Storybook serves story-only artwork from `apps/storybook/public`. Approved by the designer |
