@@ -44,15 +44,6 @@
 }
 
 /*
- * nl:bg-border-default: the border-default colour as a fill (DESIGN.md §9, NlDivider). Only NlDivider uses it, for
- * the section band. The theme exposes border-default as a border, outline and ring colour only, so no bg-* utility
- * can reach it. Exception approved by the designer, 18 Nov 2026 (CLAUDE.md, Tailwind rule 9).
- */
-@utility bg-border-default {
-  background-color: var(--nl-border-default);
-}
-
-/*
  * nl:animate-skeleton-pulse: the loading pulse (DESIGN.md §9, NlSkeleton). Only NlSkeleton uses it. Opacity goes
  * 100% → 60% → 100%, one full cycle per --nl-duration-pulse, with --nl-ease-standard (OD-6), repeating.
  * The 0.6 is the spec's literal value; there is no opacity token. Approved by the designer, 18 Nov 2026 (rule 9).

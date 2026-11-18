@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon to NlRadio approved; OD-4, OD-6, OD-7, OD-8, OD-10 and OD-11 decided; OD-5, OD-9 and OD-12 open).
+Last updated: 18 Nov 2026 (NlIcon to NlRadio approved; OD-4, OD-6, OD-7, OD-8, OD-10, OD-11 and OD-13a to OD-13d decided; OD-5, OD-9 and OD-12 open; NlSwitch in progress).
 
 ---
 
@@ -35,7 +35,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlRadio approved; OD-4, OD-6, OD-7, OD-8, O
 | 7 | `NlProgressBar` | yes | – | `NlFileUpload` | – | ✅ batch 1 | ✅ |
 | 8 | `NlSlider` | yes | – | – | – | ✅ batch 1 | ✅ |
 | 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ✅ |
-| 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | OD-13b | ✅ batch 1 | ⬜ |
+| 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | – | ✅ batch 1 | ⬜ |
 | 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-14, OD-15, OD-16, OD-41, OD-120 | ✅ batch 2 | ⬜ |
 | 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | OD-19 | ✅ batch 2 | ⬜ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
@@ -208,10 +208,10 @@ Decide these before building the components listed under "Affects".
 - OD-12 · Visible value or ticks: not specified · Open
 
 **NlSwitch**
-- OD-13a · Handle inset: `Space-XS` · Open
-- OD-13b · Hover and pressed: on = `fg-hovered` / `fg-pressed`; off = unchanged (no token works in both themes) · Open
-- OD-13c · Slide animation: `--nl-duration-fast`, `--nl-ease-standard` · Open
-- OD-13d · Default size: `large` · Open
+- OD-13a · Handle inset: `Space-XS` · **Decided** 18 Nov 2026: approved
+- OD-13b · Hover and pressed: on = `fg-hovered` / `fg-pressed`; off = unchanged (no token works in both themes) · **Decided** 18 Nov 2026: no hover or pressed colours, on or off (white handle too faint in Dark)
+- OD-13c · Slide animation: `--nl-duration-fast`, `--nl-ease-standard` · **Decided** 18 Nov 2026: approved
+- OD-13d · Default size: `large` · **Decided** 18 Nov 2026: approved
 
 **NlTextBlock**
 - OD-14, OD-15, OD-16: see section 2
