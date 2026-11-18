@@ -2,6 +2,7 @@
 export * from './icons';
 export * from './components/NlCountBadge';
 export * from './components/NlDivider';
+export * from './components/NlIconContainer';
 export * from './components/NlMenu';
 export * from './components/NlOverlay';
 export * from './components/NlProgressBar';
