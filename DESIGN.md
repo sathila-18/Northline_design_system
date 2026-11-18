@@ -608,7 +608,7 @@ _The designer adds rows here before each build._
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ✅ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ✅ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlButtonBase` | [§9](#nlwhitebutton) | ✅ |
-| 26 | Destructive button (internal) | `NlDestructiveButton` | `NlIcon` | [§9](#nldestructivebutton) | ⬜ |
+| 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ✅ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ⬜ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ⬜ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
@@ -3230,7 +3230,7 @@ Renders `NlButtonBase`. `className` and other native attributes go to it. Presen
 
 ### NlDestructiveButton
 
-**Level** Atom L1 · **Base** – (one of the three button bases, D12) · **Depends on** `NlIcon` · **Internal**
+**Level** Atom L1 · **Base** – (one of the three button bases, D12; built on `NlButtonBase`) · **Depends on** `NlButtonBase` · **Internal**
 
 **Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
 
@@ -3278,6 +3278,45 @@ As `NlButtonBase`. A destructive action should name what it removes in its label
 | Tertiary | Not in the reference (primary and secondary only). D12 lists tertiary for every tone | Tertiary destructive = no background, no border, `text-error` / `fg-error`, with hover and pressed using the secondary destructive backgrounds | Approved |
 | Large text style | 18/24 | `Button XL`, as `NlButtonBase` | Approved |
 | Colours | As in the table | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Variant | `variant`: `primary` (default), `secondary`, `tertiary`, passed to `NlButtonBase` (`data-variant`). No `link`: the types reject it |
+| Size, icon, icon name, label | Passed to `NlButtonBase` (icon-only included) |
+| Marker | `data-tone="destructive"` |
+| Colours | `appearance` per variant from `NlDestructiveButton.styles.ts`; `NlButton` can replace it to add states |
+| Element | `as`, `href`, passed to `NlButtonBase` |
+
+#### API
+
+```tsx
+import { NlDestructiveButton } from '../NlDestructiveButton'; // internal, not exported from @northline/ui
+
+<NlDestructiveButton variant="secondary" icon="leading" iconName="delete">
+  Delete reward
+</NlDestructiveButton>
+```
+
+Renders `NlButtonBase`. `className` and other native attributes go to it. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Variant | Button | Icon |
+|---|---|---|
+| primary | `bg-action-destructive`, `text-white_both` | `fg-white_both` |
+| secondary | 2px inset ring `border-error`, `text-error` | `fg-error` |
+| tertiary | `text-error` | `fg-error` |
+
+Everything else from `NlButtonBase`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Built on `NlButtonBase` | As `NlWhiteButton`: a fixed `appearance` per variant, no markup or size classes of its own. The §8 dependency is `NlButtonBase` (designer's choice, 18 Nov 2026) |
+| Contrast | The same in every brand. White on `bg-action-destructive` 6.22; `text-error` on `bg-primary` 9.17 / 10.38; `fg-error` 6.22 / 7.56; `border-error` 4.31 / 5.61 (Light / Dark) |
 
 ---
 
@@ -6721,7 +6760,7 @@ Expanded, minimized; default or tree style.
 | D9 | 17 Nov 2026 | Chart tokens are deferred to the dashboard stage |
 | D10 | 17 Nov 2026 | React components that run in Next.js. Tailwind CSS 4 for styling from the start |
 | D11 | 17 Nov 2026 | Component specs extracted once from the designer's reference library, outside this repo, as neutral specs. Spacing, radius, type and shadow scales match the reference system so the specs map one to one |
-| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button Built on `NlButtonBase` (18 Nov 2026): `NlWhiteButton` renders `NlButtonBase` with a fixed `appearance` instead of copying its markup. |
+| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button Built on `NlButtonBase` (18 Nov 2026): `NlWhiteButton` and `NlDestructiveButton` render `NlButtonBase` with a fixed `appearance` instead of copying its markup. |
 | D13 | 17 Nov 2026 | Left out of the demo: one-time code input, profile image, avatar group, the "with text" progress and spinner versions, labels on radio and switch, and the reference library's unused pages (notes, image ratios, tabs) |
 | D14 | 17 Nov 2026 | Menu and calendar are their own components. Select and date fields use them, so they sit at the level the composition rule gives them |
 | D15 | 17 Nov 2026 | Slot content doesn't count toward a component's level (§7.1). `NlTextBlock` takes its label as a slot. Table toolbar, header row, row and footer are internal parts of `NlTable`. `NlAppShell` takes nav, header and content as slots |
@@ -6775,3 +6814,4 @@ Known issues
 | 18 Nov 2026 | NlBadge (#23): status tag mapped on `NlBadgeBase`, eight tones (default `neutral`, OD-53), small (default) and large (OD-51), optional icons off by default in the matching `fg-*` colour (OD-52). Known issue K4 accepted (disabled tone text contrast). Approved by the designer |
 | 18 Nov 2026 | NlButtonBase (#24, internal): primary, secondary (2px inset ring), tertiary and link at rest; four sizes with fixed heights (`Size-56` to `Size-36`) and icon-only squares (`Size-56` to `Size-32`); leading, trailing and icon-only icons with a hidden label; `as` and `href` for links. `appearance` replaces the resting colours; standard focus ring in the base; `soft` left out until OD-40 (OD-1). Approved by the designer |
 | 18 Nov 2026 | NlWhiteButton (#25, internal): the white button for brand backgrounds, built on `NlButtonBase` with a fixed `appearance` (`bg-action-inverse`, 1px inset ring `border-subtle`, `text-dark_both`, `fg-dark_both`); no markup or sizes of its own. §8 dependency changed to `NlButtonBase`; D12 updated. OD-54: white takes only `variant="primary"`, applied in `NlButton`. Approved by the designer |
+| 18 Nov 2026 | NlDestructiveButton (#26, internal): primary (`bg-action-destructive`), secondary (2px inset ring `border-error`) and tertiary (`text-error`) at rest, built on `NlButtonBase` with a fixed `appearance` per variant; no link form. §8 dependency changed to `NlButtonBase`; D12 updated. Approved by the designer |

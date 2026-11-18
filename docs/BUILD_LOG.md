@@ -32,3 +32,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlBadge | 2026-11-18 17:00 | 2026-11-18 17:10 | OD-51, OD-52 (icons off by default), OD-53 approved; K4 accepted. Approved by the designer |
 | NlButtonBase | 2026-11-18 17:13 | 2026-11-18 17:22 | appearance replaces resting colours; focus ring in the base; soft variant left out (OD-1/OD-40 open); D12 note updated. Approved by the designer |
 | NlWhiteButton | 2026-11-18 17:29 | 2026-11-18 17:40 | Built on NlButtonBase (fixed appearance); §8 dependency and D12 updated; OD-54 decided (applied in #27). Approved by the designer |
+| NlDestructiveButton | 2026-11-18 17:44 | 2026-11-18 17:54 | Built on NlButtonBase (fixed appearance per variant); no link variant; §8 dependency and D12 updated. Approved by the designer |
