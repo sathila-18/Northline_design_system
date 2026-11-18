@@ -262,8 +262,8 @@ Decide these before building the components listed under "Affects".
 - OD-46 · Defaults: size 48, tone `primary` · **Decided** 18 Nov 2026: approved
 
 **NlAvatar**
-- OD-47 · Default icon `person` · Open
-- OD-48 · Default size `medium` · Open
+- OD-47 · Default icon `person` · **Decided** 18 Nov 2026: approved, added to the registry
+- OD-48 · Default size `medium` · **Decided** 18 Nov 2026: approved
 
 **NlBadgeBase**
 - OD-49 · Height hugs the content (26 and 32 aren't tokens) · Open

@@ -603,7 +603,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 20 | Icon container | `NlIconContainer` | `NlIcon` | [§9](#nliconcontainer) | ✅ |
-| 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ⬜ |
+| 21 | Avatar | `NlAvatar` | `NlIcon`, `NlStatusDot` | [§9](#nlavatar) | ✅ |
 | 22 | Badge base (internal) | `NlBadgeBase` | `NlIcon` | [§9](#nlbadgebase) | ⬜ |
 | 23 | Badge | `NlBadge` | `NlBadgeBase` | [§9](#nlbadge) | ⬜ |
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ⬜ |
@@ -805,7 +805,7 @@ A `<span>`. `className` is added last; other native `<span>` attributes and `ref
 | Decision | Detail |
 |---|---|
 | Glyphs by code point | `nlIcons` maps each Material Symbols name to its glyph's code point, and `NlIcon` renders that glyph. Not ligature text: subsetting by ligature would keep the letters a–z and every icon spelled with them, so nearly the whole font. TypeScript checks each name against the `material-symbols` package's own name list |
-| Font subset (§6) | `pnpm icons` (`packages/ui/scripts/subset-icons.mjs`, `subset-font`) subsets Material Symbols Rounded to the registry's code points, keeping all axes (FILL, wght, GRAD, opsz). 25 icons: 5.3 MB → 19 KB. Runs before the build, tests and Storybook; the output is not committed |
+| Font subset (§6) | `pnpm icons` (`packages/ui/scripts/subset-icons.mjs`, `subset-font`) subsets Material Symbols Rounded to the registry's code points, keeping all axes (FILL, wght, GRAD, opsz). 26 icons: 5.3 MB → 20 KB. Runs before the build, tests and Storybook; the output is not committed |
 | Named utilities | `nl:font-icon` (family, icon weight, line height 1, no text transforms), `nl:icon-*` (font size from `Size-*`), `nl:icon-filled` (`FILL` 1), in `packages/ui/src/styles/tailwind.css`. The package's own `.material-symbols-rounded` class is no longer loaded (it hardcodes `24px`) |
 | Optical size | The font's `opsz` axis covers 20 to 48. At 16 and 64 it uses the nearest end; the glyph still fills the box |
 | Weight and grade | Weight 300 from `Alias Typography.Icon.Font weight` (`--nl-font-icon-weight`, §3.4), the designer's choice on 18 Nov 2026. Grade 0, the font default |
@@ -2761,10 +2761,54 @@ None. Not interactive. An avatar inside a button or link gets its states from th
 | Shape | Round in the component. The reference's documentation also mentions an octagon brand shape, which no component uses | Round | Matches |
 | Largest size | 96 in the component (the documentation says 100) | `Size-96` | Matches the component |
 | Status dot inset | Raw 1 (xsmall to xlarge) and 3 (xxlarge, xxxlarge) | 1 is the dot's own 1px ring. The extra 2 is `Space-XXS` | Matches |
-| Default icon | A person outline from the reference's icon set | Material Symbols `person` | **Needs approval** |
+| Default icon | A person outline from the reference's icon set | Material Symbols `person`, added to the registry | Approved (OD-47) |
 | Initials text colour | `text-secondary` | Same | Matches |
 | Fallback order | From the reference's documentation: photo, then initials, then icon | Same | Matches |
-| Default size | Not set | `medium` | **Needs approval** |
+| Default size | Not set | `medium` | Approved (OD-48) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | Worked out from the props, also `data-type`: `src` gives `image`; `initials` gives `text`; neither gives `icon`. A photo that fails to load gives `text` or `icon` |
+| Size | `size`: `xsmall` … `xxxlarge`, default `medium`, also `data-size` |
+| Online | `online?: boolean`, renders `NlStatusDot` |
+| Online label | `onlineLabel?`, default `"Online"`, the dot's `label` |
+| Image | `src?`, `alt?` (the `<img>` alt, default `""`) |
+| Initials | `initials?`: trimmed, first 2 characters, uppercase. Blank gives the icon |
+| Icon | `icon?: NlIconName`, default `person` |
+| Accessible name (initials, icon) | `alt?`: the circle gets `role="img"` and `aria-label`; without it the content is `aria-hidden` |
+
+#### API
+
+```tsx
+import { NlAvatar } from '@northline/ui';
+
+<NlAvatar src={photoUrl} alt="Member 0042" online />
+<NlAvatar initials="MX" size="large" />
+<NlAvatar size="small" />
+```
+
+A `<span>` bounding box holding the circle and the dot as siblings, so the circle clips the photo and not the dot. `className` and other native attributes go to the bounding box. `'use client'` (image fallback).
+
+#### Tokens used
+
+| Part | Tokens |
+|---|---|
+| Bounding box | `Size-24`, `Size-32`, `Size-40`, `Size-48`, `Size-56`, `Size-64`, `Size-96` |
+| Circle | `Radius-Full`; 1px `border-subtle` inside (border-box); `bg-icons` for initials and icon |
+| Initials | `Label S`, `Label M`, `Label L`, `Title L`, `Headline Medium-H5`, `Headline Large-H4`, `Display Medium-H2`; `text-secondary` |
+| Icon | `NlIcon` 16, 20, 24, 24, 36, 48, 64; `fg-secondary` (inherited) |
+| Status dot | `NlStatusDot` xsmall, small, medium, medium, large, large, xlarge; inset `Space-none` up to xlarge, `Space-XXS` for xxlarge and xxxlarge |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Image fallback | `onError` switches to initials, then the icon. After hydration the avatar also checks for a photo that already failed, because in a server-rendered page the error can fire before React attaches the handler. A new `src` is tried again |
+| Initials | Trimmed, cut to 2 characters and uppercased. Callers pass letters; the component doesn't filter (designer's choice, 18 Nov 2026) |
+| `person` icon | Added to the `nlIcons` registry at U+E7FD, checked against the font's own ligature. 26 icons |
+| Story image | An abstract gradient SVG in `apps/storybook/public` (Storybook `staticDirs`), not a photo and not in the library (designer's choice, 18 Nov 2026) |
 
 ---
 
@@ -6562,3 +6606,4 @@ Known issues
 | 18 Nov 2026 | NlTextBlock (#11): six heading types plus `label` (OD-14) and `body` (OD-41); `align`, label slot, `tone`, `headingAs` (OD-16) and `disabled` (OD-15). Known issue K3 accepted (disabled text contrast). The class check skips quoted object keys; the a11y check waits for the Storybook addon's axe run. OD-120 open. Approved by the designer |
 | 18 Nov 2026 | NlMenu (#12): floating panel with sticky header and footer slots; `kind` action, select (`multiple`), filter, navigation with roles and keyboard (OD-19); positioned with the new dependency `@floating-ui/dom` (OD-18); `maxHeight` as a Size name (OD-20); `shadow-menu` (OD-17); fade (OD-21); `nlMenuTriggerProps` helper. Approved by the designer |
 | 18 Nov 2026 | NlIconContainer (#20): an `NlIcon` centred on a `Radius-Full` tinted circle, sizes 40, 48 (default) and 64 with a 24 or 36 icon, seven tones (default `primary`), optional label. Fixed size with no padding (OD-45); defaults approved (OD-46). The circle sets the colour and the icon inherits it. K1 accepted for primary and disabled in Light. Approved by the designer |
+| 18 Nov 2026 | NlAvatar (#21): photo, initials or icon in a `Radius-Full` circle with a 1px `border-subtle` inside, seven sizes (`Size-24` to `Size-96`, default `medium`), optional `NlStatusDot` bottom-right. Falls back from the photo to initials, then the icon. `person` added to the icon registry (OD-47, 26 icons); Storybook serves story-only artwork from `apps/storybook/public`. Approved by the designer |
