@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 18 Nov 2026 (NlIcon to NlTextBlock approved; OD-2, OD-4, OD-6, OD-7, OD-8, OD-10, OD-11, OD-13a to OD-13d, OD-14 to OD-21 and OD-41 decided; OD-5, OD-9, OD-12 and OD-120 open; NlMenu in progress).
+Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD-8, OD-10, OD-11, OD-13a to OD-13d, OD-14 to OD-21 and OD-41 decided; OD-5, OD-9, OD-12 and OD-120 open).
 
 ---
 
@@ -37,7 +37,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlTextBlock approved; OD-2, OD-4, OD-6, OD-
 | 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ✅ |
 | 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | – | ✅ batch 1 | ✅ |
 | 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-120 | ✅ batch 2 | ✅ |
-| 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | – | ✅ batch 2 | ⬜ |
+| 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | – | ✅ batch 2 | ✅ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 15 | `NlCalendarDay` | internal | – | `NlCalendar` | OD-27 | ✅ batch 2 | ⬜ |

@@ -589,7 +589,7 @@ _The designer adds rows here before each build._
 | 9 | Radio | `NlRadio` | – | [§9](#nlradio) | ✅ |
 | 10 | Switch | `NlSwitch` | – | [§9](#nlswitch) | ✅ |
 | 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ✅ |
-| 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | 🟨 |
+| 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ✅ |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
 | 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ⬜ |
@@ -6524,3 +6524,4 @@ Known issues
 | 18 Nov 2026 | NlRadio (#9): native radio under a drawn `Size-20` ring and `Size-12` dot in a `Size-24` box, following the input through a named group. All eight state colours per the spec; round focus ring around the box. The token build now maps `fg-*` to border colours (§3.8). Approved by the designer |
 | 18 Nov 2026 | NlSwitch (#10): native `<button role="switch">`, large (default) and small, handle inset `Space-XS`, slides with Duration fast and Ease standard (OD-13a, c, d). No hover or pressed colours (OD-13b). The token build now maps `border-*` to backgrounds (§3.8); the divider's one-off utility was removed. Approved by the designer |
 | 18 Nov 2026 | NlTextBlock (#11): six heading types plus `label` (OD-14) and `body` (OD-41); `align`, label slot, `tone`, `headingAs` (OD-16) and `disabled` (OD-15). Known issue K3 accepted (disabled text contrast). The class check skips quoted object keys; the a11y check waits for the Storybook addon's axe run. OD-120 open. Approved by the designer |
+| 18 Nov 2026 | NlMenu (#12): floating panel with sticky header and footer slots; `kind` action, select (`multiple`), filter, navigation with roles and keyboard (OD-19); positioned with the new dependency `@floating-ui/dom` (OD-18); `maxHeight` as a Size name (OD-20); `shadow-menu` (OD-17); fade (OD-21); `nlMenuTriggerProps` helper. Approved by the designer |
