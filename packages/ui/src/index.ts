@@ -2,6 +2,7 @@
 export * from './icons';
 export * from './components/NlAvatar';
 export * from './components/NlBadge';
+export * from './components/NlButton';
 export * from './components/NlCountBadge';
 export * from './components/NlDivider';
 export * from './components/NlIconContainer';

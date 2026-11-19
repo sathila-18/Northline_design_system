@@ -33,3 +33,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlButtonBase | 2026-11-18 17:13 | 2026-11-18 17:22 | appearance replaces resting colours; focus ring in the base; soft variant left out (OD-1/OD-40 open); D12 note updated. Approved by the designer |
 | NlWhiteButton | 2026-11-18 17:29 | 2026-11-18 17:40 | Built on NlButtonBase (fixed appearance); §8 dependency and D12 updated; OD-54 decided (applied in #27). Approved by the designer |
 | NlDestructiveButton | 2026-11-18 17:44 | 2026-11-18 17:54 | Built on NlButtonBase (fixed appearance per variant); no link variant; §8 dependency and D12 updated. Approved by the designer |
+| NlButton | 2026-11-19 07:47 | 2026-11-19 08:05 | OD-55 to OD-59 decided; state selectors not-disabled:not-aria-disabled: (rule 9 exception, approved); link underline on a label span in NlButtonBase. Approved by the designer |
