@@ -632,7 +632,7 @@ _The designer adds rows here before each build._
 | 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ✅ |
 | 43 | Notification button | `NlNotificationButton` | `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ✅ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ✅ |
-| 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ⬜ |
+| 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ✅ |
 | 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ⬜ |
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ⬜ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ⬜ |
@@ -7462,3 +7462,4 @@ Known issues
 | 19 Nov 2026 | NlCheckbox (#42, public): label row of `NlCheckboxControl` and `NlTextBlock type="body"`, hidden-label option, disabled text (K3). Approved by the designer |
 | 19 Nov 2026 | NlNotificationButton (#43, public): own native 40 circle (OD-40, D12 exception) with the `notifications` icon (added to the registry, 27 icons) and an `NlCountBadge` dot or number; name carries the shown count. Approved by the designer |
 | 19 Nov 2026 | NlInputBase (#44, internal): outlined field with a real floating label (CSS only, OD-42), large/small, leading, trailing, prefix, suffix, helper text in a polite live region (icon only for errors, OD-76), error and disabled; standard focus ring on errors (OD-44). Select type with #70; required marker open (OD-78). Approved by the designer |
+| 19 Nov 2026 | NlTextField (#45, public): single-line input on `NlInputBase` with `inputType` (text, email, number, tel, url) and an optional decorative trailing icon (OD-79). The field hint text was removed from `NlInputBase` and `NlTextField`: focused and empty, the box shows only the floating label (designer's choice). Approved by the designer |
