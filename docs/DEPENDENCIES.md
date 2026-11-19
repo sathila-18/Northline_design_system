@@ -277,11 +277,11 @@ Decide these before building the components listed under "Affects".
 - OD-54 · With `tone="white"`, `variant` is ignored (or restricted to `primary`) · **Decided** 18 Nov 2026: restricted to `primary` in `NlButton`'s types (applied in #27)
 
 **NlButton**
-- OD-55 · No separate icon tone (`contentTone="secondary"` covers close buttons) · Open
-- OD-56 · Content tones use the same alpha for hover and press · Open
-- OD-57 · `aria-expanded="true"` uses the pressed look · Open
-- OD-58 · Defaults: normal, primary, medium, no icon · Open
-- OD-59 · Loading state: not specified · Open
+- OD-55 · No separate icon tone (`contentTone="secondary"` covers close buttons) · **Decided** 19 Nov 2026: approved
+- OD-56 · Content tones use the same alpha for hover and press · **Decided** 19 Nov 2026: approved
+- OD-57 · `aria-expanded="true"` uses the pressed look · **Decided** 19 Nov 2026: approved
+- OD-58 · Defaults: normal, primary, medium, no icon · **Decided** 19 Nov 2026: approved
+- OD-59 · Loading state: not specified · **Decided** 19 Nov 2026: left out for now (adding it later is not breaking)
 - OD-31: see section 2
 
 **NlCheckboxControl**

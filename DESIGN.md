@@ -3093,9 +3093,9 @@ None of its own (§7.2).
 | Size | `size`: `large`, `medium` (default), `small`, `xsmall`, also `data-size` |
 | Icon | `icon`: `none` (default), `leading`, `trailing`, `only-icon`, also `data-icon`. The types forbid `only-icon` with `link` |
 | Icon name | `iconName`: required by the types unless `icon` is `none` |
-| Label | `children`, always required. Icon-only keeps it as `nl:sr-only` text, the accessible name |
+| Label | `children`, always required, in a `<span data-slot="label">`. Icon-only keeps it as `nl:sr-only` text, the accessible name |
 | Element | `as` (default `'button'`, or `'a'`, or a component such as a router link) and `href`. A native button gets `type="button"` unless the caller passes a type |
-| Colours | The variant's resting colours, or `appearance?: { button, icon }` from `NlButton`, which replaces them (with states and content tones) |
+| Colours | The variant's resting colours, or `appearance?: { button, icon, label? }` from `NlButton`, which replaces them (with states and content tones). `label` styles the label span (the link underline, added in #27) |
 
 #### API
 
@@ -3324,7 +3324,7 @@ Everything else from `NlButtonBase`.
 
 **Level** Atom L1 (built from its bases, takes their level) · **Base** `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` (D12) · **Depends on** – · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-1, OD-31, OD-40, OD-55, OD-56, OD-57, OD-58, OD-59, OD-117.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-1, OD-31, OD-40, OD-117. OD-55 to OD-59 decided 19 Nov 2026.
 
 The only public button. It picks the base by `tone`, passes `variant`, `size` and `icon` to it, and owns every interaction state.
 
@@ -3437,17 +3437,58 @@ Enabled, hover, pressed, focus, disabled. `aria-expanded="true"` (a button that 
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Link variant | The reference's button set has a fourth type, "link": tertiary sizes, no background in any state, label underlined on hover and press, `text-pressed` when pressed, normal tone only, no icon-only | Included as in the reference | Approved. **D12 in DESIGN.md lists only three variants and needs updating** |
-| Content tones on tertiary | The reference's description says code lets tertiary buttons recolour their label and icon (on snackbars, banners and side sheet close), with hover and press tinted by `Alpha-light` (on inverse) or `Alpha-sm` | `contentTone` prop, tertiary and normal tone only, values and colours as above | Approved. **Not in D12 yet** |
-| Separate icon tone | The reference's description also has a code-only option that recolours only the icon (secondary, for a close button) | Not added. An icon-only close button has no visible label, so `contentTone="secondary"` gives the same result | **Needs approval** |
+| Link variant | The reference's button set has a fourth type, "link": tertiary sizes, no background in any state, label underlined on hover and press, `text-pressed` when pressed, normal tone only, no icon-only | Included as in the reference | Approved. D12 updated to list link |
+| Content tones on tertiary | The reference's description says code lets tertiary buttons recolour their label and icon (on snackbars, banners and side sheet close), with hover and press tinted by `Alpha-light` (on inverse) or `Alpha-sm` | `contentTone` prop, tertiary and normal tone only, values and colours as above | Approved. D12 updated |
+| Separate icon tone | The reference's description also has a code-only option that recolours only the icon (secondary, for a close button) | Not added. An icon-only close button has no visible label, so `contentTone="secondary"` gives the same result | Approved (OD-55) |
 | Destructive tertiary | Not in the reference | As in the table above | Approved |
 | Secondary pressed (medium and xsmall) | `bg-active-hover`, while large and small use `bg-action-secondary_pressed` | `bg-action-secondary_pressed` for every size (treated as a drawing slip) | Approved |
-| Pressed and hover with the same token | Content tones use the same alpha for hover and press | Kept as in the reference's description | **Needs approval** |
+| Pressed and hover with the same token | Content tones use the same alpha for hover and press | Kept as in the reference's description | Approved (OD-56) |
 | Focus ring | 2px outside, 1 away from the edge | Standard ring from CLAUDE.md | Matches the rule |
-| Expanded look | The reference's "row actions" button has an "open" state | Pressed look when `aria-expanded="true"` | **Needs approval** |
+| Expanded look | The reference's "row actions" button has an "open" state | Pressed look when `aria-expanded="true"` | Approved (OD-57) |
 | Large text style | 18/24 | `Button XL` (see `NlButtonBase`) | Approved. **To be added to DESIGN.md §3.4** |
-| Defaults | Not set | `tone="normal"`, `variant="primary"`, `size="medium"`, `icon="none"` | **Needs approval** |
-| Loading state | Not in the reference | Not specified | Open |
+| Defaults | Not set | `tone="normal"`, `variant="primary"`, `size="medium"`, `icon="none"` | Approved (OD-58) |
+| Loading state | Not in the reference | Left out for now; adding it later is not breaking | Approved (OD-59) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Tone | `tone`: `normal` (default), `white`, `destructive`, also `data-tone`. Picks `NlButtonBase`, `NlWhiteButton` or `NlDestructiveButton` |
+| Variant | `variant`: `primary` (default), `secondary`, `tertiary`, `link`, also `data-variant`. The types allow only `primary` with `white` (OD-54) and no `link` with `destructive` |
+| Content tone | `contentTone`: `default` (default), `inverse`, `primary`, `secondary`, `info`, `success`, `error`, `warning`. The types allow it only with `variant="tertiary"` and the normal tone |
+| Size, icon, icon name, label | Passed to the base. The types forbid `icon="only-icon"` with `link` |
+| States | Hover, pressed, expanded, disabled and focus, through `appearance` (whole class sets in `NlButton.styles.ts`) |
+| Disabled | `disabled`: native on a button. On a link (`as`): no `href`, `aria-disabled="true"`, clicks ignored |
+| Expanded | `aria-expanded`, passed through; `"true"` uses the pressed look (OD-57) |
+| Element | `as`, `href`, passed to the base |
+
+#### API
+
+```tsx
+import { NlButton } from '@northline/ui';
+
+<NlButton>Save changes</NlButton>
+<NlButton variant="secondary" icon="leading" iconName="add">Add reward</NlButton>
+<NlButton tone="destructive" variant="tertiary">Delete reward</NlButton>
+<NlButton tone="white">Join now</NlButton>
+<NlButton variant="tertiary" contentTone="inverse" icon="only-icon" iconName="close">Close</NlButton>
+<NlButton as="a" href="/rewards" variant="link">View details</NlButton>
+```
+
+`className` (placement only) and native attributes go to the button. Presentational, so no `'use client'`.
+
+#### Tokens used
+
+The tables in "Colours by state", as written. Colour changes use `--nl-duration-fast` (`nl:transition-colors nl:duration-fast`), none under reduced motion. Sizes, radius, text styles and the focus ring from `NlButtonBase`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| State selectors | Hover, pressed and expanded use `not-disabled:not-aria-disabled:` instead of `enabled:` (CLAUDE.md Tailwind rule 3), because `:enabled` never matches a link (`as="a"`). Same result for buttons. **Needs the designer's approval (rule 9)** |
+| Expanded over hover | Expanded sorts after hover, so an open button keeps the pressed look under the pointer |
+| Link underline | On a label span added to `NlButtonBase` (`data-slot="label"`, `appearance.label`), because an underline on the button also ran under the icon. Disabled links have none |
+| Icon states | The icon slot follows the button through the named group `button`; disabled sorts last, so a disabled button's icon keeps the disabled colour |
 
 ---
 

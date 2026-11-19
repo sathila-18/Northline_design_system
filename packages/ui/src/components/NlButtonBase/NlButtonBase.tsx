@@ -12,6 +12,8 @@ export interface NlButtonBaseAppearance {
   button: string;
   /** Icon colour, with any state classes (follow the root through the `button` group). */
   icon: string;
+  /** Label decoration, with any state classes (for example the link underline, label only, never under the icon). */
+  label?: string;
 }
 
 interface NlButtonBaseCommonProps extends Omit<ComponentPropsWithRef<'button'>, 'children'> {
@@ -87,7 +89,9 @@ export function NlButtonBase({
           <span className={styles.hiddenLabel}>{children}</span>
         </>
       ) : (
-        children
+        <span className={'label' in colours ? colours.label : undefined} data-slot="label">
+          {children}
+        </span>
       )}
       {icon === 'trailing' && glyph('trailing')}
     </Element>
