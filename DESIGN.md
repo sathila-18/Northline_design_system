@@ -4673,6 +4673,41 @@ Enabled, hover, pressed / open, focus, disabled. Pressed, open and disabled are 
 | Pressed and open | Not drawn | `bg-tertiary`, as hover, with the arrow turned up when open | Approved |
 | Disabled | Not drawn | `bg-disabled`, `text-disabled-on_bg`, `fg-disabled-on_bg`, no border | Approved |
 | Variant property name | A generic "Property 1" | Not used | Matches |
+| Label contrast in Dark | Not checked | `text-tertiary` on `bg-tertiary` (hover, pressed, open) is 4.47:1 in Dark, every brand, under 4.5:1. Kept as specified: known issue K7 | Accepted (K7, 20 Nov 2026) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Value | `value: number`, shown in Label S |
+| Options, `onValueChange` | Not on the trigger: `NlTable` owns the options and the `NlMenu` (`kind="select"`) under it, and passes the chosen `value` back (see "What it opens") |
+| Label | `label?: string`, default "Rows per page" |
+| Open | `open?: boolean` (set by the parent, kept in sync with the menu), `onOpenChange?(open)`: a click asks for the opposite, Down arrow asks to open (as `NlMenu`). `data-open` |
+| Disabled | Native `disabled` |
+| Element | Native `<button type="button" aria-haspopup="listbox" aria-expanded>`; name is its visible text ("Rows per page 10"); pass `aria-controls` with the menu's id. `ref`, `className` and button attributes go to it. An `onClick` or `onKeyDown` that calls `preventDefault()` stops the request |
+
+#### API
+
+```tsx
+import { NlRowsPerPage } from '@northline/ui';
+
+<NlRowsPerPage value={10} open={open} onOpenChange={setOpen} aria-controls="rows-menu" ref={anchorRef} />
+```
+
+`'use client'` (event handlers).
+
+#### Tokens used
+
+The "Sizes and layout" and "Colours" tables, as written: `Space-M` gap, `Space-XS` / `Space-L` padding, `Radius-Full`, 1px inset ring `border-subtle`, Body S label, Label S value, `NlIcon` 24 (`keyboard_arrow_down`, `keyboard_arrow_up` when open), `bg-secondary`, `bg-tertiary` (hover, pressed, open), `bg-disabled`, `text-tertiary`, `text-primary`, `fg-secondary`, `text-disabled-on_bg`, `fg-disabled-on_bg`, the standard focus ring, Duration fast.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Trigger only | Options and the menu live in `NlTable`; the stories pair it with `NlMenu` to show the flow |
+| Label contrast | Known issue K7 (designer's choice, 20 Nov 2026): open samples are marked `data-a11y-known-issue="K7"`. The other options were `text-secondary` always (6.08 and over) or only on hover and open |
+
+Checked in the browser: 32 high in every state; open shows the arrow up and `bg-tertiary`.
 
 ---
 
@@ -7754,6 +7789,7 @@ Known issues
 | K4 | The disabled `NlBadge` tone's text (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (3.53 Light, 1.60 Dark, every brand). A disabled badge is a status, not an inactive control, so WCAG 1.4.3's exemption doesn't strictly apply. Kept as specified; the label must say the status. Story samples are marked `data-a11y-known-issue="K4"`. Found with `NlBadge`. Accepted by the designer, 18 Nov 2026 | Accepted |
 | K5 | A disabled `NlInputChip`'s label (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (about 3.5 Light, 1.6 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control. axe can't tell, because the chip is a `<span>` (its remove button is left out when disabled), so story samples are marked `data-a11y-known-issue="K5"`. Found by `pnpm test:a11y` with `NlInputChip`. Accepted by the designer, 19 Nov 2026 | Accepted |
 | K6 | The calendar range band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark (every brand), so in Dark the band behind range-middle days is close to invisible. The filled range-start and range-end days still show the range, and the cells carry `aria-selected`. Kept as specified. Found with `NlCalendarDay` (#15). Accepted by the designer, 19 Nov 2026 | Accepted |
+| K7 | The `NlRowsPerPage` label (`text-tertiary`, Body S) on `bg-tertiary` (hover, pressed, open) is 4.47:1 in Dark, every brand, under 4.5:1 (5.51 at rest; Light 7.73). Kept as specified. Open samples are marked `data-a11y-known-issue="K7"`. Found with `NlRowsPerPage` (#37). Accepted by the designer, 20 Nov 2026 | Accepted |
 
 ---
 

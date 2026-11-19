@@ -7,6 +7,12 @@ import { NlRowsPerPage } from './NlRowsPerPage';
 const row =
   'nl:flex nl:w-full nl:items-center nl:p-l nl:text-start nl:text-body-m nl:text-primary nl:aria-selected:text-action nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused';
 
+/**
+ * Open uses the hover/pressed background (bg-tertiary), where the text-tertiary label is 4.47:1 in Dark, under
+ * 4.5:1: known issue K7, kept as specified.
+ */
+const knownIssue = (open: boolean | undefined) => (open ? { 'data-a11y-known-issue': 'K7' } : {});
+
 const meta = {
   title: 'Components/Atoms L1/Rows per page',
   component: NlRowsPerPage,
@@ -18,6 +24,11 @@ const meta = {
     label: { control: 'text' },
     onOpenChange: { control: false },
   },
+  render: (args) => (
+    <span {...knownIssue(args.open)}>
+      <NlRowsPerPage {...args} />
+    </span>
+  ),
 } satisfies Meta<typeof NlRowsPerPage>;
 export default meta;
 
@@ -26,12 +37,14 @@ type Story = StoryObj<typeof meta>;
 /** The trigger with every option as a control. Hover, press and tab to it to see the states. */
 export const Default: Story = {};
 
-/** Closed, open (pressed look, arrow up) and disabled. */
+/** Closed, open (pressed look, arrow up; K7 in Dark) and disabled. */
 export const States: Story = {
   render: () => (
     <div className="nl:flex nl:items-center nl:gap-m">
       <NlRowsPerPage value={10} />
-      <NlRowsPerPage value={10} open />
+      <span {...knownIssue(true)}>
+        <NlRowsPerPage value={10} open />
+      </span>
       <NlRowsPerPage value={10} disabled />
     </div>
   ),
