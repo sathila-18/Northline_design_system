@@ -38,4 +38,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlSpinner | 2026-11-19 09:43 | 2026-11-19 10:04 | OD-61 to OD-64 approved; spinner track, arc, value and turn utilities (rule 9, approved); status region always rendered. Approved by the designer |
 | NlLabel | 2026-11-19 10:09 | 2026-11-19 10:42 | OD-50 (tone), OD-65, OD-66 approved; badgeLabel required with a badge. Approved by the designer |
 | NlChipBase | 2026-11-19 11:26 | 2026-11-19 11:57 | Default size small; trailing slot added for NlInputChip; appearance replaces resting colours. Approved by the designer |
-| NlFilterChip | 2026-11-19 12:07 | | |
+| NlFilterChip | 2026-11-19 12:07 | 2026-11-19 12:34 | Leading icon fg-primary when off (designer's choice); no border = inset ring width 0. Approved by the designer |
