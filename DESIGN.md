@@ -609,7 +609,7 @@ _The designer adds rows here before each build._
 | 24 | Button base (internal) | `NlButtonBase` | `NlIcon` | [§9](#nlbuttonbase) | ✅ |
 | 25 | White button (internal) | `NlWhiteButton` | `NlButtonBase` | [§9](#nlwhitebutton) | ✅ |
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ✅ |
-| 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ⬜ |
+| 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ✅ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ⬜ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ⬜ |
@@ -3485,7 +3485,7 @@ The tables in "Colours by state", as written. Colour changes use `--nl-duration-
 
 | Decision | Detail |
 |---|---|
-| State selectors | Hover, pressed and expanded use `not-disabled:not-aria-disabled:` instead of `enabled:` (CLAUDE.md Tailwind rule 3), because `:enabled` never matches a link (`as="a"`). Same result for buttons. **Needs the designer's approval (rule 9)** |
+| State selectors | Hover, pressed and expanded use `not-disabled:not-aria-disabled:` instead of `enabled:` (CLAUDE.md Tailwind rule 3), because `:enabled` never matches a link (`as="a"`). Same result for buttons. Approved by the designer as a rule 9 exception, 19 Nov 2026 |
 | Expanded over hover | Expanded sorts after hover, so an open button keeps the pressed look under the pointer |
 | Link underline | On a label span added to `NlButtonBase` (`data-slot="label"`, `appearance.label`), because an underline on the button also ran under the icon. Disabled links have none |
 | Icon states | The icon slot follows the button through the named group `button`; disabled sorts last, so a disabled button's icon keeps the disabled colour |
@@ -6856,3 +6856,4 @@ Known issues
 | 18 Nov 2026 | NlButtonBase (#24, internal): primary, secondary (2px inset ring), tertiary and link at rest; four sizes with fixed heights (`Size-56` to `Size-36`) and icon-only squares (`Size-56` to `Size-32`); leading, trailing and icon-only icons with a hidden label; `as` and `href` for links. `appearance` replaces the resting colours; standard focus ring in the base; `soft` left out until OD-40 (OD-1). Approved by the designer |
 | 18 Nov 2026 | NlWhiteButton (#25, internal): the white button for brand backgrounds, built on `NlButtonBase` with a fixed `appearance` (`bg-action-inverse`, 1px inset ring `border-subtle`, `text-dark_both`, `fg-dark_both`); no markup or sizes of its own. §8 dependency changed to `NlButtonBase`; D12 updated. OD-54: white takes only `variant="primary"`, applied in `NlButton`. Approved by the designer |
 | 18 Nov 2026 | NlDestructiveButton (#26, internal): primary (`bg-action-destructive`), secondary (2px inset ring `border-error`) and tertiary (`text-error`) at rest, built on `NlButtonBase` with a fixed `appearance` per variant; no link form. §8 dependency changed to `NlButtonBase`; D12 updated. Approved by the designer |
+| 19 Nov 2026 | NlButton (#27, public): picks the base by tone; hover, pressed, expanded (pressed look) and disabled states for every tone and variant; tertiary content tones; disabled links lose `href` and get `aria-disabled`. Link underline on a new label span in `NlButtonBase`. OD-55 to OD-59 decided; `not-disabled:not-aria-disabled:` state selectors approved as a rule 9 exception. Approved by the designer |

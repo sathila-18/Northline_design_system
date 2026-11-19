@@ -6,6 +6,7 @@
 // State selectors:
 // - Hover, pressed and expanded on the button use `not-disabled:not-aria-disabled:` instead of `enabled:`, because
 //   `:enabled` never matches a link (`as="a"`). A disabled button and a disabled link (aria-disabled) both opt out.
+//   Exception to Tailwind rule 3, approved by the designer 19 Nov 2026 (rule 9).
 // - Expanded (`aria-expanded="true"`, OD-57) uses the pressed look. It sorts after hover and pressed, so an open
 //   button keeps the pressed look under the pointer.
 // - Disabled is set for both `disabled:` (native button) and `aria-disabled:` (link).
