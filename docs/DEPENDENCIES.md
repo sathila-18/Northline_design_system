@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #17, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch; #18 in progress. OD-27 to OD-35, OD-78, OD-80 to OD-89 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #18, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-27 to OD-35, OD-78, OD-80 to OD-89 decided).
 
 ---
 
@@ -43,7 +43,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #17, #20 t
 | 15 | `NlCalendarDay` | internal | – | `NlCalendar` | – | ✅ batch 2 | ✅ |
 | 16 | `NlListCaption` | internal | – | `NlListItem` | – | ✅ batch 2 | ✅ |
 | 17 | `NlNavSubItem` | internal | – | `NlNavItem` | – | ✅ batch 2 | ✅ |
-| 18 | `NlPaginationItem` | internal | – | `NlPagination` | – | ✅ batch 2 | 🟨 |
+| 18 | `NlPaginationItem` | internal | – | `NlPagination` | – | ✅ batch 2 | ✅ |
 | 19 | `NlPageDot` | internal | – | `NlPageDots` | OD-36 | ✅ batch 2 | ⬜ |
 
 ### Atoms L1

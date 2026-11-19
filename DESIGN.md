@@ -595,7 +595,7 @@ _The designer adds rows here before each build._
 | 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ✅ |
 | 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ✅ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ✅ |
-| 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ⬜ |
+| 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ✅ |
 | 19 | Page dot (internal) | `NlPageDot` | – | [§9](#nlpagedot) | ⬜ |
 
 ### 8.2 Atoms L1
@@ -7788,3 +7788,4 @@ Known issues
 | 19 Nov 2026 | NlCalendarDay (#15, internal): `gridcell` drawing the range band (`bg-active`, `Radius-S` on the outer logical corners) around a 40 × 40 native button named by the full date (`label`); seven types; `today` as a separate boolean (OD-27; no border on filled types, `border-disabled` when disabled); standard focus ring (OD-28); `aria-disabled` days stay focusable. K6 accepted (band near invisible in Dark). Approved by the designer |
 | 19 Nov 2026 | NlListCaption (#16, internal): one-line trailing text for list rows; small, medium (default) and large; heavy (Label, default; designer's choice) and light (Body); `text-tertiary`, `text-disabled` when the row is disabled (OD-29). Approved by the designer |
 | 19 Nov 2026 | NlNavSubItem (#17, internal): side nav page link (`as`, default `<a>`), Label M with an ellipsis and the full text as `title` when cut off; default, hover, pressed (K1) and current colours; standard focus ring (OD-30b); optional tree line under the section icon centre (OD-30a) through the `nl:nav-tree-line` and `nl:nav-tree-continue` utilities (rule 9). Approved by the designer |
+| 19 Nov 2026 | NlPaginationItem (#18, internal): page number button ("Page 3", Label M, minimum `Size-32`, hugs long numbers, OD-32) or the "…" gap (one character, `aria-hidden`, OD-35); hover and pressed the same (OD-33); standard focus ring (OD-34); the current page keeps its look and doesn't select. Approved by the designer |
