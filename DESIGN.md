@@ -620,7 +620,7 @@ _The designer adds rows here before each build._
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ✅ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ✅ |
 | 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
-| 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ⬜ |
+| 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ✅ |
 | 39 | Page dots | `NlPageDots` | `NlPageDot` | [§9](#nlpagedots) | ⬜ |
 | 40 | Tooltip | `NlTooltip` | `NlTextBlock` | [§9](#nltooltip) | ⬜ |
 
@@ -7231,3 +7231,4 @@ Known issues
 | 19 Nov 2026 | NlInputChip (#34, public): chosen value on `NlChipBase` (bordered) with a native remove button (close 16/20 in a 24 target, Backspace and Delete remove, name "Remove {label}"); disabled has no remove button. K5 accepted. Approved by the designer |
 | 19 Nov 2026 | NlSegment (#35, internal): native radio under drawn content; medium, small, xsmall (40, 32, 24; icon-only 36, 28, 24); filled icon when selected; OD-67 and OD-68 decided. Approved by the designer |
 | 19 Nov 2026 | NlHelperText (#36, public): five tones (default `text-tertiary`, OD-43; error glyph `error`, OD-69), optional decorative icon centred on the first line (OD-70), described-by id. Approved by the designer |
+| 19 Nov 2026 | NlNavIcon (#38, internal): decorative 20 icon, `fg-secondary`, or `fg-active` and filled when selected (OD-71). Approved by the designer |
