@@ -593,7 +593,7 @@ _The designer adds rows here before each build._
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
 | 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ✅ |
-| 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ⬜ |
+| 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ✅ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ⬜ |
 | 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ⬜ |
 | 19 | Page dot (internal) | `NlPageDot` | – | [§9](#nlpagedot) | ⬜ |
@@ -2379,7 +2379,7 @@ Checked in the browser: cells and days 40 × 40; the band joins start, middle an
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlListItem`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-29.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-29 decided 19 Nov 2026.
 
 Short trailing text in a list row, such as a date, a count or a points value.
 
@@ -2394,8 +2394,8 @@ NlListCaption
 
 | Option | Values | Prop |
 |---|---|---|
-| Size | small, medium, large | `size`, also `data-size` |
-| Weight | heavy, light | `weight: 'heavy' \| 'light'`, also `data-weight` |
+| Size | small, medium, large | `size`, default `medium`, also `data-size` |
+| Weight | heavy, light | `weight: 'heavy' \| 'light'`, default `heavy` (Label styles; designer's choice, 19 Nov 2026), also `data-weight` |
 | Text | text | `children` |
 
 #### Sizes and layout
@@ -2428,7 +2428,43 @@ None of its own. In a disabled row, the row switches it to `text-disabled` (see 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Gap | A raw 10 gap with a single child (no effect) | No gap | Matches |
-| Disabled colour | Not drawn | `text-disabled` when the row is disabled, set through a `disabled` prop passed by the row | **Needs approval** |
+| Disabled colour | Not drawn | `text-disabled` when the row is disabled, set through a `disabled` prop passed by the row | Approved (OD-29) |
+| Defaults | Not given | `size="medium"`, `weight="heavy"` (Label M): captions use Label, not Body, by default | Designer's choice, 19 Nov 2026 |
+| Long text | Not drawn | One line, never truncated: a long caption narrows the row's title. Captions are meant to be short | Approved, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'small' \| 'medium' \| 'large'`, default `medium`, `data-size` |
+| Weight | `weight?: 'heavy' \| 'light'`, default `heavy`, `data-weight` |
+| Text | `children` |
+| Disabled | `disabled?: boolean` (set by the row): `text-disabled`, `data-disabled` |
+| Element | `<span>`; `ref` and attributes pass through; `className` (placement only) appended last |
+
+#### API
+
+```tsx
+import { NlListCaption } from '../NlListCaption'; // internal, not exported from @northline/ui
+
+<NlListCaption>250 pts</NlListCaption>
+<NlListCaption size="small" weight="light" disabled>19 Nov</NlListCaption>
+```
+
+Presentational (no `'use client'`).
+
+#### Tokens used
+
+Label S / M / L (heavy), Body S / M / L (light), `text-tertiary`, `text-disabled`, `Space-none`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Layout | `whitespace-nowrap` and `shrink-0`: one line, keeps its width in the row |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: heavy 12 / 14 / 16 at weight 500, light 12 / 14 / 16 regular, line heights 18 / 21 / 24.
 | Text styles and colour | As in the table | Same | Matches |
 
 ---
@@ -7677,3 +7713,4 @@ Known issues
 | 19 Nov 2026 | NlTextAreaBase (#48, internal): native `<textarea>` with a floating label and no hint text (designer's choice), `rows` (default 4 = 128, OD-85), vertical resize only (OD-86), label `text-tertiary` (OD-87 via OD-77); error, disabled and helper text as `NlInputBase`. Approved by the designer |
 | 19 Nov 2026 | NlTextArea (#49, public): multi-line input on `NlTextAreaBase`, no placeholder, value `text-primary` (OD-88). Character count added to the base (OD-89): native `maxLength`, "120 / 500" at the end of the helper line (flush with the box end), limit in the description, polite announcements at 20, 10, 5 and 0 left. Approved by the designer |
 | 19 Nov 2026 | NlCalendarDay (#15, internal): `gridcell` drawing the range band (`bg-active`, `Radius-S` on the outer logical corners) around a 40 × 40 native button named by the full date (`label`); seven types; `today` as a separate boolean (OD-27; no border on filled types, `border-disabled` when disabled); standard focus ring (OD-28); `aria-disabled` days stay focusable. K6 accepted (band near invisible in Dark). Approved by the designer |
+| 19 Nov 2026 | NlListCaption (#16, internal): one-line trailing text for list rows; small, medium (default) and large; heavy (Label, default; designer's choice) and light (Body); `text-tertiary`, `text-disabled` when the row is disabled (OD-29). Approved by the designer |
