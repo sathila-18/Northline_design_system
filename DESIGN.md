@@ -612,7 +612,7 @@ _The designer adds rows here before each build._
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ✅ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ✅ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ✅ |
-| 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ⬜ |
+| 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ✅ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
@@ -3716,7 +3716,7 @@ Arc on track contrast: 3.92 to 5.75 in every brand and theme (`docs/TOKEN_AUDIT.
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlCountBadge` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-65, OD-66.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-50, OD-65 and OD-66 decided 19 Nov 2026.
 
 A small, low-emphasis label, optionally followed by a dot badge. Used above headings (in the `NlTextBlock` label slot), in list rows, the calendar header, steps and table headers.
 
@@ -3771,9 +3771,50 @@ None. Not interactive.
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Badge form | Always the small dot, red, hidden by default | `NlCountBadge` small dot, `tone="error"` by default | Matches |
-| Badge tone option | Only red in the reference | `badgeTone` added for warning and success | **Needs approval** |
+| Badge tone option | Only red in the reference | `badgeTone` added for warning and success | Approved (OD-65) |
 | Gap | `Space-M` | Same | Matches |
-| `as="label"` | Not in the reference | Added so the label can name form controls | **Needs approval** |
+| `as="label"` | Not in the reference | Added so the label can name form controls | Approved (OD-66) |
+| Tone | Fixed `text-tertiary`. `NlStep` and `NlCalendar` need other colours | `tone`: tertiary (default), primary, secondary, action | Approved (OD-50) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'medium' \| 'small'`, default `medium`, also `data-size`. `nl:text-label-m` / `nl:text-label-s` |
+| Tone | `tone?: 'tertiary' \| 'primary' \| 'secondary' \| 'action'`, default `tertiary`, also `data-tone` (OD-50) |
+| Text | `children` |
+| Show badge | `badge?: boolean`, default off. `NlCountBadge` small, dot form, after the text |
+| Badge tone | `badgeTone?: 'error' \| 'warning' \| 'success'`, default `error` (OD-65) |
+| Badge meaning | `badgeLabel: string`, required by the types when `badge` is on; `NlCountBadge`'s hidden `label` |
+| Element | `as?: 'span' \| 'label'`, default `span`; `htmlFor` with `label` (OD-66). Native attributes and `ref` go to the element, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlLabel } from '@northline/ui';
+
+<NlLabel>Tier 2</NlLabel>
+<NlLabel size="small" tone="secondary">Mon</NlLabel>
+<NlLabel badge badgeLabel="New">Rewards</NlLabel>
+<NlLabel as="label" htmlFor="member-id">Member ID</NlLabel>
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Layout | `Space-M` gap, `Space-none` padding |
+| Text style | `Label M`, `Label S` |
+| Text colour | `text-tertiary` (default), `text-primary`, `text-secondary`, `text-action` |
+| Badge | `NlCountBadge` small dot, `badgeTone` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Tertiary and secondary | Light: Neutral-600 and Neutral-500; Dark: Neutral-300 and Neutral-200. Close, so they look alike in some brands (token values, not changed here) |
 
 ---
 
@@ -6939,3 +6980,4 @@ Known issues
 | 19 Nov 2026 | NlButton (#27, public): picks the base by tone; hover, pressed, expanded (pressed look) and disabled states for every tone and variant; tertiary content tones; disabled links lose `href` and get `aria-disabled`. Link underline on a new label span in `NlButtonBase`. OD-55 to OD-59 decided; `not-disabled:not-aria-disabled:` state selectors approved as a rule 9 exception. Approved by the designer |
 | 19 Nov 2026 | NlCheckboxControl (#28, internal): native checkbox under a drawn Size-20 box in a Size-24 hit area; unselected, selected and indeterminate (`check` / `remove`, OD-60) with hover, pressed, disabled and focus (ring on the hit area, Radius-XS); indeterminate set through a ref. Approved by the designer |
 | 19 Nov 2026 | NlSpinner (#29, public): SVG ring (4 stroke, artwork) turning once per Duration pulse, or a value arc; success (`check`) and error (`warning`) results; always-present status region announces the result. Spinner utilities in tailwind.css. OD-61 to OD-64 decided. Approved by the designer |
+| 19 Nov 2026 | NlLabel (#30, public): Label M / Label S, `tone` (tertiary, primary, secondary, action; OD-50), optional `NlCountBadge` dot with `badgeTone` and required `badgeLabel` (OD-65), `as="label"` for form controls (OD-66). Approved by the designer |

@@ -6,6 +6,7 @@ export * from './components/NlButton';
 export * from './components/NlCountBadge';
 export * from './components/NlDivider';
 export * from './components/NlIconContainer';
+export * from './components/NlLabel';
 export * from './components/NlMenu';
 export * from './components/NlOverlay';
 export * from './components/NlProgressBar';
