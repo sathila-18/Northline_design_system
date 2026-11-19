@@ -13,7 +13,6 @@ const meta = {
     size: 'large',
     error: false,
     disabled: false,
-    placeholder: '0042',
     helperText: 'On the member card.',
   },
   argTypes: {
@@ -21,7 +20,6 @@ const meta = {
     size: { control: 'inline-radio', options: ['large', 'small'] },
     error: { control: 'boolean' },
     disabled: { control: 'boolean' },
-    placeholder: { control: 'text' },
     helperText: { control: 'text' },
     prefix: { control: 'text' },
     suffix: { control: 'text' },
@@ -45,14 +43,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** Every option as a control. Click in: the label floats up and the hint shows. Type: the border turns strong. */
+/** Every option as a control. Click in: the label floats up and the box stays empty. Type: the border turns strong. */
 export const Default: Story = {};
 
 /** Empty, filled and with helper text. Focus a field to see the ring and the floating label. */
 export const States: Story = {
   render: () => (
     <div className="nl:flex nl:flex-col nl:gap-xl">
-      <NlInputBase label="Member number" placeholder="0042" />
+      <NlInputBase label="Member number" />
       <NlInputBase label="Member number" defaultValue="Member 0042" />
       <NlInputBase label="Member number" defaultValue="Member 0042" helperText="On the member card." />
     </div>

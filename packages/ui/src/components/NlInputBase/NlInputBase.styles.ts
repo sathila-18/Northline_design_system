@@ -2,7 +2,7 @@
 //
 // Structure: root (vertical) → box (named group `field`) → leading slot, prefix, value area (the native <input> with
 // `peer/input`, then the floating <label>), suffix, trailing slot → helper. States come from the input: the box uses
-// has-focus, has-disabled, has-enabled and has-placeholder-shown (the input always has a placeholder, a hint or a
+// has-focus, has-disabled, has-enabled and has-placeholder-shown (the input's placeholder is always a single
 // space, so "placeholder shown" means empty). The label follows the input with peer-* variants.
 
 /** The root: box, then the helper area. Fills its container. */
@@ -37,11 +37,11 @@ export const value = 'nl:relative nl:flex nl:min-w-0 nl:flex-1 nl:items-center';
 
 /**
  * The input: Body L, text-primary, no box of its own. The box draws the focus ring, so the input's own outline is
- * hidden (nl:focus:outline-hidden; designer-approved spec, 19 Nov 2026). The placeholder is a hint shown only while
- * focused and empty (OD-42). Disabled text-disabled.
+ * hidden (nl:focus:outline-hidden; designer-approved spec, 19 Nov 2026). There is no hint text (designer's choice, 19 Nov
+ * 2026): the native placeholder is a single space, only so :placeholder-shown means empty. Disabled text-disabled.
  */
 export const input =
-  'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:text-primary nl:placeholder:text-transparent nl:focus:placeholder:text-placeholder nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:text-disabled';
+  'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:text-primary nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:text-disabled';
 
 /**
  * The label (OD-42): at rest in the value position, Body L, text-placeholder. Floating (focused or filled): Label S,

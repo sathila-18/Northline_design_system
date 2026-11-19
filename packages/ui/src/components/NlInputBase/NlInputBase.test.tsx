@@ -35,11 +35,11 @@ describe('NlInputBase', () => {
     );
   });
 
-  it('the placeholder is a hint, never the name', () => {
-    render(<NlInputBase label="Member number" placeholder="0042" />);
+  it('has no hint text: the native placeholder is a space, only to detect an empty field', () => {
+    render(<NlInputBase label="Member number" />);
     const input = screen.getByRole('textbox', { name: 'Member number' });
-    expect(input).toHaveAttribute('placeholder', '0042');
-    expect(input).toHaveClass('nl:placeholder:text-transparent', 'nl:focus:placeholder:text-placeholder');
+    expect(input).toHaveAttribute('placeholder', ' ');
+    expect(input.className).not.toMatch(/placeholder:/);
   });
 
   it('types, uncontrolled and controlled', async () => {

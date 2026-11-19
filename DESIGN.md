@@ -632,7 +632,7 @@ _The designer adds rows here before each build._
 | 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ✅ |
 | 43 | Notification button | `NlNotificationButton` | `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ✅ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ✅ |
-| 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ⬜ |
+| 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ✅ |
 | 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ⬜ |
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ⬜ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ⬜ |
@@ -5084,7 +5084,7 @@ NlInputBase (vertical)
 | Type | default, select | `type` (select makes the whole box a trigger with a chevron). Payment and mobile-number types are left out |
 | Error | off, on | `error?: boolean` (the reference's "destructive") |
 | Label | text | `label: string` (required) |
-| Placeholder | text | `placeholder?: string` |
+| Placeholder | removed | No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused |
 | Prefix, suffix | short text | `prefix?`, `suffix?` |
 | Leading, trailing | slots | `leading?: ReactNode`, `trailing?: ReactNode` |
 | Helper text | text | `helperText?: string` |
@@ -5134,7 +5134,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. The `placeholder` hint then shows only while focused and empty | Approved (OD-42) |
+| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. No hint text: focused and empty, the box shows only the floating label (designer's choice, 19 Nov 2026) | Approved (OD-42), hint removed 19 Nov 2026 |
 | Focus ring | A 2px ring outside, inset 1 (equivalent to the standard ring) | Standard ring from CLAUDE.md, shown on any focus | Matches |
 | Error focus ring | `border-error` | The standard `border-focused` ring; the error shows in the border, helper text and icon | Decided (OD-44, OD-3): standard ring |
 | Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | `NlHelperText` default tone uses `text-tertiary` everywhere | Approved (OD-43, 19 Nov 2026) |
@@ -5151,7 +5151,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 | Type | Default (text input) now; `type="select"` comes with `NlSelect` (#70). The native `type` attribute (`text`, `email`, `password` …) passes to the input |
 | Error | `error?: boolean`: `aria-invalid`, border `border-error`, helper tone `error` with its icon, `data-error` |
 | Label | `label: string`, a real `<label for>` |
-| Placeholder | `placeholder?: string`, a hint shown only while focused and empty (OD-42). Without one the input gets a single space, so "placeholder shown" means empty |
+| Placeholder | None. No hint text: the box stays empty while focused, with only the floating label (designer's choice, 19 Nov 2026, replacing OD-42's hint). The native placeholder is a single space, only so "placeholder shown" means empty |
 | Prefix, suffix | `prefix?`, `suffix?`: Body L, `text-placeholder` |
 | Leading, trailing | `leading?`, `trailing?` slots, `fg-secondary` (disabled `fg-disabled`) |
 | Helper text | `helperText?`: `NlHelperText` (`Space-M` below, indented `Space-XL`), id in the input's `aria-describedby`, inside an always-present `aria-live="polite"` region. Icon only for error (OD-76) |
@@ -5163,7 +5163,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 ```tsx
 import { NlInputBase } from '../NlInputBase'; // internal, not exported from @northline/ui
 
-<NlInputBase label="Member number" placeholder="0042" helperText="On the member card." />
+<NlInputBase label="Member number" helperText="On the member card." />
 <NlInputBase label="Member number" error helperText="Enter a member number." />
 ```
 
@@ -5192,7 +5192,7 @@ Checked in the browser: the floating label is centred on the top border and line
 
 **Level** Molecule (mapped, takes its base's level) · **Base** `NlInputBase` · **Depends on** – · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-79.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-79 decided 19 Nov 2026.
 
 A single-line text input, for names, codes, amounts and search terms that need a label.
 
@@ -5209,7 +5209,7 @@ As `NlInputBase`, with `type="default"`.
 | Error | off, on | `error?: boolean` |
 | Input type | text, email, number, tel, url | `inputType`, default `text` |
 | Value | text | `value` / `defaultValue`, `onChange` |
-| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `ref` |
+| Everything else | as `NlInputBase` | `label`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `ref` (no placeholder, as `NlInputBase`) |
 
 #### Sizes, layout, colours and states
 
@@ -5224,7 +5224,33 @@ As `NlInputBase`. A decorative trailing icon is `aria-hidden`. If an icon needs 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Types | Default, mobile number, payment | Default only (D13 leaves out the others) | Matches |
-| Trailing icon | An info icon in the reference | Any registry icon, decorative | **Needs approval** |
+| Trailing icon | An info icon in the reference | Any registry icon, decorative | Approved (OD-79) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'large' \| 'small'`, default `large`, passed to `NlInputBase` |
+| Trailing icon | `trailingIcon?: NlIconName`: a decorative `NlIcon` (24 large, 20 small) in the base's trailing slot (OD-79) |
+| Error | `error?: boolean`, passed to the base |
+| Input type | `inputType?: 'text' \| 'email' \| 'number' \| 'tel' \| 'url'`, default `text`: the native `type` |
+| Value | `value` / `defaultValue`, `onChange` |
+| Everything else | `label`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `name`, `ref` and native attributes, passed to the base. No `leading` or `trailing` slots |
+
+#### API
+
+```tsx
+import { NlTextField } from '@northline/ui';
+
+<NlTextField label="Email" inputType="email" />
+<NlTextField label="Member number" trailingIcon="info" helperText="On the member card." />
+```
+
+No `'use client'` of its own (`NlInputBase` has it).
+
+#### Tokens used
+
+None of its own: everything from `NlInputBase`; the trailing icon is `fg-secondary` through the base's slot.
 
 ---
 
@@ -7436,3 +7462,4 @@ Known issues
 | 19 Nov 2026 | NlCheckbox (#42, public): label row of `NlCheckboxControl` and `NlTextBlock type="body"`, hidden-label option, disabled text (K3). Approved by the designer |
 | 19 Nov 2026 | NlNotificationButton (#43, public): own native 40 circle (OD-40, D12 exception) with the `notifications` icon (added to the registry, 27 icons) and an `NlCountBadge` dot or number; name carries the shown count. Approved by the designer |
 | 19 Nov 2026 | NlInputBase (#44, internal): outlined field with a real floating label (CSS only, OD-42), large/small, leading, trailing, prefix, suffix, helper text in a polite live region (icon only for errors, OD-76), error and disabled; standard focus ring on errors (OD-44). Select type with #70; required marker open (OD-78). Approved by the designer |
+| 19 Nov 2026 | NlTextField (#45, public): single-line input on `NlInputBase` with `inputType` (text, email, number, tel, url) and an optional decorative trailing icon (OD-79). The field hint text was removed from `NlInputBase` and `NlTextField`: focused and empty, the box shows only the floating label (designer's choice). Approved by the designer |
