@@ -5447,7 +5447,7 @@ Checked in the browser: box 48 (large), clear button 32 square, placeholder visi
 
 **Level** Molecule (contains `NlHelperText`, L1) · **Base** – (this is the base) · **Depends on** `NlHelperText` · **Internal**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-85, OD-86, OD-87.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-42 and OD-43 (decided with `NlInputBase`), OD-85, OD-86 and OD-87 decided 19 Nov 2026.
 
 The multi-line version of the field box. `NlTextArea` maps onto it.
 
@@ -5467,7 +5467,7 @@ NlTextAreaBase (vertical)
 |---|---|---|
 | Error | off, on | `error?: boolean` (the reference's "destructive") |
 | Label | text | `label` (required) |
-| Placeholder | text | `placeholder?` |
+| Placeholder | removed | No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused, as `NlInputBase` |
 | Helper text | text | `helperText?` |
 | Rows | number | `rows`, default 4 |
 
@@ -5495,9 +5495,49 @@ As `NlInputBase`.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Height | Fixed 128 (no `Size-128` token) | From `rows` (default 4) | **Needs approval** |
-| Resize | Not in the reference | Vertical resize allowed, no horizontal | **Needs approval** |
-| Floating label colour | `text-primary` here, `text-tertiary` in single-line fields | `text-tertiary`, as `NlInputBase` | **Needs approval** |
+| Height | Fixed 128 (no `Size-128` token) | From `rows` (default 4): 4 × Body L line height 24 + 2 × `Space-XL` = 128 | Approved (OD-85) |
+| Resize | Not in the reference | Vertical resize allowed, no horizontal, none when disabled. The browser lets it shrink below `rows` (a minimum height would need a token) | Approved (OD-86) |
+| Floating label colour | `text-primary` here, `text-tertiary` in single-line fields | `text-tertiary`, as `NlInputBase` | Approved (OD-87, covered by OD-77) |
+| Placeholder | Placeholder text in the box | None: no hint text, empty while focused | Designer's choice, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Error | `error?: boolean`: `aria-invalid`, border `border-error`, helper tone `error` with its icon, `data-error` |
+| Label | `label: string`, a real `<label for>`; at rest on the first line, floating when focused or filled (OD-42) |
+| Placeholder | None (not in the props). The native placeholder is a single space, only so "placeholder shown" means empty |
+| Helper text | `helperText?`: `NlHelperText` (`Space-M` below, indented `Space-XL`), id in `aria-describedby`, inside an always-present `aria-live="polite"` region. Icon only for error (OD-76) |
+| Rows | `rows?: number`, default 4, on the native `<textarea>` |
+| Disabled, Required | Native on the textarea; disabled helper tone `disabled`, no resize. No required marker (OD-78) |
+| Element | Native `<textarea>`: `value` / `defaultValue`, `onChange`, `name`, `maxLength`, `ref` and native attributes go to it; `className` (placement only) to the root |
+
+#### API
+
+```tsx
+import { NlTextAreaBase } from '../NlTextAreaBase'; // internal, not exported from @northline/ui
+
+<NlTextAreaBase label="Notes" helperText="Visible to admins only." />
+<NlTextAreaBase label="Notes" rows={6} error helperText="Add a note before saving." />
+```
+
+`'use client'` (`useId`).
+
+#### Tokens used
+
+Box `Radius-M` with a 1px inset border; `Space-XL` padding on the textarea; Body L `text-primary`; borders `border-default`, `border-strong` (filled, not focused), `border-error`, `border-disabled`; hover `bg-secondary`; the standard `border-focused` ring; label at rest Body L `text-placeholder`, floating Label S `text-tertiary` on `bg-primary` with `Space-XS` inline padding; disabled `text-disabled`; helper as `NlInputBase`. Motion `--nl-duration-fast`, none under reduced motion.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Own styles | `NlTextAreaBase.styles.ts` with the same tokens as `NlInputBase` (rule 1: one styles file per component); no shared classes |
+| Padding on the textarea | `Space-XL` sits on the textarea, not the box, so the resize handle is in the box corner and text scrolls inside the border |
+| Focus ring | `has-focus` on the box: it holds nothing else focusable, so no `input-focus`-style variant is needed |
+| Floating label | At rest `Space-XL` in from the top and start (on the first line); floating at the top border, centred with a half translate. CSS only, through `peer-*` variants |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: 2, 4 and 6 rows give 80, 128 and 176; the floating label is centred on the top border and its text lines up with the value; focus draws one ring.
 | Type name | "Distructive" (spelling) | `error` | Matches |
 
 ---
