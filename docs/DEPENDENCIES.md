@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column brought up to date: #1 to #12, #20 to #36, #38 and #40 to #46 approved; #37 parked on its branch; #47 approved. OD-31, OD-78, OD-80 to OD-84 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #20 to #36, #38 and #40 to #48 approved; #37 parked on its branch. OD-31, OD-78, OD-80 to OD-87 decided).
 
 ---
 
@@ -66,7 +66,7 @@ Last updated: 19 Nov 2026 (Build column brought up to date: #1 to #12, #20 to #3
 | 33 | `NlAssistChip` | yes | `NlChipBase` | – | – | ✅ batch 4 | ✅ |
 | 34 | `NlInputChip` | yes | `NlChipBase` | `NlMultiSelect` | – | ✅ batch 4 | ✅ |
 | 35 | `NlSegment` | internal | `NlIcon` | `NlSegmentedButton` | – | ✅ batch 4 | ✅ |
-| 36 | `NlHelperText` | yes | `NlIcon` | `NlInputBase`, `NlTextAreaBase` | OD-43 | ✅ batch 4 | ✅ |
+| 36 | `NlHelperText` | yes | `NlIcon` | `NlInputBase`, `NlTextAreaBase` | – | ✅ batch 4 | ✅ |
 | 37 | `NlRowsPerPage` | yes | `NlIcon` | `NlTable` | – | ✅ batch 4 | 🟨 |
 | 38 | `NlNavIcon` | internal | `NlIcon` | `NlNavItem` | – | ✅ batch 4 | ✅ |
 | 39 | `NlPageDots` | yes | `NlPageDot` | – | – | ✅ batch 4 | ⬜ |
@@ -79,11 +79,11 @@ Last updated: 19 Nov 2026 (Build column brought up to date: #1 to #12, #20 to #3
 | 41 | `NlSegmentedButton` | yes | `NlSegment`, `NlTooltip` | – | – | ✅ batch 5 | ✅ |
 | 42 | `NlCheckbox` | yes | `NlCheckboxControl`, `NlTextBlock` | – | OD-41, OD-15 | ✅ batch 5 | ✅ |
 | 43 | `NlNotificationButton` | yes | `NlCountBadge`, `NlIcon` | `NlPageHeader` | – | ✅ batch 5 | ✅ |
-| 44 | `NlInputBase` | internal | `NlHelperText`, `NlIcon` | `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect`, `NlDateField` | OD-42, OD-43, OD-44 | ✅ batch 5 | ✅ |
+| 44 | `NlInputBase` | internal | `NlHelperText`, `NlIcon` | `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect`, `NlDateField` | – | ✅ batch 5 | ✅ |
 | 45 | `NlTextField` | yes | `NlInputBase` | – | – | ✅ batch 5 | ✅ |
 | 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | – | ✅ batch 5 | ✅ |
 | 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | – | ✅ batch 5 | ✅ |
-| 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | OD-42, OD-43 | ✅ batch 5 | ⬜ |
+| 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | – | ✅ batch 5 | ✅ |
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ⬜ |
 | 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | OD-50 | ✅ batch 5 | ⬜ |
 | 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | OD-50 | ✅ batch 6 | ⬜ |
@@ -110,8 +110,8 @@ Last updated: 19 Nov 2026 (Build column brought up to date: #1 to #12, #20 to #3
 
 | # | Component | Public | Depends on | Used by | Blocked by | Spec | Build |
 |---|---|---|---|---|---|---|---|
-| 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | OD-42, OD-43 (via the base) | ✅ batch 8 | ⬜ |
-| 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | OD-42, OD-43 (via the base), OD-136 | ✅ batch 8 | ⬜ |
+| 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | – | ✅ batch 8 | ⬜ |
+| 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | OD-136 | ✅ batch 8 | ⬜ |
 | 72 | `NlDateField` | yes | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | – | OD-137 | ✅ batch 8 | ⬜ |
 | 73 | `NlStepper` | yes | `NlStep` | – | – | ✅ batch 8 | ⬜ |
 | 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ⬜ |
@@ -132,7 +132,7 @@ Build and settle these early. A change to them ripples widely.
 | `NlButton` | 17 | OD-1 / OD-40 |
 | `NlTextBlock` | 11 | OD-120 (OD-14, OD-15, OD-16, OD-41 decided) |
 | `NlLabel` | 6 | OD-50 |
-| `NlInputBase` | 6 | OD-42, OD-43, OD-44 |
+| `NlInputBase` | 6 | – |
 | `NlListItemBase` | 5 | OD-14, OD-15 |
 | `NlCheckboxControl` | 5 | – |
 | `NlMenu` | 5 | OD-19 |
@@ -347,9 +347,9 @@ Decide these before building the components listed under "Affects".
 - OD-84 · Icons `search`, `cancel` · **Decided** 19 Nov 2026: approved
 
 **NlTextAreaBase**
-- OD-85 · Height from `rows` (default 4) · Open
-- OD-86 · Vertical resize only · Open
-- OD-87 · Floating label `text-tertiary` · Open
+- OD-85 · Height from `rows` (default 4) · **Decided** 19 Nov 2026: approved (4 rows = 128)
+- OD-86 · Vertical resize only · **Decided** 19 Nov 2026: approved; none when disabled
+- OD-87 · Floating label `text-tertiary` · **Decided** 19 Nov 2026: covered by OD-77
 
 **NlTextArea**
 - OD-88 · Filled value `text-primary` (the reference shows placeholder colour) · Open
