@@ -3496,7 +3496,7 @@ The tables in "Colours by state", as written. Colour changes use `--nl-duration-
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used by `NlCheckbox`, checkbox list items and table cells)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-60.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-60 decided 19 Nov 2026.
 
 The bare checkbox: a rounded square that is empty, ticked or shows a dash (indeterminate).
 
@@ -3562,7 +3562,44 @@ Enabled, hover, pressed, focus, disabled, for each of unselected, selected and i
 | Unselected pressed fill | `bg-action-primary_pressed`, a dark brand fill with no tick, which looks like a selected box with the tick missing | `bg-active-hover` (as hover) with `border-pressed` | Approved |
 | Selected hover and pressed fills | `fg-hovered` and `fg-pressed` (foreground tokens used as fills) | Kept | Matches |
 | Focus ring | 2px outside, `border-focused`, `Radius-XS` | Standard ring from CLAUDE.md | Matches the rule |
-| Icons | `check` and `remove` from the reference's icon set | Material Symbols `check` and `remove` | **Needs approval** |
+| Icons | `check` and `remove` from the reference's icon set | Material Symbols `check` and `remove` | Approved (OD-60) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `checked` / `defaultChecked` (native) and `indeterminate?: boolean`, set on the input in an effect after every render and again after each change. The box and icons follow the input through CSS (`:checked`, `:indeterminate`), so uncontrolled use works too |
+| Disabled | `disabled` (native). The root gets no pointer events, so hover and press never show |
+| Accessible name | `aria-label`, `aria-labelledby` or a wrapping `<label>`. Not required by the type, because a wrapping label is valid (as `NlRadio`) |
+| Change | `onChange` (native) |
+| Element | Native attributes and `ref` go to the input; `className` to the 24 × 24 root, for placement only |
+
+#### API
+
+```tsx
+import { NlCheckboxControl } from '../NlCheckboxControl'; // internal, not exported from @northline/ui
+
+<label>
+  <NlCheckboxControl checked={selected} onChange={(e) => setSelected(e.target.checked)} />
+  Member 0042
+</label>
+<NlCheckboxControl aria-label="Select all members" checked={all} indeterminate={some} onChange={toggleAll} />
+```
+
+`'use client'` (an effect sets `indeterminate`).
+
+#### Tokens used
+
+The table in "Colours", as written. Hit area `Size-24`, box `Size-20`, `Radius-XS` on both, 2px border (`nl:border-2`); selected and indeterminate use a transparent border so the fill covers the box. `NlIcon` 16. Colour changes use `--nl-duration-fast`, none under reduced motion.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Focus ring | The standard ring around the 24 × 24 hit area with `Radius-XS` (designer's choice, 19 Nov 2026) |
+| Unselected hover | `bg-active-hover` for hover and pressed, as in the spec (the radio uses `bg-active` for hover) (designer's choice, 19 Nov 2026) |
+| Icons | Both icons are rendered; CSS shows the tick when checked and the dash when indeterminate (the dash wins if both are true) |
+| Indeterminate is the caller's | Activating a mixed checkbox makes it checked; the caller clears `indeterminate` in `onChange`. While the prop stays true the dash stays |
 
 ---
 
