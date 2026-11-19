@@ -2379,7 +2379,7 @@ Checked in the browser: cells and days 40 × 40; the band joins start, middle an
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlListItem`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-29.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-29 decided 19 Nov 2026.
 
 Short trailing text in a list row, such as a date, a count or a points value.
 
@@ -2394,8 +2394,8 @@ NlListCaption
 
 | Option | Values | Prop |
 |---|---|---|
-| Size | small, medium, large | `size`, also `data-size` |
-| Weight | heavy, light | `weight: 'heavy' \| 'light'`, also `data-weight` |
+| Size | small, medium, large | `size`, default `medium`, also `data-size` |
+| Weight | heavy, light | `weight: 'heavy' \| 'light'`, default `heavy` (Label styles; designer's choice, 19 Nov 2026), also `data-weight` |
 | Text | text | `children` |
 
 #### Sizes and layout
@@ -2428,7 +2428,43 @@ None of its own. In a disabled row, the row switches it to `text-disabled` (see 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Gap | A raw 10 gap with a single child (no effect) | No gap | Matches |
-| Disabled colour | Not drawn | `text-disabled` when the row is disabled, set through a `disabled` prop passed by the row | **Needs approval** |
+| Disabled colour | Not drawn | `text-disabled` when the row is disabled, set through a `disabled` prop passed by the row | Approved (OD-29) |
+| Defaults | Not given | `size="medium"`, `weight="heavy"` (Label M): captions use Label, not Body, by default | Designer's choice, 19 Nov 2026 |
+| Long text | Not drawn | One line, never truncated: a long caption narrows the row's title. Captions are meant to be short | Approved, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'small' \| 'medium' \| 'large'`, default `medium`, `data-size` |
+| Weight | `weight?: 'heavy' \| 'light'`, default `heavy`, `data-weight` |
+| Text | `children` |
+| Disabled | `disabled?: boolean` (set by the row): `text-disabled`, `data-disabled` |
+| Element | `<span>`; `ref` and attributes pass through; `className` (placement only) appended last |
+
+#### API
+
+```tsx
+import { NlListCaption } from '../NlListCaption'; // internal, not exported from @northline/ui
+
+<NlListCaption>250 pts</NlListCaption>
+<NlListCaption size="small" weight="light" disabled>19 Nov</NlListCaption>
+```
+
+Presentational (no `'use client'`).
+
+#### Tokens used
+
+Label S / M / L (heavy), Body S / M / L (light), `text-tertiary`, `text-disabled`, `Space-none`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Layout | `whitespace-nowrap` and `shrink-0`: one line, keeps its width in the row |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: heavy 12 / 14 / 16 at weight 500, light 12 / 14 / 16 regular, line heights 18 / 21 / 24.
 | Text styles and colour | As in the table | Same | Matches |
 
 ---
