@@ -4074,6 +4074,46 @@ Enabled, hover, pressed, focus, disabled, and open for dropdown chips.
 | Open look | Selected look with the up arrow | Same | Matches |
 | Arrow icons | From the reference's icon set | Material Symbols `keyboard_arrow_down` and `keyboard_arrow_up` | Approved |
 
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Dropdown | `dropdown?: boolean`. On: trailing `keyboard_arrow_down` (closed) or `keyboard_arrow_up` (open), `aria-haspopup`, `aria-expanded`, `data-open` |
+| Popup type | `popup?: 'menu' \| 'listbox' \| 'dialog'`, default `menu`, for `aria-haspopup` (dropdown only) |
+| Open | `open?: boolean`, set by the parent and kept in sync with the menu (dropdown only; the types enforce it) |
+| Open request | `onOpenChange?(open)`: a click asks for the opposite, Down arrow asks to open. Same signature as `NlMenu`'s. An `onClick` or `onKeyDown` that calls `preventDefault()` stops it |
+| Size | `size?: 'xsmall' \| 'small' \| 'large'`, default `small` |
+| Disabled, Click | `disabled`, `onClick` (native) |
+| Label | `children`, the accessible name |
+| Leading icon | `leadingIcon?: NlIconName`, `NlIcon` 16 / 16 / 20, decorative |
+| Base | `NlChipBase` with `as="button"`, `type="button"`, `look` `unselected-bordered` (closed) or `selected` (open), and the state colours as `appearance`. `aria-controls`, `ref` and native attributes pass through |
+
+#### API
+
+```tsx
+import { NlAssistChip, NlMenu } from '@northline/ui';
+
+<NlAssistChip onClick={exportList}>Export</NlAssistChip>
+
+<NlAssistChip ref={anchorRef} dropdown open={open} onOpenChange={setOpen} aria-controls="date-menu" leadingIcon="calendar_today">
+  Date range
+</NlAssistChip>
+<NlMenu id="date-menu" aria-label="Date range" open={open} onOpenChange={setOpen} anchorRef={anchorRef}>…</NlMenu>
+```
+
+`'use client'` (event handlers). Escape and returning focus to the chip are `NlMenu`'s job.
+
+#### Tokens used
+
+The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0, "no shadow" is `nl:shadow-none`. Focus: the standard ring, following `Radius-S`. Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Open under the pointer | Hovering an open chip keeps the open look; pressing still shows the pressed look (designer's choice, 19 Nov 2026, as `NlButton` expanded) |
+| With `NlMenu` | Checked in the browser: a click opens and closes, Down arrow opens and focuses the first row, Escape closes and returns focus to the chip |
+
 ---
 
 ### NlInputChip
