@@ -2255,7 +2255,7 @@ NlAppShell (full window, horizontal)
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlCalendar`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-27, OD-28.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-27 and OD-28 decided 19 Nov 2026.
 
 One day cell in the calendar grid: a 40 × 40 button with the day number. It also draws the range band when it is part of a selected range.
 
@@ -2274,7 +2274,8 @@ NlCalendarDay (cell, 40 × 40; draws the range band)
 | Day | number | `day: number` |
 | Type | default, today, outside, selected, range-start, range-middle, range-end, disabled | `type`, also `data-type` |
 | Today | combines with the other types | `today?: boolean` (see "Mapping notes") |
-| Date | the full date, for the accessible name | `date: string` (ISO), formatted by `NlCalendar` |
+| Date | the full date | `date: string` (ISO), passed back in `onSelect` |
+| Accessible name | the full date as text | `label: string`, formatted by `NlCalendar` ("Monday 3 March") |
 | Select | callback | `onSelect(date)` |
 
 Hover and pressed are CSS states, not props (§7.3).
@@ -2326,8 +2327,48 @@ Enabled, hover, pressed and focus for every type except disabled. Disabled has o
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Today combined with selected or in-range | The reference draws "today" only as its own type | Proposed: `today` is a separate boolean, so today can also be selected or in a range. The border shows on top of any type except selected (where the fill is enough) | **Needs approval** |
-| Focus ring | From the description: 2px `border-focused`, 2 outside | The standard ring from CLAUDE.md (offset −1), as for the switch and app shell | **Needs approval** |
+| Today combined with selected or in-range | The reference draws "today" only as its own type | `today` is a separate boolean, so today can also be selected or in a range. The border shows on top of any type except the filled ones (selected, range-start, range-end), where the fill is enough. On a disabled day it is `border-disabled` | Approved (OD-27) |
+| Focus ring | From the description: 2px `border-focused`, 2 outside | The standard ring from CLAUDE.md (offset −1), as for the switch and app shell | Approved (OD-28) |
+| One-day range | Not drawn | `NlCalendar` passes `selected` (no band) | Designer's choice, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Day | `day: number`, the visible number |
+| Type | `type?: 'default' \| 'outside' \| 'selected' \| 'range-start' \| 'range-middle' \| 'range-end' \| 'disabled'`, default `default`, `data-type` on the cell |
+| Today | `today?: boolean`: `aria-current="date"`, inset ring `border-strong` (not on filled types; `border-disabled` when disabled), `data-today` |
+| Date | `date: string` (ISO), passed to `onSelect(date)` |
+| Accessible name | `label: string` on the button (`aria-label`); it contains the visible number (WCAG 2.5.3) |
+| Select | `onSelect?(date)` on click, Enter or Space; never for a disabled day |
+| Roving focus | `tabIndex`, `ref`, `onKeyDown` and other button attributes go to the button, for `NlCalendar` |
+| Cell | `<div role="gridcell">`, `aria-selected="true"` for selected and range types, draws the band |
+| Disabled | `aria-disabled="true"` (not native `disabled`), stays focusable, no state colours |
+
+#### API
+
+```tsx
+import { NlCalendarDay } from '../NlCalendarDay'; // internal, not exported from @northline/ui
+
+<NlCalendarDay day={3} date="2027-03-03" label="Wednesday 3 March" onSelect={select} />
+<NlCalendarDay day={4} date="2027-03-04" label="Thursday 4 March" type="range-middle" today />
+```
+
+`'use client'` (click handler).
+
+#### Tokens used
+
+The "Sizes and layout" and "Colours" tables, as written: `Size-40`, `Space-none`, `Radius-S` (day; band start or end corners as logical corners), Body M, `bg-active`, `bg-secondary`, `bg-tertiary`, `bg-active-hover`, `bg-action-primary` (+ hovered, pressed), `text-primary`, `text-tertiary`, `text-white-both`, `text-disabled`, `border-strong`, `border-disabled`, the standard focus ring, Duration fast.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| States | The button is never natively disabled, so enabled types use the usual `enabled:hover:` / `enabled:active:`; the disabled type has no state classes at all (no rule 9 exception needed) |
+| Band corners | `rounded-s-s` / `rounded-e-s` (logical), so right-to-left works |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: cells and days 40 × 40; the band joins start, middle and end with 8 (`Radius-S`) on the outer corners. The band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark, so in Dark it is close to invisible (see the summary for #15).
 | Range-middle pressed | Same as hover (`bg-active-hover`) | Same | Matches |
 | Size | `Size-40` | `Size-40` | Matches |
 | Radius | `Radius-S` | `Radius-S` | Matches |
