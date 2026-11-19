@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #40 to #49 approved; #50 in progress. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90 decided; OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #40 to #50 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90 decided; OD-50 cleared from Blocked by).
 
 ---
 
@@ -85,7 +85,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #4
 | 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | – | ✅ batch 5 | ✅ |
 | 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | – | ✅ batch 5 | ✅ |
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ✅ |
-| 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | – | ✅ batch 5 | 🟨 |
+| 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | – | ✅ batch 5 | ✅ |
 | 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | – | ✅ batch 6 | ⬜ |
 | 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-14, OD-15, OD-119 | ✅ batch 6 | ⬜ |
 | 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ⬜ |

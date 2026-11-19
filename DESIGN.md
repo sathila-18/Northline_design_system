@@ -637,7 +637,7 @@ _The designer adds rows here before each build._
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ✅ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ✅ |
 | 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ✅ |
-| 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ⬜ |
+| 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ✅ |
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
 | 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ⬜ |
 | 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ⬜ |
@@ -7904,3 +7904,4 @@ Known issues
 | 19 Nov 2026 | NlPaginationItem (#18, internal): page number button ("Page 3", Label M, minimum `Size-32`, hugs long numbers, OD-32) or the "…" gap (one character, `aria-hidden`, OD-35); hover and pressed the same (OD-33); standard focus ring (OD-34); the current page keeps its look and doesn't select. Approved by the designer |
 | 19 Nov 2026 | NlPageDot (#19, internal): decorative `Size-6` dot in `fg-placeholder`; the current page a `Size-24` pill in `fg-brand` (OD-36), `Radius-Full` (OD-37); width and fill ease with Duration base (OD-38); not interactive (OD-39, OD-72). Approved by the designer |
 | 20 Nov 2026 | NlRowsPerPage (#37, public): table footer pill trigger (`aria-haspopup="listbox"`, `aria-expanded`), Body S label, Label S value, 24 arrow (up when open), `open` / `onOpenChange` for `NlTable`'s `NlMenu`; disabled. Label kept `text-tertiary`: K7 accepted (4.47:1 on `bg-tertiary` in Dark). Approved by the designer |
+| 20 Nov 2026 | NlCalendar (#50, public): single date or range month grid; 6 weeks of `NlCalendarDay`, `NlLabel` weekday headers (`tone="secondary"`, OD-50), `NlButton` previous and next; one tab stop with roving focus and full keyboard; range preview; limits and unavailable dates; ISO dates in UTC; `names` instead of locale formatting; today read after hydration; `bg-primary` (OD-90). Approved by the designer |
