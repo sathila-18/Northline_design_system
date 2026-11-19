@@ -637,7 +637,7 @@ _The designer adds rows here before each build._
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ✅ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ✅ |
 | 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ✅ |
-| 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ⬜ |
+| 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ✅ |
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
 | 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ⬜ |
 | 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ⬜ |
@@ -5840,7 +5840,7 @@ Checked in the browser: the count sits `Space-M` (8) below the box, flush with i
 
 **Level** Molecule (contains `NlCalendarDay` L0, `NlButton` L1, `NlLabel` L1) · **Base** none · **Depends on** `NlCalendarDay`, `NlButton`, `NlLabel` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-90.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-50 (`NlLabel` tone) and OD-90 decided.
 
 A month grid for picking one date or a date range. Used inside `NlDateField`'s menu and on its own.
 
@@ -5864,7 +5864,8 @@ NlCalendar (horizontal; one month, or two for a range)
 | Limits | earliest and latest dates | `minDate?`, `maxDate?` |
 | Disabled dates | a test | `isDateDisabled?(date)` |
 | Week start | Monday | `weekStartsOn`, default Monday (1) |
-| Locale | for names | `locale`, default the app's |
+| Names | month and weekday names | `names?`, default English (replaces `locale`: no locale formatting during render; designer's choice, 20 Nov 2026) |
+| Today | a date | `today?` (ISO); without it, read in the browser after hydration |
 
 #### Sizes and layout
 
@@ -5880,7 +5881,7 @@ NlCalendar (horizontal; one month, or two for a range)
 |---|---|
 | Background | `bg-primary` |
 | Month title | `text-primary` |
-| Weekday names | see "Mapping notes" |
+| Weekday names | `text-secondary` (`NlLabel tone="secondary"`, OD-50) |
 | Days | see `NlCalendarDay` |
 
 #### States
@@ -5904,12 +5905,58 @@ From the parts. While choosing the end of a range, hovering a day previews the r
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Background | Raw white fills on the month, header and rows | `bg-primary` | **Needs approval** |
-| Weekday names colour | `text-secondary` per the reference's description, but `NlLabel` is `text-tertiary` | `NlLabel` as it is (`text-tertiary`). Otherwise `NlLabel` needs a tone option | **Needs approval** |
+| Background | Raw white fills on the month, header and rows | `bg-primary` | Approved (OD-90) |
+| Weekday names colour | `text-secondary` per the reference's description | `NlLabel size="small" tone="secondary"` | Decided (OD-50) |
 | Previous and next icon colour | Icon secondary (from the description) | `contentTone="secondary"` | Matches |
 | Keyboard and range preview | From the reference's description (code only) | As above | Matches |
 | Six weeks per month | As in the reference | Same, so the height doesn't jump between months | Matches |
 | Gaps and padding | `Space-L`, `Space-2XL`, `Space-S` | Same | Matches |
+| Names | `locale` | `names` (months, weekdays, two-letter short weekdays "Mo"–"Su"), English by default | Designer's choice, 20 Nov 2026 |
+| Range rules | Not drawn | A day before the start restarts the range; the same day twice is one `selected` day; the preview follows hover and keyboard focus | Approved, 20 Nov 2026 |
+| Limits | Not drawn | Previous and next are disabled when the next month would be wholly outside `minDate` / `maxDate` | Approved, 20 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `mode?: 'single' \| 'range'`, default `single`, `data-mode` |
+| Value | single: `value` / `defaultValue: string \| null` (ISO), `onValueChange(date)`. Range: `{ start, end }` (`end` null while choosing), `onValueChange(range)` |
+| Month shown | `month` / `defaultMonth` (`'YYYY-MM'`, the first month in a range), `onMonthChange(month)`. Default: the value's month, else today's |
+| Limits | `minDate?`, `maxDate?` (ISO): days outside are `disabled` |
+| Disabled dates | `isDateDisabled?(date)` |
+| Week start | `weekStartsOn?: 0–6`, default 1 (Monday) |
+| Today | `today?` (ISO); without it, `useSyncExternalStore` reads it in the browser (server snapshot null), so server and hydration output match |
+| Names | `names?: { months, weekdays, weekdaysShort }`, default English |
+| Header | `NlButton` tertiary small icon-only `contentTone="secondary"`, `chevron_left` / `chevron_right`, "Previous month" / "Next month"; a `Size-36` spacer where a range leaves one out. Title Title S `text-primary`, `aria-live="polite"` |
+| Grid | `role="grid"` per month, `aria-labelledby` the title; weekday `columnheader`s with `NlLabel` (hidden) and the full name (screen readers); 6 `row`s of 7 `NlCalendarDay`; in a range, other months' days are empty `gridcell`s |
+| Day names | "Wednesday 17 March 2027", plus ", unavailable" when disabled |
+| Focus | One tab stop (roving `tabIndex`): the focused date if shown, else the selection, today, or the first shown day. Focus follows keyboard moves across months |
+
+#### API
+
+```tsx
+import { NlCalendar } from '@northline/ui';
+
+<NlCalendar defaultValue="2027-03-09" onValueChange={setDate} />
+<NlCalendar mode="range" value={range} onValueChange={setRange} minDate="2027-03-01" />
+```
+
+`'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`bg-primary`, `Space-L` (padding), `Space-2XL` (between months), `Space-S` (month gap and above the weeks), `Size-40` (header height, weekday cells), Title S `text-primary`, `Size-36` (spacer); the parts' own tokens (`NlButton`, `NlLabel`, `NlCalendarDay`).
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Dates as ISO strings | `dates.ts` holds plain helpers in UTC (no date library, no `Intl`), so a time zone can't shift a day |
+| Today | `useSyncExternalStore` with a null server snapshot, not an effect, so there is no extra render and no hydration mismatch. Without a value, a `defaultMonth` or `today`, the grid appears once hydrated |
+| Range drawing | Start alone is `selected`; with an end (or a preview) start and end take `range-start` / `range-end`, days between `range-middle`; the preview end shows as `range-middle` |
+| Disabled contrast | `text-disabled` day numbers: known issue K3; the Limits story is marked |
+
+Checked in the browser: one month 304 × 356 (grid 280 × 286), range 604 wide with the two months 20 apart; header 40 high; Tab lands on today, arrows and Page Down move focus and the month.
 
 ---
 
@@ -7857,3 +7904,4 @@ Known issues
 | 19 Nov 2026 | NlPaginationItem (#18, internal): page number button ("Page 3", Label M, minimum `Size-32`, hugs long numbers, OD-32) or the "…" gap (one character, `aria-hidden`, OD-35); hover and pressed the same (OD-33); standard focus ring (OD-34); the current page keeps its look and doesn't select. Approved by the designer |
 | 19 Nov 2026 | NlPageDot (#19, internal): decorative `Size-6` dot in `fg-placeholder`; the current page a `Size-24` pill in `fg-brand` (OD-36), `Radius-Full` (OD-37); width and fill ease with Duration base (OD-38); not interactive (OD-39, OD-72). Approved by the designer |
 | 20 Nov 2026 | NlRowsPerPage (#37, public): table footer pill trigger (`aria-haspopup="listbox"`, `aria-expanded`), Body S label, Label S value, 24 arrow (up when open), `open` / `onOpenChange` for `NlTable`'s `NlMenu`; disabled. Label kept `text-tertiary`: K7 accepted (4.47:1 on `bg-tertiary` in Dark). Approved by the designer |
+| 20 Nov 2026 | NlCalendar (#50, public): single date or range month grid; 6 weeks of `NlCalendarDay`, `NlLabel` weekday headers (`tone="secondary"`, OD-50), `NlButton` previous and next; one tab stop with roving focus and full keyboard; range preview; limits and unavailable dates; ISO dates in UTC; `names` instead of locale formatting; today read after hydration; `bg-primary` (OD-90). Approved by the designer |
