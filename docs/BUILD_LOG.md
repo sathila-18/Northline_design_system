@@ -46,3 +46,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlNavIcon | 2026-11-19 16:11 | 2026-11-19 16:31 | OD-71 approved (filled when selected); no states of its own. Approved by the designer |
 | NlTooltip | 2026-11-19 16:32 | 2026-11-19 16:47 | OD-73, OD-74 approved; tooltip-position utility (rule 9, approved); hoverable frame instead of a hide delay; light box in Dark accepted. Approved by the designer |
 | NlSegmentedButton | 2026-11-19 16:50 | 2026-11-19 17:31 | OD-75 approved; NlTooltip added as a dependency; Home and End added; menu use not built. Approved by the designer |
+| NlCheckbox | 2026-11-19 17:34 | 2026-11-19 17:43 | OD-15/OD-41 already settled by NlTextBlock; label row kept (designer's choice). Approved by the designer |

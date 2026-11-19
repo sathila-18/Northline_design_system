@@ -629,7 +629,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 41 | Segmented button | `NlSegmentedButton` | `NlSegment`, `NlTooltip` | [§9](#nlsegmentedbutton) | ✅ |
-| 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ⬜ |
+| 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ✅ |
 | 43 | Notification button | `NlNotificationButton` | `NlButton`, `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ⬜ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ⬜ |
 | 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ⬜ |
@@ -4866,7 +4866,7 @@ The "Sizes and layout" table, as written; track `bg-tertiary`. Labelled tracks f
 
 **Level** Molecule (contains `NlCheckboxControl`, L1) · **Base** none · **Depends on** `NlCheckboxControl`, `NlTextBlock` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-15, OD-41.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-15 and OD-41 were decided with `NlTextBlock`.
 
 A checkbox with its text, for single options in forms, such as "Send a welcome email".
 
@@ -4919,10 +4919,42 @@ Enabled, hover, pressed, focus and disabled for each type. Hover and pressed are
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Text style | A text block set to its largest display type with only the description shown, which is a roundabout way to get `Body L` | Options: (a) do the same, `NlTextBlock type="display-large"` with only a description; (b) add `type="body"` to `NlTextBlock`: no heading style, description in `Body L`. I recommend (b), because the code then says what it means | **Needs approval** |
-| Disabled text | `text-disabled` | `NlTextBlock disabled` (proposed in `NlTextBlock`) | **Needs approval** |
+| Text style | A text block set to its largest display type with only the description shown, which is a roundabout way to get `Body L` | Options: (a) do the same, `NlTextBlock type="display-large"` with only a description; (b) add `type="body"` to `NlTextBlock`: no heading style, description in `Body L`. I recommend (b), because the code then says what it means | (b), approved with `NlTextBlock` (OD-41) |
+| Disabled text | `text-disabled` | `NlTextBlock disabled` | Approved with `NlTextBlock` (OD-15) |
 | Focus ring | Around the control only | Same | Matches |
 | Checkbox position | Always on the left | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `checked` / `defaultChecked`, `indeterminate`, passed to `NlCheckboxControl` |
+| Disabled | `disabled`: passed to the control and to `NlTextBlock disabled` (`text-disabled`); the row's cursor is default |
+| Text | `children`, as `NlTextBlock type="body"`'s description (`Body L`, `text-secondary`) |
+| Show text | `hideLabel?: boolean`: the text is `nl:sr-only` and stays the name |
+| Change, Form | `onChange`, `name`, `value`, `ref` and native input attributes go to the control's input; `className` (placement only) to the row |
+
+#### API
+
+```tsx
+import { NlCheckbox } from '@northline/ui';
+
+<NlCheckbox name="welcome" defaultChecked>Send a welcome email</NlCheckbox>
+<NlCheckbox hideLabel checked={selected} onChange={(e) => setSelected(e.target.checked)}>Select member 0042</NlCheckbox>
+```
+
+`'use client'` (through `NlCheckboxControl`).
+
+#### Tokens used
+
+Gap `Space-L`, padding `Space-none`; text and control tokens from `NlTextBlock` and `NlCheckboxControl`. Measured in the browser: the box and the first text line share the same centre.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Label contents | The row is a `<label>` holding `NlTextBlock` (a `<div>` and `<p>`). Not strictly valid HTML (a label takes phrasing content), but clicking, naming and accessibility work in every browser and axe passes (designer's choice, 19 Nov 2026) |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
 
 ---
 
@@ -7326,3 +7358,4 @@ Known issues
 | 19 Nov 2026 | NlNavIcon (#38, internal): decorative 20 icon, `fg-secondary`, or `fg-active` and filled when selected (OD-71). Approved by the designer |
 | 19 Nov 2026 | NlTooltip (#40, public): single-line and rich tooltip, `role="tooltip"` described-by trigger, hover delay (OD-73), keyboard focus, Escape, hoverable transparent frame, floating-ui placement with flips (OD-74), `nl:tooltip-position` utility. Light box in Dark (`bg-direct`) accepted. Approved by the designer |
 | 19 Nov 2026 | NlSegmentedButton (#41, public): radiogroup of 2 or 3 `NlSegment`s (OD-75), sizes 48/40/24, icon-only with `NlTooltip`, Home and End, disabled group. Disabled selected matches the track (noted, as specified). Approved by the designer |
+| 19 Nov 2026 | NlCheckbox (#42, public): label row of `NlCheckboxControl` and `NlTextBlock type="body"`, hidden-label option, disabled text (K3). Approved by the designer |
