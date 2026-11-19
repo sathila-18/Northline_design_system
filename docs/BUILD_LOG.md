@@ -54,4 +54,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlSearchField | 2026-11-19 22:02 | 2026-11-19 22:16 | OD-82 to OD-84 decided; hidden label with placeholder shown while focused (designer's choice); hideLabel and placeholder added to NlInputBase; search-cancel-none utility (rule 9, approved). Approved by the designer |
 | NlTextAreaBase | 2026-11-19 22:23 | 2026-11-19 22:32 | OD-85, OD-86, OD-87 decided; no placeholder (designer's choice); padding on the textarea so the resize handle sits in the corner. Approved by the designer |
 | NlTextArea | 2026-11-19 22:34 | 2026-11-19 22:53 | OD-88, OD-89 approved; count built into NlTextAreaBase (hard limit, announced at 20/10/5/0 left); count flush with the box end. Approved by the designer |
-| NlCalendarDay | 2026-11-19 22:55 | | |
+| NlCalendarDay | 2026-11-19 22:55 | 2026-11-19 23:07 | OD-27, OD-28 approved; label prop for the accessible name; one-day range passes selected; K6 accepted (band in Dark). Approved by the designer |

@@ -592,7 +592,7 @@ _The designer adds rows here before each build._
 | 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ✅ |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
-| 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ⬜ |
+| 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ✅ |
 | 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ⬜ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ⬜ |
 | 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ⬜ |
@@ -2368,7 +2368,7 @@ The "Sizes and layout" and "Colours" tables, as written: `Size-40`, `Space-none`
 | Band corners | `rounded-s-s` / `rounded-e-s` (logical), so right-to-left works |
 | Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
 
-Checked in the browser: cells and days 40 × 40; the band joins start, middle and end with 8 (`Radius-S`) on the outer corners. The band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark, so in Dark it is close to invisible (see the summary for #15).
+Checked in the browser: cells and days 40 × 40; the band joins start, middle and end with 8 (`Radius-S`) on the outer corners. The band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark, so in Dark it is close to invisible: known issue K6, kept as specified (accepted 19 Nov 2026).
 | Range-middle pressed | Same as hover (`bg-active-hover`) | Same | Matches |
 | Size | `Size-40` | `Size-40` | Matches |
 | Radius | `Radius-S` | `Radius-S` | Matches |
@@ -7614,6 +7614,7 @@ Known issues
 | K3 | `text-disabled` on `bg-primary` is under 4.5:1 (3.00 Light, 1.79 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control (a disabled list row, checkbox or menu item). axe can't tell from plain text, so story samples of disabled text are marked `data-a11y-known-issue="K3"`. Found by `pnpm test:a11y` with `NlTextBlock`. Accepted by the designer, 18 Nov 2026 | Accepted |
 | K4 | The disabled `NlBadge` tone's text (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (3.53 Light, 1.60 Dark, every brand). A disabled badge is a status, not an inactive control, so WCAG 1.4.3's exemption doesn't strictly apply. Kept as specified; the label must say the status. Story samples are marked `data-a11y-known-issue="K4"`. Found with `NlBadge`. Accepted by the designer, 18 Nov 2026 | Accepted |
 | K5 | A disabled `NlInputChip`'s label (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (about 3.5 Light, 1.6 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control. axe can't tell, because the chip is a `<span>` (its remove button is left out when disabled), so story samples are marked `data-a11y-known-issue="K5"`. Found by `pnpm test:a11y` with `NlInputChip`. Accepted by the designer, 19 Nov 2026 | Accepted |
+| K6 | The calendar range band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark (every brand), so in Dark the band behind range-middle days is close to invisible. The filled range-start and range-end days still show the range, and the cells carry `aria-selected`. Kept as specified. Found with `NlCalendarDay` (#15). Accepted by the designer, 19 Nov 2026 | Accepted |
 
 ---
 
@@ -7675,3 +7676,4 @@ Known issues
 | 19 Nov 2026 | NlSearchField (#47, public): `type="search"` on `NlInputBase` with a hidden label (default "Search") and placeholder text shown while empty, focused too; leading `search` icon; xsmall clear `NlButton` (`cancel`) while there is text (OD-82 to OD-84). Enter calls `onSearch`; Escape clears and stops when there is text. `NlInputBase` gained `hideLabel` and `placeholder`; `nl:search-cancel-none` hides the browser's clear button. Approved by the designer |
 | 19 Nov 2026 | NlTextAreaBase (#48, internal): native `<textarea>` with a floating label and no hint text (designer's choice), `rows` (default 4 = 128, OD-85), vertical resize only (OD-86), label `text-tertiary` (OD-87 via OD-77); error, disabled and helper text as `NlInputBase`. Approved by the designer |
 | 19 Nov 2026 | NlTextArea (#49, public): multi-line input on `NlTextAreaBase`, no placeholder, value `text-primary` (OD-88). Character count added to the base (OD-89): native `maxLength`, "120 / 500" at the end of the helper line (flush with the box end), limit in the description, polite announcements at 20, 10, 5 and 0 left. Approved by the designer |
+| 19 Nov 2026 | NlCalendarDay (#15, internal): `gridcell` drawing the range band (`bg-active`, `Radius-S` on the outer logical corners) around a 40 × 40 native button named by the full date (`label`); seven types; `today` as a separate boolean (OD-27; no border on filled types, `border-disabled` when disabled); standard focus ring (OD-28); `aria-disabled` days stay focusable. K6 accepted (band near invisible in Dark). Approved by the designer |
