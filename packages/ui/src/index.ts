@@ -25,5 +25,6 @@ export * from './components/NlSwitch';
 export * from './components/NlTextBlock';
 export * from './components/NlTextField';
 export * from './components/NlPasswordField';
+export * from './components/NlSearchField';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

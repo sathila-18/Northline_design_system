@@ -46,6 +46,21 @@ describe('NlInputBase', () => {
     expect(input.className).not.toMatch(/placeholder:/);
   });
 
+  it('ignores placeholder text unless the label is hidden', () => {
+    render(<NlInputBase label="Member number" placeholder="Member 0042" />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('placeholder', ' ');
+  });
+
+  it('hideLabel: the label is never drawn but still names the input; placeholder text shows instead', () => {
+    render(<NlInputBase label="Search" hideLabel placeholder="Search" />);
+    const input = screen.getByRole('textbox', { name: 'Search' });
+    expect(input).toHaveAttribute('placeholder', 'Search');
+    expect(input).toHaveClass('nl:placeholder:text-placeholder', 'nl:disabled:placeholder:text-disabled');
+    const label = screen.getByText('Search', { selector: 'label' });
+    expect(label).toHaveClass('nl:sr-only');
+    expect(label.className).not.toMatch(/peer-focus/);
+  });
+
   it('types, uncontrolled and controlled', async () => {
     const onChange = vi.fn();
     function Controlled() {

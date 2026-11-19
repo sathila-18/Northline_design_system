@@ -5084,7 +5084,8 @@ NlInputBase (vertical)
 | Type | default, select | `type` (select makes the whole box a trigger with a chevron). Payment and mobile-number types are left out |
 | Error | off, on | `error?: boolean` (the reference's "destructive") |
 | Label | text | `label: string` (required) |
-| Placeholder | removed | No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused |
+| Placeholder | removed | No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused. Only a field with a hidden label (`hideLabel`, NlSearchField) shows placeholder text |
+| Hidden label | on or off | `hideLabel?: boolean`: the label is never drawn and stays the accessible name; `placeholder` is drawn instead |
 | Prefix, suffix | short text | `prefix?`, `suffix?` |
 | Leading, trailing | slots | `leading?: ReactNode`, `trailing?: ReactNode` |
 | Helper text | text | `helperText?: string` |
@@ -5182,6 +5183,8 @@ The "Sizes and layout" and "Colours" tables, as written, with the standard focus
 | Focus ring and trailing buttons | A focused trailing button (for example the password show/hide) shows only its own ring, not the box's. `has-focus` matched the button too and drew two rings, so the box uses `nl:input-focus:` instead (rule 9, approved 19 Nov 2026 with `NlPasswordField` #46). Hover fill and the filled border use `not-input-focus` the same way |
 | Label with a leading item | The label sits in the value area, so with a leading icon it starts after the icon, at rest and floating |
 | Required | Native `required` only, no visible marker (OD-78, designer's choice, 19 Nov 2026) |
+| Hidden label (#47) | `hideLabel` makes the label `nl:sr-only` (still the `<label for>` name) and draws `placeholder` in Body L `text-placeholder` (`nl:placeholder:`, disabled `text-disabled`), shown while empty, focused too. Without `hideLabel`, `placeholder` is ignored (designer's choice, 19 Nov 2026) |
+| Browser clear button | `nl:search-cancel-none` (`tailwind.css`) on the input hides the WebKit and Blink clear button for `type="search"`; no effect on other types (rule 9, approved 19 Nov 2026 with NlSearchField #47) |
 | Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
 
 Checked in the browser: the floating label is centred on the top border and lines up with the value; a filled field turns `border-strong` on blur.
@@ -5343,7 +5346,7 @@ Checked in the browser: box 48 (large) and 40 (small), toggle 32 square in both,
 
 **Level** Molecule (mapped; also contains `NlButton`, L1) · **Base** `NlInputBase` · **Depends on** `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-82, OD-83, OD-84. OD-31 decided 19 Nov 2026 (xsmall clear button).
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-31, OD-82, OD-83 and OD-84 decided 19 Nov 2026.
 
 A search input with a search icon and a clear button. Used in table toolbars and menu headers.
 
@@ -5359,8 +5362,8 @@ As `NlInputBase`: a leading search icon, the value, and a clear `NlButton` in th
 | Value | text | `value` / `defaultValue`, `onChange` |
 | Submit | callback | `onSearch(value)` (Enter) |
 | Clear | callback | `onClear()` |
-| Accessible name | text | `aria-label` (required; there is no visible label), default "Search" |
-| Placeholder | text | `placeholder`, default "Search" |
+| Accessible name | text | `label`, default "Search": a hidden `<label>` (never drawn), so no `aria-label` is needed |
+| Placeholder | text | `placeholder`, default "Search", shown while empty, focused too |
 
 #### Sizes and layout
 
@@ -5381,8 +5384,8 @@ Enabled, focus, typing, complete. See "Mapping notes" for hover and disabled.
 
 #### Behaviour and accessibility
 
-- `<input type="search">` inside `role="search"` when it searches the page or a table.
-- Enter calls `onSearch`. Escape clears the text (and calls `onClear`) when there is text.
+- `<input type="search">` (role `searchbox`). The field adds no landmark: the page or toolbar wraps it in `<search>` (or `role="search"`) when it searches the page or a table; a menu header doesn't (designer's choice, 19 Nov 2026).
+- Enter calls `onSearch`. Escape clears the text (and calls `onClear`) when there is text, and stops there so a surrounding menu stays open; when empty, Escape passes on.
 - The clear button's name is "Clear search". After clearing, focus returns to the input.
 - Results that update while typing are announced by the results region ("12 results"), not by this field.
 
@@ -5390,10 +5393,53 @@ Enabled, focus, typing, complete. See "Mapping notes" for hover and disabled.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Hover and disabled | Not drawn for search | As `NlInputBase` (hover `bg-secondary`; disabled colours) | **Needs approval** |
-| Clear button | A bare cancel icon | `NlButton` icon-only, tertiary, `contentTone="secondary"` (same size note as `NlPasswordField`) | **Needs approval** |
-| No visible label | As in the reference | `aria-label` required | Matches |
-| Icons | Search and cancel from the reference's icon set | Material Symbols `search`, `cancel` | **Needs approval** |
+| Hover and disabled | Not drawn for search | As `NlInputBase` (hover `bg-secondary`; disabled colours); disabled with text, the clear button is disabled too | Approved (OD-82) |
+| Clear button | A bare cancel icon | `NlButton` icon-only, tertiary, `contentTone="secondary"`, xsmall (32, 20 icon) in both sizes | Approved (OD-83, OD-31) |
+| No visible label | As in the reference | A hidden `<label>` (`label`, default "Search") names the input; placeholder text shows instead, focused too | Designer's choice, 19 Nov 2026 |
+| Icons | Search and cancel from the reference's icon set | Material Symbols `search`, `cancel` | Approved (OD-84) |
+| Browser clear button | Not in the reference | WebKit and Blink draw their own × in a search input; hidden (`nl:search-cancel-none`) so only the `NlButton` shows | Approved (rule 9) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'large' \| 'small'`, default `large`, passed to the base |
+| Value | `value` / `defaultValue` (strings), `onChange`; tracked inside when uncontrolled, to show the clear button |
+| Submit | `onSearch?(value)` on Enter |
+| Clear | `onClear?()` from the button or Escape; controlled parents reset `value` to `''` there. Focus returns to the input |
+| Accessible name | `label?`, default "Search", through `NlInputBase hideLabel` |
+| Placeholder | `placeholder?`, default "Search" |
+| Leading icon | `NlIcon search` (24 large, 20 small), decorative, in the base's leading slot (`fg-secondary`, disabled `fg-disabled`) |
+| Clear button | `NlButton type="button" variant="tertiary" contentTone="secondary" size="xsmall" icon="only-icon" iconName="cancel"`, "Clear search", only while there is text; disabled with the field |
+| Left out | Helper text, error, prefix, suffix, required, floating label |
+
+#### API
+
+```tsx
+import { NlSearchField } from '@northline/ui';
+
+<NlSearchField onSearch={runSearch} />
+<search>
+  <NlSearchField label="Search members" value={query} onChange={(e) => setQuery(e.target.value)} onClear={() => setQuery('')} />
+</search>
+```
+
+`'use client'` (state and refs).
+
+#### Tokens used
+
+None of its own: the field's are `NlInputBase`'s (placeholder `text-placeholder` in Body L, disabled `text-disabled`), the clear button's are `NlButton`'s (tertiary, `contentTone="secondary"`, xsmall), the icon's `fg-secondary` / `fg-disabled`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Hidden label | New `hideLabel` and `placeholder` on `NlInputBase` (designer's choice: placeholder text shows while focused, because the label is always hidden) |
+| Escape | Clears and stops when there is text; passes on when empty. The browser's own Escape clear is prevented so both paths run `onClear` |
+| Landmark | None built in; the caller adds `<search>` |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: box 48 (large), clear button 32 square, placeholder visible while focused, no second browser ×.
 
 ---
 

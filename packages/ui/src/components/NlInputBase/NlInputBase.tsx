@@ -24,6 +24,13 @@ export interface NlInputBaseProps extends Omit<
   leading?: ReactNode;
   /** Slot after the value: an icon, or an NlButton for an action. */
   trailing?: ReactNode;
+  /**
+   * Hides the label from view; it stays the accessible name. For fields without a visible label (NlSearchField).
+   * Only then is `placeholder` drawn.
+   */
+  hideLabel?: boolean;
+  /** Placeholder text, used only with `hideLabel`. Floating-label fields have no hint text (designer's choice). */
+  placeholder?: string;
   /** The line under the box. Announced politely when it changes. */
   helperText?: string;
   /** Placement only, on the root. */
@@ -47,6 +54,8 @@ export function NlInputBase({
   leading,
   trailing,
   helperText,
+  hideLabel = false,
+  placeholder,
   className,
   id,
   disabled,
@@ -77,12 +86,16 @@ export function NlInputBase({
             disabled={disabled}
             // No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused, the label is the only
             // text. A single space keeps :placeholder-shown working, so it means empty and the label floats on a value.
-            placeholder=" "
+            // With a hidden label, the placeholder text shows instead (NlSearchField).
+            placeholder={hideLabel && placeholder ? placeholder : ' '}
             aria-invalid={error || undefined}
             aria-describedby={[describedBy, helperText ? helperId : undefined].filter(Boolean).join(' ') || undefined}
-            className={styles.input}
+            className={hideLabel ? `${styles.input} ${styles.placeholder}` : styles.input}
           />
-          <label htmlFor={inputId} className={`${styles.label} ${styles.labelFloat[size]}`}>
+          <label
+            htmlFor={inputId}
+            className={hideLabel ? styles.labelHidden : `${styles.label} ${styles.labelFloat[size]}`}
+          >
             {label}
           </label>
         </div>

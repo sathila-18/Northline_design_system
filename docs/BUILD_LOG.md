@@ -51,3 +51,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlInputBase | 2026-11-19 18:10 | 2026-11-19 18:24 | OD-42, OD-44, OD-76, OD-77 decided; OD-78 open; select type deferred to #70; label floats via peer variants. Approved by the designer |
 | NlTextField | 2026-11-19 18:27 | 2026-11-19 18:42 | OD-79 approved; hint text removed from NlInputBase and NlTextField (designer's choice). Approved by the designer |
 | NlPasswordField | 2026-11-19 21:36 | 2026-11-19 21:47 | OD-31, OD-78, OD-80, OD-81 decided; fixed toggle name with aria-pressed; NlInputBase ring via nl:input-focus (rule 9, approved). Approved by the designer |
+| NlSearchField | 2026-11-19 22:02 | | |

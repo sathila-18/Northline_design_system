@@ -41,9 +41,17 @@ export const value = 'nl:relative nl:flex nl:min-w-0 nl:flex-1 nl:items-center';
  * The input: Body L, text-primary, no box of its own. The box draws the focus ring, so the input's own outline is
  * hidden (nl:focus:outline-hidden; designer-approved spec, 19 Nov 2026). There is no hint text (designer's choice, 19 Nov
  * 2026): the native placeholder is a single space, only so :placeholder-shown means empty. Disabled text-disabled.
+ * nl:search-cancel-none (tailwind.css) hides the browser's own clear button when the type is search (NlSearchField
+ * draws an NlButton); it does nothing for other types.
  */
 export const input =
-  'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:text-primary nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:text-disabled';
+  'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:text-primary nl:search-cancel-none nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:text-disabled';
+
+/**
+ * Placeholder text, only with a hidden label (NlSearchField: "Search", shown while empty, focused too; designer's
+ * choice, 19 Nov 2026). Body L (the input's), text-placeholder; disabled text-disabled.
+ */
+export const placeholder = 'nl:placeholder:text-placeholder nl:disabled:placeholder:text-disabled';
 
 /**
  * The label (OD-42): at rest in the value position, Body L, text-placeholder. Floating (focused or filled): Label S,
@@ -53,6 +61,9 @@ export const input =
  */
 export const label =
   'nl:pointer-events-none nl:absolute nl:start-none nl:top-1/2 nl:-ms-xs nl:max-w-full nl:-translate-y-1/2 nl:truncate nl:px-xs nl:text-body-l nl:text-placeholder nl:peer-focus/input:bg-primary nl:peer-focus/input:text-label-s nl:peer-focus/input:text-tertiary nl:peer-not-placeholder-shown/input:bg-primary nl:peer-not-placeholder-shown/input:text-label-s nl:peer-not-placeholder-shown/input:text-tertiary nl:peer-disabled/input:text-disabled nl:transition-all nl:duration-fast nl:motion-reduce:transition-none';
+
+/** A hidden label (NlSearchField): never drawn, still the input's accessible name. The placeholder shows instead. */
+export const labelHidden = 'nl:sr-only';
 
 /** Floating label offset per size: up by the box's block padding, onto the top border. */
 export const labelFloat = {
