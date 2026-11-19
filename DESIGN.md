@@ -636,7 +636,7 @@ _The designer adds rows here before each build._
 | 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ✅ |
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ✅ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ✅ |
-| 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ⬜ |
+| 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ✅ |
 | 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ⬜ |
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
 | 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ⬜ |
@@ -5470,6 +5470,7 @@ NlTextAreaBase (vertical)
 | Placeholder | removed | No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused, as `NlInputBase` |
 | Helper text | text | `helperText?` |
 | Rows | number | `rows`, default 4 |
+| Character count | with `maxLength` | A count at the end of the helper line (OD-89, added with `NlTextArea` #49) |
 
 #### Sizes and layout
 
@@ -5509,6 +5510,7 @@ As `NlInputBase`.
 | Placeholder | None (not in the props). The native placeholder is a single space, only so "placeholder shown" means empty |
 | Helper text | `helperText?`: `NlHelperText` (`Space-M` below, indented `Space-XL`), id in `aria-describedby`, inside an always-present `aria-live="polite"` region. Icon only for error (OD-76) |
 | Rows | `rows?: number`, default 4, on the native `<textarea>` |
+| Character count (#49) | `maxLength?`: native limit (typing stops). Count "120 / 500" at the end of the helper line (helper text takes the rest of the row, `Space-M` apart), `Space-M` below the box, Body S `text-tertiary` (also with an error), disabled `text-disabled`, `aria-hidden`. A hidden "Up to 500 characters." is in `aria-describedby`; a hidden polite live region says "N characters left" / "Character limit reached" only when typing crosses 20, 10, 5 and 0 left. Length tracked inside when uncontrolled |
 | Disabled, Required | Native on the textarea; disabled helper tone `disabled`, no resize. No required marker (OD-78) |
 | Element | Native `<textarea>`: `value` / `defaultValue`, `onChange`, `name`, `maxLength`, `ref` and native attributes go to it; `className` (placement only) to the root |
 
@@ -5546,7 +5548,7 @@ Checked in the browser: 2, 4 and 6 rows give 80, 128 and 176; the floating label
 
 **Level** Molecule (mapped) · **Base** `NlTextAreaBase` · **Depends on** – · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-88, OD-89.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-88 and OD-89 decided 19 Nov 2026.
 
 A multi-line text input, for notes, descriptions and messages.
 
@@ -5562,7 +5564,7 @@ As `NlTextAreaBase`.
 | Rows | number | `rows`, default 4 |
 | Maximum length | number | `maxLength?` (see "Mapping notes") |
 | Value | text | `value` / `defaultValue`, `onChange` |
-| Everything else | as `NlTextAreaBase` | `label`, `placeholder`, `helperText`, `disabled`, `required`, `ref` |
+| Everything else | as `NlTextAreaBase` | `label`, `helperText`, `disabled`, `required`, `ref`. No placeholder (designer's choice, 19 Nov 2026) |
 
 #### Sizes, layout, colours and states
 
@@ -5576,8 +5578,46 @@ As `NlTextAreaBase`. Enter adds a new line, it never submits a form.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Complete state value colour | `text-placeholder` (a drawing slip: the entered text looks like a placeholder) | `text-primary` | **Needs approval** |
-| Character count | Not in the reference | With `maxLength`, a count ("120 / 500") at the end of the helper line, `Body S` `text-tertiary`, announced politely near the limit | **Needs approval** |
+| Complete state value colour | `text-placeholder` (a drawing slip: the entered text looks like a placeholder) | `text-primary` | Approved (OD-88) |
+| Character count | Not in the reference | With `maxLength`, a count ("120 / 500") at the end of the helper line, `Body S` `text-tertiary`, announced politely when typing crosses 20, 10, 5 and 0 left. A hard limit: native `maxLength` stops typing, so there is no over-limit error. Built into `NlTextAreaBase` (the helper line is the base's) | Approved (OD-89) |
+| Placeholder | Placeholder text | None, as `NlTextAreaBase` | Designer's choice, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Error | `error?: boolean`, passed to the base |
+| Rows | `rows?: number`, default 4 |
+| Maximum length | `maxLength?: number`: native limit, count, limit description and near-limit announcements (the base's) |
+| Value | `value` / `defaultValue`, `onChange`; the count follows both |
+| Everything else | `label`, `helperText`, `disabled`, `required`, `ref` and native attributes, passed to the base |
+| Enter | A new line (native); a textarea never submits a form |
+
+#### API
+
+```tsx
+import { NlTextArea } from '@northline/ui';
+
+<NlTextArea label="Notes" />
+<NlTextArea label="Description" maxLength={200} helperText="Shown on the reward page." />
+```
+
+Presentational (the base has `'use client'`).
+
+#### Tokens used
+
+`NlTextAreaBase`'s. The count: Body S, `text-tertiary`, disabled `text-disabled`, `Space-M` below the box and from the helper text.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Mapped with nothing fixed | `NlTextArea` passes every prop to `NlTextAreaBase`; the count lives in the base because the helper line is the base's |
+| Count position | At the very end of the line, flush with the box's end edge (the helper text keeps its `Space-XL` start indent) |
+| Announcements | Only on typing (through `onChange`); a value set by the parent updates the count silently |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: the count sits `Space-M` (8) below the box, flush with its end edge, `text-tertiary` in Light and Dark.
 
 ---
 
@@ -7593,3 +7633,4 @@ Known issues
 | 19 Nov 2026 | NlPasswordField (#46, public): password input on `NlInputBase` with a show/hide `NlButton` (tertiary, icon-only, xsmall, OD-80, OD-31), icons `visibility` / `visibility_off` (OD-81), fixed name "Show password" with `aria-pressed`, caret kept on switch. `NlInputBase`'s focus ring now follows its input only (`nl:input-focus:`), so a focused trailing button shows one ring. OD-78: no required marker. Approved by the designer |
 | 19 Nov 2026 | NlSearchField (#47, public): `type="search"` on `NlInputBase` with a hidden label (default "Search") and placeholder text shown while empty, focused too; leading `search` icon; xsmall clear `NlButton` (`cancel`) while there is text (OD-82 to OD-84). Enter calls `onSearch`; Escape clears and stops when there is text. `NlInputBase` gained `hideLabel` and `placeholder`; `nl:search-cancel-none` hides the browser's clear button. Approved by the designer |
 | 19 Nov 2026 | NlTextAreaBase (#48, internal): native `<textarea>` with a floating label and no hint text (designer's choice), `rows` (default 4 = 128, OD-85), vertical resize only (OD-86), label `text-tertiary` (OD-87 via OD-77); error, disabled and helper text as `NlInputBase`. Approved by the designer |
+| 19 Nov 2026 | NlTextArea (#49, public): multi-line input on `NlTextAreaBase`, no placeholder, value `text-primary` (OD-88). Character count added to the base (OD-89): native `maxLength`, "120 / 500" at the end of the helper line (flush with the box end), limit in the description, polite announcements at 20, 10, 5 and 0 left. Approved by the designer |
