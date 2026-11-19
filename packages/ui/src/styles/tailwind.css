@@ -167,6 +167,29 @@
 }
 /* stylelint-enable nesting-selector-no-missing-scoping-root */
 
+/*
+ * nl:nav-tree-line and nl:nav-tree-continue: where the side nav's tree line sits in an NlNavSubItem (DESIGN.md §9,
+ * NlNavSubItem, OD-30a). Only NlNavSubItem uses them. The line runs under the section icon's centre, Space-L + half of
+ * Size-20 from the start; the curve leg starts Space-XS above the item (bridging the gap between pages), meets the
+ * item's middle and runs towards the text, stopping Space-XS before it (the text starts at Space-6XL). The
+ * continuation runs from the middle to the bottom for a "middle" item. Position and size only: the 1px border, its
+ * colour and the Radius-S curve are normal classes. Classes can't add tokens without arbitrary values. Approved by the
+ * designer, 19 Nov 2026 (rule 9).
+ */
+@utility nav-tree-line {
+  position: absolute;
+  inset-inline-start: calc(var(--nl-space-l) + var(--nl-size-20) / 2);
+  inset-block-start: calc(var(--nl-space-xs) * -1);
+  inline-size: calc(var(--nl-space-6xl) - var(--nl-space-xs) - var(--nl-space-l) - var(--nl-size-20) / 2);
+  block-size: calc(50% + var(--nl-space-xs));
+}
+
+@utility nav-tree-continue {
+  position: absolute;
+  inset-inline-start: calc(var(--nl-space-l) + var(--nl-size-20) / 2);
+  inset-block: 50% 0;
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {
