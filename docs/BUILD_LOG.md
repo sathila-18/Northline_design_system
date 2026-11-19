@@ -41,3 +41,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlFilterChip | 2026-11-19 12:07 | 2026-11-19 12:34 | Leading icon fg-primary when off (designer's choice); no border = inset ring width 0. Approved by the designer |
 | NlAssistChip | 2026-11-19 13:44 | 2026-11-19 14:11 | popup prop and onOpenChange added; open keeps its look on hover (designer's choice); checked with NlMenu in the browser. Approved by the designer |
 | NlInputChip | 2026-11-19 14:17 | 2026-11-19 15:10 | Native remove button (not NlButton) so the chip keeps its height; focus ring Radius-XS; K5 accepted for disabled contrast. Approved by the designer |
+| NlSegment | 2026-11-19 15:14 | 2026-11-19 15:22 | OD-67, OD-68 approved; native radio (designer's choice); sizes measured in the browser. Approved by the designer |

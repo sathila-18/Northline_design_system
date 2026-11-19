@@ -617,7 +617,7 @@ _The designer adds rows here before each build._
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ✅ |
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ✅ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ✅ |
-| 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ⬜ |
+| 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ✅ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ⬜ |
 | 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
 | 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ⬜ |
@@ -4226,7 +4226,7 @@ Rendered heights measured in the browser: 26, 33 and 40, the same as `NlChipBase
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used only by `NlSegmentedButton`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-67, OD-68.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-67 and OD-68 decided 19 Nov 2026.
 
 One option in a segmented button: a label with an optional leading icon, or an icon on its own.
 
@@ -4291,10 +4291,49 @@ Enabled, hover, pressed, focus, disabled, each selected and unselected.
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Text styles | A 14/24 style (medium) and a 12/24 style (small, xsmall) | `Button M` and `Button S` | Matches |
-| Small icon-only square | 28 (20 icon + `Space-XS` all round). No `Size-28` token | Proposed: keep `Space-XS` padding around a 20 icon, so the size comes from padding (no fixed size token) | **Needs approval** |
-| Unselected hover label | `text-tertiary`, which is darker than `text-secondary` in Light but lighter in Dark | Kept as in the reference | **Needs approval** |
+| Small icon-only square | 28 (20 icon + `Space-XS` all round). No `Size-28` token | Proposed: keep `Space-XS` padding around a 20 icon, so the size comes from padding (no fixed size token) | Approved (OD-67) |
+| Unselected hover label | `text-tertiary`, which is darker than `text-secondary` in Light but lighter in Dark | Kept as in the reference | Approved (OD-68) |
 | Filled icon when selected | Code only, per the reference's description | `NlIcon filled` | Matches §6 |
 | Leading slot gap | A raw 10 gap with a single child | No gap | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Selected | `selected: boolean` (set by the group): `checked` on the native radio, `data-selected`. Colours picked per `selected` |
+| Size | `size?: 'medium' \| 'small' \| 'xsmall'`, default `medium`, also `data-size` |
+| Icon only | `iconOnly?: boolean`; the types require `icon` with it. The label stays as `nl:sr-only` text |
+| Icon | `icon?: NlIconName`, `NlIcon` 20 / 20 / 16, `filled` when selected |
+| Label | `children`, always required |
+| Disabled | `disabled` (native on the radio); the root gets no pointer events |
+| Element | `<label>` root with a transparent native `<input type="radio">` covering it. `name`, `value`, `onChange`, `ref` and native attributes go to the input; `className` (placement and width, from the group) to the root |
+
+#### API
+
+```tsx
+import { NlSegment } from '../NlSegment'; // internal, not exported from @northline/ui
+
+<div role="radiogroup" aria-label="Period">
+  <NlSegment name="period" value="week" selected={value === 'week'} onChange={(e) => setValue(e.target.value)}>
+    Week
+  </NlSegment>
+</div>
+```
+
+Presentational, so no `'use client'`. The browser's radio group gives arrow keys (wrapping) and skips disabled segments.
+
+#### Tokens used
+
+The "Sizes and layout" and "Colours" tables, as written. Small icon-only: `Space-XS` around the 20 icon (28, OD-67). Focus: the standard ring on the root. Colour changes use `--nl-duration-fast`, none under reduced motion.
+
+Rendered sizes measured in the browser: labelled heights 40, 32 and 24; icon-only 36, 28 and 24.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Native radio | A visually replaced `<input type="radio">`, not `role="radio"` (designer's choice, 19 Nov 2026): grouping and arrow keys come from the browser |
+| Story surface | Stories sit on a `bg-tertiary` surface as a stand-in for the track. `NlSegmentedButton` sets the real track; in Dark, `bg-disabled` (disabled selected) is close to `bg-tertiary` |
 
 ---
 
@@ -7130,3 +7169,4 @@ Known issues
 | 19 Nov 2026 | NlFilterChip (#32, public): toggle button (`aria-pressed`) on `NlChipBase`, controlled or uncontrolled; off/on × enabled, hover, pressed, disabled and focus as in the spec; leading icon `fg-primary` off, `fg-brand` on. Approved by the designer |
 | 19 Nov 2026 | NlAssistChip (#33, public): action or dropdown chip on `NlChipBase`; `popup`, `open`, `onOpenChange` (click toggles, Down arrow opens) to pair with `NlMenu`; open keeps its look on hover, pressed still shows. Approved by the designer |
 | 19 Nov 2026 | NlInputChip (#34, public): chosen value on `NlChipBase` (bordered) with a native remove button (close 16/20 in a 24 target, Backspace and Delete remove, name "Remove {label}"); disabled has no remove button. K5 accepted. Approved by the designer |
+| 19 Nov 2026 | NlSegment (#35, internal): native radio under drawn content; medium, small, xsmall (40, 32, 24; icon-only 36, 28, 24); filled icon when selected; OD-67 and OD-68 decided. Approved by the designer |

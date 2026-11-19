@@ -299,8 +299,8 @@ Decide these before building the components listed under "Affects".
 - OD-50: see section 2
 
 **NlSegment**
-- OD-67 · Small icon-only size from padding (reference 28, not a token) · Open
-- OD-68 · Unselected hover label `text-tertiary` (as the reference) · Open
+- OD-67 · Small icon-only size from padding (reference 28, not a token) · **Decided** 19 Nov 2026: approved
+- OD-68 · Unselected hover label `text-tertiary` (as the reference) · **Decided** 19 Nov 2026: approved
 
 **NlHelperText**
 - OD-69 · Icons: `info`, `check_circle`, `warning`; maybe `error` for the error tone · Open
