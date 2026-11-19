@@ -2578,7 +2578,7 @@ Checked in the browser: line at 22, curve ending at 36, text at 40; the curve me
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlPagination`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-32, OD-33, OD-34, OD-35.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-32 to OD-35 decided 19 Nov 2026.
 
 One page number button in the table pagination, or the "…" gap between page ranges.
 
@@ -2631,11 +2631,49 @@ Default, hover, focus, selected. The ellipsis has no states.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Width for long numbers | Fixed 32 square | Proposed: minimum width `Size-32`, width hugs the number, so "100" and over still fit | **Needs approval** |
-| Pressed state | Not drawn | Proposed: same as hover | **Needs approval** |
-| Focus | Not drawn | Standard ring from CLAUDE.md | **Needs approval** |
-| Ellipsis text | Three full stops | One ellipsis character "…" | **Needs approval** |
+| Width for long numbers | Fixed 32 square | Minimum width `Size-32`, width hugs the number, so "100" and over still fit | Approved (OD-32) |
+| Pressed state | Not drawn | Same as hover | Approved (OD-33) |
+| Focus | Not drawn | Standard ring from CLAUDE.md | Approved (OD-34) |
+| Ellipsis text | Three full stops | One ellipsis character "…" | Approved (OD-35) |
+| Current page | Not drawn | Keeps its look on hover and press; pressing it does nothing (no `onSelect`); stays focusable | Approved, 19 Nov 2026 |
+| Ellipsis for screen readers | `aria-hidden` | Same: the gap isn't announced | Approved, 19 Nov 2026 |
 | Sizes, radius, colours | As above | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Kind | `kind?: 'page' \| 'ellipsis'`, default `page`, `data-kind` |
+| Page | `page: number` (required for a page) |
+| Selected | `current?: boolean`: `aria-current="page"`, `bg-active`, `border-active`, `text-action`, no state change, `data-current` |
+| Select | `onSelect?(page)` on click, Enter or Space; never for the current page |
+| Page element | Native `<button type="button">`, `aria-label` "Page 3", shows the number; `ref` and attributes pass through; `className` (placement only) appended last |
+| Ellipsis element | `<span aria-hidden="true">` with "…", the same box, Label L `text-secondary`, no border or fill |
+
+#### API
+
+```tsx
+import { NlPaginationItem } from '../NlPaginationItem'; // internal, not exported from @northline/ui
+
+<NlPaginationItem page={3} onSelect={goTo} />
+<NlPaginationItem page={4} current />
+<NlPaginationItem kind="ellipsis" />
+```
+
+`'use client'` (click handler).
+
+#### Tokens used
+
+`Size-32` (height and minimum width), `Space-XS` padding, `Radius-S`, 1px inset border, Label M (page) and Label L (ellipsis); `bg-secondary`, `border-subtle`, `text-secondary` (default); `bg-tertiary`, `border-default`, `text-primary` (hover and pressed); `bg-active`, `border-active`, `text-action` (current); the standard focus ring; Duration fast.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Union props | A page needs `page`; the ellipsis takes none. Stories use flat controls (as `NlButton`) |
+| Current page | `cursor-default`, no hover or pressed classes, and the click does not call `onSelect` |
+
+Checked in the browser: 9 and 99 are 32 square; 100 is 32 to 33 wide and 1250 is 40 to 42 wide, depending on the brand font; all 32 high.
 
 ---
 
