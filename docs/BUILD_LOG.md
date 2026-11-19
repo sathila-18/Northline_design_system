@@ -45,3 +45,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlHelperText | 2026-11-19 15:30 | 2026-11-19 16:01 | OD-43 (text-tertiary), OD-69 (error glyph), OD-70 (icon centred on first line via 1lh slot); disabled samples marked K3. Approved by the designer |
 | NlNavIcon | 2026-11-19 16:11 | 2026-11-19 16:31 | OD-71 approved (filled when selected); no states of its own. Approved by the designer |
 | NlTooltip | 2026-11-19 16:32 | 2026-11-19 16:47 | OD-73, OD-74 approved; tooltip-position utility (rule 9, approved); hoverable frame instead of a hide delay; light box in Dark accepted. Approved by the designer |
+| NlSegmentedButton | 2026-11-19 16:50 | 2026-11-19 17:31 | OD-75 approved; NlTooltip added as a dependency; Home and End added; menu use not built. Approved by the designer |

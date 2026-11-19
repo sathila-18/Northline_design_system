@@ -15,6 +15,7 @@ export * from './components/NlMenu';
 export * from './components/NlOverlay';
 export * from './components/NlProgressBar';
 export * from './components/NlRadio';
+export * from './components/NlSegmentedButton';
 export * from './components/NlSkeleton';
 export * from './components/NlSlider';
 export * from './components/NlSpinner';
