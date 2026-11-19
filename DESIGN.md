@@ -635,7 +635,7 @@ _The designer adds rows here before each build._
 | 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ✅ |
 | 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ✅ |
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ✅ |
-| 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ⬜ |
+| 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ✅ |
 | 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ⬜ |
 | 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ⬜ |
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
@@ -7592,3 +7592,4 @@ Known issues
 | 19 Nov 2026 | NlTextField (#45, public): single-line input on `NlInputBase` with `inputType` (text, email, number, tel, url) and an optional decorative trailing icon (OD-79). The field hint text was removed from `NlInputBase` and `NlTextField`: focused and empty, the box shows only the floating label (designer's choice). Approved by the designer |
 | 19 Nov 2026 | NlPasswordField (#46, public): password input on `NlInputBase` with a show/hide `NlButton` (tertiary, icon-only, xsmall, OD-80, OD-31), icons `visibility` / `visibility_off` (OD-81), fixed name "Show password" with `aria-pressed`, caret kept on switch. `NlInputBase`'s focus ring now follows its input only (`nl:input-focus:`), so a focused trailing button shows one ring. OD-78: no required marker. Approved by the designer |
 | 19 Nov 2026 | NlSearchField (#47, public): `type="search"` on `NlInputBase` with a hidden label (default "Search") and placeholder text shown while empty, focused too; leading `search` icon; xsmall clear `NlButton` (`cancel`) while there is text (OD-82 to OD-84). Enter calls `onSearch`; Escape clears and stops when there is text. `NlInputBase` gained `hideLabel` and `placeholder`; `nl:search-cancel-none` hides the browser's clear button. Approved by the designer |
+| 19 Nov 2026 | NlTextAreaBase (#48, internal): native `<textarea>` with a floating label and no hint text (designer's choice), `rows` (default 4 = 128, OD-85), vertical resize only (OD-86), label `text-tertiary` (OD-87 via OD-77); error, disabled and helper text as `NlInputBase`. Approved by the designer |
