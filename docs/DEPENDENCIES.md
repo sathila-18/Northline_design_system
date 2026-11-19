@@ -81,7 +81,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 | 43 | `NlNotificationButton` | yes | `NlCountBadge`, `NlIcon` | `NlPageHeader` | – | ✅ batch 5 | ⬜ |
 | 44 | `NlInputBase` | internal | `NlHelperText`, `NlIcon` | `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect`, `NlDateField` | OD-42, OD-43, OD-44 | ✅ batch 5 | ⬜ |
 | 45 | `NlTextField` | yes | `NlInputBase` | – | – | ✅ batch 5 | ⬜ |
-| 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | – | ✅ batch 5 | ⬜ |
+| 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | – | ✅ batch 5 | ✅ |
 | 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | – | ✅ batch 5 | ⬜ |
 | 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | OD-42, OD-43 | ✅ batch 5 | ⬜ |
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ⬜ |

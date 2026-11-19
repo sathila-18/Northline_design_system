@@ -633,7 +633,7 @@ _The designer adds rows here before each build._
 | 43 | Notification button | `NlNotificationButton` | `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ✅ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ✅ |
 | 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ✅ |
-| 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ⬜ |
+| 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ✅ |
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ⬜ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ⬜ |
 | 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ⬜ |
@@ -7504,3 +7504,4 @@ Known issues
 | 19 Nov 2026 | NlNotificationButton (#43, public): own native 40 circle (OD-40, D12 exception) with the `notifications` icon (added to the registry, 27 icons) and an `NlCountBadge` dot or number; name carries the shown count. Approved by the designer |
 | 19 Nov 2026 | NlInputBase (#44, internal): outlined field with a real floating label (CSS only, OD-42), large/small, leading, trailing, prefix, suffix, helper text in a polite live region (icon only for errors, OD-76), error and disabled; standard focus ring on errors (OD-44). Select type with #70; required marker open (OD-78). Approved by the designer |
 | 19 Nov 2026 | NlTextField (#45, public): single-line input on `NlInputBase` with `inputType` (text, email, number, tel, url) and an optional decorative trailing icon (OD-79). The field hint text was removed from `NlInputBase` and `NlTextField`: focused and empty, the box shows only the floating label (designer's choice). Approved by the designer |
+| 19 Nov 2026 | NlPasswordField (#46, public): password input on `NlInputBase` with a show/hide `NlButton` (tertiary, icon-only, xsmall, OD-80, OD-31), icons `visibility` / `visibility_off` (OD-81), fixed name "Show password" with `aria-pressed`, caret kept on switch. `NlInputBase`'s focus ring now follows its input only (`nl:input-focus:`), so a focused trailing button shows one ring. OD-78: no required marker. Approved by the designer |
