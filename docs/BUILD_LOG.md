@@ -39,3 +39,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlLabel | 2026-11-19 10:09 | 2026-11-19 10:42 | OD-50 (tone), OD-65, OD-66 approved; badgeLabel required with a badge. Approved by the designer |
 | NlChipBase | 2026-11-19 11:26 | 2026-11-19 11:57 | Default size small; trailing slot added for NlInputChip; appearance replaces resting colours. Approved by the designer |
 | NlFilterChip | 2026-11-19 12:07 | 2026-11-19 12:34 | Leading icon fg-primary when off (designer's choice); no border = inset ring width 0. Approved by the designer |
+| NlAssistChip | 2026-11-19 13:44 | 2026-11-19 14:11 | popup prop and onOpenChange added; open keeps its look on hover (designer's choice); checked with NlMenu in the browser. Approved by the designer |

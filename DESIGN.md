@@ -615,7 +615,7 @@ _The designer adds rows here before each build._
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ✅ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ✅ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ✅ |
-| 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
+| 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ✅ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ⬜ |
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ⬜ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ⬜ |
@@ -4074,6 +4074,46 @@ Enabled, hover, pressed, focus, disabled, and open for dropdown chips.
 | Open look | Selected look with the up arrow | Same | Matches |
 | Arrow icons | From the reference's icon set | Material Symbols `keyboard_arrow_down` and `keyboard_arrow_up` | Approved |
 
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Dropdown | `dropdown?: boolean`. On: trailing `keyboard_arrow_down` (closed) or `keyboard_arrow_up` (open), `aria-haspopup`, `aria-expanded`, `data-open` |
+| Popup type | `popup?: 'menu' \| 'listbox' \| 'dialog'`, default `menu`, for `aria-haspopup` (dropdown only) |
+| Open | `open?: boolean`, set by the parent and kept in sync with the menu (dropdown only; the types enforce it) |
+| Open request | `onOpenChange?(open)`: a click asks for the opposite, Down arrow asks to open. Same signature as `NlMenu`'s. An `onClick` or `onKeyDown` that calls `preventDefault()` stops it |
+| Size | `size?: 'xsmall' \| 'small' \| 'large'`, default `small` |
+| Disabled, Click | `disabled`, `onClick` (native) |
+| Label | `children`, the accessible name |
+| Leading icon | `leadingIcon?: NlIconName`, `NlIcon` 16 / 16 / 20, decorative |
+| Base | `NlChipBase` with `as="button"`, `type="button"`, `look` `unselected-bordered` (closed) or `selected` (open), and the state colours as `appearance`. `aria-controls`, `ref` and native attributes pass through |
+
+#### API
+
+```tsx
+import { NlAssistChip, NlMenu } from '@northline/ui';
+
+<NlAssistChip onClick={exportList}>Export</NlAssistChip>
+
+<NlAssistChip ref={anchorRef} dropdown open={open} onOpenChange={setOpen} aria-controls="date-menu" leadingIcon="calendar_today">
+  Date range
+</NlAssistChip>
+<NlMenu id="date-menu" aria-label="Date range" open={open} onOpenChange={setOpen} anchorRef={anchorRef}>…</NlMenu>
+```
+
+`'use client'` (event handlers). Escape and returning focus to the chip are `NlMenu`'s job.
+
+#### Tokens used
+
+The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0, "no shadow" is `nl:shadow-none`. Focus: the standard ring, following `Radius-S`. Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Open under the pointer | Hovering an open chip keeps the open look; pressing still shows the pressed look (designer's choice, 19 Nov 2026, as `NlButton` expanded) |
+| With `NlMenu` | Checked in the browser: a click opens and closes, Down arrow opens and focuses the first row, Escape closes and returns focus to the chip |
+
 ---
 
 ### NlInputChip
@@ -7045,3 +7085,4 @@ Known issues
 | 19 Nov 2026 | NlLabel (#30, public): Label M / Label S, `tone` (tertiary, primary, secondary, action; OD-50), optional `NlCountBadge` dot with `badgeTone` and required `badgeLabel` (OD-65), `as="label"` for form controls (OD-66). Approved by the designer |
 | 19 Nov 2026 | NlChipBase (#31, internal): unselected, unselected-bordered and selected looks at rest; xsmall, small (default) and large (26, 33, 40 high); leading slot, trailing icon or `trailing` slot; `appearance` and `as` for the mapped chips. Approved by the designer |
 | 19 Nov 2026 | NlFilterChip (#32, public): toggle button (`aria-pressed`) on `NlChipBase`, controlled or uncontrolled; off/on × enabled, hover, pressed, disabled and focus as in the spec; leading icon `fg-primary` off, `fg-brand` on. Approved by the designer |
+| 19 Nov 2026 | NlAssistChip (#33, public): action or dropdown chip on `NlChipBase`; `popup`, `open`, `onOpenChange` (click toggles, Down arrow opens) to pair with `NlMenu`; open keeps its look on hover, pressed still shows. Approved by the designer |
