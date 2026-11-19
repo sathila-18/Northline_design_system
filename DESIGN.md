@@ -611,7 +611,7 @@ _The designer adds rows here before each build._
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ✅ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ✅ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ✅ |
-| 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
+| 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ✅ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ⬜ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
@@ -3607,7 +3607,7 @@ The table in "Colours", as written. Hit area `Size-24`, box `Size-20`, `Radius-X
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-61, OD-62, OD-63, OD-64.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-61 to OD-64 decided 19 Nov 2026.
 
 A round loading indicator. It can end in a success tick or an error mark. The "with text" version is left out (D13).
 
@@ -3660,12 +3660,55 @@ Loading, success, error. Not interactive.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Ring thickness | Raw 4 (stroke and arc) | §4.2 allows only 1px and 2px borders. The ring is drawn as an SVG stroke, not a border. Proposed: keep 4 as the SVG `stroke-width`, treated as artwork (§2.1 exception), with a comment | **Needs approval** |
-| 25%, 50%, 75% variants | Three arcs of different lengths. They could be animation frames or progress values | Proposed: by default an indeterminate spinner (a quarter arc that turns), plus an optional `value` that sets the arc length for a determinate ring | **Needs approval** |
-| Rotation speed | Not in the reference | One turn per `--nl-duration-pulse` (1600ms), linear | **Needs approval** |
-| Error icon | A warning triangle (outlined) from the reference's icon set | Material Symbols `warning` | **Needs approval** |
+| Ring thickness | Raw 4 (stroke and arc) | §4.2 allows only 1px and 2px borders. The ring is drawn as an SVG stroke, not a border. Proposed: keep 4 as the SVG `stroke-width`, treated as artwork (§2.1 exception), with a comment | Approved (OD-61) |
+| 25%, 50%, 75% variants | Three arcs of different lengths. They could be animation frames or progress values | Proposed: by default an indeterminate spinner (a quarter arc that turns), plus an optional `value` that sets the arc length for a determinate ring | Approved (OD-62) |
+| Rotation speed | Not in the reference | One turn per `--nl-duration-pulse` (1600ms), linear | Approved (OD-63) |
+| Error icon | A warning triangle (outlined) from the reference's icon set | Material Symbols `warning` | Approved (OD-64) |
 | Success icon | `check` | Material Symbols `check` | Matches |
 | Sizes | Only 48 | Only 48 (`Size-48`). Add sizes only if a component needs one | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Status | `status?: 'loading' \| 'success' \| 'error'`, default `loading`, also `data-status` |
+| Progress | `value?: number`, clamped to 0–100. Without it, a quarter arc turns; with it, the arc length is the value (`--nl-spinner-value` on a `pathLength` of 100) and the ring doesn't turn |
+| Accessible name | `label: string`, required. While loading: the progressbar's `aria-label`. Success or error: the text of the status region |
+| Element | `<span>` root; native attributes and `ref` go to it, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlSpinner } from '@northline/ui';
+
+<NlSpinner label="Loading rewards" />
+<NlSpinner label="Uploading file" value={40} />
+<NlSpinner status="success" label="Upload complete" />
+<NlSpinner status="error" label="Upload failed" />
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Box / ring / result | `Size-48` / `Size-40` / `Size-48` with `Radius-Full` |
+| Track / arc | `bg-active-hover` / `fg-brand` (through `nl:spinner-track` and `nl:spinner-arc`) |
+| Success | `bg-success_secondary`, `fg-success`, `NlIcon` 24 `check` |
+| Error | `bg-error_secondary`, `fg-error`, `NlIcon` 24 `warning` |
+| Turning | `--nl-duration-pulse`, linear (`nl:animate-spinner-turn`); `nl:motion-reduce:animate-none` |
+
+Arc on track contrast: 3.92 to 5.75 in every brand and theme (`docs/TOKEN_AUDIT.md`).
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Utilities | `nl:spinner-track`, `nl:spinner-arc`, `nl:spinner-value` and `nl:animate-spinner-turn` in `tailwind.css`: the theme has no stroke colours, the arc length is data, and Tailwind's spin is fixed at 1s. Approved by the designer, 19 Nov 2026 (rule 9) |
+| Ring artwork | SVG `viewBox` 40, radius 18, `stroke-width` 4, round ends, starting at the top (OD-61) |
+| Announcing the result | A visually hidden `role="status"` region is always rendered: empty while loading, the label on success or error, so the change is announced (designer's choice, 19 Nov 2026). The result circle is `aria-hidden` |
+| Value 0 | With round ends, `value={0}` shows a dot at the top |
 
 ---
 
@@ -6895,3 +6938,4 @@ Known issues
 | 18 Nov 2026 | NlDestructiveButton (#26, internal): primary (`bg-action-destructive`), secondary (2px inset ring `border-error`) and tertiary (`text-error`) at rest, built on `NlButtonBase` with a fixed `appearance` per variant; no link form. §8 dependency changed to `NlButtonBase`; D12 updated. Approved by the designer |
 | 19 Nov 2026 | NlButton (#27, public): picks the base by tone; hover, pressed, expanded (pressed look) and disabled states for every tone and variant; tertiary content tones; disabled links lose `href` and get `aria-disabled`. Link underline on a new label span in `NlButtonBase`. OD-55 to OD-59 decided; `not-disabled:not-aria-disabled:` state selectors approved as a rule 9 exception. Approved by the designer |
 | 19 Nov 2026 | NlCheckboxControl (#28, internal): native checkbox under a drawn Size-20 box in a Size-24 hit area; unselected, selected and indeterminate (`check` / `remove`, OD-60) with hover, pressed, disabled and focus (ring on the hit area, Radius-XS); indeterminate set through a ref. Approved by the designer |
+| 19 Nov 2026 | NlSpinner (#29, public): SVG ring (4 stroke, artwork) turning once per Duration pulse, or a value arc; success (`check`) and error (`warning`) results; always-present status region announces the result. Spinner utilities in tailwind.css. OD-61 to OD-64 decided. Approved by the designer |
