@@ -3716,7 +3716,7 @@ Arc on track contrast: 3.92 to 5.75 in every brand and theme (`docs/TOKEN_AUDIT.
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlCountBadge` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-65, OD-66.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-50, OD-65 and OD-66 decided 19 Nov 2026.
 
 A small, low-emphasis label, optionally followed by a dot badge. Used above headings (in the `NlTextBlock` label slot), in list rows, the calendar header, steps and table headers.
 
@@ -3771,9 +3771,50 @@ None. Not interactive.
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Badge form | Always the small dot, red, hidden by default | `NlCountBadge` small dot, `tone="error"` by default | Matches |
-| Badge tone option | Only red in the reference | `badgeTone` added for warning and success | **Needs approval** |
+| Badge tone option | Only red in the reference | `badgeTone` added for warning and success | Approved (OD-65) |
 | Gap | `Space-M` | Same | Matches |
-| `as="label"` | Not in the reference | Added so the label can name form controls | **Needs approval** |
+| `as="label"` | Not in the reference | Added so the label can name form controls | Approved (OD-66) |
+| Tone | Fixed `text-tertiary`. `NlStep` and `NlCalendar` need other colours | `tone`: tertiary (default), primary, secondary, action | Approved (OD-50) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'medium' \| 'small'`, default `medium`, also `data-size`. `nl:text-label-m` / `nl:text-label-s` |
+| Tone | `tone?: 'tertiary' \| 'primary' \| 'secondary' \| 'action'`, default `tertiary`, also `data-tone` (OD-50) |
+| Text | `children` |
+| Show badge | `badge?: boolean`, default off. `NlCountBadge` small, dot form, after the text |
+| Badge tone | `badgeTone?: 'error' \| 'warning' \| 'success'`, default `error` (OD-65) |
+| Badge meaning | `badgeLabel: string`, required by the types when `badge` is on; `NlCountBadge`'s hidden `label` |
+| Element | `as?: 'span' \| 'label'`, default `span`; `htmlFor` with `label` (OD-66). Native attributes and `ref` go to the element, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlLabel } from '@northline/ui';
+
+<NlLabel>Tier 2</NlLabel>
+<NlLabel size="small" tone="secondary">Mon</NlLabel>
+<NlLabel badge badgeLabel="New">Rewards</NlLabel>
+<NlLabel as="label" htmlFor="member-id">Member ID</NlLabel>
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Layout | `Space-M` gap, `Space-none` padding |
+| Text style | `Label M`, `Label S` |
+| Text colour | `text-tertiary` (default), `text-primary`, `text-secondary`, `text-action` |
+| Badge | `NlCountBadge` small dot, `badgeTone` |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Tertiary and secondary | Light: Neutral-600 and Neutral-500; Dark: Neutral-300 and Neutral-200. Close, so they look alike in some brands (token values, not changed here) |
 
 ---
 

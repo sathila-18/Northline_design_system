@@ -178,7 +178,7 @@ Decide these before building the components listed under "Affects".
 | OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | Open |
 | OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | Open |
 | OD-44 | `NlInputBase` | Error focus ring colour | `border-error` (reference) vs `border-focused` (CLAUDE.md) | Every field | Open |
-| OD-50 | `NlLabel` | Tone option | Batch 6 makes this stronger: add `tone` (tertiary default, primary, secondary, action). `NlStep` needs three colours, `NlCalendar` weekday names want `text-secondary` | `NlCalendar`, `NlStep` | Open |
+| OD-50 | `NlLabel` | Tone option | Batch 6 makes this stronger: add `tone` (tertiary default, primary, secondary, action). `NlStep` needs three colours, `NlCalendar` weekday names want `text-secondary` | `NlCalendar`, `NlStep` | **Decided** 19 Nov 2026: `tone` added to `NlLabel` (tertiary default, primary, secondary, action) |
 | OD-93 | `NlBanner`, `NlSnackbar` | Their text is recoloured by tone, which `NlTextBlock` can't do | Plain text inside these components, not `NlTextBlock` (inventory dependency for the snackbar goes) | `NlBanner`, `NlSnackbar` | Open |
 | OD-117 | `NlButton` | The table's link cell needs a link button with no inline padding, so its text lines up with the header | `variant="link"` gets no inline padding (instead of tertiary padding) | `NlTableCell`, any inline link | Open |
 | OD-119 | `NlListItemBase` | The side nav user row uses different padding (`Space-L` / `Space-XL`) and `Radius-M` | A third density, `density="nav"` | `NlSideNavUser` | Open |
@@ -294,8 +294,8 @@ Decide these before building the components listed under "Affects".
 - OD-64 · Error icon `warning` · **Decided** 19 Nov 2026: approved
 
 **NlLabel**
-- OD-65 · `badgeTone` (error, warning, success) · Open
-- OD-66 · `as="label"` · Open
+- OD-65 · `badgeTone` (error, warning, success) · **Decided** 19 Nov 2026: approved
+- OD-66 · `as="label"` · **Decided** 19 Nov 2026: approved
 - OD-50: see section 2
 
 **NlSegment**
