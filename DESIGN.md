@@ -617,7 +617,7 @@ _The designer adds rows here before each build._
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ✅ |
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ✅ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ✅ |
-| 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ⬜ |
+| 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ✅ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ⬜ |
 | 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
 | 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ⬜ |
@@ -7169,3 +7169,4 @@ Known issues
 | 19 Nov 2026 | NlFilterChip (#32, public): toggle button (`aria-pressed`) on `NlChipBase`, controlled or uncontrolled; off/on × enabled, hover, pressed, disabled and focus as in the spec; leading icon `fg-primary` off, `fg-brand` on. Approved by the designer |
 | 19 Nov 2026 | NlAssistChip (#33, public): action or dropdown chip on `NlChipBase`; `popup`, `open`, `onOpenChange` (click toggles, Down arrow opens) to pair with `NlMenu`; open keeps its look on hover, pressed still shows. Approved by the designer |
 | 19 Nov 2026 | NlInputChip (#34, public): chosen value on `NlChipBase` (bordered) with a native remove button (close 16/20 in a 24 target, Backspace and Delete remove, name "Remove {label}"); disabled has no remove button. K5 accepted. Approved by the designer |
+| 19 Nov 2026 | NlSegment (#35, internal): native radio under drawn content; medium, small, xsmall (40, 32, 24; icon-only 36, 28, 24); filled icon when selected; OD-67 and OD-68 decided. Approved by the designer |
