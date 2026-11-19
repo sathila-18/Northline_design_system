@@ -593,7 +593,7 @@ _The designer adds rows here before each build._
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
 | 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ✅ |
-| 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ⬜ |
+| 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ✅ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ⬜ |
 | 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ⬜ |
 | 19 | Page dot (internal) | `NlPageDot` | – | [§9](#nlpagedot) | ⬜ |
@@ -7713,3 +7713,4 @@ Known issues
 | 19 Nov 2026 | NlTextAreaBase (#48, internal): native `<textarea>` with a floating label and no hint text (designer's choice), `rows` (default 4 = 128, OD-85), vertical resize only (OD-86), label `text-tertiary` (OD-87 via OD-77); error, disabled and helper text as `NlInputBase`. Approved by the designer |
 | 19 Nov 2026 | NlTextArea (#49, public): multi-line input on `NlTextAreaBase`, no placeholder, value `text-primary` (OD-88). Character count added to the base (OD-89): native `maxLength`, "120 / 500" at the end of the helper line (flush with the box end), limit in the description, polite announcements at 20, 10, 5 and 0 left. Approved by the designer |
 | 19 Nov 2026 | NlCalendarDay (#15, internal): `gridcell` drawing the range band (`bg-active`, `Radius-S` on the outer logical corners) around a 40 × 40 native button named by the full date (`label`); seven types; `today` as a separate boolean (OD-27; no border on filled types, `border-disabled` when disabled); standard focus ring (OD-28); `aria-disabled` days stay focusable. K6 accepted (band near invisible in Dark). Approved by the designer |
+| 19 Nov 2026 | NlListCaption (#16, internal): one-line trailing text for list rows; small, medium (default) and large; heavy (Label, default; designer's choice) and light (Body); `text-tertiary`, `text-disabled` when the row is disabled (OD-29). Approved by the designer |
