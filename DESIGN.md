@@ -613,7 +613,7 @@ _The designer adds rows here before each build._
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ✅ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ✅ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ✅ |
-| 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
+| 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ✅ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ⬜ |
@@ -3845,6 +3845,7 @@ NlChipBase (rounded, horizontal)
 | Label | text | `children` |
 | Leading | off, or a slot | `leading?: ReactNode` |
 | Trailing icon | off, or a registry name | `trailingIcon?: NlIconName` |
+| Trailing slot | off, or a slot (for `NlInputChip`'s remove button) | `trailing?: ReactNode`, instead of `trailingIcon` (designer's choice, 19 Nov 2026) |
 
 #### Sizes and layout
 
@@ -3883,6 +3884,41 @@ The element and role come from the mapped chip: a toggle button (filter), a butt
 | Leading slot gap | A raw 10 gap in one size's leading slot, with a single child | No gap | Matches |
 | Shadow | A "resting cards" shadow (0 1 3, black at 5%) | `--nl-shadow-resting` | Matches |
 | Padding, gaps, radius, text styles | As in the table | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Look | `look?: 'unselected' \| 'unselected-bordered' \| 'selected'`, default `unselected`, also `data-look` |
+| Size | `size?: 'xsmall' \| 'small' \| 'large'`, default `small` (designer's choice, 19 Nov 2026), also `data-size` |
+| Label | `children`, in `<span data-slot="label">` |
+| Leading | `leading?: ReactNode` in a slot that carries the leading colour; an `NlIcon` with `tone="inherit"` follows it |
+| Trailing | `trailingIcon?: NlIconName` (decorative `NlIcon` at the size's icon size) or `trailing?: ReactNode` (a slot); the types allow one or the other |
+| Colours | The look's resting colours, or `appearance?: { chip, leading, trailing }` from the mapped chip, which replaces them (with states). The root carries the named group `chip` |
+| Element | `as` (default `span`; a button for filter and assist chips). Button props in the types, as `NlButtonBase`. Native attributes and `ref` go to the element, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlChipBase } from '../NlChipBase'; // internal, not exported from @northline/ui
+
+<NlChipBase look="selected" leading={<NlIcon name="check" size={16} tone="inherit" />} trailingIcon="keyboard_arrow_down">
+  This week
+</NlChipBase>
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Padding / gap / text | xsmall `Space-XS` / `Space-M`, `Space-XS`, `Label S`; small `Space-S` / `Space-L`, `Space-M`, `Label M`; large `Space-M` / `Space-L`, `Space-M`, `Label L` |
+| Icons | 16, 16, 20 |
+| Shape | `Radius-S`, 1px inset ring |
+| Colours | The "Colours (resting)" table, as written; `--nl-shadow-resting` (`nl:shadow-resting`) on unselected-bordered |
+
+Rendered heights measured in the browser: 26, 33 and 40, as in the reference.
 
 ---
 
@@ -6981,3 +7017,4 @@ Known issues
 | 19 Nov 2026 | NlCheckboxControl (#28, internal): native checkbox under a drawn Size-20 box in a Size-24 hit area; unselected, selected and indeterminate (`check` / `remove`, OD-60) with hover, pressed, disabled and focus (ring on the hit area, Radius-XS); indeterminate set through a ref. Approved by the designer |
 | 19 Nov 2026 | NlSpinner (#29, public): SVG ring (4 stroke, artwork) turning once per Duration pulse, or a value arc; success (`check`) and error (`warning`) results; always-present status region announces the result. Spinner utilities in tailwind.css. OD-61 to OD-64 decided. Approved by the designer |
 | 19 Nov 2026 | NlLabel (#30, public): Label M / Label S, `tone` (tertiary, primary, secondary, action; OD-50), optional `NlCountBadge` dot with `badgeTone` and required `badgeLabel` (OD-65), `as="label"` for form controls (OD-66). Approved by the designer |
+| 19 Nov 2026 | NlChipBase (#31, internal): unselected, unselected-bordered and selected looks at rest; xsmall, small (default) and large (26, 33, 40 high); leading slot, trailing icon or `trailing` slot; `appearance` and `as` for the mapped chips. Approved by the designer |
