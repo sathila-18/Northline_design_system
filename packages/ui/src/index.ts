@@ -3,6 +3,7 @@ export * from './icons';
 export * from './components/NlAssistChip';
 export * from './components/NlAvatar';
 export * from './components/NlBadge';
+export * from './components/NlCheckbox';
 export * from './components/NlButton';
 export * from './components/NlCountBadge';
 export * from './components/NlDivider';
