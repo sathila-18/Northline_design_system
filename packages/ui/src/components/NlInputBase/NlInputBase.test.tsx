@@ -28,7 +28,11 @@ describe('NlInputBase', () => {
       'nl:inset-ring',
       'nl:inset-ring-default',
     );
-    expect(box).toHaveClass('nl:has-focus:outline-2', 'nl:has-focus:-outline-offset-1', 'nl:has-focus:outline-focused');
+    expect(box).toHaveClass(
+      'nl:input-focus:outline-2',
+      'nl:input-focus:-outline-offset-1',
+      'nl:input-focus:outline-focused',
+    );
     expect(screen.getByText('Member number')).toHaveClass(
       'nl:peer-focus/input:-top-l',
       'nl:peer-not-placeholder-shown/input:text-label-s',

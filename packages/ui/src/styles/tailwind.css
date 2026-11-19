@@ -144,6 +144,14 @@
   left: var(--nl-tooltip-x, 0);
 }
 
+/*
+ * nl:input-focus:*: the field box while its own text input has focus (DESIGN.md §9, NlInputBase). Only NlInputBase
+ * uses it, for the box's focus ring and hover fill. has-focus would also match a focused button in the trailing slot
+ * (the NlPasswordField show/hide), drawing two rings; the button has its own. Classes can't target "the input inside"
+ * without an arbitrary value. Approved by the designer, 19 Nov 2026 (rule 9, from NlPasswordField #46).
+ */
+@custom-variant input-focus (&:has(input:focus));
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {

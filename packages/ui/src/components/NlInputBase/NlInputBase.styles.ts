@@ -2,7 +2,7 @@
 //
 // Structure: root (vertical) → box (named group `field`) → leading slot, prefix, value area (the native <input> with
 // `peer/input`, then the floating <label>), suffix, trailing slot → helper. States come from the input: the box uses
-// has-focus, has-disabled, has-enabled and has-placeholder-shown (the input's placeholder is always a single
+// input-focus (tailwind.css), has-disabled, has-enabled and has-placeholder-shown (the input's placeholder is always a single
 // space, so "placeholder shown" means empty). The label follows the input with peer-* variants.
 
 /** The root: box, then the helper area. Fills its container. */
@@ -10,11 +10,13 @@ export const root = 'nl:flex nl:w-full nl:flex-col';
 
 /**
  * The box: a row, gap Space-M, Radius-M, 1px inside border. Hover fills bg-secondary (enabled and not focused).
- * The focus ring shows on any focus inside the box (OD-44: the standard border-focused ring; the spec draws it on
- * :focus, not only keyboard focus, as text inputs usually do). Colour changes use Duration fast.
+ * The focus ring shows while the box's own input has focus (OD-44: the standard border-focused ring; the spec draws
+ * it on :focus, not only keyboard focus, as text inputs usually do). nl:input-focus (tailwind.css) rather than
+ * has-focus, so a focused trailing button shows only its own ring (approved 19 Nov 2026, rule 9). Colour changes use
+ * Duration fast.
  */
 export const box =
-  'nl:group/field nl:relative nl:flex nl:w-full nl:items-center nl:rounded-m nl:inset-ring nl:hover:has-enabled:not-has-focus:bg-secondary nl:has-focus:outline-2 nl:has-focus:-outline-offset-1 nl:has-focus:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+  'nl:group/field nl:relative nl:flex nl:w-full nl:items-center nl:rounded-m nl:inset-ring nl:hover:has-enabled:not-input-focus:bg-secondary nl:input-focus:outline-2 nl:input-focus:-outline-offset-1 nl:input-focus:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
 
 /** Height, padding and gap per size. Large Size-48, Space-L / Space-XL; small Size-40, Space-M / Space-XL. */
 export const size = {
@@ -28,7 +30,7 @@ export const size = {
  */
 export const border = {
   normal:
-    'nl:inset-ring-default nl:has-enabled:not-has-placeholder-shown:not-has-focus:inset-ring-strong nl:has-disabled:inset-ring-disabled',
+    'nl:inset-ring-default nl:has-enabled:not-has-placeholder-shown:not-input-focus:inset-ring-strong nl:has-disabled:inset-ring-disabled',
   error: 'nl:inset-ring-error nl:has-disabled:inset-ring-disabled',
 } as const;
 
