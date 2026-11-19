@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-31, OD-78, OD-80 to OD-89 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-27, OD-28, OD-31, OD-78, OD-80 to OD-89 decided).
 
 ---
 
@@ -40,7 +40,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #20 to #36, #38 a
 | 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | – | ✅ batch 2 | ✅ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
-| 15 | `NlCalendarDay` | internal | – | `NlCalendar` | OD-27 | ✅ batch 2 | ⬜ |
+| 15 | `NlCalendarDay` | internal | – | `NlCalendar` | – | ✅ batch 2 | ✅ |
 | 16 | `NlListCaption` | internal | – | `NlListItem` | – | ✅ batch 2 | ⬜ |
 | 17 | `NlNavSubItem` | internal | – | `NlNavItem` | OD-30a (resolution proposed, confirm) | ✅ batch 2 | ⬜ |
 | 18 | `NlPaginationItem` | internal | – | `NlPagination` | – | ✅ batch 2 | ⬜ |
@@ -233,8 +233,8 @@ Decide these before building the components listed under "Affects".
 - OD-26 · Content focus ring: 2px inset `border-focused` · Open
 
 **NlCalendarDay**
-- OD-27 · `today` as a separate boolean (combines with selected and range) · Open
-- OD-28 · Focus: standard ring · Open
+- OD-27 · `today` as a separate boolean (combines with selected and range) · **Decided** 19 Nov 2026: approved; no border on filled types, `border-disabled` when disabled
+- OD-28 · Focus: standard ring · **Decided** 19 Nov 2026: approved
 
 **NlListCaption**
 - OD-29 · Disabled colour `text-disabled`, set by the row · Open

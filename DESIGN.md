@@ -592,7 +592,7 @@ _The designer adds rows here before each build._
 | 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ✅ |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
 | 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
-| 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ⬜ |
+| 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ✅ |
 | 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ⬜ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ⬜ |
 | 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ⬜ |
@@ -2255,7 +2255,7 @@ NlAppShell (full window, horizontal)
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlCalendar`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-27, OD-28.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-27 and OD-28 decided 19 Nov 2026.
 
 One day cell in the calendar grid: a 40 × 40 button with the day number. It also draws the range band when it is part of a selected range.
 
@@ -2274,7 +2274,8 @@ NlCalendarDay (cell, 40 × 40; draws the range band)
 | Day | number | `day: number` |
 | Type | default, today, outside, selected, range-start, range-middle, range-end, disabled | `type`, also `data-type` |
 | Today | combines with the other types | `today?: boolean` (see "Mapping notes") |
-| Date | the full date, for the accessible name | `date: string` (ISO), formatted by `NlCalendar` |
+| Date | the full date | `date: string` (ISO), passed back in `onSelect` |
+| Accessible name | the full date as text | `label: string`, formatted by `NlCalendar` ("Monday 3 March") |
 | Select | callback | `onSelect(date)` |
 
 Hover and pressed are CSS states, not props (§7.3).
@@ -2326,8 +2327,48 @@ Enabled, hover, pressed and focus for every type except disabled. Disabled has o
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Today combined with selected or in-range | The reference draws "today" only as its own type | Proposed: `today` is a separate boolean, so today can also be selected or in a range. The border shows on top of any type except selected (where the fill is enough) | **Needs approval** |
-| Focus ring | From the description: 2px `border-focused`, 2 outside | The standard ring from CLAUDE.md (offset −1), as for the switch and app shell | **Needs approval** |
+| Today combined with selected or in-range | The reference draws "today" only as its own type | `today` is a separate boolean, so today can also be selected or in a range. The border shows on top of any type except the filled ones (selected, range-start, range-end), where the fill is enough. On a disabled day it is `border-disabled` | Approved (OD-27) |
+| Focus ring | From the description: 2px `border-focused`, 2 outside | The standard ring from CLAUDE.md (offset −1), as for the switch and app shell | Approved (OD-28) |
+| One-day range | Not drawn | `NlCalendar` passes `selected` (no band) | Designer's choice, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Day | `day: number`, the visible number |
+| Type | `type?: 'default' \| 'outside' \| 'selected' \| 'range-start' \| 'range-middle' \| 'range-end' \| 'disabled'`, default `default`, `data-type` on the cell |
+| Today | `today?: boolean`: `aria-current="date"`, inset ring `border-strong` (not on filled types; `border-disabled` when disabled), `data-today` |
+| Date | `date: string` (ISO), passed to `onSelect(date)` |
+| Accessible name | `label: string` on the button (`aria-label`); it contains the visible number (WCAG 2.5.3) |
+| Select | `onSelect?(date)` on click, Enter or Space; never for a disabled day |
+| Roving focus | `tabIndex`, `ref`, `onKeyDown` and other button attributes go to the button, for `NlCalendar` |
+| Cell | `<div role="gridcell">`, `aria-selected="true"` for selected and range types, draws the band |
+| Disabled | `aria-disabled="true"` (not native `disabled`), stays focusable, no state colours |
+
+#### API
+
+```tsx
+import { NlCalendarDay } from '../NlCalendarDay'; // internal, not exported from @northline/ui
+
+<NlCalendarDay day={3} date="2027-03-03" label="Wednesday 3 March" onSelect={select} />
+<NlCalendarDay day={4} date="2027-03-04" label="Thursday 4 March" type="range-middle" today />
+```
+
+`'use client'` (click handler).
+
+#### Tokens used
+
+The "Sizes and layout" and "Colours" tables, as written: `Size-40`, `Space-none`, `Radius-S` (day; band start or end corners as logical corners), Body M, `bg-active`, `bg-secondary`, `bg-tertiary`, `bg-active-hover`, `bg-action-primary` (+ hovered, pressed), `text-primary`, `text-tertiary`, `text-white-both`, `text-disabled`, `border-strong`, `border-disabled`, the standard focus ring, Duration fast.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| States | The button is never natively disabled, so enabled types use the usual `enabled:hover:` / `enabled:active:`; the disabled type has no state classes at all (no rule 9 exception needed) |
+| Band corners | `rounded-s-s` / `rounded-e-s` (logical), so right-to-left works |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: cells and days 40 × 40; the band joins start, middle and end with 8 (`Radius-S`) on the outer corners. The band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark, so in Dark it is close to invisible: known issue K6, kept as specified (accepted 19 Nov 2026).
 | Range-middle pressed | Same as hover (`bg-active-hover`) | Same | Matches |
 | Size | `Size-40` | `Size-40` | Matches |
 | Radius | `Radius-S` | `Radius-S` | Matches |
@@ -7573,6 +7614,7 @@ Known issues
 | K3 | `text-disabled` on `bg-primary` is under 4.5:1 (3.00 Light, 1.79 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control (a disabled list row, checkbox or menu item). axe can't tell from plain text, so story samples of disabled text are marked `data-a11y-known-issue="K3"`. Found by `pnpm test:a11y` with `NlTextBlock`. Accepted by the designer, 18 Nov 2026 | Accepted |
 | K4 | The disabled `NlBadge` tone's text (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (3.53 Light, 1.60 Dark, every brand). A disabled badge is a status, not an inactive control, so WCAG 1.4.3's exemption doesn't strictly apply. Kept as specified; the label must say the status. Story samples are marked `data-a11y-known-issue="K4"`. Found with `NlBadge`. Accepted by the designer, 18 Nov 2026 | Accepted |
 | K5 | A disabled `NlInputChip`'s label (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (about 3.5 Light, 1.6 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control. axe can't tell, because the chip is a `<span>` (its remove button is left out when disabled), so story samples are marked `data-a11y-known-issue="K5"`. Found by `pnpm test:a11y` with `NlInputChip`. Accepted by the designer, 19 Nov 2026 | Accepted |
+| K6 | The calendar range band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark (every brand), so in Dark the band behind range-middle days is close to invisible. The filled range-start and range-end days still show the range, and the cells carry `aria-selected`. Kept as specified. Found with `NlCalendarDay` (#15). Accepted by the designer, 19 Nov 2026 | Accepted |
 
 ---
 
@@ -7634,3 +7676,4 @@ Known issues
 | 19 Nov 2026 | NlSearchField (#47, public): `type="search"` on `NlInputBase` with a hidden label (default "Search") and placeholder text shown while empty, focused too; leading `search` icon; xsmall clear `NlButton` (`cancel`) while there is text (OD-82 to OD-84). Enter calls `onSearch`; Escape clears and stops when there is text. `NlInputBase` gained `hideLabel` and `placeholder`; `nl:search-cancel-none` hides the browser's clear button. Approved by the designer |
 | 19 Nov 2026 | NlTextAreaBase (#48, internal): native `<textarea>` with a floating label and no hint text (designer's choice), `rows` (default 4 = 128, OD-85), vertical resize only (OD-86), label `text-tertiary` (OD-87 via OD-77); error, disabled and helper text as `NlInputBase`. Approved by the designer |
 | 19 Nov 2026 | NlTextArea (#49, public): multi-line input on `NlTextAreaBase`, no placeholder, value `text-primary` (OD-88). Character count added to the base (OD-89): native `maxLength`, "120 / 500" at the end of the helper line (flush with the box end), limit in the description, polite announcements at 20, 10, 5 and 0 left. Approved by the designer |
+| 19 Nov 2026 | NlCalendarDay (#15, internal): `gridcell` drawing the range band (`bg-active`, `Radius-S` on the outer logical corners) around a 40 × 40 native button named by the full date (`label`); seven types; `today` as a separate boolean (OD-27; no border on filled types, `border-disabled` when disabled); standard focus ring (OD-28); `aria-disabled` days stay focusable. K6 accepted (band near invisible in Dark). Approved by the designer |
