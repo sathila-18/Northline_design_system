@@ -5059,7 +5059,7 @@ The "Colours" table, as written; `Size-40`, `Radius-Full`, padding `Space-M`, `N
 
 **Level** Molecule (contains `NlHelperText`, L1) · **Base** – (this is the base) · **Depends on** `NlHelperText`, `NlIcon` · **Internal**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-44, OD-76, OD-77, OD-78.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-78 (required marker, waits for a design). `type="select"` is added with `NlSelect` (#70). OD-42, OD-43, OD-44, OD-76 and OD-77 decided 19 Nov 2026.
 
 The shared field: an outlined box with a floating label, optional leading and trailing items, and a helper line below. `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect` and `NlDateField` map onto it.
 
@@ -5112,7 +5112,7 @@ NlInputBase (vertical)
 | Hover | `bg-secondary` | `border-default` | as above | as above |
 | Focused / typing | none | `border-default`, plus the focus ring (`border-focused`) | floating, `text-tertiary` | `text-primary` |
 | Complete (filled, not focused) | none | `border-strong` | floating, `text-tertiary` | `text-primary` |
-| Error (any state) | as the state | `border-error`; focus ring `border-error` | as the state | as the state |
+| Error (any state) | as the state | `border-error`; the standard focus ring (OD-44) | as the state | as the state |
 | Disabled | none | `border-disabled` | `text-disabled` | `text-disabled` |
 
 - Icons in the slots: `fg-secondary`; disabled `fg-disabled`.
@@ -5134,14 +5134,57 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. The `placeholder` hint then shows only while focused and empty | **Needs approval** |
+| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. The `placeholder` hint then shows only while focused and empty | Approved (OD-42) |
 | Focus ring | A 2px ring outside, inset 1 (equivalent to the standard ring) | Standard ring from CLAUDE.md, shown on any focus | Matches |
-| Error focus ring | `border-error` | Same | **Needs approval** (CLAUDE.md fixes the ring colour to `border-focused`) |
+| Error focus ring | `border-error` | The standard `border-focused` ring; the error shows in the border, helper text and icon | Decided (OD-44, OD-3): standard ring |
 | Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | `NlHelperText` default tone uses `text-tertiary` everywhere | Approved (OD-43, 19 Nov 2026) |
-| Helper icon | Hidden for default, shown for error in text areas but not in single-line fields | Hidden for default, shown for success, warning and error everywhere | **Needs approval** |
-| Floating label colour | `text-tertiary` in fields, `text-primary` in text areas | `text-tertiary` everywhere | **Needs approval** |
-| Required marker | Not in the reference | Not specified | Open |
+| Helper icon | Hidden for default, shown for error in text areas but not in single-line fields | Hidden for default, shown for success, warning and error everywhere | Approved (OD-76) |
+| Floating label colour | `text-tertiary` in fields, `text-primary` in text areas | `text-tertiary` everywhere | Approved (OD-77) |
+| Required marker | Not in the reference | Native `required` only (announced); no visible marker until one is designed | Open (OD-78) |
 | Types left out | Payment and mobile number | Left out | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'large' \| 'small'`, default `large`, also `data-size` |
+| Type | Default (text input) now; `type="select"` comes with `NlSelect` (#70). The native `type` attribute (`text`, `email`, `password` …) passes to the input |
+| Error | `error?: boolean`: `aria-invalid`, border `border-error`, helper tone `error` with its icon, `data-error` |
+| Label | `label: string`, a real `<label for>` |
+| Placeholder | `placeholder?: string`, a hint shown only while focused and empty (OD-42). Without one the input gets a single space, so "placeholder shown" means empty |
+| Prefix, suffix | `prefix?`, `suffix?`: Body L, `text-placeholder` |
+| Leading, trailing | `leading?`, `trailing?` slots, `fg-secondary` (disabled `fg-disabled`) |
+| Helper text | `helperText?`: `NlHelperText` (`Space-M` below, indented `Space-XL`), id in the input's `aria-describedby`, inside an always-present `aria-live="polite"` region. Icon only for error (OD-76) |
+| Disabled, Required | Native on the input; disabled helper tone `disabled` |
+| Element | Native `<input>`: `value` / `defaultValue`, `onChange`, `name`, `ref` and native attributes go to it; `className` (placement only) to the root |
+
+#### API
+
+```tsx
+import { NlInputBase } from '../NlInputBase'; // internal, not exported from @northline/ui
+
+<NlInputBase label="Member number" placeholder="0042" helperText="On the member card." />
+<NlInputBase label="Member number" error helperText="Enter a member number." />
+```
+
+`'use client'` (`useId`).
+
+#### Tokens used
+
+The "Sizes and layout" and "Colours" tables, as written, with the standard focus ring for errors too (OD-44). The label's position eases with `--nl-duration-fast` and its text style switches (a smooth size change would need a raw scale); no movement under reduced motion.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Floating label in CSS | The label floats on `:focus` or when the input no longer shows its placeholder (has a value), through `peer-*` variants, so controlled and uncontrolled both work |
+| Focus ring timing | The ring shows on any focus inside the box (`has-focus`), as the spec draws it for text inputs; the input's own outline is hidden (`nl:focus:outline-hidden`) |
+| Focus ring and trailing buttons | `has-focus` also matches a focused trailing button (for example the password show/hide), so the box ring shows then too. Revisit with `NlPasswordField` (#46) |
+| Label with a leading item | The label sits in the value area, so with a leading icon it starts after the icon, at rest and floating |
+| Required | Native `required` only until a marker is designed (OD-78) |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: the floating label is centred on the top border and lines up with the value; a filled field turns `border-strong` on blur.
 
 ---
 

@@ -156,7 +156,7 @@ Status: **Open** · **Decided** · **Dropped**
 | – | `Size-320` (§3.5) | Decided | Already in DESIGN.md |
 | OD-1 | `NlButton variant="soft"` (filled `bg-action-secondary`, no border) | Open | Only if OD-40 goes that way. Would change D12. Left out of `NlButtonBase` for now (18 Nov 2026); adding it later is not breaking |
 | OD-2 | `NlTextBlock` types `label` and `body` | **Decided** 18 Nov 2026: both added | See OD-14 and OD-41 |
-| OD-3 | Focus ring colour on fields with an error: `border-error` instead of `border-focused` | Open | Would add an exception to CLAUDE.md's focus ring rule. See OD-44 |
+| OD-3 | Focus ring colour on fields with an error: `border-error` instead of `border-focused` | Decided 19 Nov 2026: no; standard ring (OD-44) | Would add an exception to CLAUDE.md's focus ring rule. See OD-44 |
 | OD-91 | A maximum-width size token for snackbars (for example `Size-560`) | Open | See OD-104 |
 | OD-92 | A time token for snackbar auto-dismiss (for example 6 s) | Open | See OD-105 |
 | OD-121 | Dialog width tokens, for example a small and a large width (480 and 720) in §3.5 | Open | See OD-115 |
@@ -175,9 +175,9 @@ Decide these before building the components listed under "Affects".
 | OD-31 | `NlButton` | Icon-only sizes inside fields | Fields use the xsmall icon-only button (20 icon). Large fields lose the 24 icon | `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlDateField` | Open |
 | OD-40 | `NlNotificationButton` | Its look matches no `NlButton` variant | (b) add `variant="soft"` to `NlButton` (recommended) or (a) its own button as a D12 exception | `NlButton`, `NlPageHeader` | **Decided** 19 Nov 2026: (a) its own native button |
 | OD-41 | `NlCheckbox` | How to get `Body L` text | (b) `NlTextBlock type="body"` (recommended) or (a) `type="display-large"` | `NlTextBlock` | **Decided** 18 Nov 2026: (b), built in `NlTextBlock` |
-| OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | Open |
+| OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | **Decided** 19 Nov 2026: approved |
 | OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | **Decided** 19 Nov 2026: `text-tertiary` |
-| OD-44 | `NlInputBase` | Error focus ring colour | `border-error` (reference) vs `border-focused` (CLAUDE.md) | Every field | Open |
+| OD-44 | `NlInputBase` | Error focus ring colour | `border-error` (reference) vs `border-focused` (CLAUDE.md) | Every field | **Decided** 19 Nov 2026: the standard `border-focused` ring |
 | OD-50 | `NlLabel` | Tone option | Batch 6 makes this stronger: add `tone` (tertiary default, primary, secondary, action). `NlStep` needs three colours, `NlCalendar` weekday names want `text-secondary` | `NlCalendar`, `NlStep` | **Decided** 19 Nov 2026: `tone` added to `NlLabel` (tertiary default, primary, secondary, action) |
 | OD-93 | `NlBanner`, `NlSnackbar` | Their text is recoloured by tone, which `NlTextBlock` can't do | Plain text inside these components, not `NlTextBlock` (inventory dependency for the snackbar goes) | `NlBanner`, `NlSnackbar` | Open |
 | OD-117 | `NlButton` | The table's link cell needs a link button with no inline padding, so its text lines up with the header | `variant="link"` gets no inline padding (instead of tertiary padding) | `NlTableCell`, any inline link | Open |
@@ -330,8 +330,8 @@ Decide these before building the components listed under "Affects".
 
 **NlInputBase**
 - OD-42, OD-43, OD-44: see section 2
-- OD-76 · Helper icon: hidden for default, shown for success, warning and error everywhere · Open
-- OD-77 · Floating label `text-tertiary` everywhere · Open
+- OD-76 · Helper icon: hidden for default, shown for success, warning and error everywhere · **Decided** 19 Nov 2026: approved
+- OD-77 · Floating label `text-tertiary` everywhere · **Decided** 19 Nov 2026: approved
 - OD-78 · Required marker: not specified · Open
 
 **NlTextField**
