@@ -59,3 +59,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlNavSubItem | 2026-11-19 23:27 | 2026-11-19 23:37 | OD-30a, OD-30b approved; tree line utilities in tailwind.css (rule 9, approved); title when cut off. Approved by the designer |
 | NlPaginationItem | 2026-11-19 23:39 | 2026-11-19 23:49 | OD-32 to OD-35 approved; current page does nothing on press; flat story controls for the union props. Approved by the designer |
 | NlPageDot | 2026-11-19 23:51 | 2026-11-20 00:09 | OD-36 to OD-39 and OD-72 approved; width and fill on the same timing. Approved by the designer |
+| NlRowsPerPage | 2026-11-19 16:03 | | Parked 19 Nov (Dark label contrast); resumed 2026-11-20 00:10 |
