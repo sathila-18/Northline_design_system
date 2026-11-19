@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #40 to #49 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-89 decided).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #40 to #49 approved; #50 in progress. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90 decided; OD-50 cleared from Blocked by).
 
 ---
 
@@ -60,7 +60,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #4
 | 27 | `NlButton` | yes | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | `NlNotificationButton`, `NlPasswordField`, `NlSearchField`, `NlCalendar`, `NlBanner`, `NlSnackbar`, `NlButtonDock`, `NlEmptyState`, `NlFileUpload`, `NlDialog`, `NlPagination`, `NlTableCell`, `NlTableColumnFilter`, `NlSideSheet`, `NlPageHeader`, `NlTable`, `NlSideNav` | OD-1 / OD-40, OD-117 | ✅ batch 3 | ✅ |
 | 28 | `NlCheckboxControl` | internal | `NlIcon` | `NlCheckbox`, `NlCheckboxListItem`, `NlTableHeaderCell`, `NlTableCell`, `NlTable` | – | ✅ batch 3 | ✅ |
 | 29 | `NlSpinner` | yes | `NlIcon` | – | OD-61, OD-62 | ✅ batch 3 | ✅ |
-| 30 | `NlLabel` | yes | `NlCountBadge` | `NlCalendar`, `NlStep`, `NlListItemBase`, `NlAccordion`, `NlStatCard`, `NlTableHeaderCell` | OD-50 | ✅ batch 3 | ✅ |
+| 30 | `NlLabel` | yes | `NlCountBadge` | `NlCalendar`, `NlStep`, `NlListItemBase`, `NlAccordion`, `NlStatCard`, `NlTableHeaderCell` | – | ✅ batch 3 | ✅ |
 | 31 | `NlChipBase` | internal | `NlIcon` | `NlFilterChip`, `NlAssistChip`, `NlInputChip` | – | ✅ batch 4 | ✅ |
 | 32 | `NlFilterChip` | yes | `NlChipBase` | – | – | ✅ batch 4 | ✅ |
 | 33 | `NlAssistChip` | yes | `NlChipBase` | – | – | ✅ batch 4 | ✅ |
@@ -85,8 +85,8 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #4
 | 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | – | ✅ batch 5 | ✅ |
 | 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | – | ✅ batch 5 | ✅ |
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ✅ |
-| 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | OD-50 | ✅ batch 5 | ⬜ |
-| 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | OD-50 | ✅ batch 6 | ⬜ |
+| 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | – | ✅ batch 5 | 🟨 |
+| 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | – | ✅ batch 6 | ⬜ |
 | 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-14, OD-15, OD-119 | ✅ batch 6 | ⬜ |
 | 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ⬜ |
 | 54 | `NlCheckboxListItem` | yes | `NlListItemBase`, `NlCheckboxControl` | `NlMultiSelect`, `NlTableColumnFilter` | – | ✅ batch 6 | ⬜ |
@@ -97,7 +97,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #4
 | 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | OD-93, OD-91, OD-92 | ✅ batch 6 | ⬜ |
 | 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ⬜ |
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
-| 62 | `NlStatCard` | yes | `NlLabel` (`NlTextBlock` only if OD-113 is refused) | – | OD-50, OD-113 | ✅ batch 7 | ⬜ |
+| 62 | `NlStatCard` | yes | `NlLabel` (`NlTextBlock` only if OD-113 is refused) | – | OD-113 | ✅ batch 7 | ⬜ |
 | 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | OD-114 | ✅ batch 7 | ⬜ |
 | 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | OD-16, OD-41, OD-115 | ✅ batch 7 | ⬜ |
 | 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
@@ -131,7 +131,7 @@ Build and settle these early. A change to them ripples widely.
 | `NlIcon` | 21 | – |
 | `NlButton` | 17 | OD-1 / OD-40 |
 | `NlTextBlock` | 11 | OD-120 (OD-14, OD-15, OD-16, OD-41 decided) |
-| `NlLabel` | 6 | OD-50 |
+| `NlLabel` | 6 | – |
 | `NlInputBase` | 6 | – |
 | `NlListItemBase` | 5 | OD-14, OD-15 |
 | `NlCheckboxControl` | 5 | – |
@@ -356,7 +356,7 @@ Decide these before building the components listed under "Affects".
 - OD-89 · Character count with `maxLength` · **Decided** 19 Nov 2026: approved; built into `NlTextAreaBase`, hard limit, announced at 20, 10, 5 and 0 left
 
 **NlCalendar**
-- OD-90 · Raw white fills map to `bg-primary` · Open
+- OD-90 · Raw white fills map to `bg-primary` · **Decided** 20 Nov 2026: `bg-primary`
 - OD-50: see section 2
 
 **NlStep**
