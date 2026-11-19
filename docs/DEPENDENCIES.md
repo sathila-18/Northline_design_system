@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #20 to #36, #38 and #40 to #48 approved; #37 parked on its branch; #49 in progress. OD-31, OD-78, OD-80 to OD-89 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-31, OD-78, OD-80 to OD-89 decided).
 
 ---
 
@@ -84,7 +84,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #20 to #36, #38 a
 | 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | – | ✅ batch 5 | ✅ |
 | 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | – | ✅ batch 5 | ✅ |
 | 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | – | ✅ batch 5 | ✅ |
-| 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | 🟨 |
+| 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ✅ |
 | 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | OD-50 | ✅ batch 5 | ⬜ |
 | 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | OD-50 | ✅ batch 6 | ⬜ |
 | 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-14, OD-15, OD-119 | ✅ batch 6 | ⬜ |
