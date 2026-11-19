@@ -56,3 +56,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlTextArea | 2026-11-19 22:34 | 2026-11-19 22:53 | OD-88, OD-89 approved; count built into NlTextAreaBase (hard limit, announced at 20/10/5/0 left); count flush with the box end. Approved by the designer |
 | NlCalendarDay | 2026-11-19 22:55 | 2026-11-19 23:07 | OD-27, OD-28 approved; label prop for the accessible name; one-day range passes selected; K6 accepted (band in Dark). Approved by the designer |
 | NlListCaption | 2026-11-19 23:14 | 2026-11-19 23:24 | OD-29 approved; default weight heavy (Label, designer's choice); one line, never truncated. Approved by the designer |
+| NlNavSubItem | 2026-11-19 23:27 | | |

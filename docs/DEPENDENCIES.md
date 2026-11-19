@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15, #16, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-27 to OD-29, OD-31, OD-78, OD-80 to OD-89 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15, #16, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch; #17 in progress. OD-27 to OD-30b, OD-31, OD-78, OD-80 to OD-89 decided).
 
 ---
 
@@ -42,7 +42,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15, #16, #20 to 
 | 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 15 | `NlCalendarDay` | internal | – | `NlCalendar` | – | ✅ batch 2 | ✅ |
 | 16 | `NlListCaption` | internal | – | `NlListItem` | – | ✅ batch 2 | ✅ |
-| 17 | `NlNavSubItem` | internal | – | `NlNavItem` | OD-30a (resolution proposed, confirm) | ✅ batch 2 | ⬜ |
+| 17 | `NlNavSubItem` | internal | – | `NlNavItem` | – | ✅ batch 2 | 🟨 |
 | 18 | `NlPaginationItem` | internal | – | `NlPagination` | – | ✅ batch 2 | ⬜ |
 | 19 | `NlPageDot` | internal | – | `NlPageDots` | OD-36 | ✅ batch 2 | ⬜ |
 
@@ -240,8 +240,8 @@ Decide these before building the components listed under "Affects".
 - OD-29 · Disabled colour `text-disabled`, set by the row · **Decided** 19 Nov 2026: approved
 
 **NlNavSubItem**
-- OD-30a · Tree line position: the icon centre, `Space-L` + half of `Size-20` from the row's start (worked out in the `NlNavItem` spec, matches the reference) · Open, resolution proposed, confirm
-- OD-30b · Focus: standard ring · Open
+- OD-30a · Tree line position: the icon centre, `Space-L` + half of `Size-20` from the row's start (worked out in the `NlNavItem` spec, matches the reference) · **Decided** 19 Nov 2026: approved, through `nl:nav-tree-line`
+- OD-30b · Focus: standard ring · **Decided** 19 Nov 2026: approved
 
 **NlPaginationItem**
 - OD-32 · Minimum width `Size-32`, hugs longer numbers · Open

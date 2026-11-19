@@ -2473,7 +2473,7 @@ Checked in the browser: heavy 12 / 14 / 16 at weight 500, light 12 / 14 / 16 reg
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlNavItem`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-30a, OD-30b.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-30a and OD-30b decided 19 Nov 2026.
 
 A page link under an expanded section in the side nav. In the tree style, a thin line connects it to its section.
 
@@ -2530,12 +2530,47 @@ Default, hover, pressed, selected, focus. There is no disabled state in the refe
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Tree line horizontal position | From the reference's description: under the section icon centre, given as raw distances from the left edge | No token covers those offsets. Proposed: work it out from `NlNavItem`'s padding and icon size (icon centre = item padding + half of `Size-20`), and settle it in the `NlNavItem` spec | **Needs approval** |
+| Tree line horizontal position | From the reference's description: under the section icon centre, given as raw distances from the left edge | `NlNavItem`'s padding + half the icon: `Space-L` + half `Size-20` = 22 from the start, through the `nl:nav-tree-line` utility (rule 9) | Approved (OD-30a) |
 | Tree line ends | `Space-XS` above, `Space-XS` before the text, `Radius-S` curve | Same | Matches |
 | Width | Drawn 280 wide | Fills the nav | Matches |
 | Selected background | `bg-primary` (a white chip on the grey nav) | Same | Matches |
 | Pressed background | `bg-neutral` | Same. In Light it equals `bg-tertiary` today, so hover and pressed look the same (K1) | Known issue K1 |
-| Focus | Not drawn | Standard ring from CLAUDE.md | **Needs approval** |
+| Focus | Not drawn | Standard ring from CLAUDE.md | Approved (OD-30b) |
+| Cut-off text | Not drawn | The full text as `title`, only when it is cut off (measured after layout and on resize) | Approved, 19 Nov 2026 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Selected | `current?: boolean`: `aria-current="page"`, `bg-primary`, `text-action` (no hover change), `data-current` |
+| Tree | `tree?: 'none' \| 'middle' \| 'last'`, default `none`, `data-tree`. Middle and last draw the curve leg; middle also draws the continuation. Both `aria-hidden` |
+| Text | `children`: Label M, one line, ellipsis; the full text as `title` when cut off (a caller's `title` wins) |
+| Link | `as?: ElementType`, default `'a'`; `href`, `ref` and other attributes go to it; `className` (placement only) appended last |
+
+#### API
+
+```tsx
+import { NlNavSubItem } from '../NlNavSubItem'; // internal, not exported from @northline/ui
+
+<NlNavSubItem href="/members" tree="middle">Members</NlNavSubItem>
+<NlNavSubItem as={RouterLink} to="/tiers" tree="last" current>Tiers</NlNavSubItem>
+```
+
+`'use client'` (the cut-off measuring).
+
+#### Tokens used
+
+Padding `Space-M` block, `Space-XL` end, `Space-6XL` start; `Radius-M`; Label M; `bg-secondary`, `bg-tertiary` (hover), `bg-neutral` (pressed, K1), `bg-primary` (selected); `text-secondary`, `text-action`; tree line 1px `border-default`, `Radius-S` curve, positioned from `Space-L`, `Size-20`, `Space-XS` and `Space-6XL`; the standard focus ring; Duration fast.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Tree line utilities | `nl:nav-tree-line` (curve leg: from `Space-XS` above the item to its middle, ending `Space-XS` before the text) and `nl:nav-tree-continue` (middle to bottom) in `tailwind.css`, position and size only (rule 9, approved 19 Nov 2026) |
+| Gap between pages | The curve leg starts `Space-XS` above the item, so it bridges `NlNavItem`'s `Space-XS` gap and joins the item above |
+| Selected hover | None: the spec gives no hover for the current page |
+
+Checked in the browser: line at 22, curve ending at 36, text at 40; the curve meets the item's middle; middle items reach the next item's line; long text gets its full title.
 
 ---
 
