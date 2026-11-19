@@ -4500,7 +4500,7 @@ Enabled, hover, pressed / open, focus, disabled. Pressed, open and disabled are 
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used only by `NlNavItem`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-71.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-71 decided 19 Nov 2026.
 
 The icon of a side nav section, which changes colour (and fill) when its section is current.
 
@@ -4542,9 +4542,38 @@ Unselected and selected. Hover and pressed come from `NlNavItem`, which may chan
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Selected fill | Colour change only in the drawing | Filled glyph when selected, as §6 asks for active states | **Needs approval** |
+| Selected fill | Colour change only in the drawing | Filled glyph when selected, as §6 asks for active states | Approved (OD-71) |
 | Colours | `fg-secondary`, `fg-active` | Same | Matches |
 | Size | 20 | `Size-20` | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Selected | `selected: boolean` (set by `NlNavItem`), also `data-selected`. `fg-active` and `NlIcon filled` when on |
+| Icon | `name: NlIconName`, `NlIcon` 20 |
+| Element | `<span aria-hidden="true">`, `Size-20`, no padding. Native attributes and `ref` go to it, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlNavIcon } from '../NlNavIcon'; // internal, not exported from @northline/ui
+
+<NlNavIcon name="person" selected={isCurrent} />
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+`fg-secondary` (unselected), `fg-active` (selected), `Size-20`. Colour changes use `--nl-duration-fast`, none under reduced motion.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| No states of its own | `NlNavItem` keeps the icon `fg-secondary` on hover and pressed, so only `selected` changes it |
+| Glyphs without a fill | Some glyphs (for example `search`) look the same filled; for those only the colour changes |
 
 ---
 
