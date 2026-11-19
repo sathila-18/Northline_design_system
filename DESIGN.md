@@ -3845,6 +3845,7 @@ NlChipBase (rounded, horizontal)
 | Label | text | `children` |
 | Leading | off, or a slot | `leading?: ReactNode` |
 | Trailing icon | off, or a registry name | `trailingIcon?: NlIconName` |
+| Trailing slot | off, or a slot (for `NlInputChip`'s remove button) | `trailing?: ReactNode`, instead of `trailingIcon` (designer's choice, 19 Nov 2026) |
 
 #### Sizes and layout
 
@@ -3883,6 +3884,41 @@ The element and role come from the mapped chip: a toggle button (filter), a butt
 | Leading slot gap | A raw 10 gap in one size's leading slot, with a single child | No gap | Matches |
 | Shadow | A "resting cards" shadow (0 1 3, black at 5%) | `--nl-shadow-resting` | Matches |
 | Padding, gaps, radius, text styles | As in the table | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Look | `look?: 'unselected' \| 'unselected-bordered' \| 'selected'`, default `unselected`, also `data-look` |
+| Size | `size?: 'xsmall' \| 'small' \| 'large'`, default `small` (designer's choice, 19 Nov 2026), also `data-size` |
+| Label | `children`, in `<span data-slot="label">` |
+| Leading | `leading?: ReactNode` in a slot that carries the leading colour; an `NlIcon` with `tone="inherit"` follows it |
+| Trailing | `trailingIcon?: NlIconName` (decorative `NlIcon` at the size's icon size) or `trailing?: ReactNode` (a slot); the types allow one or the other |
+| Colours | The look's resting colours, or `appearance?: { chip, leading, trailing }` from the mapped chip, which replaces them (with states). The root carries the named group `chip` |
+| Element | `as` (default `span`; a button for filter and assist chips). Button props in the types, as `NlButtonBase`. Native attributes and `ref` go to the element, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlChipBase } from '../NlChipBase'; // internal, not exported from @northline/ui
+
+<NlChipBase look="selected" leading={<NlIcon name="check" size={16} tone="inherit" />} trailingIcon="keyboard_arrow_down">
+  This week
+</NlChipBase>
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Padding / gap / text | xsmall `Space-XS` / `Space-M`, `Space-XS`, `Label S`; small `Space-S` / `Space-L`, `Space-M`, `Label M`; large `Space-M` / `Space-L`, `Space-M`, `Label L` |
+| Icons | 16, 16, 20 |
+| Shape | `Radius-S`, 1px inset ring |
+| Colours | The "Colours (resting)" table, as written; `--nl-shadow-resting` (`nl:shadow-resting`) on unselected-bordered |
+
+Rendered heights measured in the browser: 26, 33 and 40, as in the reference.
 
 ---
 
