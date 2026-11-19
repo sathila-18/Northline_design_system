@@ -596,7 +596,7 @@ _The designer adds rows here before each build._
 | 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ✅ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ✅ |
 | 18 | Pagination item (internal) | `NlPaginationItem` | – | [§9](#nlpaginationitem) | ✅ |
-| 19 | Page dot (internal) | `NlPageDot` | – | [§9](#nlpagedot) | ⬜ |
+| 19 | Page dot (internal) | `NlPageDot` | – | [§9](#nlpagedot) | ✅ |
 
 ### 8.2 Atoms L1
 
@@ -2681,7 +2681,7 @@ Checked in the browser: 9 and 99 are 32 square; 100 is 32 to 33 wide and 1250 is
 
 **Level** Atom L0 · **Base** none · **Depends on** nothing · **Internal** (used only by `NlPageDots`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-36, OD-37, OD-38, OD-39.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-36 to OD-39 decided 19 Nov 2026.
 
 One dot in a page indicator. The current page shows as a longer pill.
 
@@ -2702,7 +2702,7 @@ NlPageDot (dot or pill)
 | Type | Width | Height | Radius |
 |---|---|---|---|
 | default | `Size-6` | `Size-6` | `Radius-Full` |
-| selected | see "Mapping notes" | `Size-6` | `Radius-Full` |
+| selected | `Size-24` (OD-36) | `Size-6` | `Radius-Full` |
 
 - Width changes between the two with `--nl-duration-base`, `--nl-ease-standard`. Reduced motion: no animation.
 
@@ -2726,10 +2726,40 @@ None. Not interactive in the reference.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Selected width | Raw 22 | No `Size-22` token. Proposed: `Size-24` (closest; 2 wider) | **Needs approval** |
-| Radius | Raw 8 on a 6-tall shape (fully round) | `Radius-Full` | **Needs approval** |
-| Width animation | Not in the reference | `--nl-duration-base`, none under reduced motion | **Needs approval** |
-| Clickable dots | Not in the reference | Not interactive. If dots must move between pages, that needs a new spec | Open |
+| Selected width | Raw 22 | No `Size-22` token: `Size-24` (closest; 2 wider) | Approved (OD-36) |
+| Radius | Raw 8 on a 6-tall shape (fully round) | `Radius-Full` | Approved (OD-37) |
+| Width animation | Not in the reference | Width and fill with `--nl-duration-base` and `--nl-ease-standard`, none under reduced motion | Approved (OD-38) |
+| Clickable dots | Not in the reference | Not interactive. If dots must move between pages, that needs a new spec | Decided (OD-39, with OD-72): not interactive |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `current?: boolean`: `Size-24` wide, `fg-brand`; default `Size-6`, `fg-placeholder`; `data-current` |
+| Element | `<span aria-hidden="true">`, empty, not interactive; `ref` and attributes pass through; `className` (placement only) appended last |
+
+#### API
+
+```tsx
+import { NlPageDot } from '../NlPageDot'; // internal, not exported from @northline/ui
+
+<NlPageDot />
+<NlPageDot current />
+```
+
+Presentational (no `'use client'`).
+
+#### Tokens used
+
+`Size-6` (height, default width), `Size-24` (current width), `Radius-Full`, `fg-placeholder`, `fg-brand` (as fills), `--nl-duration-base`, `--nl-ease-standard`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Animation | `transition-all` so width and fill change together; `motion-reduce:transition-none` |
+
+Checked in the browser: dots 6 × 6, the current pill 24 × 6, fully round; moving a page eases both widths over Duration base.
 
 ---
 
@@ -4731,7 +4761,7 @@ Presentational, so no `'use client'`.
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlPageDot` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-72.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-72 decided 19 Nov 2026 (not interactive, with OD-39).
 
 A row of 3 to 5 dots showing which page or step of a short sequence is current, for example in an onboarding panel or a card carousel.
 
@@ -4775,7 +4805,7 @@ None. Not interactive.
 |---|---|---|---|
 | Gap | `Space-XS` | Same | Matches |
 | Size property | Only "Small" exists | No size prop | Matches |
-| Interactive dots | Not in the reference | Not interactive. A carousel that needs clickable dots needs a new spec | Open |
+| Interactive dots | Not in the reference | Not interactive. A carousel that needs clickable dots needs a new spec | Decided (OD-72, with OD-39): not interactive |
 | Count limit | 3 to 5 | Same | Matches |
 
 ---
@@ -7789,3 +7819,4 @@ Known issues
 | 19 Nov 2026 | NlListCaption (#16, internal): one-line trailing text for list rows; small, medium (default) and large; heavy (Label, default; designer's choice) and light (Body); `text-tertiary`, `text-disabled` when the row is disabled (OD-29). Approved by the designer |
 | 19 Nov 2026 | NlNavSubItem (#17, internal): side nav page link (`as`, default `<a>`), Label M with an ellipsis and the full text as `title` when cut off; default, hover, pressed (K1) and current colours; standard focus ring (OD-30b); optional tree line under the section icon centre (OD-30a) through the `nl:nav-tree-line` and `nl:nav-tree-continue` utilities (rule 9). Approved by the designer |
 | 19 Nov 2026 | NlPaginationItem (#18, internal): page number button ("Page 3", Label M, minimum `Size-32`, hugs long numbers, OD-32) or the "…" gap (one character, `aria-hidden`, OD-35); hover and pressed the same (OD-33); standard focus ring (OD-34); the current page keeps its look and doesn't select. Approved by the designer |
+| 19 Nov 2026 | NlPageDot (#19, internal): decorative `Size-6` dot in `fg-placeholder`; the current page a `Size-24` pill in `fg-brand` (OD-36), `Radius-Full` (OD-37); width and fill ease with Duration base (OD-38); not interactive (OD-39, OD-72). Approved by the designer |
