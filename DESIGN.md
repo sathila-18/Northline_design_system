@@ -611,7 +611,7 @@ _The designer adds rows here before each build._
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ✅ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ✅ |
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ✅ |
-| 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
+| 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ✅ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ⬜ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
@@ -6938,3 +6938,4 @@ Known issues
 | 18 Nov 2026 | NlDestructiveButton (#26, internal): primary (`bg-action-destructive`), secondary (2px inset ring `border-error`) and tertiary (`text-error`) at rest, built on `NlButtonBase` with a fixed `appearance` per variant; no link form. §8 dependency changed to `NlButtonBase`; D12 updated. Approved by the designer |
 | 19 Nov 2026 | NlButton (#27, public): picks the base by tone; hover, pressed, expanded (pressed look) and disabled states for every tone and variant; tertiary content tones; disabled links lose `href` and get `aria-disabled`. Link underline on a new label span in `NlButtonBase`. OD-55 to OD-59 decided; `not-disabled:not-aria-disabled:` state selectors approved as a rule 9 exception. Approved by the designer |
 | 19 Nov 2026 | NlCheckboxControl (#28, internal): native checkbox under a drawn Size-20 box in a Size-24 hit area; unselected, selected and indeterminate (`check` / `remove`, OD-60) with hover, pressed, disabled and focus (ring on the hit area, Radius-XS); indeterminate set through a ref. Approved by the designer |
+| 19 Nov 2026 | NlSpinner (#29, public): SVG ring (4 stroke, artwork) turning once per Duration pulse, or a value arc; success (`check`) and error (`warning`) results; always-present status region announces the result. Spinner utilities in tailwind.css. OD-61 to OD-64 decided. Approved by the designer |
