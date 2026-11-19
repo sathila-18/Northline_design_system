@@ -620,7 +620,7 @@ _The designer adds rows here before each build._
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ✅ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ✅ |
 | 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
-| 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ⬜ |
+| 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ✅ |
 | 39 | Page dots | `NlPageDots` | `NlPageDot` | [§9](#nlpagedots) | ⬜ |
 | 40 | Tooltip | `NlTooltip` | `NlTextBlock` | [§9](#nltooltip) | ⬜ |
 
@@ -4500,7 +4500,7 @@ Enabled, hover, pressed / open, focus, disabled. Pressed, open and disabled are 
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used only by `NlNavItem`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-71.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-71 decided 19 Nov 2026.
 
 The icon of a side nav section, which changes colour (and fill) when its section is current.
 
@@ -4542,9 +4542,38 @@ Unselected and selected. Hover and pressed come from `NlNavItem`, which may chan
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Selected fill | Colour change only in the drawing | Filled glyph when selected, as §6 asks for active states | **Needs approval** |
+| Selected fill | Colour change only in the drawing | Filled glyph when selected, as §6 asks for active states | Approved (OD-71) |
 | Colours | `fg-secondary`, `fg-active` | Same | Matches |
 | Size | 20 | `Size-20` | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Selected | `selected: boolean` (set by `NlNavItem`), also `data-selected`. `fg-active` and `NlIcon filled` when on |
+| Icon | `name: NlIconName`, `NlIcon` 20 |
+| Element | `<span aria-hidden="true">`, `Size-20`, no padding. Native attributes and `ref` go to it, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlNavIcon } from '../NlNavIcon'; // internal, not exported from @northline/ui
+
+<NlNavIcon name="person" selected={isCurrent} />
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+`fg-secondary` (unselected), `fg-active` (selected), `Size-20`. Colour changes use `--nl-duration-fast`, none under reduced motion.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| No states of its own | `NlNavItem` keeps the icon `fg-secondary` on hover and pressed, so only `selected` changes it |
+| Glyphs without a fill | Some glyphs (for example `search`) look the same filled; for those only the colour changes |
 
 ---
 
@@ -7202,3 +7231,4 @@ Known issues
 | 19 Nov 2026 | NlInputChip (#34, public): chosen value on `NlChipBase` (bordered) with a native remove button (close 16/20 in a 24 target, Backspace and Delete remove, name "Remove {label}"); disabled has no remove button. K5 accepted. Approved by the designer |
 | 19 Nov 2026 | NlSegment (#35, internal): native radio under drawn content; medium, small, xsmall (40, 32, 24; icon-only 36, 28, 24); filled icon when selected; OD-67 and OD-68 decided. Approved by the designer |
 | 19 Nov 2026 | NlHelperText (#36, public): five tones (default `text-tertiary`, OD-43; error glyph `error`, OD-69), optional decorative icon centred on the first line (OD-70), described-by id. Approved by the designer |
+| 19 Nov 2026 | NlNavIcon (#38, internal): decorative 20 icon, `fg-secondary`, or `fg-active` and filled when selected (OD-71). Approved by the designer |

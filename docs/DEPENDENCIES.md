@@ -308,7 +308,7 @@ Decide these before building the components listed under "Affects".
 - OD-43: see section 2
 
 **NlNavIcon**
-- OD-71 · Filled glyph when selected · Open
+- OD-71 · Filled glyph when selected · **Decided** 19 Nov 2026: approved
 
 **NlPageDots**
 - OD-72 · Clickable dots: not specified · Open
