@@ -152,6 +152,21 @@
  */
 @custom-variant input-focus (&:has(input:focus));
 
+/*
+ * nl:search-cancel-none: hides the browser's own clear button and decoration in <input type="search"> (DESIGN.md §9,
+ * NlSearchField). Set on NlInputBase's input, so it only acts on the search type: NlSearchField draws its own clear
+ * NlButton, and WebKit and Blink would add a second one. Firefox draws none. Classes can't reach these
+ * pseudo-elements. Approved by the designer, 19 Nov 2026 (rule 9).
+ */
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- & is the element the utility applies to (Tailwind 4) */
+@utility search-cancel-none {
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    appearance: none;
+  }
+}
+/* stylelint-enable nesting-selector-no-missing-scoping-root */
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {
