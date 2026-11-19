@@ -614,7 +614,7 @@ _The designer adds rows here before each build._
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ✅ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ✅ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ✅ |
-| 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
+| 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ✅ |
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ⬜ |
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ⬜ |
@@ -3964,7 +3964,7 @@ As `NlChipBase`. Base look: `unselected` when off, `selected` when on.
 | on | disabled | `bg-disabled` | `border-disabled` | `text-disabled-on_bg` |
 | any | focus | as above, plus the standard focus ring from CLAUDE.md (`border-focused`) | | |
 
-A leading icon follows the label colour, except when on and enabled or hovered, where it uses `fg-brand`.
+A leading icon follows the label colour (`fg-primary` off, `fg-white_both` pressed, `fg-disabled-on_bg` disabled), except when on and enabled or hovered, where it uses `fg-brand` (designer's choice, 19 Nov 2026: `fg-primary` off, not the base's `fg-secondary`).
 
 #### States
 
@@ -3985,6 +3985,32 @@ Enabled, hover, pressed, focus, disabled, each off and on.
 | Off-state hover border | The border disappears on hover | Kept as in the reference | Matches |
 | Focus | Not drawn | Standard ring from CLAUDE.md | Matches the rule |
 | Default size | Not set | `small` | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Selected | `selected` (controlled) or `defaultSelected` (uncontrolled, default off), `onSelectedChange(selected)`. `aria-pressed`, `data-selected`. An `onClick` that calls `preventDefault()` stops the toggle |
+| Size | `size?: 'xsmall' \| 'small' \| 'large'`, default `small` |
+| Disabled | `disabled` (native) |
+| Label | `children`, the accessible name |
+| Leading icon | `leadingIcon?: NlIconName`, `NlIcon` 16 / 16 / 20, decorative |
+| Base | `NlChipBase` with `as="button"`, `type="button"`, `look` `unselected` (off) or `selected` (on), and the state colours as `appearance` |
+
+#### API
+
+```tsx
+import { NlFilterChip } from '@northline/ui';
+
+<NlFilterChip>Active members</NlFilterChip>
+<NlFilterChip selected={on} onSelectedChange={setOn} leadingIcon="check">Tier 2</NlFilterChip>
+```
+
+`'use client'` (uncontrolled state). `ref`, `className` (placement only) and native button attributes go to the button.
+
+#### Tokens used
+
+The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0. Focus: the standard ring, following `Radius-S`. Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
 
 ---
 
@@ -7018,3 +7044,4 @@ Known issues
 | 19 Nov 2026 | NlSpinner (#29, public): SVG ring (4 stroke, artwork) turning once per Duration pulse, or a value arc; success (`check`) and error (`warning`) results; always-present status region announces the result. Spinner utilities in tailwind.css. OD-61 to OD-64 decided. Approved by the designer |
 | 19 Nov 2026 | NlLabel (#30, public): Label M / Label S, `tone` (tertiary, primary, secondary, action; OD-50), optional `NlCountBadge` dot with `badgeTone` and required `badgeLabel` (OD-65), `as="label"` for form controls (OD-66). Approved by the designer |
 | 19 Nov 2026 | NlChipBase (#31, internal): unselected, unselected-bordered and selected looks at rest; xsmall, small (default) and large (26, 33, 40 high); leading slot, trailing icon or `trailing` slot; `appearance` and `as` for the mapped chips. Approved by the designer |
+| 19 Nov 2026 | NlFilterChip (#32, public): toggle button (`aria-pressed`) on `NlChipBase`, controlled or uncontrolled; off/on × enabled, hover, pressed, disabled and focus as in the spec; leading icon `fg-primary` off, `fg-brand` on. Approved by the designer |
