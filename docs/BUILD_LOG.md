@@ -49,3 +49,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlCheckbox | 2026-11-19 17:34 | 2026-11-19 17:43 | OD-15/OD-41 already settled by NlTextBlock; label row kept (designer's choice). Approved by the designer |
 | NlNotificationButton | 2026-11-19 17:52 | 2026-11-19 18:08 | OD-40 (a) own button; notifications icon added; name uses "99+" (WCAG 2.5.3). Approved by the designer |
 | NlInputBase | 2026-11-19 18:10 | 2026-11-19 18:24 | OD-42, OD-44, OD-76, OD-77 decided; OD-78 open; select type deferred to #70; label floats via peer variants. Approved by the designer |
+| NlTextField | 2026-11-19 18:27 | | |

@@ -335,7 +335,7 @@ Decide these before building the components listed under "Affects".
 - OD-78 · Required marker: not specified · Open
 
 **NlTextField**
-- OD-79 · Trailing icon: any registry icon, decorative · Open
+- OD-79 · Trailing icon: any registry icon, decorative · **Decided** 19 Nov 2026: approved
 
 **NlPasswordField**
 - OD-80 · Toggle as an `NlButton` (see OD-31 for size) · Open

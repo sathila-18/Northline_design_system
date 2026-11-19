@@ -5192,7 +5192,7 @@ Checked in the browser: the floating label is centred on the top border and line
 
 **Level** Molecule (mapped, takes its base's level) · **Base** `NlInputBase` · **Depends on** – · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-79.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-79 decided 19 Nov 2026.
 
 A single-line text input, for names, codes, amounts and search terms that need a label.
 
@@ -5224,7 +5224,33 @@ As `NlInputBase`. A decorative trailing icon is `aria-hidden`. If an icon needs 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Types | Default, mobile number, payment | Default only (D13 leaves out the others) | Matches |
-| Trailing icon | An info icon in the reference | Any registry icon, decorative | **Needs approval** |
+| Trailing icon | An info icon in the reference | Any registry icon, decorative | Approved (OD-79) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'large' \| 'small'`, default `large`, passed to `NlInputBase` |
+| Trailing icon | `trailingIcon?: NlIconName`: a decorative `NlIcon` (24 large, 20 small) in the base's trailing slot (OD-79) |
+| Error | `error?: boolean`, passed to the base |
+| Input type | `inputType?: 'text' \| 'email' \| 'number' \| 'tel' \| 'url'`, default `text`: the native `type` |
+| Value | `value` / `defaultValue`, `onChange` |
+| Everything else | `label`, `placeholder`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `name`, `ref` and native attributes, passed to the base. No `leading` or `trailing` slots |
+
+#### API
+
+```tsx
+import { NlTextField } from '@northline/ui';
+
+<NlTextField label="Email" inputType="email" placeholder="member@example.org" />
+<NlTextField label="Member number" trailingIcon="info" helperText="On the member card." />
+```
+
+No `'use client'` of its own (`NlInputBase` has it).
+
+#### Tokens used
+
+None of its own: everything from `NlInputBase`; the trailing icon is `fg-secondary` through the base's slot.
 
 ---
 
