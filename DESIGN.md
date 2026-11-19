@@ -613,7 +613,7 @@ _The designer adds rows here before each build._
 | 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ✅ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ✅ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ✅ |
-| 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
+| 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ✅ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ⬜ |
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ⬜ |
@@ -7017,3 +7017,4 @@ Known issues
 | 19 Nov 2026 | NlCheckboxControl (#28, internal): native checkbox under a drawn Size-20 box in a Size-24 hit area; unselected, selected and indeterminate (`check` / `remove`, OD-60) with hover, pressed, disabled and focus (ring on the hit area, Radius-XS); indeterminate set through a ref. Approved by the designer |
 | 19 Nov 2026 | NlSpinner (#29, public): SVG ring (4 stroke, artwork) turning once per Duration pulse, or a value arc; success (`check`) and error (`warning`) results; always-present status region announces the result. Spinner utilities in tailwind.css. OD-61 to OD-64 decided. Approved by the designer |
 | 19 Nov 2026 | NlLabel (#30, public): Label M / Label S, `tone` (tertiary, primary, secondary, action; OD-50), optional `NlCountBadge` dot with `badgeTone` and required `badgeLabel` (OD-65), `as="label"` for form controls (OD-66). Approved by the designer |
+| 19 Nov 2026 | NlChipBase (#31, internal): unselected, unselected-bordered and selected looks at rest; xsmall, small (default) and large (26, 33, 40 high); leading slot, trailing icon or `trailing` slot; `appearance` and `as` for the mapped chips. Approved by the designer |
