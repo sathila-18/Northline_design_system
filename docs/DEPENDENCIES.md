@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #17, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-27 to OD-30b, OD-31, OD-78, OD-80 to OD-89 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #18, #20 to #36, #38 and #40 to #49 approved; #37 parked on its branch. OD-27 to OD-35, OD-78, OD-80 to OD-89 decided).
 
 ---
 
@@ -43,7 +43,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #17, #20 t
 | 15 | `NlCalendarDay` | internal | – | `NlCalendar` | – | ✅ batch 2 | ✅ |
 | 16 | `NlListCaption` | internal | – | `NlListItem` | – | ✅ batch 2 | ✅ |
 | 17 | `NlNavSubItem` | internal | – | `NlNavItem` | – | ✅ batch 2 | ✅ |
-| 18 | `NlPaginationItem` | internal | – | `NlPagination` | – | ✅ batch 2 | ⬜ |
+| 18 | `NlPaginationItem` | internal | – | `NlPagination` | – | ✅ batch 2 | ✅ |
 | 19 | `NlPageDot` | internal | – | `NlPageDots` | OD-36 | ✅ batch 2 | ⬜ |
 
 ### Atoms L1
@@ -244,10 +244,10 @@ Decide these before building the components listed under "Affects".
 - OD-30b · Focus: standard ring · **Decided** 19 Nov 2026: approved
 
 **NlPaginationItem**
-- OD-32 · Minimum width `Size-32`, hugs longer numbers · Open
-- OD-33 · Pressed state: same as hover · Open
-- OD-34 · Focus: standard ring · Open
-- OD-35 · Ellipsis: one "…" character · Open
+- OD-32 · Minimum width `Size-32`, hugs longer numbers · **Decided** 19 Nov 2026: approved
+- OD-33 · Pressed state: same as hover · **Decided** 19 Nov 2026: approved
+- OD-34 · Focus: standard ring · **Decided** 19 Nov 2026: approved
+- OD-35 · Ellipsis: one "…" character · **Decided** 19 Nov 2026: approved
 
 **NlPageDot**
 - OD-36 · Selected width `Size-24` (reference 22) · Open
