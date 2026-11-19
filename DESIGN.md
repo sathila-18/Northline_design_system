@@ -629,7 +629,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 41 | Segmented button | `NlSegmentedButton` | `NlSegment`, `NlTooltip` | [§9](#nlsegmentedbutton) | ✅ |
-| 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ⬜ |
+| 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ✅ |
 | 43 | Notification button | `NlNotificationButton` | `NlButton`, `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ⬜ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ⬜ |
 | 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ⬜ |
@@ -7358,3 +7358,4 @@ Known issues
 | 19 Nov 2026 | NlNavIcon (#38, internal): decorative 20 icon, `fg-secondary`, or `fg-active` and filled when selected (OD-71). Approved by the designer |
 | 19 Nov 2026 | NlTooltip (#40, public): single-line and rich tooltip, `role="tooltip"` described-by trigger, hover delay (OD-73), keyboard focus, Escape, hoverable transparent frame, floating-ui placement with flips (OD-74), `nl:tooltip-position` utility. Light box in Dark (`bg-direct`) accepted. Approved by the designer |
 | 19 Nov 2026 | NlSegmentedButton (#41, public): radiogroup of 2 or 3 `NlSegment`s (OD-75), sizes 48/40/24, icon-only with `NlTooltip`, Home and End, disabled group. Disabled selected matches the track (noted, as specified). Approved by the designer |
+| 19 Nov 2026 | NlCheckbox (#42, public): label row of `NlCheckboxControl` and `NlTextBlock type="body"`, hidden-label option, disabled text (K3). Approved by the designer |
