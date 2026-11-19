@@ -88,7 +88,7 @@ describe('NlTextAreaBase', () => {
     expect(helper).toHaveAttribute('data-tone', 'default');
     expect(helper?.querySelector('[data-slot="icon"]')).toBeNull();
     expect(helper?.parentElement).toHaveAttribute('aria-live', 'polite');
-    expect(helper?.parentElement).toHaveClass('nl:ps-xl');
+    expect(helper?.parentElement?.parentElement).toHaveClass('nl:ps-xl');
   });
 
   it('keeps the live region when there is no helper text', () => {
@@ -138,7 +138,7 @@ describe('NlTextAreaBase', () => {
     expect(textarea).toHaveAttribute('id', 'notes');
     expect(textarea).toBeRequired();
     expect(textarea).toHaveAttribute('maxlength', '200');
-    expect(textarea).toHaveAccessibleDescription('Extra Help');
+    expect(textarea).toHaveAccessibleDescription('Extra Help Up to 200 characters.');
     expect(container.querySelector('.nl\\:mt-xl')).toBe(boxOf(textarea).parentElement);
   });
 });

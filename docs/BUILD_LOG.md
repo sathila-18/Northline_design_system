@@ -53,3 +53,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlPasswordField | 2026-11-19 21:36 | 2026-11-19 21:47 | OD-31, OD-78, OD-80, OD-81 decided; fixed toggle name with aria-pressed; NlInputBase ring via nl:input-focus (rule 9, approved). Approved by the designer |
 | NlSearchField | 2026-11-19 22:02 | 2026-11-19 22:16 | OD-82 to OD-84 decided; hidden label with placeholder shown while focused (designer's choice); hideLabel and placeholder added to NlInputBase; search-cancel-none utility (rule 9, approved). Approved by the designer |
 | NlTextAreaBase | 2026-11-19 22:23 | 2026-11-19 22:32 | OD-85, OD-86, OD-87 decided; no placeholder (designer's choice); padding on the textarea so the resize handle sits in the corner. Approved by the designer |
+| NlTextArea | 2026-11-19 22:34 | | |

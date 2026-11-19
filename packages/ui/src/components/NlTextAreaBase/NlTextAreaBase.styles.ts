@@ -44,8 +44,26 @@ export const textarea =
 export const label =
   'nl:pointer-events-none nl:absolute nl:start-xl nl:top-xl nl:-ms-xs nl:max-w-full nl:truncate nl:px-xs nl:text-body-l nl:text-placeholder nl:peer-focus/input:top-none nl:peer-focus/input:-translate-y-1/2 nl:peer-focus/input:bg-primary nl:peer-focus/input:text-label-s nl:peer-focus/input:text-tertiary nl:peer-not-placeholder-shown/input:top-none nl:peer-not-placeholder-shown/input:-translate-y-1/2 nl:peer-not-placeholder-shown/input:bg-primary nl:peer-not-placeholder-shown/input:text-label-s nl:peer-not-placeholder-shown/input:text-tertiary nl:peer-disabled/input:text-disabled nl:transition-all nl:duration-fast nl:motion-reduce:transition-none';
 
-/** The helper area: indented Space-XL to line up with the text. A polite live region, empty without text. */
-export const helper = 'nl:ps-xl';
+/**
+ * The line under the box: indented Space-XL to line up with the text. The helper text takes the rest of the row and
+ * the character count sits at its end, Space-M apart (OD-89).
+ */
+export const footer = 'nl:flex nl:items-start nl:gap-m nl:ps-xl';
+
+/** The helper area: a polite live region, empty without text. Takes the rest of the row. */
+export const helper = 'nl:min-w-0 nl:flex-1';
 
 /** The helper text: Space-M below the box (on the text, so an empty helper area adds no space). */
 export const helperText = 'nl:mt-m';
+
+/** The character count ("120 / 500", OD-89): Space-M below the box, Body S, never wraps. Hidden from screen readers. */
+export const count = 'nl:mt-m nl:shrink-0 nl:text-body-s';
+
+/** Count colour: text-tertiary (also with an error; only the helper text turns red), disabled text-disabled. */
+export const countTone = {
+  default: 'nl:text-tertiary',
+  disabled: 'nl:text-disabled',
+} as const;
+
+/** The limit for screen readers ("Up to 500 characters.") and the near-limit announcements: never drawn. */
+export const srOnly = 'nl:sr-only';
