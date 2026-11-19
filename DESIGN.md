@@ -619,7 +619,7 @@ _The designer adds rows here before each build._
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ✅ |
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ✅ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ✅ |
-| 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
+| 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ✅ |
 | 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ✅ |
 | 39 | Page dots | `NlPageDots` | `NlPageDot` | [§9](#nlpagedots) | ⬜ |
 | 40 | Tooltip | `NlTooltip` | `NlTextBlock` | [§9](#nltooltip) | ✅ |
@@ -7856,3 +7856,4 @@ Known issues
 | 19 Nov 2026 | NlNavSubItem (#17, internal): side nav page link (`as`, default `<a>`), Label M with an ellipsis and the full text as `title` when cut off; default, hover, pressed (K1) and current colours; standard focus ring (OD-30b); optional tree line under the section icon centre (OD-30a) through the `nl:nav-tree-line` and `nl:nav-tree-continue` utilities (rule 9). Approved by the designer |
 | 19 Nov 2026 | NlPaginationItem (#18, internal): page number button ("Page 3", Label M, minimum `Size-32`, hugs long numbers, OD-32) or the "…" gap (one character, `aria-hidden`, OD-35); hover and pressed the same (OD-33); standard focus ring (OD-34); the current page keeps its look and doesn't select. Approved by the designer |
 | 19 Nov 2026 | NlPageDot (#19, internal): decorative `Size-6` dot in `fg-placeholder`; the current page a `Size-24` pill in `fg-brand` (OD-36), `Radius-Full` (OD-37); width and fill ease with Duration base (OD-38); not interactive (OD-39, OD-72). Approved by the designer |
+| 20 Nov 2026 | NlRowsPerPage (#37, public): table footer pill trigger (`aria-haspopup="listbox"`, `aria-expanded`), Body S label, Label S value, 24 arrow (up when open), `open` / `onOpenChange` for `NlTable`'s `NlMenu`; disabled. Label kept `text-tertiary`: K7 accepted (4.47:1 on `bg-tertiary` in Dark). Approved by the designer |

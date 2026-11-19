@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #36, #38 and #40 to #49 approved; #37 in progress (K7 accepted). OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-89 decided).
+Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #40 to #49 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-89 decided).
 
 ---
 
@@ -67,7 +67,7 @@ Last updated: 19 Nov 2026 (Build column up to date: #1 to #12, #15 to #36, #38 a
 | 34 | `NlInputChip` | yes | `NlChipBase` | `NlMultiSelect` | – | ✅ batch 4 | ✅ |
 | 35 | `NlSegment` | internal | `NlIcon` | `NlSegmentedButton` | – | ✅ batch 4 | ✅ |
 | 36 | `NlHelperText` | yes | `NlIcon` | `NlInputBase`, `NlTextAreaBase` | – | ✅ batch 4 | ✅ |
-| 37 | `NlRowsPerPage` | yes | `NlIcon` | `NlTable` | – | ✅ batch 4 | 🟨 |
+| 37 | `NlRowsPerPage` | yes | `NlIcon` | `NlTable` | – | ✅ batch 4 | ✅ |
 | 38 | `NlNavIcon` | internal | `NlIcon` | `NlNavItem` | – | ✅ batch 4 | ✅ |
 | 39 | `NlPageDots` | yes | `NlPageDot` | – | – | ✅ batch 4 | ⬜ |
 | 40 | `NlTooltip` | yes | `NlTextBlock` | – | – | ✅ batch 4 | ✅ |
