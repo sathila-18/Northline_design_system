@@ -622,7 +622,7 @@ _The designer adds rows here before each build._
 | 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
 | 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ✅ |
 | 39 | Page dots | `NlPageDots` | `NlPageDot` | [§9](#nlpagedots) | ⬜ |
-| 40 | Tooltip | `NlTooltip` | `NlTextBlock` | [§9](#nltooltip) | ⬜ |
+| 40 | Tooltip | `NlTooltip` | `NlTextBlock` | [§9](#nltooltip) | ✅ |
 
 ### 8.3 Molecules
 
@@ -4746,7 +4746,7 @@ import { NlButton, NlTooltip } from '@northline/ui';
 | Keyboard | Shows on keyboard focus only (`:focus-visible`), not on a mouse click's focus. Escape hides it and keeps focus |
 | Touch | Doesn't show on touch hover; the information must be available another way |
 | Disabled triggers | A disabled control gets no hover or focus, so its tooltip can't show (designer's choice, 19 Nov 2026) |
-| Dark theme | `bg-direct` is light in Dark, so the tooltip is a light box with dark `text-inverse` there |
+| Dark theme | `bg-direct` is light in Dark, so the tooltip is a light box with dark `text-inverse` there. Accepted by the designer, 19 Nov 2026 |
 
 Checked in the browser: shows after the delay on hover and at once on Tab, stays while the pointer moves into it, hides on leave and Escape, 4 (`Space-XS`) from the trigger, flips below at the window's top edge.
 
@@ -7281,3 +7281,4 @@ Known issues
 | 19 Nov 2026 | NlSegment (#35, internal): native radio under drawn content; medium, small, xsmall (40, 32, 24; icon-only 36, 28, 24); filled icon when selected; OD-67 and OD-68 decided. Approved by the designer |
 | 19 Nov 2026 | NlHelperText (#36, public): five tones (default `text-tertiary`, OD-43; error glyph `error`, OD-69), optional decorative icon centred on the first line (OD-70), described-by id. Approved by the designer |
 | 19 Nov 2026 | NlNavIcon (#38, internal): decorative 20 icon, `fg-secondary`, or `fg-active` and filled when selected (OD-71). Approved by the designer |
+| 19 Nov 2026 | NlTooltip (#40, public): single-line and rich tooltip, `role="tooltip"` described-by trigger, hover delay (OD-73), keyboard focus, Escape, hoverable transparent frame, floating-ui placement with flips (OD-74), `nl:tooltip-position` utility. Light box in Dark (`bg-direct`) accepted. Approved by the designer |
