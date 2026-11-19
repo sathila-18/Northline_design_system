@@ -288,10 +288,10 @@ Decide these before building the components listed under "Affects".
 - OD-60 · Icons `check` and `remove` · **Decided** 19 Nov 2026: approved
 
 **NlSpinner**
-- OD-61 · 4px ring as an SVG stroke (artwork exception) · Open
-- OD-62 · Indeterminate by default, optional `value` · Open
-- OD-63 · One turn per `--nl-duration-pulse`, linear · Open
-- OD-64 · Error icon `warning` · Open
+- OD-61 · 4px ring as an SVG stroke (artwork exception) · **Decided** 19 Nov 2026: approved
+- OD-62 · Indeterminate by default, optional `value` · **Decided** 19 Nov 2026: approved
+- OD-63 · One turn per `--nl-duration-pulse`, linear · **Decided** 19 Nov 2026: approved
+- OD-64 · Error icon `warning` · **Decided** 19 Nov 2026: approved
 
 **NlLabel**
 - OD-65 · `badgeTone` (error, warning, success) · Open

@@ -54,6 +54,30 @@
 }
 
 /*
+ * nl:spinner-track, nl:spinner-arc, nl:spinner-value, nl:animate-spinner-turn: the spinner ring (DESIGN.md §9,
+ * NlSpinner). Only NlSpinner uses them. The ring is an SVG stroke (OD-61), and the theme has no stroke colours, so the
+ * track (bg-active-hover) and arc (fg-brand) colours are set here from their semantic tokens. The arc length is data:
+ * --nl-spinner-value (0 to 100, on a pathLength of 100), set by the component; 25 (a quarter) when it turns.
+ * One turn per --nl-duration-pulse, linear (OD-63); always paired with nl:motion-reduce:animate-none (rule 6).
+ * Approved by the designer, 19 Nov 2026 (rule 9).
+ */
+@utility spinner-track {
+  stroke: var(--nl-bg-active-hover);
+}
+
+@utility spinner-arc {
+  stroke: var(--nl-fg-brand);
+}
+
+@utility spinner-value {
+  stroke-dasharray: var(--nl-spinner-value, 25) 100;
+}
+
+@utility animate-spinner-turn {
+  animation: nl-spinner-turn var(--nl-duration-pulse) linear infinite;
+}
+
+/*
  * nl:progress-fill: the progress bar fill's width (DESIGN.md §9, NlProgressBar). Only NlProgressBar uses it.
  * The width is data (value%), set by the component as --nl-progress-value on the element; classes can't express it
  * without an arbitrary value. Also names width as the transitioned property; duration and easing come from
@@ -117,5 +141,11 @@
 
   50% {
     opacity: 0.6;
+  }
+}
+
+@keyframes nl-spinner-turn {
+  to {
+    transform: rotate(1turn);
   }
 }
