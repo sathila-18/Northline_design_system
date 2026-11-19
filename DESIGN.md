@@ -630,7 +630,7 @@ _The designer adds rows here before each build._
 |---|---|---|---|---|---|
 | 41 | Segmented button | `NlSegmentedButton` | `NlSegment`, `NlTooltip` | [§9](#nlsegmentedbutton) | ✅ |
 | 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ✅ |
-| 43 | Notification button | `NlNotificationButton` | `NlButton`, `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ⬜ |
+| 43 | Notification button | `NlNotificationButton` | `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ⬜ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ⬜ |
 | 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ⬜ |
 | 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ⬜ |
@@ -805,7 +805,7 @@ A `<span>`. `className` is added last; other native `<span>` attributes and `ref
 | Decision | Detail |
 |---|---|
 | Glyphs by code point | `nlIcons` maps each Material Symbols name to its glyph's code point, and `NlIcon` renders that glyph. Not ligature text: subsetting by ligature would keep the letters a–z and every icon spelled with them, so nearly the whole font. TypeScript checks each name against the `material-symbols` package's own name list |
-| Font subset (§6) | `pnpm icons` (`packages/ui/scripts/subset-icons.mjs`, `subset-font`) subsets Material Symbols Rounded to the registry's code points, keeping all axes (FILL, wght, GRAD, opsz). 26 icons: 5.3 MB → 20 KB. Runs before the build, tests and Storybook; the output is not committed |
+| Font subset (§6) | `pnpm icons` (`packages/ui/scripts/subset-icons.mjs`, `subset-font`) subsets Material Symbols Rounded to the registry's code points, keeping all axes (FILL, wght, GRAD, opsz). 27 icons (`notifications` added for `NlNotificationButton`): 5.3 MB → 22 KB. Runs before the build, tests and Storybook; the output is not committed |
 | Named utilities | `nl:font-icon` (family, icon weight, line height 1, no text transforms), `nl:icon-*` (font size from `Size-*`), `nl:icon-filled` (`FILL` 1), in `packages/ui/src/styles/tailwind.css`. The package's own `.material-symbols-rounded` class is no longer loaded (it hardcodes `24px`) |
 | Optical size | The font's `opsz` axis covers 20 to 48. At 16 and 64 it uses the nearest end; the glyph still fills the box |
 | Weight and grade | Weight 300 from `Alias Typography.Icon.Font weight` (`--nl-font-icon-weight`, §3.4), the designer's choice on 18 Nov 2026. Grade 0, the font default |
@@ -4960,9 +4960,9 @@ Gap `Space-L`, padding `Space-none`; text and control tokens from `NlTextBlock` 
 
 ### NlNotificationButton
 
-**Level** Molecule or L1, see "Mapping notes" · **Base** none · **Depends on** `NlIcon`, `NlCountBadge` (and `NlButton`, see "Mapping notes") · **Public**
+**Level** Atom L1 · **Base** none · **Depends on** `NlIcon`, `NlCountBadge` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-40.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-40 decided 19 Nov 2026: (a).
 
 The bell button in the page header, with a dot or a number when there are unread notifications.
 
@@ -5017,9 +5017,41 @@ Default, hover, pressed, focus, disabled. A disabled button shows no badge.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Built from `NlButton` | The inventory planned it on `NlButton` (D12: one public button). But its look, a filled light-brand circle (`bg-action-secondary`), matches no `NlButton` variant: secondary has a 2px border and no fill, tertiary has no fill | Options: (a) its own native button (L1: `NlIcon` + `NlCountBadge`), an exception to D12 for this one component; (b) a new `NlButton` look, for example `variant="soft"` (filled `bg-action-secondary`, no border), and build this on it (molecule). I recommend (b): other places may want a soft button too | **Designer to decide** |
+| Built from `NlButton` | The inventory planned it on `NlButton` (D12: one public button). But its look, a filled light-brand circle (`bg-action-secondary`), matches no `NlButton` variant: secondary has a 2px border and no fill, tertiary has no fill | Options: (a) its own native button (L1: `NlIcon` + `NlCountBadge`), an exception to D12 for this one component; (b) a new `NlButton` look, for example `variant="soft"` (filled `bg-action-secondary`, no border), and build this on it (molecule). (a) chosen: `NlButton` also has no 40 size and no circle, so (b) would add a look, a size and a shape to the only public button for one component. Soft can still come later as OD-1 | Approved (OD-40, option a) |
 | Badge positions | From the reference's description: dot 8 from the top and right; number from the centre line, 4 above the top | `Space-M` and `Space-XS`, as above | Matches |
 | Disabled hides the badge | As in the reference | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Notification | `count?: number` (default 0) and `showCount?: boolean` (default `true`): 0 or none shows nothing; `showCount={false}` the dot; otherwise the number from `NlCountBadge` ("99+" over 99) |
+| Label | `label?: string`, default "Notifications". The button's `aria-label` is "{label}, {shown} unread" or "{label}, new"; `{shown}` is what the badge shows ("99+" over 99), so the visible text is part of the name (WCAG 2.5.3) |
+| Disabled | `disabled` (native): no badge, the plain label as the name |
+| Expanded | `aria-expanded` passed through; uses the pressed look |
+| Element | Native `<button type="button">`. `ref` and native attributes go to it, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlNotificationButton } from '@northline/ui';
+
+<NlNotificationButton count={3} aria-expanded={open} onClick={togglePanel} />
+<NlNotificationButton count={unread} showCount={false} />
+```
+
+Presentational, so no `'use client'`.
+
+#### Tokens used
+
+The "Colours" table, as written; `Size-40`, `Radius-Full`, padding `Space-M`, `NlIcon` `notifications` 20 (added to the registry at U+E7F4, checked against the font's own ligature). Badge placement: dot `Space-M` from the top and the end; number from the centre line, `Space-XS` above the top. Measured in the browser: as specified, the badge unclipped.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Own button | Not built on `NlButton` (OD-40, option a); a D12 exception for this one component |
+| Badge hidden | The badge sits in an `aria-hidden` wrapper that also holds its placement (`NlCountBadge` sets its own `aria-hidden` when it has digits) |
 
 ---
 
@@ -7289,7 +7321,7 @@ Expanded, minimized; default or tree style.
 | D9 | 17 Nov 2026 | Chart tokens are deferred to the dashboard stage |
 | D10 | 17 Nov 2026 | React components that run in Next.js. Tailwind CSS 4 for styling from the start |
 | D11 | 17 Nov 2026 | Component specs extracted once from the designer's reference library, outside this repo, as neutral specs. Spacing, radius, type and shadow scales match the reference system so the specs map one to one |
-| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button Built on `NlButtonBase` (18 Nov 2026): `NlWhiteButton` and `NlDestructiveButton` render `NlButtonBase` with a fixed `appearance` instead of copying its markup. |
+| D12 | 17 Nov 2026 | Buttons follow the reference system. `NlButtonBase`, `NlWhiteButton` and `NlDestructiveButton` are internal bases. `NlButton` is the only public button, with `tone` (normal, white, destructive), `variant` (primary, secondary, tertiary, link), `size` and `icon` (none, leading, trailing, only-icon). Link is normal tone only, with no icon-only form. Destructive has a tertiary variant. Tertiary buttons take a `contentTone` (inverse, primary, secondary, info, success, error, warning) for snackbars, banners and close buttons. The large size uses `Button XL`. No separate icon button Built on `NlButtonBase` (18 Nov 2026): `NlWhiteButton` and `NlDestructiveButton` render `NlButtonBase` with a fixed `appearance` instead of copying its markup. Exception (19 Nov 2026, OD-40): `NlNotificationButton` is its own native button, because its 40 filled circle matches no `NlButton` size or look. |
 | D13 | 17 Nov 2026 | Left out of the demo: one-time code input, profile image, avatar group, the "with text" progress and spinner versions, labels on radio and switch, and the reference library's unused pages (notes, image ratios, tabs) |
 | D14 | 17 Nov 2026 | Menu and calendar are their own components. Select and date fields use them, so they sit at the level the composition rule gives them |
 | D15 | 17 Nov 2026 | Slot content doesn't count toward a component's level (§7.1). `NlTextBlock` takes its label as a slot. Table toolbar, header row, row and footer are internal parts of `NlTable`. `NlAppShell` takes nav, header and content as slots |

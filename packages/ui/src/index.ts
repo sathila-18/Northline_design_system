@@ -13,6 +13,7 @@ export * from './components/NlIconContainer';
 export * from './components/NlInputChip';
 export * from './components/NlLabel';
 export * from './components/NlMenu';
+export * from './components/NlNotificationButton';
 export * from './components/NlOverlay';
 export * from './components/NlProgressBar';
 export * from './components/NlRadio';

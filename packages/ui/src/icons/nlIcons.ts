@@ -29,6 +29,7 @@ export const nlIcons = {
   keyboard_arrow_up: 0xe316,
   menu: 0xe5d2,
   more_vert: 0xe5d4,
+  notifications: 0xe7f4,
   person: 0xe7fd,
   remove: 0xe15b,
   search: 0xe8b6,

@@ -78,7 +78,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 |---|---|---|---|---|---|---|---|
 | 41 | `NlSegmentedButton` | yes | `NlSegment`, `NlTooltip` | – | – | ✅ batch 5 | ⬜ |
 | 42 | `NlCheckbox` | yes | `NlCheckboxControl`, `NlTextBlock` | – | OD-41, OD-15 | ✅ batch 5 | ⬜ |
-| 43 | `NlNotificationButton` | yes | `NlButton`, `NlCountBadge`, `NlIcon` | `NlPageHeader` | OD-40 | ✅ batch 5 | ⬜ |
+| 43 | `NlNotificationButton` | yes | `NlCountBadge`, `NlIcon` | `NlPageHeader` | – | ✅ batch 5 | ⬜ |
 | 44 | `NlInputBase` | internal | `NlHelperText`, `NlIcon` | `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect`, `NlDateField` | OD-42, OD-43, OD-44 | ✅ batch 5 | ⬜ |
 | 45 | `NlTextField` | yes | `NlInputBase` | – | – | ✅ batch 5 | ⬜ |
 | 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | OD-31 | ✅ batch 5 | ⬜ |
@@ -173,7 +173,7 @@ Decide these before building the components listed under "Affects".
 | OD-15 | `NlTextBlock` | Disabled text colour | `disabled` prop → `text-disabled` | `NlCheckbox`, list items, `NlListCaption` | **Decided** 18 Nov 2026: approved (contrast: K3) |
 | OD-16 | `NlTextBlock` | Heading element | `headingAs`, default `p` | `NlDialog`, `NlSideSheet`, `NlPageHeader`, `NlEmptyState` | **Decided** 18 Nov 2026: approved |
 | OD-31 | `NlButton` | Icon-only sizes inside fields | Fields use the xsmall icon-only button (20 icon). Large fields lose the 24 icon | `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlDateField` | Open |
-| OD-40 | `NlNotificationButton` | Its look matches no `NlButton` variant | (b) add `variant="soft"` to `NlButton` (recommended) or (a) its own button as a D12 exception | `NlButton`, `NlPageHeader` | Open |
+| OD-40 | `NlNotificationButton` | Its look matches no `NlButton` variant | (b) add `variant="soft"` to `NlButton` (recommended) or (a) its own button as a D12 exception | `NlButton`, `NlPageHeader` | **Decided** 19 Nov 2026: (a) its own native button |
 | OD-41 | `NlCheckbox` | How to get `Body L` text | (b) `NlTextBlock type="body"` (recommended) or (a) `type="display-large"` | `NlTextBlock` | **Decided** 18 Nov 2026: (b), built in `NlTextBlock` |
 | OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | Open |
 | OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | **Decided** 19 Nov 2026: `text-tertiary` |
