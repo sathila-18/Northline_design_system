@@ -5084,7 +5084,7 @@ NlInputBase (vertical)
 | Type | default, select | `type` (select makes the whole box a trigger with a chevron). Payment and mobile-number types are left out |
 | Error | off, on | `error?: boolean` (the reference's "destructive") |
 | Label | text | `label: string` (required) |
-| Placeholder | text | `placeholder?: string` |
+| Placeholder | removed | No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused |
 | Prefix, suffix | short text | `prefix?`, `suffix?` |
 | Leading, trailing | slots | `leading?: ReactNode`, `trailing?: ReactNode` |
 | Helper text | text | `helperText?: string` |
@@ -5134,7 +5134,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. The `placeholder` hint then shows only while focused and empty | Approved (OD-42) |
+| Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. No hint text: focused and empty, the box shows only the floating label (designer's choice, 19 Nov 2026) | Approved (OD-42), hint removed 19 Nov 2026 |
 | Focus ring | A 2px ring outside, inset 1 (equivalent to the standard ring) | Standard ring from CLAUDE.md, shown on any focus | Matches |
 | Error focus ring | `border-error` | The standard `border-focused` ring; the error shows in the border, helper text and icon | Decided (OD-44, OD-3): standard ring |
 | Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | `NlHelperText` default tone uses `text-tertiary` everywhere | Approved (OD-43, 19 Nov 2026) |
@@ -5151,7 +5151,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 | Type | Default (text input) now; `type="select"` comes with `NlSelect` (#70). The native `type` attribute (`text`, `email`, `password` …) passes to the input |
 | Error | `error?: boolean`: `aria-invalid`, border `border-error`, helper tone `error` with its icon, `data-error` |
 | Label | `label: string`, a real `<label for>` |
-| Placeholder | `placeholder?: string`, a hint shown only while focused and empty (OD-42). Without one the input gets a single space, so "placeholder shown" means empty |
+| Placeholder | None. No hint text: the box stays empty while focused, with only the floating label (designer's choice, 19 Nov 2026, replacing OD-42's hint). The native placeholder is a single space, only so "placeholder shown" means empty |
 | Prefix, suffix | `prefix?`, `suffix?`: Body L, `text-placeholder` |
 | Leading, trailing | `leading?`, `trailing?` slots, `fg-secondary` (disabled `fg-disabled`) |
 | Helper text | `helperText?`: `NlHelperText` (`Space-M` below, indented `Space-XL`), id in the input's `aria-describedby`, inside an always-present `aria-live="polite"` region. Icon only for error (OD-76) |
@@ -5163,7 +5163,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 ```tsx
 import { NlInputBase } from '../NlInputBase'; // internal, not exported from @northline/ui
 
-<NlInputBase label="Member number" placeholder="0042" helperText="On the member card." />
+<NlInputBase label="Member number" helperText="On the member card." />
 <NlInputBase label="Member number" error helperText="Enter a member number." />
 ```
 
@@ -5209,7 +5209,7 @@ As `NlInputBase`, with `type="default"`.
 | Error | off, on | `error?: boolean` |
 | Input type | text, email, number, tel, url | `inputType`, default `text` |
 | Value | text | `value` / `defaultValue`, `onChange` |
-| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `ref` |
+| Everything else | as `NlInputBase` | `label`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `ref` (no placeholder, as `NlInputBase`) |
 
 #### Sizes, layout, colours and states
 
@@ -5235,14 +5235,14 @@ As `NlInputBase`. A decorative trailing icon is `aria-hidden`. If an icon needs 
 | Error | `error?: boolean`, passed to the base |
 | Input type | `inputType?: 'text' \| 'email' \| 'number' \| 'tel' \| 'url'`, default `text`: the native `type` |
 | Value | `value` / `defaultValue`, `onChange` |
-| Everything else | `label`, `placeholder`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `name`, `ref` and native attributes, passed to the base. No `leading` or `trailing` slots |
+| Everything else | `label`, `helperText`, `prefix`, `suffix`, `disabled`, `required`, `name`, `ref` and native attributes, passed to the base. No `leading` or `trailing` slots |
 
 #### API
 
 ```tsx
 import { NlTextField } from '@northline/ui';
 
-<NlTextField label="Email" inputType="email" placeholder="member@example.org" />
+<NlTextField label="Email" inputType="email" />
 <NlTextField label="Member number" trailingIcon="info" helperText="On the member card." />
 ```
 

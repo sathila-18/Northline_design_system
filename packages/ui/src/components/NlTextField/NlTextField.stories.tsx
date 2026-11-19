@@ -13,7 +13,6 @@ const meta = {
     label: 'Member name',
     size: 'large',
     inputType: 'text',
-    placeholder: 'Member 0042',
     helperText: '',
     error: false,
     disabled: false,
@@ -24,7 +23,6 @@ const meta = {
     size: { control: 'inline-radio', options: ['large', 'small'] },
     inputType: { control: 'inline-radio', options: ['text', 'email', 'number', 'tel', 'url'] },
     trailingIcon: { control: 'select', options: [undefined, ...nlIconNames] },
-    placeholder: { control: 'text' },
     helperText: { control: 'text' },
     prefix: { control: 'text' },
     suffix: { control: 'text' },
@@ -58,10 +56,10 @@ export const InputTypes: Story = {
   render: () => (
     <div className="nl:flex nl:flex-col nl:gap-xl">
       <NlTextField label="Member name" />
-      <NlTextField label="Email" inputType="email" placeholder="member@example.org" />
+      <NlTextField label="Email" inputType="email" />
       <NlTextField label="Points" inputType="number" suffix="pts" />
       <NlTextField label="Phone" inputType="tel" />
-      <NlTextField label="Website" inputType="url" placeholder="https://example.org" />
+      <NlTextField label="Website" inputType="url" />
     </div>
   ),
 };

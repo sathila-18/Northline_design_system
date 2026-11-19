@@ -15,7 +15,7 @@ const iconSize = { large: 24, small: 20 } as const;
 
 /**
  * A single-line text input (DESIGN.md §9, NlTextField). Mapped onto NlInputBase: it passes the native type and an
- * optional decorative trailing icon, and adds no markup or styles of its own. Label, placeholder, helper text,
+ * optional decorative trailing icon, and adds no markup or styles of its own. Label, helper text,
  * prefix, suffix, error, disabled, required, value and `ref` are the base's. Presentational, so no 'use client'
  * (the base has it).
  */

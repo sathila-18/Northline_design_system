@@ -16,8 +16,6 @@ export interface NlInputBaseProps extends Omit<
   size?: NlInputBaseSize;
   /** Error look: border-error, aria-invalid, error-toned helper text. */
   error?: boolean;
-  /** A hint shown inside the box only while it is focused and empty. Never the name. */
-  placeholder?: string;
   /** Short text before the value, for example a currency sign. */
   prefix?: string;
   /** Short text after the value, for example a unit. */
@@ -44,7 +42,6 @@ export function NlInputBase({
   label,
   size = 'large',
   error = false,
-  placeholder,
   prefix,
   suffix,
   leading,
@@ -78,8 +75,9 @@ export function NlInputBase({
             {...rest}
             id={inputId}
             disabled={disabled}
-            // A space when there is no hint, so "placeholder shown" always means empty (the label floats on a value).
-            placeholder={placeholder ?? ' '}
+            // No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused, the label is the only
+            // text. A single space keeps :placeholder-shown working, so it means empty and the label floats on a value.
+            placeholder=" "
             aria-invalid={error || undefined}
             aria-describedby={[describedBy, helperText ? helperId : undefined].filter(Boolean).join(' ') || undefined}
             className={styles.input}
