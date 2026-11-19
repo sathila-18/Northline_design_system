@@ -628,7 +628,7 @@ _The designer adds rows here before each build._
 
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
-| 41 | Segmented button | `NlSegmentedButton` | `NlSegment` | [§9](#nlsegmentedbutton) | ⬜ |
+| 41 | Segmented button | `NlSegmentedButton` | `NlSegment`, `NlTooltip` | [§9](#nlsegmentedbutton) | ⬜ |
 | 42 | Checkbox | `NlCheckbox` | `NlCheckboxControl`, `NlTextBlock` | [§9](#nlcheckbox) | ⬜ |
 | 43 | Notification button | `NlNotificationButton` | `NlButton`, `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ⬜ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ⬜ |
@@ -4754,9 +4754,9 @@ Checked in the browser: shows after the delay on hover and at once on Tab, stays
 
 ### NlSegmentedButton
 
-**Level** Molecule (contains `NlSegment`, an L1 atom) · **Base** none · **Depends on** `NlSegment` · **Public**
+**Level** Molecule (contains `NlSegment`, an L1 atom) · **Base** none · **Depends on** `NlSegment`, `NlTooltip` (icon only) · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-75.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): menu use (`menuitemradio`) not built yet. OD-75 decided 19 Nov 2026.
 
 A row of 2 or 3 options where exactly one is selected, for example a view switch (list or grid) or a theme switch (system, light, dark).
 
@@ -4812,10 +4812,53 @@ The group can be disabled as a whole (every segment uses its disabled look). Oth
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Show button 1, 2, 3 | Three booleans that hide segments | An `options` array of 2 or 3 | **Needs approval** |
+| Show button 1, 2, 3 | Three booleans that hide segments | An `options` array of 2 or 3 | Approved (OD-75) |
 | Track colour | `bg-tertiary` | Same | Matches |
 | Sizes, padding, gaps, radius | From the reference's description and drawing | Same | Matches |
 | Tooltips and menu behaviour | Code only, per the reference's description | As above | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Options | `options`: a tuple of 2 or 3 `{ value: string, label: string, icon?: NlIconName }` (OD-75) |
+| Value | `value` (controlled) or `defaultValue` (uncontrolled, default the first option), `onValueChange(value)` |
+| Size | `size?: 'medium' \| 'small' \| 'xsmall'`, default `medium`, also `data-size`; passed to every `NlSegment` |
+| Icon only | `iconOnly?: boolean`; the types then require `icon` on every option. Each segment is wrapped in `NlTooltip` with its label |
+| Disabled | `disabled?: boolean`: every segment disabled, `aria-disabled` on the group |
+| Accessible name | `aria-label` or `aria-labelledby`, one required by the types |
+| Element | `<div role="radiogroup">`; segments share a generated `name`. Native attributes and `ref` go to it, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlSegmentedButton } from '@northline/ui';
+
+<NlSegmentedButton
+  aria-label="Theme"
+  value={theme}
+  onValueChange={setTheme}
+  options={[
+    { value: 'system', label: 'System' },
+    { value: 'light', label: 'Light' },
+    { value: 'dark', label: 'Dark' },
+  ]}
+/>
+```
+
+`'use client'` (uncontrolled state).
+
+#### Tokens used
+
+The "Sizes and layout" table, as written; track `bg-tertiary`. Labelled tracks fill their container (`nl:w-full`) and segments share it (`nl:flex-1`); icon-only tracks hug (`nl:w-fit`). Measured in the browser: track heights 48, 40 and 24.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Keyboard | The native radio group gives one tab stop and wrapping arrow keys; Home and End are added on the group |
+| Menu use | `menuitemradio` inside a menu is not built; added when a menu needs it (designer's choice, 19 Nov 2026) |
+| Disabled selected | `bg-disabled` is the same colour as the `bg-tertiary` track in every brand and theme, so a disabled group shows its selected option only by the label's weight and colour (see K1) |
 
 ---
 

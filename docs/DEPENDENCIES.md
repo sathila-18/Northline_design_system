@@ -76,7 +76,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 
 | # | Component | Public | Depends on | Used by | Blocked by | Spec | Build |
 |---|---|---|---|---|---|---|---|
-| 41 | `NlSegmentedButton` | yes | `NlSegment` | – | – | ✅ batch 5 | ⬜ |
+| 41 | `NlSegmentedButton` | yes | `NlSegment`, `NlTooltip` | – | – | ✅ batch 5 | ⬜ |
 | 42 | `NlCheckbox` | yes | `NlCheckboxControl`, `NlTextBlock` | – | OD-41, OD-15 | ✅ batch 5 | ⬜ |
 | 43 | `NlNotificationButton` | yes | `NlButton`, `NlCountBadge`, `NlIcon` | `NlPageHeader` | OD-40 | ✅ batch 5 | ⬜ |
 | 44 | `NlInputBase` | internal | `NlHelperText`, `NlIcon` | `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect`, `NlDateField` | OD-42, OD-43, OD-44 | ✅ batch 5 | ⬜ |
@@ -320,7 +320,7 @@ Decide these before building the components listed under "Affects".
 #### Molecules
 
 **NlSegmentedButton**
-- OD-75 · An `options` array (2 or 3) instead of show/hide booleans · Open
+- OD-75 · An `options` array (2 or 3) instead of show/hide booleans · **Decided** 19 Nov 2026: approved
 
 **NlCheckbox**
 - OD-41, OD-15: see section 2
