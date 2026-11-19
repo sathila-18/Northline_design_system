@@ -4178,6 +4178,48 @@ Enabled and disabled for the chip. The remove button has focus, and see "Mapping
 | Disabled | No stroke, no shadow, no remove action | Same | Matches |
 | Leading slot | Off by default | Same | Matches |
 
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'xsmall' \| 'small' \| 'large'`, default `small` |
+| Disabled | `disabled?: boolean`: disabled colours, no remove button, `data-disabled` |
+| Label | `children`, in a span whose id names the remove button |
+| Leading | `leading?: ReactNode`, off by default (inherits `fg-secondary`) |
+| Remove | `onRemove()`: click, Enter, Space, and Backspace or Delete on the focused remove button |
+| Remove name | `removeLabel?: string`. Default: a hidden "Remove" plus the label (`aria-labelledby`), so any label content works |
+| Base | `NlChipBase`, `look="unselected-bordered"`, colours as `appearance`, the remove button in the `trailing` slot. The chip is a `<span>`; `ref`, native attributes and `className` (placement only) go to it |
+
+#### API
+
+```tsx
+import { NlInputChip } from '@northline/ui';
+
+<NlInputChip onRemove={() => remove('tier-2')}>Tier 2</NlInputChip>
+<NlInputChip disabled>Tier 2</NlInputChip>
+```
+
+`'use client'` (`useId`, event handlers). Moving focus after a removal is the caller's job (`NlMultiSelect`).
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Chip | Enabled `bg-primary`, 1px inset ring `border-default`, `--nl-shadow-resting`, `text-primary`. Disabled `bg-disabled`, `text-disabled-on_bg`, no border or shadow |
+| Remove icon | `NlIcon` `close` 16 / 16 / 20, `fg-secondary`, `fg-primary` on hover and press |
+| Remove target | `Size-24`, negative margin `Space-XS` (16 icon) or `Space-XXS` (20 icon); focus ring `Radius-XS` |
+| Motion | `--nl-duration-fast`, none under reduced motion |
+
+Rendered heights measured in the browser: 26, 33 and 40, the same as `NlChipBase`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Remove button | A native button with `NlIcon`, not `NlButton`: `NlButton`'s smallest icon-only size (32) would make the chip taller (designer's choice, 19 Nov 2026) |
+| Focus ring | Around the 24 × 24 target, `Radius-XS` (designer's choice, 19 Nov 2026) |
+| Disabled contrast | Under 4.5:1 by design; known issue K5 (accepted by the designer, 19 Nov 2026) |
+
 ---
 
 ### NlSegment
@@ -7039,6 +7081,7 @@ Known issues
 | K2 | `text-white_subtle` (Neutral-100) on `bg-brand` is under 4.5:1 in Northline Dark (3.82), Garnet Dark (3.49) and Voltic (4.23, both themes). Found by `pnpm test:a11y` (S6). Accepted for now; decide when a component uses this pairing | Open |
 | K3 | `text-disabled` on `bg-primary` is under 4.5:1 (3.00 Light, 1.79 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control (a disabled list row, checkbox or menu item). axe can't tell from plain text, so story samples of disabled text are marked `data-a11y-known-issue="K3"`. Found by `pnpm test:a11y` with `NlTextBlock`. Accepted by the designer, 18 Nov 2026 | Accepted |
 | K4 | The disabled `NlBadge` tone's text (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (3.53 Light, 1.60 Dark, every brand). A disabled badge is a status, not an inactive control, so WCAG 1.4.3's exemption doesn't strictly apply. Kept as specified; the label must say the status. Story samples are marked `data-a11y-known-issue="K4"`. Found with `NlBadge`. Accepted by the designer, 18 Nov 2026 | Accepted |
+| K5 | A disabled `NlInputChip`'s label (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (about 3.5 Light, 1.6 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control. axe can't tell, because the chip is a `<span>` (its remove button is left out when disabled), so story samples are marked `data-a11y-known-issue="K5"`. Found by `pnpm test:a11y` with `NlInputChip`. Accepted by the designer, 19 Nov 2026 | Accepted |
 
 ---
 

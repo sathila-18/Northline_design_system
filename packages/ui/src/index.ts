@@ -8,6 +8,7 @@ export * from './components/NlCountBadge';
 export * from './components/NlDivider';
 export * from './components/NlFilterChip';
 export * from './components/NlIconContainer';
+export * from './components/NlInputChip';
 export * from './components/NlLabel';
 export * from './components/NlMenu';
 export * from './components/NlOverlay';
