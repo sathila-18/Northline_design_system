@@ -618,7 +618,7 @@ _The designer adds rows here before each build._
 | 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ✅ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ✅ |
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ✅ |
-| 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ⬜ |
+| 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ✅ |
 | 37 | Rows per page | `NlRowsPerPage` | `NlIcon` | [§9](#nlrowsperpage) | ⬜ |
 | 38 | Nav icon (internal) | `NlNavIcon` | `NlIcon` | [§9](#nlnavicon) | ⬜ |
 | 39 | Page dots | `NlPageDots` | `NlPageDot` | [§9](#nlpagedots) | ⬜ |
@@ -4341,7 +4341,7 @@ Rendered sizes measured in the browser: labelled heights 40, 32 and 24; icon-onl
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-43, OD-69, OD-70.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-43, OD-69 and OD-70 decided 19 Nov 2026.
 
 A short line under a form field: a hint, or a success, warning or error message, with an optional leading icon.
 
@@ -4373,10 +4373,10 @@ NlHelperText (horizontal)
 
 | Tone | Icon | Icon glyph | Text |
 |---|---|---|---|
-| default | `fg-secondary` | `info` | `text-secondary` |
+| default | `fg-secondary` | `info` | `text-tertiary` (OD-43, as the fields use it) |
 | success | `fg-success` | `check_circle` | `text-success` |
 | warning | `fg-warning` | `warning` | `text-warning` |
-| error | `fg-error` | `warning` (see "Mapping notes") | `text-error` |
+| error | `fg-error` | `error` (OD-69) | `text-error` |
 | disabled | `fg-disabled` | `info` | `text-disabled` |
 
 #### States
@@ -4395,8 +4395,39 @@ The five tones above. Not interactive.
 | Item | Reference | Note | Status |
 |---|---|---|---|
 | Gap | `Space-M` | Same | Matches |
-| Icon glyphs | Default and disabled use an info icon, success a check-circle, warning and error a warning icon | Material Symbols `info`, `check_circle`, `warning`. Error could use `error` (a circle with "!") so it differs from warning in shape | **Needs approval** |
-| Multi-line alignment | Not drawn (single line only) | Icon aligned to the first line | **Needs approval** |
+| Icon glyphs | Default and disabled use an info icon, success a check-circle, warning and error a warning icon | Material Symbols `info`, `check_circle`, `warning`. Error uses `error` (a circle with "!") so it differs from warning in shape | Approved (OD-69) |
+| Multi-line alignment | Not drawn (single line only) | Icon centred on the first line | Approved (OD-70) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| State | `tone?: 'default' \| 'success' \| 'warning' \| 'error' \| 'disabled'`, default `default`, also `data-tone` |
+| Show leading icon | `showIcon?: boolean`, default `true`. Decorative `NlIcon` 20 |
+| Text | `children` |
+| Id | `id`, for the field's `aria-describedby`. Native attributes and `ref` go to the root `<div>`, `className` (placement only) last |
+
+#### API
+
+```tsx
+import { NlHelperText } from '@northline/ui';
+
+<input aria-describedby="member-help" aria-invalid="true" />
+<NlHelperText id="member-help" tone="error">Enter a member number.</NlHelperText>
+```
+
+Presentational, so no `'use client'`. Not a live region: `NlInputBase` announces errors.
+
+#### Tokens used
+
+The "Colours" table, as written. Gap `Space-M`, padding `Space-none`, `Body S`, `NlIcon` 20.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| First-line alignment | Items start at the top; the icon sits in a slot one line of `Body S` high (`nl:h-lh`, 18) and is centred in it, so it is centred on the first line, wrapped or not. Measured in the browser: icon and first line share the same centre |
+| Disabled contrast | `text-disabled` on `bg-primary`: known issue K3; story samples are marked |
 
 ---
 
@@ -4921,7 +4952,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 | Label at rest | At rest the box shows only placeholder text; the label appears on the border when focused or filled | A real label is always present: at rest it sits in the value position styled as placeholder, and floats up on focus or when filled. The `placeholder` hint then shows only while focused and empty | **Needs approval** |
 | Focus ring | A 2px ring outside, inset 1 (equivalent to the standard ring) | Standard ring from CLAUDE.md, shown on any focus | Matches |
 | Error focus ring | `border-error` | Same | **Needs approval** (CLAUDE.md fixes the ring colour to `border-focused`) |
-| Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | Proposed: `NlHelperText` default tone uses `text-tertiary` everywhere (update `NlHelperText`) | **Needs approval** |
+| Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | `NlHelperText` default tone uses `text-tertiary` everywhere | Approved (OD-43, 19 Nov 2026) |
 | Helper icon | Hidden for default, shown for error in text areas but not in single-line fields | Hidden for default, shown for success, warning and error everywhere | **Needs approval** |
 | Floating label colour | `text-tertiary` in fields, `text-primary` in text areas | `text-tertiary` everywhere | **Needs approval** |
 | Required marker | Not in the reference | Not specified | Open |
@@ -7170,3 +7201,4 @@ Known issues
 | 19 Nov 2026 | NlAssistChip (#33, public): action or dropdown chip on `NlChipBase`; `popup`, `open`, `onOpenChange` (click toggles, Down arrow opens) to pair with `NlMenu`; open keeps its look on hover, pressed still shows. Approved by the designer |
 | 19 Nov 2026 | NlInputChip (#34, public): chosen value on `NlChipBase` (bordered) with a native remove button (close 16/20 in a 24 target, Backspace and Delete remove, name "Remove {label}"); disabled has no remove button. K5 accepted. Approved by the designer |
 | 19 Nov 2026 | NlSegment (#35, internal): native radio under drawn content; medium, small, xsmall (40, 32, 24; icon-only 36, 28, 24); filled icon when selected; OD-67 and OD-68 decided. Approved by the designer |
+| 19 Nov 2026 | NlHelperText (#36, public): five tones (default `text-tertiary`, OD-43; error glyph `error`, OD-69), optional decorative icon centred on the first line (OD-70), described-by id. Approved by the designer |

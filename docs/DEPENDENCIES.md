@@ -176,7 +176,7 @@ Decide these before building the components listed under "Affects".
 | OD-40 | `NlNotificationButton` | Its look matches no `NlButton` variant | (b) add `variant="soft"` to `NlButton` (recommended) or (a) its own button as a D12 exception | `NlButton`, `NlPageHeader` | Open |
 | OD-41 | `NlCheckbox` | How to get `Body L` text | (b) `NlTextBlock type="body"` (recommended) or (a) `type="display-large"` | `NlTextBlock` | **Decided** 18 Nov 2026: (b), built in `NlTextBlock` |
 | OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | Open |
-| OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | Open |
+| OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | **Decided** 19 Nov 2026: `text-tertiary` |
 | OD-44 | `NlInputBase` | Error focus ring colour | `border-error` (reference) vs `border-focused` (CLAUDE.md) | Every field | Open |
 | OD-50 | `NlLabel` | Tone option | Batch 6 makes this stronger: add `tone` (tertiary default, primary, secondary, action). `NlStep` needs three colours, `NlCalendar` weekday names want `text-secondary` | `NlCalendar`, `NlStep` | **Decided** 19 Nov 2026: `tone` added to `NlLabel` (tertiary default, primary, secondary, action) |
 | OD-93 | `NlBanner`, `NlSnackbar` | Their text is recoloured by tone, which `NlTextBlock` can't do | Plain text inside these components, not `NlTextBlock` (inventory dependency for the snackbar goes) | `NlBanner`, `NlSnackbar` | Open |
@@ -303,8 +303,8 @@ Decide these before building the components listed under "Affects".
 - OD-68 · Unselected hover label `text-tertiary` (as the reference) · **Decided** 19 Nov 2026: approved
 
 **NlHelperText**
-- OD-69 · Icons: `info`, `check_circle`, `warning`; maybe `error` for the error tone · Open
-- OD-70 · Icon aligned to the first line when text wraps · Open
+- OD-69 · Icons: `info`, `check_circle`, `warning`; maybe `error` for the error tone · **Decided** 19 Nov 2026: approved
+- OD-70 · Icon aligned to the first line when text wraps · **Decided** 19 Nov 2026: approved
 - OD-43: see section 2
 
 **NlNavIcon**
