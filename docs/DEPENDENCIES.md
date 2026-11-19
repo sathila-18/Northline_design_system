@@ -314,8 +314,8 @@ Decide these before building the components listed under "Affects".
 - OD-72 · Clickable dots: not specified · Open
 
 **NlTooltip**
-- OD-73 · Show delay `--nl-duration-base` on hover, none on focus · Open
-- OD-74 · Placement: `Space-XS` from the trigger, `Space-M` from the window edge · Open
+- OD-73 · Show delay `--nl-duration-base` on hover, none on focus · **Decided** 19 Nov 2026: approved
+- OD-74 · Placement: `Space-XS` from the trigger, `Space-M` from the window edge · **Decided** 19 Nov 2026: approved
 
 #### Molecules
 

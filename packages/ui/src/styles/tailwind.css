@@ -133,6 +133,17 @@
   max-height: min(var(--nl-menu-available-height, 100vh), var(--nl-menu-max-height, 100vh));
 }
 
+/*
+ * nl:tooltip-position: where the tooltip sits (DESIGN.md §9, NlTooltip). Only NlTooltip uses it. The position is
+ * measured at run time by the positioning code (@floating-ui/dom) and set as --nl-tooltip-x and --nl-tooltip-y on the
+ * tooltip; classes can't express it without an arbitrary value. The fallbacks only apply before the first measure.
+ * Approved by the designer, 19 Nov 2026 (rule 9).
+ */
+@utility tooltip-position {
+  top: var(--nl-tooltip-y, 0);
+  left: var(--nl-tooltip-x, 0);
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {

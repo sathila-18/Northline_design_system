@@ -20,4 +20,5 @@ export * from './components/NlSlider';
 export * from './components/NlSpinner';
 export * from './components/NlSwitch';
 export * from './components/NlTextBlock';
+export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

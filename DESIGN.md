@@ -4634,7 +4634,7 @@ None. Not interactive.
 
 **Level** Atom L1 (D15: `NlTextBlock` is L0) · **Base** none · **Depends on** `NlTextBlock` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-73, OD-74.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-73 and OD-74 decided 19 Nov 2026.
 
 A short dark label that appears next to an element on hover or focus. The rich form adds a heading and a description.
 
@@ -4696,10 +4696,59 @@ Hidden, shown. Not interactive itself.
 |---|---|---|---|
 | Rich text colour | The text block's heading and description are overridden to `text-inverse` | `NlTextBlock tone="inverse"` | Approved |
 | Rich width | Drawn at 375 (a mobile width) | Maximum width from a new primitive `Size-320` (320). Added to DESIGN.md §3.5 and the token JSON | Approved |
-| Show delay | Not in the reference | Proposed: `--nl-duration-base` before showing on hover, none on focus | **Needs approval** |
-| Placement and offsets | Not in the reference | `Space-XS` from the trigger, `Space-M` from the window edge, the same as `NlMenu` | **Needs approval** |
+| Show delay | Not in the reference | `--nl-duration-base` before showing on hover, none on focus | Approved (OD-73) |
+| Placement and offsets | Not in the reference | `Space-XS` from the trigger, `Space-M` from the window edge, the same as `NlMenu` | Approved (OD-74) |
 | Arrow | None in the reference | None | Matches |
 | Look | One look ("black") | No `look` prop | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | From the props: `content` (single line) or `heading` with an optional `description` (rich); the types allow one or the other. `data-type` |
+| Content | `content: string`, or `heading: string` and `description?: string` |
+| Trigger | `children`: one element that takes a ref and focus. The tooltip adds its ref, `aria-describedby` (kept with the trigger's own) and its pointer and focus handlers (kept with the trigger's own) |
+| Placement | `placement?: 'top' \| 'bottom' \| 'start' \| 'end'`, default `top`; flips and shifts with `@floating-ui/dom`; start and end follow the text direction |
+| Element | `role="tooltip"` with its own id, always in the page (display none when hidden), `data-shown` |
+
+#### API
+
+```tsx
+import { NlButton, NlTooltip } from '@northline/ui';
+
+<NlTooltip content="Add reward">
+  <NlButton variant="tertiary" icon="only-icon" iconName="add">Add reward</NlButton>
+</NlTooltip>
+
+<NlTooltip heading="Tier 2" description="Members with 1,000 points or more.">
+  <NlButton variant="secondary">Tier 2</NlButton>
+</NlTooltip>
+```
+
+`'use client'` (state, effects, timers).
+
+#### Tokens used
+
+| Part | Token |
+|---|---|
+| Box | `bg-direct`, `Radius-S`, layer `--nl-z-tooltip` |
+| Single line | `Space-M` / `Space-XL`, `Caption L`, `text-inverse` |
+| Rich | `Space-L` / `Space-XL`, `NlTextBlock type="headline-small" tone="inverse"`, max `Size-320` |
+| Distance | `Space-XS` (the frame's padding), `Space-M` from the window edge |
+| Motion | Show delay and fade `--nl-duration-base`; no fade under reduced motion |
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Position utility | `nl:tooltip-position` in `tailwind.css` reads the measured position (`--nl-tooltip-x`, `--nl-tooltip-y`). Approved by the designer, 19 Nov 2026 (rule 9) |
+| Crossing into the tooltip | A transparent `Space-XS` frame around the box touches the trigger, so the pointer never leaves trigger or tooltip on the way (WCAG 1.4.13). Chosen over a hide delay, which would be 0 under reduced motion |
+| Keyboard | Shows on keyboard focus only (`:focus-visible`), not on a mouse click's focus. Escape hides it and keeps focus |
+| Touch | Doesn't show on touch hover; the information must be available another way |
+| Disabled triggers | A disabled control gets no hover or focus, so its tooltip can't show (designer's choice, 19 Nov 2026) |
+| Dark theme | `bg-direct` is light in Dark, so the tooltip is a light box with dark `text-inverse` there |
+
+Checked in the browser: shows after the delay on hover and at once on Tab, stays while the pointer moves into it, hides on leave and Escape, 4 (`Space-XS`) from the trigger, flips below at the window's top edge.
 
 ---
 
