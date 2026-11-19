@@ -615,7 +615,7 @@ _The designer adds rows here before each build._
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ✅ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ✅ |
 | 32 | Filter chip | `NlFilterChip` | `NlChipBase` | [§9](#nlfilterchip) | ✅ |
-| 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ⬜ |
+| 33 | Assist chip | `NlAssistChip` | `NlChipBase` | [§9](#nlassistchip) | ✅ |
 | 34 | Input chip | `NlInputChip` | `NlChipBase` | [§9](#nlinputchip) | ⬜ |
 | 35 | Segment (internal) | `NlSegment` | `NlIcon` | [§9](#nlsegment) | ⬜ |
 | 36 | Helper text | `NlHelperText` | `NlIcon` | [§9](#nlhelpertext) | ⬜ |
@@ -7085,3 +7085,4 @@ Known issues
 | 19 Nov 2026 | NlLabel (#30, public): Label M / Label S, `tone` (tertiary, primary, secondary, action; OD-50), optional `NlCountBadge` dot with `badgeTone` and required `badgeLabel` (OD-65), `as="label"` for form controls (OD-66). Approved by the designer |
 | 19 Nov 2026 | NlChipBase (#31, internal): unselected, unselected-bordered and selected looks at rest; xsmall, small (default) and large (26, 33, 40 high); leading slot, trailing icon or `trailing` slot; `appearance` and `as` for the mapped chips. Approved by the designer |
 | 19 Nov 2026 | NlFilterChip (#32, public): toggle button (`aria-pressed`) on `NlChipBase`, controlled or uncontrolled; off/on × enabled, hover, pressed, disabled and focus as in the spec; leading icon `fg-primary` off, `fg-brand` on. Approved by the designer |
+| 19 Nov 2026 | NlAssistChip (#33, public): action or dropdown chip on `NlChipBase`; `popup`, `open`, `onOpenChange` (click toggles, Down arrow opens) to pair with `NlMenu`; open keeps its look on hover, pressed still shows. Approved by the designer |
