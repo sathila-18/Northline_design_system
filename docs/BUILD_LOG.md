@@ -36,4 +36,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlButton | 2026-11-19 07:47 | 2026-11-19 08:05 | OD-55 to OD-59 decided; state selectors not-disabled:not-aria-disabled: (rule 9 exception, approved); link underline on a label span in NlButtonBase. Approved by the designer |
 | NlCheckboxControl | 2026-11-19 08:13 | 2026-11-19 08:40 | OD-60 approved; focus ring on the hit area with Radius-XS; bg-active-hover for unselected hover and pressed; indeterminate is the caller's. Approved by the designer |
 | NlSpinner | 2026-11-19 09:43 | 2026-11-19 10:04 | OD-61 to OD-64 approved; spinner track, arc, value and turn utilities (rule 9, approved); status region always rendered. Approved by the designer |
-| NlLabel | 2026-11-19 10:09 | | |
+| NlLabel | 2026-11-19 10:09 | 2026-11-19 10:42 | OD-50 (tone), OD-65, OD-66 approved; badgeLabel required with a badge. Approved by the designer |
