@@ -285,7 +285,7 @@ Decide these before building the components listed under "Affects".
 - OD-31: see section 2
 
 **NlCheckboxControl**
-- OD-60 · Icons `check` and `remove` · Open
+- OD-60 · Icons `check` and `remove` · **Decided** 19 Nov 2026: approved
 
 **NlSpinner**
 - OD-61 · 4px ring as an SVG stroke (artwork exception) · Open

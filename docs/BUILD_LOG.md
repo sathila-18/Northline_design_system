@@ -34,3 +34,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlWhiteButton | 2026-11-18 17:29 | 2026-11-18 17:40 | Built on NlButtonBase (fixed appearance); §8 dependency and D12 updated; OD-54 decided (applied in #27). Approved by the designer |
 | NlDestructiveButton | 2026-11-18 17:44 | 2026-11-18 17:54 | Built on NlButtonBase (fixed appearance per variant); no link variant; §8 dependency and D12 updated. Approved by the designer |
 | NlButton | 2026-11-19 07:47 | 2026-11-19 08:05 | OD-55 to OD-59 decided; state selectors not-disabled:not-aria-disabled: (rule 9 exception, approved); link underline on a label span in NlButtonBase. Approved by the designer |
+| NlCheckboxControl | 2026-11-19 08:13 | 2026-11-19 08:40 | OD-60 approved; focus ring on the hit area with Radius-XS; bg-active-hover for unselected hover and pressed; indeterminate is the caller's. Approved by the designer |

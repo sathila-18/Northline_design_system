@@ -610,7 +610,7 @@ _The designer adds rows here before each build._
 | 25 | White button (internal) | `NlWhiteButton` | `NlButtonBase` | [§9](#nlwhitebutton) | ✅ |
 | 26 | Destructive button (internal) | `NlDestructiveButton` | `NlButtonBase` | [§9](#nldestructivebutton) | ✅ |
 | 27 | Button | `NlButton` | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | [§9](#nlbutton) | ✅ |
-| 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ⬜ |
+| 28 | Checkbox control (internal) | `NlCheckboxControl` | `NlIcon` | [§9](#nlcheckboxcontrol) | ✅ |
 | 29 | Spinner | `NlSpinner` | `NlIcon` | [§9](#nlspinner) | ⬜ |
 | 30 | Label | `NlLabel` | `NlCountBadge` | [§9](#nllabel) | ⬜ |
 | 31 | Chip base (internal) | `NlChipBase` | `NlIcon` | [§9](#nlchipbase) | ⬜ |
@@ -3496,7 +3496,7 @@ The tables in "Colours by state", as written. Colour changes use `--nl-duration-
 
 **Level** Atom L1 · **Base** none · **Depends on** `NlIcon` · **Internal** (used by `NlCheckbox`, checkbox list items and table cells)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-60.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-60 decided 19 Nov 2026.
 
 The bare checkbox: a rounded square that is empty, ticked or shows a dash (indeterminate).
 
@@ -3562,7 +3562,44 @@ Enabled, hover, pressed, focus, disabled, for each of unselected, selected and i
 | Unselected pressed fill | `bg-action-primary_pressed`, a dark brand fill with no tick, which looks like a selected box with the tick missing | `bg-active-hover` (as hover) with `border-pressed` | Approved |
 | Selected hover and pressed fills | `fg-hovered` and `fg-pressed` (foreground tokens used as fills) | Kept | Matches |
 | Focus ring | 2px outside, `border-focused`, `Radius-XS` | Standard ring from CLAUDE.md | Matches the rule |
-| Icons | `check` and `remove` from the reference's icon set | Material Symbols `check` and `remove` | **Needs approval** |
+| Icons | `check` and `remove` from the reference's icon set | Material Symbols `check` and `remove` | Approved (OD-60) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `checked` / `defaultChecked` (native) and `indeterminate?: boolean`, set on the input in an effect after every render and again after each change. The box and icons follow the input through CSS (`:checked`, `:indeterminate`), so uncontrolled use works too |
+| Disabled | `disabled` (native). The root gets no pointer events, so hover and press never show |
+| Accessible name | `aria-label`, `aria-labelledby` or a wrapping `<label>`. Not required by the type, because a wrapping label is valid (as `NlRadio`) |
+| Change | `onChange` (native) |
+| Element | Native attributes and `ref` go to the input; `className` to the 24 × 24 root, for placement only |
+
+#### API
+
+```tsx
+import { NlCheckboxControl } from '../NlCheckboxControl'; // internal, not exported from @northline/ui
+
+<label>
+  <NlCheckboxControl checked={selected} onChange={(e) => setSelected(e.target.checked)} />
+  Member 0042
+</label>
+<NlCheckboxControl aria-label="Select all members" checked={all} indeterminate={some} onChange={toggleAll} />
+```
+
+`'use client'` (an effect sets `indeterminate`).
+
+#### Tokens used
+
+The table in "Colours", as written. Hit area `Size-24`, box `Size-20`, `Radius-XS` on both, 2px border (`nl:border-2`); selected and indeterminate use a transparent border so the fill covers the box. `NlIcon` 16. Colour changes use `--nl-duration-fast`, none under reduced motion.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Focus ring | The standard ring around the 24 × 24 hit area with `Radius-XS` (designer's choice, 19 Nov 2026) |
+| Unselected hover | `bg-active-hover` for hover and pressed, as in the spec (the radio uses `bg-active` for hover) (designer's choice, 19 Nov 2026) |
+| Icons | Both icons are rendered; CSS shows the tick when checked and the dash when indeterminate (the dash wins if both are true) |
+| Indeterminate is the caller's | Activating a mixed checkbox makes it checked; the caller clears `indeterminate` in `onChange`. While the prop stays true the dash stays |
 
 ---
 
@@ -6857,3 +6894,4 @@ Known issues
 | 18 Nov 2026 | NlWhiteButton (#25, internal): the white button for brand backgrounds, built on `NlButtonBase` with a fixed `appearance` (`bg-action-inverse`, 1px inset ring `border-subtle`, `text-dark_both`, `fg-dark_both`); no markup or sizes of its own. §8 dependency changed to `NlButtonBase`; D12 updated. OD-54: white takes only `variant="primary"`, applied in `NlButton`. Approved by the designer |
 | 18 Nov 2026 | NlDestructiveButton (#26, internal): primary (`bg-action-destructive`), secondary (2px inset ring `border-error`) and tertiary (`text-error`) at rest, built on `NlButtonBase` with a fixed `appearance` per variant; no link form. §8 dependency changed to `NlButtonBase`; D12 updated. Approved by the designer |
 | 19 Nov 2026 | NlButton (#27, public): picks the base by tone; hover, pressed, expanded (pressed look) and disabled states for every tone and variant; tertiary content tones; disabled links lose `href` and get `aria-disabled`. Link underline on a new label span in `NlButtonBase`. OD-55 to OD-59 decided; `not-disabled:not-aria-disabled:` state selectors approved as a rule 9 exception. Approved by the designer |
+| 19 Nov 2026 | NlCheckboxControl (#28, internal): native checkbox under a drawn Size-20 box in a Size-24 hit area; unselected, selected and indeterminate (`check` / `remove`, OD-60) with hover, pressed, disabled and focus (ring on the hit area, Radius-XS); indeterminate set through a ref. Approved by the designer |
