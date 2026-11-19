@@ -633,7 +633,7 @@ _The designer adds rows here before each build._
 | 43 | Notification button | `NlNotificationButton` | `NlCountBadge`, `NlIcon` | [§9](#nlnotificationbutton) | ✅ |
 | 44 | Input base (internal) | `NlInputBase` | `NlHelperText`, `NlIcon` | [§9](#nlinputbase) | ✅ |
 | 45 | Text field | `NlTextField` | `NlInputBase` | [§9](#nltextfield) | ✅ |
-| 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ⬜ |
+| 46 | Password field | `NlPasswordField` | `NlInputBase`, `NlButton` | [§9](#nlpasswordfield) | ✅ |
 | 47 | Search field | `NlSearchField` | `NlInputBase`, `NlButton` | [§9](#nlsearchfield) | ⬜ |
 | 48 | Text area base (internal) | `NlTextAreaBase` | `NlHelperText` | [§9](#nltextareabase) | ⬜ |
 | 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ⬜ |
@@ -3324,7 +3324,7 @@ Everything else from `NlButtonBase`.
 
 **Level** Atom L1 (built from its bases, takes their level) · **Base** `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` (D12) · **Depends on** – · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-1, OD-31, OD-40, OD-117. OD-55 to OD-59 decided 19 Nov 2026.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-1, OD-40, OD-117. OD-55 to OD-59 decided 19 Nov 2026; OD-31 decided 19 Nov 2026 (xsmall icon-only button in fields).
 
 The only public button. It picks the base by `tone`, passes `variant`, `size` and `icon` to it, and owns every interaction state.
 
@@ -5059,7 +5059,7 @@ The "Colours" table, as written; `Size-40`, `Radius-Full`, padding `Space-M`, `N
 
 **Level** Molecule (contains `NlHelperText`, L1) · **Base** – (this is the base) · **Depends on** `NlHelperText`, `NlIcon` · **Internal**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-78 (required marker, waits for a design). `type="select"` is added with `NlSelect` (#70). OD-42, OD-43, OD-44, OD-76 and OD-77 decided 19 Nov 2026.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. `type="select"` is added with `NlSelect` (#70). OD-42, OD-43, OD-44, OD-76, OD-77 and OD-78 decided 19 Nov 2026.
 
 The shared field: an outlined box with a floating label, optional leading and trailing items, and a helper line below. `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect` and `NlDateField` map onto it.
 
@@ -5140,7 +5140,7 @@ Enabled, hover, focused, typing, complete, disabled, each with and without error
 | Helper text colour in fields | `text-tertiary`, while `NlHelperText`'s default tone is `text-secondary` | `NlHelperText` default tone uses `text-tertiary` everywhere | Approved (OD-43, 19 Nov 2026) |
 | Helper icon | Hidden for default, shown for error in text areas but not in single-line fields | Hidden for default, shown for success, warning and error everywhere | Approved (OD-76) |
 | Floating label colour | `text-tertiary` in fields, `text-primary` in text areas | `text-tertiary` everywhere | Approved (OD-77) |
-| Required marker | Not in the reference | Native `required` only (announced); no visible marker until one is designed | Open (OD-78) |
+| Required marker | Not in the reference | Native `required` only (announced); no visible marker | Decided (OD-78, 19 Nov 2026): no marker |
 | Types left out | Payment and mobile number | Left out | Matches |
 
 #### Spec → code
@@ -5178,10 +5178,10 @@ The "Sizes and layout" and "Colours" tables, as written, with the standard focus
 | Decision | Detail |
 |---|---|
 | Floating label in CSS | The label floats on `:focus` or when the input no longer shows its placeholder (has a value), through `peer-*` variants, so controlled and uncontrolled both work |
-| Focus ring timing | The ring shows on any focus inside the box (`has-focus`), as the spec draws it for text inputs; the input's own outline is hidden (`nl:focus:outline-hidden`) |
-| Focus ring and trailing buttons | `has-focus` also matches a focused trailing button (for example the password show/hide), so the box ring shows then too. Revisit with `NlPasswordField` (#46) |
+| Focus ring timing | The ring shows whenever the box's own input has focus (`nl:input-focus:`, a named variant in `tailwind.css` for `:has(input:focus)`), as the spec draws it for text inputs; the input's own outline is hidden (`nl:focus:outline-hidden`) |
+| Focus ring and trailing buttons | A focused trailing button (for example the password show/hide) shows only its own ring, not the box's. `has-focus` matched the button too and drew two rings, so the box uses `nl:input-focus:` instead (rule 9, approved 19 Nov 2026 with `NlPasswordField` #46). Hover fill and the filled border use `not-input-focus` the same way |
 | Label with a leading item | The label sits in the value area, so with a leading icon it starts after the icon, at rest and floating |
-| Required | Native `required` only until a marker is designed (OD-78) |
+| Required | Native `required` only, no visible marker (OD-78, designer's choice, 19 Nov 2026) |
 | Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
 
 Checked in the browser: the floating label is centred on the top border and lines up with the value; a filled field turns `border-strong` on blur.
@@ -5258,7 +5258,7 @@ None of its own: everything from `NlInputBase`; the trailing icon is `fg-seconda
 
 **Level** Molecule (mapped; also contains `NlButton`, L1) · **Base** `NlInputBase` · **Depends on** `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-31, OD-80, OD-81.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-31, OD-80 and OD-81 decided 19 Nov 2026.
 
 A password input with a show/hide toggle.
 
@@ -5286,15 +5286,56 @@ As `NlInputBase`. The toggle has the button's own states. Disabled field: the to
 #### Behaviour and accessibility
 
 - The input switches between `type="password"` and `type="text"`. The caret position and value stay.
-- The toggle's name is "Show password" or "Hide password", with `aria-pressed`. It is a separate tab stop after the input.
+- The toggle's name is always "Show password", and `aria-pressed` carries the state (designer's choice, 19 Nov 2026: a name that changes as well as `aria-pressed` reads as "Hide password, pressed"). It is a separate tab stop after the input.
 - `autoComplete` defaults to `current-password`. Pass `new-password` when creating one.
 
 #### Mapping notes
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Toggle | A bare eye icon (24 on large, 20 on small) | An `NlButton` icon-only, tertiary, `contentTone="secondary"`. The smallest icon-only button is 32 square with a 20 icon, so the large field's eye becomes 20, not 24. To keep 24, the field would use the small button (36 square) and the box stays 48 tall | **Needs approval** |
-| Icons | Eye and crossed eye from the reference's icon set | Material Symbols `visibility`, `visibility_off` | **Needs approval** |
+| Toggle | A bare eye icon (24 on large, 20 on small) | An `NlButton` icon-only, tertiary, `contentTone="secondary"`, size `xsmall` (32 square, 20 icon) in both field sizes, so the large field's eye is 20, not 24. Only the 48 icon-only button has a 24 icon, and it would fill the large box top to bottom | Approved (OD-80, OD-31) |
+| Icons | Eye and crossed eye from the reference's icon set | Material Symbols `visibility`, `visibility_off` | Approved (OD-81) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size?: 'large' \| 'small'`, default `large`, passed to `NlInputBase` |
+| Show password | `showPassword?` (controlled), `defaultShowPassword?` (default `false`), `onShowPasswordChange?(next)`; `data-show-password` on the input when shown |
+| Input type | `type="password"` while hidden, `type="text"` while shown; not a prop |
+| Error | `error?: boolean`, passed to the base |
+| Label, helper text, disabled, required, value, `ref` | Passed to `NlInputBase` and its native input |
+| `autoComplete` | Default `current-password`; pass `new-password` when creating one |
+| Toggle | `NlButton type="button" variant="tertiary" contentTone="secondary" size="xsmall" icon="only-icon"`, name "Show password", `aria-pressed`, disabled with the field, in the base's trailing slot |
+| Value and caret | The value stays; the caret or selection is saved before the switch and put back after |
+| Left out | `prefix`, `suffix`, `leading`, `trailing` (the trailing slot holds the toggle) |
+
+#### API
+
+```tsx
+import { NlPasswordField } from '@northline/ui';
+
+<NlPasswordField label="Password" />
+<NlPasswordField label="New password" autoComplete="new-password" helperText="Use at least 12 characters." />
+<NlPasswordField label="Password" showPassword={shown} onShowPasswordChange={setShown} />
+```
+
+`'use client'` (state and refs).
+
+#### Tokens used
+
+None of its own: the field's are `NlInputBase`'s and the toggle's are `NlButton`'s (tertiary, `contentTone="secondary"`, xsmall).
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Focus ring | Focusing the toggle shows only the button's ring; the box ring follows the input (`NlInputBase`, `nl:input-focus:`, approved 19 Nov 2026) |
+| Toggle name | Fixed "Show password" with `aria-pressed` (designer's choice) |
+| Caret | Some browsers reset the caret when the type changes, so it is put back in a layout effect |
+| Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+
+Checked in the browser: box 48 (large) and 40 (small), toggle 32 square in both, 16 from the box's end; focusing the toggle draws one ring.
 
 ---
 
@@ -5302,7 +5343,7 @@ As `NlInputBase`. The toggle has the button's own states. Disabled field: the to
 
 **Level** Molecule (mapped; also contains `NlButton`, L1) · **Base** `NlInputBase` · **Depends on** `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-31, OD-82, OD-83, OD-84.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-82, OD-83, OD-84. OD-31 decided 19 Nov 2026 (xsmall clear button).
 
 A search input with a search icon and a clear button. Used in table toolbars and menu headers.
 
@@ -6906,7 +6947,7 @@ As `NlInputBase`. Complete shows the chips.
 
 **Level** Organism (contains `NlCalendar`, a molecule) · **Base** `NlInputBase` · **Depends on** `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-31, OD-137, OD-141.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-137, OD-141. OD-31 decided 19 Nov 2026 (xsmall calendar button).
 
 A date input that accepts typing and opens a calendar.
 
@@ -6933,7 +6974,7 @@ The reference has one size (large).
 
 #### Sizes and layout
 
-- Field: as `NlInputBase` (large). Trailing calendar button: `NlButton variant="tertiary" icon="only-icon" contentTone="secondary"`, icon `calendar_today` (see OD-31 for its size).
+- Field: as `NlInputBase` (large). Trailing calendar button: `NlButton variant="tertiary" icon="only-icon" contentTone="secondary"`, icon `calendar_today`, size `xsmall` (OD-31).
 - Placeholder: the format pattern ("DD/MM/YYYY") in `text-placeholder`. It stays visible while focused (unlike other fields), and while typing, the rest of the pattern shows after the typed digits ("01/0" + "M/YYYY").
 - Menu: `NlMenu`, `Space-XS` below the field, as wide as the calendar, holding `NlCalendar mode="single"` opened on the typed date or today.
 
@@ -7463,3 +7504,4 @@ Known issues
 | 19 Nov 2026 | NlNotificationButton (#43, public): own native 40 circle (OD-40, D12 exception) with the `notifications` icon (added to the registry, 27 icons) and an `NlCountBadge` dot or number; name carries the shown count. Approved by the designer |
 | 19 Nov 2026 | NlInputBase (#44, internal): outlined field with a real floating label (CSS only, OD-42), large/small, leading, trailing, prefix, suffix, helper text in a polite live region (icon only for errors, OD-76), error and disabled; standard focus ring on errors (OD-44). Select type with #70; required marker open (OD-78). Approved by the designer |
 | 19 Nov 2026 | NlTextField (#45, public): single-line input on `NlInputBase` with `inputType` (text, email, number, tel, url) and an optional decorative trailing icon (OD-79). The field hint text was removed from `NlInputBase` and `NlTextField`: focused and empty, the box shows only the floating label (designer's choice). Approved by the designer |
+| 19 Nov 2026 | NlPasswordField (#46, public): password input on `NlInputBase` with a show/hide `NlButton` (tertiary, icon-only, xsmall, OD-80, OD-31), icons `visibility` / `visibility_off` (OD-81), fixed name "Show password" with `aria-pressed`, caret kept on switch. `NlInputBase`'s focus ring now follows its input only (`nl:input-focus:`), so a focused trailing button shows one ring. OD-78: no required marker. Approved by the designer |

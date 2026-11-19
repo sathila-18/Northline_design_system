@@ -57,7 +57,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 | 24 | `NlButtonBase` | internal | `NlIcon` | `NlButton` | OD-1 / OD-40 (soft variant?) | ✅ batch 3 | ⬜ |
 | 25 | `NlWhiteButton` | internal | `NlButtonBase` | `NlButton` | OD-54 | ✅ batch 3 | ⬜ |
 | 26 | `NlDestructiveButton` | internal | `NlButtonBase` | `NlButton` | – | ✅ batch 3 | ⬜ |
-| 27 | `NlButton` | yes | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | `NlNotificationButton`, `NlPasswordField`, `NlSearchField`, `NlCalendar`, `NlBanner`, `NlSnackbar`, `NlButtonDock`, `NlEmptyState`, `NlFileUpload`, `NlDialog`, `NlPagination`, `NlTableCell`, `NlTableColumnFilter`, `NlSideSheet`, `NlPageHeader`, `NlTable`, `NlSideNav` | OD-1 / OD-40, OD-31, OD-117 | ✅ batch 3 | ⬜ |
+| 27 | `NlButton` | yes | `NlButtonBase`, `NlWhiteButton`, `NlDestructiveButton` | `NlNotificationButton`, `NlPasswordField`, `NlSearchField`, `NlCalendar`, `NlBanner`, `NlSnackbar`, `NlButtonDock`, `NlEmptyState`, `NlFileUpload`, `NlDialog`, `NlPagination`, `NlTableCell`, `NlTableColumnFilter`, `NlSideSheet`, `NlPageHeader`, `NlTable`, `NlSideNav` | OD-1 / OD-40, OD-117 | ✅ batch 3 | ⬜ |
 | 28 | `NlCheckboxControl` | internal | `NlIcon` | `NlCheckbox`, `NlCheckboxListItem`, `NlTableHeaderCell`, `NlTableCell`, `NlTable` | – | ✅ batch 3 | ⬜ |
 | 29 | `NlSpinner` | yes | `NlIcon` | – | OD-61, OD-62 | ✅ batch 3 | ⬜ |
 | 30 | `NlLabel` | yes | `NlCountBadge` | `NlCalendar`, `NlStep`, `NlListItemBase`, `NlAccordion`, `NlStatCard`, `NlTableHeaderCell` | OD-50 | ✅ batch 3 | ⬜ |
@@ -81,8 +81,8 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 | 43 | `NlNotificationButton` | yes | `NlCountBadge`, `NlIcon` | `NlPageHeader` | – | ✅ batch 5 | ⬜ |
 | 44 | `NlInputBase` | internal | `NlHelperText`, `NlIcon` | `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect`, `NlDateField` | OD-42, OD-43, OD-44 | ✅ batch 5 | ⬜ |
 | 45 | `NlTextField` | yes | `NlInputBase` | – | – | ✅ batch 5 | ⬜ |
-| 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | OD-31 | ✅ batch 5 | ⬜ |
-| 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | OD-31 | ✅ batch 5 | ⬜ |
+| 46 | `NlPasswordField` | yes | `NlInputBase`, `NlButton` | – | – | ✅ batch 5 | ✅ |
+| 47 | `NlSearchField` | yes | `NlInputBase`, `NlButton` | `NlTableColumnFilter`, `NlTable` | – | ✅ batch 5 | ⬜ |
 | 48 | `NlTextAreaBase` | internal | `NlHelperText` | `NlTextArea` | OD-42, OD-43 | ✅ batch 5 | ⬜ |
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ⬜ |
 | 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | OD-50 | ✅ batch 5 | ⬜ |
@@ -112,7 +112,7 @@ Last updated: 18 Nov 2026 (NlIcon to NlMenu approved; OD-2, OD-4, OD-6, OD-7, OD
 |---|---|---|---|---|---|---|---|
 | 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | OD-42, OD-43 (via the base) | ✅ batch 8 | ⬜ |
 | 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | OD-42, OD-43 (via the base), OD-136 | ✅ batch 8 | ⬜ |
-| 72 | `NlDateField` | yes | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | – | OD-31, OD-137 | ✅ batch 8 | ⬜ |
+| 72 | `NlDateField` | yes | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | – | OD-137 | ✅ batch 8 | ⬜ |
 | 73 | `NlStepper` | yes | `NlStep` | – | – | ✅ batch 8 | ⬜ |
 | 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ⬜ |
 | 75 | `NlSideSheet` | yes | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | – | OD-16, OD-133 | ✅ batch 8 | ⬜ |
@@ -129,7 +129,7 @@ Build and settle these early. A change to them ripples widely.
 | Component | Used by (direct) | Open decisions |
 |---|---|---|
 | `NlIcon` | 21 | – |
-| `NlButton` | 17 | OD-1 / OD-40, OD-31 |
+| `NlButton` | 17 | OD-1 / OD-40 |
 | `NlTextBlock` | 11 | OD-120 (OD-14, OD-15, OD-16, OD-41 decided) |
 | `NlLabel` | 6 | OD-50 |
 | `NlInputBase` | 6 | OD-42, OD-43, OD-44 |
@@ -172,7 +172,7 @@ Decide these before building the components listed under "Affects".
 | OD-14 | `NlTextBlock` | List rows need `Label M` / `Body S` text | Add `type="label"` (gap `Space-none`) | All list items, `NlSideNavUser`, `NlMenu` rows | **Decided** 18 Nov 2026: approved |
 | OD-15 | `NlTextBlock` | Disabled text colour | `disabled` prop → `text-disabled` | `NlCheckbox`, list items, `NlListCaption` | **Decided** 18 Nov 2026: approved (contrast: K3) |
 | OD-16 | `NlTextBlock` | Heading element | `headingAs`, default `p` | `NlDialog`, `NlSideSheet`, `NlPageHeader`, `NlEmptyState` | **Decided** 18 Nov 2026: approved |
-| OD-31 | `NlButton` | Icon-only sizes inside fields | Fields use the xsmall icon-only button (20 icon). Large fields lose the 24 icon | `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlDateField` | Open |
+| OD-31 | `NlButton` | Icon-only sizes inside fields | Fields use the xsmall icon-only button (20 icon). Large fields lose the 24 icon | `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlDateField` | **Decided** 19 Nov 2026: xsmall (32, 20 icon) in both field sizes |
 | OD-40 | `NlNotificationButton` | Its look matches no `NlButton` variant | (b) add `variant="soft"` to `NlButton` (recommended) or (a) its own button as a D12 exception | `NlButton`, `NlPageHeader` | **Decided** 19 Nov 2026: (a) its own native button |
 | OD-41 | `NlCheckbox` | How to get `Body L` text | (b) `NlTextBlock type="body"` (recommended) or (a) `type="display-large"` | `NlTextBlock` | **Decided** 18 Nov 2026: (b), built in `NlTextBlock` |
 | OD-42 | `NlInputBase` | Label at rest | A real label at all times, in the placeholder position at rest, floating on focus or when filled | Every field | **Decided** 19 Nov 2026: approved; the hint text was then removed (box empty while focused) |
@@ -332,14 +332,14 @@ Decide these before building the components listed under "Affects".
 - OD-42, OD-43, OD-44: see section 2
 - OD-76 · Helper icon: hidden for default, shown for success, warning and error everywhere · **Decided** 19 Nov 2026: approved
 - OD-77 · Floating label `text-tertiary` everywhere · **Decided** 19 Nov 2026: approved
-- OD-78 · Required marker: not specified · Open
+- OD-78 · Required marker: not specified · **Decided** 19 Nov 2026: no marker (native `required` only)
 
 **NlTextField**
 - OD-79 · Trailing icon: any registry icon, decorative · **Decided** 19 Nov 2026: approved
 
 **NlPasswordField**
-- OD-80 · Toggle as an `NlButton` (see OD-31 for size) · Open
-- OD-81 · Icons `visibility`, `visibility_off` · Open
+- OD-80 · Toggle as an `NlButton` (see OD-31 for size) · **Decided** 19 Nov 2026: approved, xsmall; fixed name "Show password" with `aria-pressed`
+- OD-81 · Icons `visibility`, `visibility_off` · **Decided** 19 Nov 2026: approved
 
 **NlSearchField**
 - OD-82 · Hover and disabled taken from `NlInputBase` · Open
