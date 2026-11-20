@@ -61,3 +61,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlPageDot | 2026-11-19 23:51 | 2026-11-20 00:09 | OD-36 to OD-39 and OD-72 approved; width and fill on the same timing. Approved by the designer |
 | NlRowsPerPage | 2026-11-19 16:03 | 2026-11-20 00:25 | Parked 19 Nov (Dark label contrast), resumed 2026-11-20 00:10; label kept text-tertiary, K7 accepted. Approved by the designer |
 | NlCalendar | 2026-11-20 00:29 | 2026-11-20 00:41 | OD-90 approved; names prop instead of locale; today via useSyncExternalStore; range rules and limits approved. Approved by the designer |
+| NlListItemBase | 2026-11-20 08:06 | 2026-11-20 08:27 | OD-97, OD-148 to OD-151 decided; accessories take any component; hover and pressed only when actionable; OD-119 left for #69. Approved by the designer |
