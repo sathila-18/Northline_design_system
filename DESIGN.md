@@ -640,7 +640,7 @@ _The designer adds rows here before each build._
 | 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ✅ |
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
 | 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ✅ |
-| 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ⬜ |
+| 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ✅ |
 | 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ⬜ |
 | 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ⬜ |
 | 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ⬜ |
@@ -6168,7 +6168,7 @@ Presentational, no `'use client'`.
 
 **Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlAvatar`, `NlListCaption`, `NlIcon` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-98, OD-99.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-98, OD-99 and OD-152 to OD-155 decided.
 
 The standard list row: something to open, choose or read, such as a member, a reward or a menu option.
 
@@ -6188,9 +6188,11 @@ As `NlListItemBase`, with these slots filled:
 | Leading | none, icon, avatar | `icon?: NlIconName` or `avatar?: NlAvatarProps` |
 | Description | on or off | `description?` |
 | Caption | on or off | `caption?: string` (`NlListCaption size="small" weight="heavy"`) |
-| Chevron | on or off | `chevron?: boolean`. Always on for filled |
+| Chevron | on or off | `chevron?: boolean`. Always on for filled. A chevron makes the whole row actionable |
 | Selected | on or off | `selected?` |
-| Disabled | on or off | `disabled?` |
+| Disabled | on or off | `disabled?` (OD-153) |
+| Divider | on (default) or off | `divider?: boolean` (OD-154) |
+| Body | optional, in place of the description | `body?` (OD-155) |
 | Element | link, button, option, or static | `as`, `href`, `onClick`; inside `NlMenu`, the menu sets the role |
 
 #### Sizes, layout and colours
@@ -6203,10 +6205,10 @@ Default, hover, selected, selected + hover, focus, disabled.
 
 #### Behaviour and accessibility
 
-- As a link or button: the whole row is the control. Its name is the title; the description and caption are read after it (`aria-describedby`).
+- As a link or button: the whole row is the control. Its name is the row's text: the title, then the description and caption (WCAG 2.5.3, see Build decisions).
 - Inside `NlMenu`: `role="menuitem"` (action menus) or `role="option"` with `aria-selected` (select menus).
-- Selected (outside menus): `aria-current` when it marks the current page or item.
-- A static row (no action) has no hover and no focus.
+- Selected (outside menus): the page sets `aria-current` (OD-152); `selected` is the look only.
+- A static row (no action, no chevron) has no hover and no focus (OD-98). With a chevron the whole row is clickable.
 - The chevron and leading icon are decorative.
 
 #### Mapping notes
@@ -6216,8 +6218,50 @@ Default, hover, selected, selected + hover, focus, disabled.
 | Leading accessories | None, icon, flag, payment, avatar | None, icon, avatar (flag and payment left out) | Matches |
 | Trailing accessories | None or caption, plus chevron | Same | Matches |
 | Chevron on filled rows | Always shown, per the reference's description | Same | Matches |
-| Static rows | Not described | No hover or focus when there's no action | **Needs approval** |
-| Chevron icon | From the reference's icon set | Material Symbols `chevron_right` | **Needs approval** |
+| Static rows | Not described | No hover or focus when there's no action and no chevron | Approved (OD-98) |
+| Chevron icon | From the reference's icon set | Material Symbols `chevron_right` | Approved (OD-99) |
+| Current item | `aria-current` | Set by the page (`aria-current` passes through) | Approved (OD-152) |
+| Disabled | Not described | Button: native `disabled`. Link: no `href`, `aria-disabled`. Menu row: `aria-disabled`, clicks ignored. Avatar keeps its look | Approved (OD-153) |
+| Divider | From the base | `divider?`, on by default | Approved (OD-154) |
+| Base slots | Top label, extra icon, body | Only `body` exposed; top label and extra icon hidden | Approved (OD-155) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Appearance, size, density | `appearance`, `size`, `density` straight to `NlListItemBase` |
+| Leading | `icon?: NlIconName` → `NlIcon` 24, `tone="inherit"` (slot gives `fg-primary`); `avatar?` → `NlAvatar size="medium"` (wins over `icon`) |
+| Caption | `caption?` → `NlListCaption size="small" weight="heavy"` with `disabled` |
+| Chevron | `chevron?` (forced on for filled) → `NlIcon chevron_right` 24, decorative, slot gives `fg-secondary` |
+| Element | `role` → `div` with the role and `tabIndex` -1; `href` or `as` → link; `onClick` or a chevron → `button type="button"`; none → static `div`, `actionable` off. `data-kind` |
+| Name | From the row's text in order: title, description (or body), caption. No `aria-labelledby` (see Build decisions) |
+| Selected | Base look; `aria-selected` for `role="option"` |
+
+#### API
+
+```tsx
+import { NlListItem } from '@northline/ui';
+
+<NlListItem title="Member 0042" description="Tier 2" icon="person" chevron onClick={open} />
+<NlListItem title="Rewards" href="/rewards" selected aria-current="page" caption="3" />
+<NlListItem role="option" title="Tier 2" selected size="small" density="compact" divider={false} />
+```
+
+`'use client'` (event handlers).
+
+#### Tokens used
+
+The base's tokens (`NlListItemBase`), plus `NlIcon`, `NlAvatar` and `NlListCaption`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Native disabled | `NlListItemBase` now sets native `disabled` when its root is a `<button>` |
+| Name from content (WCAG 2.5.3) | The spec names the row by the title with the rest as a description. axe flags that (`label-content-name-mismatch`): the visible description and caption must be part of the name. The name is the row's text: title, then description or body, then caption |
+| Chevron without `onClick` | Still a focusable button; the page adds the handler |
+| Disabled contrast | `text-disabled` text: known issue K3; disabled samples are marked |
+
 
 ---
 
@@ -7953,3 +7997,4 @@ Known issues
 | 20 Nov 2026 | NlRowsPerPage (#37, public): table footer pill trigger (`aria-haspopup="listbox"`, `aria-expanded`), Body S label, Label S value, 24 arrow (up when open), `open` / `onOpenChange` for `NlTable`'s `NlMenu`; disabled. Label kept `text-tertiary`: K7 accepted (4.47:1 on `bg-tertiary` in Dark). Approved by the designer |
 | 20 Nov 2026 | NlCalendar (#50, public): single date or range month grid; 6 weeks of `NlCalendarDay`, `NlLabel` weekday headers (`tone="secondary"`, OD-50), `NlButton` previous and next; one tab stop with roving focus and full keyboard; range preview; limits and unavailable dates; ISO dates in UTC; `names` instead of locale formatting; today read after hydration; `bg-primary` (OD-90). Approved by the designer |
 | 20 Nov 2026 | NlListItemBase (#52, internal): shared list row, plain (divider) or filled (card), large or small, default or compact; leading and trailing accessories take any component; top label (`NlLabel` small, OD-149), extra icon 8 from the title (OD-150); hover and pressed only when actionable (OD-97, OD-151); divider stays `border-default` (OD-148); `as` for the mapped item's element. Approved by the designer |
+| 20 Nov 2026 | NlListItem (#53, public): standard row on `NlListItemBase`; leading icon or avatar (medium), trailing `NlListCaption` and chevron; link, button, menu row or static; a chevron makes the whole row clickable (filled always); static rows no hover or focus (OD-98); `aria-current` from the page (OD-152); disabled per element (OD-153); `divider` and `body` exposed (OD-154, OD-155); name from the row's text (WCAG 2.5.3). Approved by the designer |

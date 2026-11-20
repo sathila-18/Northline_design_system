@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 and OD-148 to OD-151 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 and #53 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 to OD-99 and OD-148 to OD-155 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -88,7 +88,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | – | ✅ batch 5 | ✅ |
 | 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | – | ✅ batch 6 | ⬜ |
 | 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-119 | ✅ batch 6 | ✅ |
-| 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ⬜ |
+| 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ✅ |
 | 54 | `NlCheckboxListItem` | yes | `NlListItemBase`, `NlCheckboxControl` | `NlMultiSelect`, `NlTableColumnFilter` | – | ✅ batch 6 | ⬜ |
 | 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ⬜ |
 | 56 | `NlSwitchListItem` | yes | `NlListItemBase`, `NlSwitch`, `NlIcon` | – | – | ✅ batch 6 | ⬜ |
@@ -374,8 +374,12 @@ Decide these before building the components listed under "Affects".
 - OD-151 · Hover and pressed · **Decided** 20 Nov 2026: only on actionable rows
 
 **NlListItem**
-- OD-98 · Static rows (no action) have no hover or focus · Open
-- OD-99 · Chevron icon `chevron_right` · Open
+- OD-98 · Static rows (no action) have no hover or focus · **Decided** 20 Nov 2026: approved; a chevron makes the whole row clickable
+- OD-99 · Chevron icon `chevron_right` · **Decided** 20 Nov 2026: approved
+- OD-152 · `aria-current` on selected rows · **Decided** 20 Nov 2026: the page sets it
+- OD-153 · Disabled: native on buttons, `aria-disabled` on links (no `href`) and menu rows · **Decided** 20 Nov 2026: approved
+- OD-154 · `divider` prop · **Decided** 20 Nov 2026: exposed, on by default
+- OD-155 · Base slots · **Decided** 20 Nov 2026: `body` exposed; top label and extra icon hidden
 
 **NlCheckboxListItem / NlRadioListItem / NlSwitchListItem**
 - OD-100 · The control's hover look follows the row hover · Open

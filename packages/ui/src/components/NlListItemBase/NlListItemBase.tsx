@@ -33,7 +33,7 @@ export interface NlListItemBaseProps extends Omit<ComponentPropsWithRef<'div'>, 
   divider?: boolean;
   /** Selected look. The mapped item sets the matching ARIA. */
   selected?: boolean;
-  /** Disabled look. The mapped item sets disabled / aria-disabled. */
+  /** Disabled look. On a `<button>` root also native disabled; otherwise the mapped item sets aria-disabled. */
   disabled?: boolean;
   /** Hover and pressed colours, for rows the mapped item makes actionable (OD-151). */
   actionable?: boolean;
@@ -108,6 +108,7 @@ export function NlListItemBase({
   return (
     <Element
       {...rest}
+      disabled={Element === 'button' ? disabled : undefined}
       className={classes}
       data-appearance={appearance}
       data-size={size}
