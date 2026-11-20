@@ -592,7 +592,7 @@ _The designer adds rows here before each build._
 | 11 | Text block | `NlTextBlock` | – | [§9](#nltextblock) | ✅ |
 | 12 | Menu | `NlMenu` | – | [§9](#nlmenu) | ✅ |
 | 13 | Chip group | `NlChipGroup` | – | [§9](#nlchipgroup) | ⬜ |
-| 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ⬜ |
+| 14 | App shell | `NlAppShell` | – | [§9](#nlappshell) | ✅ |
 | 15 | Calendar day (internal) | `NlCalendarDay` | – | [§9](#nlcalendarday) | ✅ |
 | 16 | List caption (internal) | `NlListCaption` | – | [§9](#nllistcaption) | ✅ |
 | 17 | Nav sub item (internal) | `NlNavSubItem` | – | [§9](#nlnavsubitem) | ✅ |
@@ -2184,7 +2184,7 @@ None of its own. Each chip has its own states.
 
 **Level** Atom L0 (D15: nav, header and content are slots) · **Base** none · **Depends on** nothing · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-24, OD-25, OD-26.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-24, OD-25, OD-26, OD-135, OD-235 and OD-236 decided.
 
 The page frame for every admin screen: side nav on the left, and on the right a rounded content panel holding the page header and the scrolling page content. It also provides the skip link.
 
@@ -2254,12 +2254,45 @@ NlAppShell (full window, horizontal)
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Nav and header | Fixed side menu and page header inside the shell | Slots (D15) | Approved (D15) |
-| Content padding and block gap | From the reference's component description: `Space-3XL` padding, `Space-4XL` between blocks | Same | **Needs approval** |
-| Skip link focus ring | 2px `border-focused`, drawn 2 outside the pill (an outer frame with `Space-XS` padding) | The standard ring from CLAUDE.md (2px, offset −1), as for the switch | **Needs approval** |
-| Content focus ring | From the description: 2px `border-focused` inside | Same, using Tailwind's 2px inset ring (§4.2) | **Needs approval** |
+| Content padding and block gap | From the reference's component description: `Space-3XL` padding, `Space-4XL` between blocks | Same: `Space-3XL` padding; the page sets the `Space-4XL` block gap | Approved (OD-24) |
+| Skip link focus ring | 2px `border-focused`, drawn 2 outside the pill (an outer frame with `Space-XS` padding) | The standard ring from CLAUDE.md (2px, offset −1), as for the switch | Approved (OD-25) |
+| Content focus ring | From the description: 2px `border-focused` inside | 2px `border-focused` `outline-2` with a −2 offset: fully inside the panel and drawn on top of the content (an inset box-shadow would sit under blocks with their own fill) | Approved (OD-26) |
+| Skip link position and layer | "Top left above everything" | `Space-M` from the top and start edges, `--nl-z-snackbar` | Approved (OD-235) |
+| Nav landmark | Wrap in `<nav>` unless the nav renders its own | Never wrapped; the nav slot provides its `<nav>` (`NlSideNav` does) | Approved (OD-236) |
+| Panel gap | `Space-XS` showing the page background (OD-135) | The panel has no fill; the header (`NlPageHeader`, `bg-primary`) and `<main>` (`bg-primary`) carry it, and the panel's clipping rounds the outer corners | Matches |
 | Nav widths and breakpoint | The description gives nav widths and switches at 1280 | The nav's own spec. The shell only uses `Breakpoint-1280` as guidance | Matches §3.7 |
 | Skip link text | Reference copy | "Skip to content" (generic, sentence case) | Matches |
 | Shadow | A "menu" shadow | `--nl-shadow-menu` | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Shell | `h-dvh`, full width, row, gap `Space-none`, `bg-secondary`, `overflow-hidden` |
+| Nav slot | `nav` in a full-height wrapper; no landmark added |
+| Panel area | Fills the rest; `Space-M` top, end and bottom, none at the start; flexes with the nav |
+| Panel | `Radius-L`, clipped, column, gap `Space-XS`, no fill |
+| Header slot | `header` in `<header>` (doesn't scroll) |
+| Content | `children` in `<main id tabIndex={0}>`: fills the rest, scrolls, `Space-3XL` padding, `bg-primary`, inside focus ring |
+| Skip link | `skipLink` (off by default), `skipLinkLabel` ("Skip to content"): a fixed wrapper (`Space-M` from top and start, `--nl-z-snackbar`) → a span that is `sr-only` until focused within → the pill link (`Space-M` / `Space-XL`, `Radius-Full`, Label M `text-action`, `bg-primary`, `--nl-shadow-menu`, standard ring); activating it focuses `<main>`. `mainId` sets the target id |
+
+#### API
+
+```tsx
+import { NlAppShell, NlPageHeader, NlSideNav } from '@northline/ui';
+
+<NlAppShell skipLink nav={<NlSideNav items={items} currentHref={pathname} />} header={<NlPageHeader title="Rewards" />}>
+  {page}
+</NlAppShell>
+```
+
+Props: `nav`, `header?`, `children?`, `skipLink?`, `skipLinkLabel?`, `mainId?`, `className?`. `'use client'` (the skip link's focus move).
+
+#### Tokens used
+
+`Space-none`, `Space-XS`, `Space-M`, `Space-XL`, `Space-3XL`; `Radius-L`, `Radius-Full`; `bg-secondary`, `bg-primary`; `text-action`; `border-focused` (rings); Label M; `--nl-shadow-menu`; `--nl-z-snackbar`.
+
+Checked in Chrome: axe clean in every brand and theme; the skip link is the first tab stop, shows as the pill, and moves focus to `<main>`; only the content scrolls (End scrolls it, the window stays put) with the inside ring.
 
 ---
 
@@ -8975,3 +9008,4 @@ Known issues
 | 20 Nov 2026 | NlPageHeader (#76, public): the bar at the top of the content panel, a `div` for `NlAppShell`'s `<header>` slot (OD-219); optional back `NlButton` or link ("Back" / `backLabel`), the title as an `h1` `NlTextBlock` headline-small cut with a tooltip (OD-144), an optional line or slot under it, and an optional `NlNotificationButton`; rising unread counts announced politely (OD-220); no bottom edge, `NlAppShell` leaves a `Space-XS` gap (OD-135). Approved by the designer |
 | 21 Nov 2026 | NlTable (#77, public): data table with an optional toolbar (search, filters slot, small primary action), a real `<table>` (hidden caption, grey `NlTableHeaderCell` headers with sort, `NlTableColumnFilter` from `column.filter` and select-all; `NlTableCell` rows with select, text, badge or link cells and a sticky row-actions `NlMenu`), and a footer (summary with the selected count, `NlRowsPerPage` + `NlMenu`, `NlPagination`); bordered variant; `Size-*` column widths; loading `Size-80` skeleton rows, empty `NlEmptyState` with `Space-4XL`; polite result and selection announcements. `NlTableHeaderCell` gained `stickyEnd`. OD-138, OD-145, OD-221 to OD-230 decided; K8 marked. Approved by the designer |
 | 21 Nov 2026 | NlSideNav (#78, public): the main `<nav>` with a logo slot and a `dock_to_right` collapse `NlButton` (no `aria-expanded`, OD-233), `NlNavItem` sections (`currentHref`, tree lines only in the tree style through the new `NlNavItem tree`, OD-231) and `NlSideNavUser` at the bottom; expanded `Size-240` column (new token, OD-134) or minimized `Size-80`, easing over Duration slow (OD-147); follows `Breakpoint-1280` until toggled (OD-232). Approved by the designer |
+| 21 Nov 2026 | NlAppShell (#14, public): the page frame, full window on `bg-secondary`: nav slot, then a `Radius-L` panel (no fill) with the header slot in `<header>` and the content in a scrolling, focusable `<main>` (`Space-3XL` padding, inside focus ring, OD-24, OD-26), `Space-XS` apart (OD-135); optional skip link pill (`Space-M` from top and start, `--nl-z-snackbar`, standard ring, OD-25, OD-235); no `<nav>` added (OD-236). Approved by the designer |
