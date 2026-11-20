@@ -36,5 +36,6 @@ export * from './components/NlSwitchListItem';
 export * from './components/NlBanner';
 export * from './components/NlSnackbar';
 export * from './components/NlButtonDock';
+export * from './components/NlEmptyState';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';
