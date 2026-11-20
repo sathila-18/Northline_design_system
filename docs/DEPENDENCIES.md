@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #61 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-112 and OD-148 to OD-174 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #62 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-113 and OD-148 to OD-176 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -97,7 +97,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | – | ✅ batch 6 | ✅ |
 | 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ✅ |
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
-| 62 | `NlStatCard` | yes | `NlLabel` (`NlTextBlock` only if OD-113 is refused) | – | OD-113 | ✅ batch 7 | ⬜ |
+| 62 | `NlStatCard` | yes | `NlLabel` | – | – | ✅ batch 7 | ✅ |
 | 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | OD-114 | ✅ batch 7 | ⬜ |
 | 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | OD-16, OD-41, OD-115 | ✅ batch 7 | ⬜ |
 | 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
@@ -433,7 +433,9 @@ Decide these before building the components listed under "Affects".
 
 **NlStatCard**
 - OD-50: see section 2 (label in `text-secondary`)
-- OD-113 · Value in `Data M` (tabular figures), rendered by the card itself, so it no longer uses `NlTextBlock` · Open
+- OD-113 · Value in `Data M` (tabular figures), rendered by the card itself, so it no longer uses `NlTextBlock` · **Decided** 20 Nov 2026: approved
+- OD-175 · Cards in a description list · **Decided** 20 Nov 2026: opt-in `inList` (`<dt>` / `<dd>`)
+- OD-176 · Long values · **Decided** 20 Nov 2026: wrap
 
 **NlFileUpload**
 - OD-114 · Dashed border via Tailwind's `border-dashed` (dash length set by the browser, not exactly 4/4) · Open
