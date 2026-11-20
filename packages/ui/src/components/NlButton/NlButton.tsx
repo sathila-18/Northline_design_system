@@ -13,14 +13,21 @@ export type NlButtonContentTone = keyof typeof styles.contentTone;
 
 /**
  * Tone, variant and content tone. Combinations the spec doesn't have are type errors, not silent changes:
- * white is primary only (OD-54), destructive has no link, content tones are tertiary only, link has no icon-only.
+ * white is primary only (OD-54), destructive has no link, content tones are tertiary and link only, link has no
+ * icon-only, and only link can be flush.
  */
 type NlButtonToneProps =
-  | { tone?: 'normal'; variant?: 'primary' | 'secondary'; contentTone?: undefined }
-  | { tone?: 'normal'; variant: 'tertiary'; contentTone?: NlButtonContentTone }
-  | { tone?: 'normal'; variant: 'link'; contentTone?: undefined; icon?: 'none' | 'leading' | 'trailing' }
-  | { tone: 'white'; variant?: 'primary'; contentTone?: undefined }
-  | { tone: 'destructive'; variant?: 'primary' | 'secondary' | 'tertiary'; contentTone?: undefined };
+  | { tone?: 'normal'; variant?: 'primary' | 'secondary'; contentTone?: undefined; flush?: undefined }
+  | { tone?: 'normal'; variant: 'tertiary'; contentTone?: NlButtonContentTone; flush?: undefined }
+  | {
+      tone?: 'normal';
+      variant: 'link';
+      contentTone?: NlButtonContentTone;
+      icon?: 'none' | 'leading' | 'trailing';
+      flush?: boolean;
+    }
+  | { tone: 'white'; variant?: 'primary'; contentTone?: undefined; flush?: undefined }
+  | { tone: 'destructive'; variant?: 'primary' | 'secondary' | 'tertiary'; contentTone?: undefined; flush?: undefined };
 
 export type NlButtonProps = DistributiveOmit<NlButtonBaseProps, 'variant' | 'appearance'> & NlButtonToneProps;
 
@@ -30,6 +37,7 @@ function appearanceFor(tone: NlButtonTone, variant: NlButtonVariant, contentTone
   if (tone === 'white') look = styles.white;
   else if (tone === 'destructive') look = styles.destructive[variant === 'link' ? 'primary' : variant];
   else if (variant === 'tertiary') look = styles.contentTone[contentTone];
+  else if (variant === 'link') look = styles.linkContentTone[contentTone];
   else look = styles.normal[variant];
   return { button: `${styles.motion} ${look.button}`, icon: `${styles.motion} ${look.icon}`, label: look.label };
 }

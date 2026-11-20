@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 to #56 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 to OD-102 and OD-148 to OD-164 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-93, OD-97 to OD-102, OD-106 to OD-109 and OD-148 to OD-165 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -93,8 +93,8 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
 | 56 | `NlSwitchListItem` | yes | `NlListItemBase`, `NlSwitch`, `NlIcon` | – | – | ✅ batch 6 | ✅ |
 | 57 | `NlAccordion` | yes | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | – | OD-14, OD-103a | ✅ batch 6 | ⬜ |
-| 58 | `NlBanner` | yes | `NlIcon`, `NlButton` | – | OD-93 | ✅ batch 6 | ⬜ |
-| 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | OD-93, OD-91, OD-92 | ✅ batch 6 | ⬜ |
+| 58 | `NlBanner` | yes | `NlIcon`, `NlButton` | – | – | ✅ batch 6 | ✅ |
+| 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | OD-91, OD-92 | ✅ batch 6 | ⬜ |
 | 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ⬜ |
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
 | 62 | `NlStatCard` | yes | `NlLabel` (`NlTextBlock` only if OD-113 is refused) | – | OD-113 | ✅ batch 7 | ⬜ |
@@ -179,7 +179,7 @@ Decide these before building the components listed under "Affects".
 | OD-43 | `NlHelperText` | Default text colour | `text-tertiary` (as fields use it) instead of `text-secondary` | Every field | **Decided** 19 Nov 2026: `text-tertiary` |
 | OD-44 | `NlInputBase` | Error focus ring colour | `border-error` (reference) vs `border-focused` (CLAUDE.md) | Every field | **Decided** 19 Nov 2026: the standard `border-focused` ring |
 | OD-50 | `NlLabel` | Tone option | Batch 6 makes this stronger: add `tone` (tertiary default, primary, secondary, action). `NlStep` needs three colours, `NlCalendar` weekday names want `text-secondary` | `NlCalendar`, `NlStep` | **Decided** 19 Nov 2026: `tone` added to `NlLabel` (tertiary default, primary, secondary, action) |
-| OD-93 | `NlBanner`, `NlSnackbar` | Their text is recoloured by tone, which `NlTextBlock` can't do | Plain text inside these components, not `NlTextBlock` (inventory dependency for the snackbar goes) | `NlBanner`, `NlSnackbar` | Open |
+| OD-93 | `NlBanner`, `NlSnackbar` | Their text is recoloured by tone, which `NlTextBlock` can't do | Plain text inside these components, not `NlTextBlock` (inventory dependency for the snackbar goes) | `NlBanner`, `NlSnackbar` | **Decided** 20 Nov 2026: plain text |
 | OD-117 | `NlButton` | The table's link cell needs a link button with no inline padding, so its text lines up with the header | `variant="link"` gets no inline padding (instead of tertiary padding) | `NlTableCell`, any inline link | Open |
 | OD-119 | `NlListItemBase` | The side nav user row uses different padding (`Space-L` / `Space-XL`) and `Radius-M` | A third density, `density="nav"` | `NlSideNavUser` | Open |
 | OD-120 | `NlTextBlock` | The side nav user row pairs a `Label M` title with a `Body M` description, which neither proposed small type gives | A second small type, or let `type="label"` take `Body M` | `NlSideNavUser`, maybe list rows | Open |
@@ -404,10 +404,11 @@ Decide these before building the components listed under "Affects".
 
 **NlBanner**
 - OD-93: see section 2
-- OD-106 · Action button: tertiary xsmall with `contentTone` (36 tall; the reference squeezes it to 24) · Open
-- OD-107 · Close as an `NlButton` icon-only · Open
-- OD-108 · Error icon `error` (differs from warning) · Open
-- OD-109 · `role="status"` / `role="alert"` for banners added after load · Open
+- OD-106 · Action button: tertiary xsmall with `contentTone` (36 tall; the reference squeezes it to 24) · **Decided** 20 Nov 2026: link button, xsmall, normal tone (designer's choice)
+- OD-107 · Close as an `NlButton` icon-only · **Decided** 20 Nov 2026: xsmall (32), tertiary, `contentTone`
+- OD-108 · Error icon `error` (differs from warning) · **Decided** 20 Nov 2026: approved
+- OD-109 · `role="status"` / `role="alert"` for banners added after load · **Decided** 20 Nov 2026: opt-in with `live`
+- OD-165 · Banner icon on the first text line; close stays top-aligned · **Decided** 20 Nov 2026: approved
 
 **NlSnackbar**
 - OD-93: see section 2

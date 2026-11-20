@@ -197,6 +197,30 @@ export const ContentTones: Story = {
   ),
 };
 
+/**
+ * Link content tones: label and icon keep the tone, no background, underline on hover and press. `flush` drops the
+ * side padding so the label lines up with the text above it (used by NlBanner).
+ */
+export const LinkContentTones: Story = {
+  name: 'Link content tones',
+  render: (args) => (
+    <div className="nl:flex nl:flex-col nl:gap-m">
+      {contentTones
+        .filter((tone) => tone !== 'inverse')
+        .map((contentTone) => (
+          <div key={contentTone} className="nl:flex nl:items-center nl:gap-m">
+            <NlButton variant="link" contentTone={contentTone} size={args.size}>
+              View details
+            </NlButton>
+            <NlButton variant="link" contentTone={contentTone} size={args.size} flush>
+              Flush
+            </NlButton>
+          </div>
+        ))}
+    </div>
+  ),
+};
+
 /** `aria-expanded="true"` (a button that opened a menu) uses the pressed look (OD-57). */
 export const Expanded: Story = {
   render: (args) => (

@@ -16,6 +16,17 @@ export const labelled = {
   xsmall: 'nl:h-36 nl:px-xl nl:py-s',
 } as const;
 
+/**
+ * Flush link (`flush`, link only): the labelled height with no side padding, so the label lines up with the text
+ * around it (designer's choice for NlBanner, 20 Nov 2026).
+ */
+export const labelledFlush = {
+  large: 'nl:h-56 nl:px-none nl:py-xl',
+  medium: 'nl:h-48 nl:px-none nl:py-l',
+  small: 'nl:h-40 nl:px-none nl:py-m',
+  xsmall: 'nl:h-36 nl:px-none nl:py-s',
+} as const;
+
 /** Icon-only: a square with no padding. Small and xsmall are smaller than their labelled heights, as in the reference. */
 export const iconOnly = {
   large: 'nl:size-56 nl:p-none',

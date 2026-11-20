@@ -163,4 +163,19 @@ describe('NlButton', () => {
     expect(button).toHaveAttribute('id', 'probe');
     expect(ref.current).toBe(button);
   });
+  it('link takes content tones and can be flush (no side padding)', () => {
+    render(
+      <NlButton variant="link" contentTone="warning" flush size="xsmall">
+        View details
+      </NlButton>,
+    );
+    const button = screen.getByRole('button', { name: 'View details' });
+    expect(button).toHaveClass('nl:text-warning', 'nl:px-none', 'nl:h-36');
+    expect(button).not.toHaveClass('nl:text-action', 'nl:px-xl');
+  });
+
+  it('a plain link keeps its padding and action colour', () => {
+    render(<NlButton variant="link">Plain</NlButton>);
+    expect(screen.getByRole('button', { name: 'Plain' })).toHaveClass('nl:text-action', 'nl:px-3xl');
+  });
 });

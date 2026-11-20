@@ -27,6 +27,8 @@ interface NlButtonBaseCommonProps extends Omit<ComponentPropsWithRef<'button'>, 
   as?: ElementType;
   /** Link target, when `as` renders a link. */
   href?: string;
+  /** Link variant only: no side padding, so the label lines up with the text around it. */
+  flush?: boolean;
 }
 
 type NlButtonBaseIconProps =
@@ -49,6 +51,7 @@ export function NlButtonBase({
   children,
   appearance,
   as,
+  flush = false,
   className,
   ...rest
 }: NlButtonBaseProps) {
@@ -57,7 +60,7 @@ export function NlButtonBase({
   const onlyIcon = icon === 'only-icon';
   const classes = [
     styles.root,
-    onlyIcon ? styles.iconOnly[size] : styles.labelled[size],
+    onlyIcon ? styles.iconOnly[size] : flush && variant === 'link' ? styles.labelledFlush[size] : styles.labelled[size],
     styles.size[size],
     colours.button,
     className,
