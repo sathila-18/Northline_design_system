@@ -670,7 +670,7 @@ _The designer adds rows here before each build._
 | 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ✅ |
 | 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ✅ |
 | 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ✅ |
-| 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ⬜ |
+| 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ✅ |
 | 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ⬜ |
 
 Every row in §8.1 to §8.4 was checked against the composition rule (§7.1) on 17 Nov 2026: L0 contains no component, L1 only L0 atoms and icons, molecules only atoms, organisms only molecules and atoms. Mapped components take their base's level (§7.2) and slot content doesn't count (D15). Rows are in build order: a component comes after everything it depends on. `NlTable`'s toolbar, header row, rows and footer are internal parts, not rows (D15).
@@ -7611,6 +7611,9 @@ import { NlTableHeaderCell } from '@northline/ui';
 | Focus ring radius | `Radius-XS`, as `NlCheckboxControl` |
 | Grey header contrast | Title on `bg-tertiary` in Dark is 4.46:1: known issue K8 (accepted); grey samples are marked |
 
+#### Sticky end (added 21 Nov 2026, with `NlTable` #77, OD-223)
+
+`stickyEnd?: boolean`: `sticky`, end edge, `--nl-z-sticky`, `--nl-shadow-sticky-end`, fill from the appearance. `NlTable` sets it on the empty row-actions header so it stays with its column when the table scrolls sideways.
 
 ---
 
@@ -8587,7 +8590,7 @@ Checked in Chrome: axe clean in every brand and theme (all stories); the cut tit
 
 **Level** Organism · **Base** none · **Depends on** `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-138, OD-145.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-138, OD-145 and OD-221 to OD-230 decided.
 
 A data table with an optional toolbar (search, filters, main action), selectable rows, sorting, filtering and a footer with pagination. The toolbar, header row, body rows and footer are internal parts (D15).
 
@@ -8658,12 +8661,69 @@ Default, loading (skeleton rows, no footer), empty (`NlEmptyState` replaces the 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Toolbar, header row, rows, footer as parts | Separate components in the reference | Internal parts of `NlTable` (D15) | Approved |
-| Empty and loading | Code only, per the reference's description | `NlEmptyState` and `NlSkeleton` rows; both added to the dependencies | **Needs approval** |
+| Empty and loading | Code only, per the reference's description | `NlEmptyState` in one full-width row, `Space-4XL` above and below (OD-229); `NlSkeleton` text bars, `Size-80` wide, in each data column (OD-228) | Approved (OD-138) |
 | Toolbar spacing | The search fills the space between (the reference's raw 80 gap is a "space between" layout) | Space between; filter slot and action `Space-L` apart | Matches |
 | Select column width | 56 | `Size-56` | Matches |
 | Row-actions column | 64, fixed when scrolling sideways | `Size-64`, sticky | Matches |
 | Footer summary text | Reference copy | "Showing {from}–{to} of {total}" | Matches |
-| Column widths and sideways scrolling | Code only | As above | **Needs approval** |
+| Column widths and sideways scrolling | Code only | `width` / `minWidth` as `Size-*` token names (`80`, `96`, `120`, `320`) through a `<colgroup>`; no width is flexible (OD-222); the frame scrolls sideways and the row-actions column (header too: `NlTableHeaderCell stickyEnd`, added, OD-223) stays at the end | Approved (OD-138) |
+| Column filters | OD-145 | The table renders `NlTableColumnFilter` from `column.filter` | Approved (OD-145) |
+| Row actions | "menu items" | `rowActions(row) → { label, onSelect, disabled? }[]` in an `NlMenu` (action) of `NlListItem` menu items, anchored to the row's button | Approved (OD-221) |
+| Row names | Not described | `getRowLabel`, else the row-header column's text, else the first column's ("Select Member 0042", "Actions for Member 0042") | Approved (OD-224) |
+| Selected count | "In the toolbar or footer" | Leads the footer summary: "3 selected · Showing 1–10 of 120"; announced | Approved (OD-225) |
+| Caption | "Visually hidden by default" | Always visually hidden (no visible caption style in the spec) | Approved (OD-226) |
+| Row fill at rest | None | `bg-primary`, so the sticky row-actions cell (which takes the row's fill) covers cells scrolled under it; looks the same on the `bg-primary` panel | Approved (OD-227) |
+| Row click | "If used" | Left out; every row keeps its actions button | Approved (OD-230) |
+| Header contrast | – | The grey header's titles are 4.46:1 in Dark: known issue K8; the stories are marked | Known issue K8 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Root | Toolbar, frame, footer, `Space-XL` apart; `data-variant` |
+| Toolbar | `toolbar: { search?, filters?, action? }` or `false`: `NlSearchField size="small"` filling the space; filters slot and `NlButton size="small"` (primary by default) `Space-L` apart |
+| Frame | Scrolls sideways; `variant="bordered"`: 1px `border-subtle`, `Radius-S`, clipped |
+| Table | `<table aria-busy>` with a visually hidden `<caption>`, `<colgroup>` (select `Size-56`, row actions `Size-64`, column widths), `<thead>` of `NlTableHeaderCell appearance="grey"` (select-all; sort; filter; an empty "Actions" header, `stickyEnd`), `<tbody>` |
+| Rows | `NlTableCell`s (`Size-40`); select cell (`narrow`, "Select {row}"); data cells from `column.cell(row)` (text, badge or link; `rowHeader` → `<th scope="row">`); row-actions cell (`stickyEnd`, "Actions for {row}"). Divider `border-default` but the last row; fills `bg-primary` / hover `bg-secondary` / selected `bg-active` / selected + hover `bg-active-hover` |
+| Selection | `selectable`, `selectedIds` (kept across pages), `onSelectionChange`; select-all for the page, indeterminate when some |
+| Sort | `sort` / `onSortChange`: `{ key, direction }` or `null` |
+| Filters | `column.filter` → the header's filter button and an `NlTableColumnFilter` |
+| Footer | `pagination` or `false`: summary (Body S `text-tertiary`), `NlRowsPerPage` + `NlMenu kind="select"` of `NlListItem` options, `NlPagination`, `Space-L` apart, `Size-32` high |
+| Loading | `loading`: skeleton rows (`pageSize`, or 5), no footer |
+| Empty | `empty` (default heading "No results"): `NlEmptyState` across every column; no footer |
+| Announcements | Hidden polite status: "Showing {n} results" when the total changes, "{n} selected" when the selection changes |
+
+#### API
+
+```tsx
+import { NlTable } from '@northline/ui';
+
+<NlTable
+  caption="Members"
+  columns={[
+    { key: 'name', header: 'Name', rowHeader: true, sortable: true },
+    { key: 'status', header: 'Status', width: '120', cell: (m) => ({ type: 'badge', badge: { tone: 'success', label: m.status } }) },
+  ]}
+  rows={pageRows}
+  getRowId={(m) => m.id}
+  selectable
+  selectedIds={selected}
+  onSelectionChange={setSelected}
+  rowActions={(m) => [{ label: 'Edit', onSelect: () => edit(m) }]}
+  toolbar={{ search: { label: 'Search members', value: query, onChange: onQuery }, action: { children: 'Add member' } }}
+  pagination={{ page, pageCount, pageSize, pageSizes: [10, 20], total, onPageChange: setPage, onPageSizeChange: setPageSize }}
+  sort={sort}
+  onSortChange={setSort}
+/>
+```
+
+Props: `caption`, `variant?`, `columns`, `rows`, `getRowId`, `getRowLabel?`, `selectable?`, `selectedIds?`, `onSelectionChange?`, `rowActions?`, `toolbar?`, `pagination?`, `sort?`, `onSortChange?`, `loading?`, `empty?`, `className?`. Generic over the row type. `'use client'` (state, refs).
+
+#### Tokens used
+
+`Space-L`, `Space-XL`, `Space-4XL`; `Size-32`, `Size-40`, `Size-56`, `Size-64`, `Size-80`, `Size-96`, `Size-120`, `Size-320`; `Radius-S`; `border-default`, `border-subtle`; `bg-primary`, `bg-secondary`, `bg-active`, `bg-active-hover`; `text-tertiary`, Body S; `--nl-shadow-sticky-end`, `--nl-z-sticky`; `--nl-duration-fast`; the parts' own.
+
+Checked in Chrome: axe in every brand and theme, at rest, hovered, with a row selected, with the row-actions menu, the rows-per-page menu and a column filter open, and scrolled sideways: only K8 (the grey header in Dark) and K9.
 
 ---
 
@@ -8871,3 +8931,4 @@ Known issues
 | 20 Nov 2026 | NlTableColumnFilter (#74, exported for custom tables): `NlMenu kind="filter"` dialog "Filter {column}" from the header cell's filter button; `NlCheckboxListItem` rows with Reset and Apply, or an `NlRadioListGroup` with "All" first (choosing applies and closes, arrow keys apply and stay open, OD-215); `NlSearchField` header above 8 values; starts from the applied values; focus back to the filter button. OD-212 to OD-215 decided. Approved by the designer |
 | 20 Nov 2026 | NlSideSheet (#75, public): full-height panel on the end edge, a native modal `<dialog>` as `NlDialog` (focus kept inside, page inert, scroll locked, focus back to the opener); header with optional back and close `NlButton`s around the title (gap `Space-XS`, OD-216), optional edge-to-edge `NlDivider` (OD-218), scrolling body (its gaps inside the scroll area), optional sticky `NlButtonDock`; `size` small `Size-560` / large `Size-720` (OD-133); slides in, fade only with reduced motion (OD-143). Approved by the designer |
 | 20 Nov 2026 | NlPageHeader (#76, public): the bar at the top of the content panel, a `div` for `NlAppShell`'s `<header>` slot (OD-219); optional back `NlButton` or link ("Back" / `backLabel`), the title as an `h1` `NlTextBlock` headline-small cut with a tooltip (OD-144), an optional line or slot under it, and an optional `NlNotificationButton`; rising unread counts announced politely (OD-220); no bottom edge, `NlAppShell` leaves a `Space-XS` gap (OD-135). Approved by the designer |
+| 21 Nov 2026 | NlTable (#77, public): data table with an optional toolbar (search, filters slot, small primary action), a real `<table>` (hidden caption, grey `NlTableHeaderCell` headers with sort, `NlTableColumnFilter` from `column.filter` and select-all; `NlTableCell` rows with select, text, badge or link cells and a sticky row-actions `NlMenu`), and a footer (summary with the selected count, `NlRowsPerPage` + `NlMenu`, `NlPagination`); bordered variant; `Size-*` column widths; loading `Size-80` skeleton rows, empty `NlEmptyState` with `Space-4XL`; polite result and selection announcements. `NlTableHeaderCell` gained `stickyEnd`. OD-138, OD-145, OD-221 to OD-230 decided; K8 marked. Approved by the designer |
