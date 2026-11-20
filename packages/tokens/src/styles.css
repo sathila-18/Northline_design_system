@@ -32,6 +32,10 @@
   --nl-duration-base: 200ms;
   --nl-duration-slow: 300ms;
   --nl-duration-pulse: 1600ms;
+
+  /* How long a snackbar without an action stays (§5, OD-92). A time to read, not an animation: not zeroed under
+     reduced motion. */
+  --nl-duration-snackbar: 6000ms;
   --nl-ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 

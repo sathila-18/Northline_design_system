@@ -356,7 +356,7 @@ _Collection `Alias Spacing & Radius`, group `Spacing`. Values point at `Primitiv
 
 The scale and names match the reference system, so extracted specs (§9) map one to one.
 
-`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 320` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-320` is a maximum width only (rich tooltip), never a spacing value, so there is no matching `Space-*` token.
+`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 320, 560` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-320` (rich tooltip) and `Size-560` (snackbar, added 20 Nov 2026, OD-91) are maximum widths only, never spacing values, so there are no matching `Space-*` tokens.
 
 ### 3.6 Radius
 
@@ -486,6 +486,7 @@ Borders, inset strokes and focus rings use Tailwind's built-in 1px and 2px width
 | `--nl-duration-base` | 200ms | Menus, tooltips |
 | `--nl-duration-slow` | 300ms | Side sheets, dialogs |
 | `--nl-duration-pulse` | 1600ms | Skeleton loading pulse (one full cycle) |
+| `--nl-duration-snackbar` | 6000ms | How long a snackbar without an action stays (OD-92). Reading time, so not zeroed under reduced motion |
 | `--nl-ease-standard` | cubic-bezier(0.2, 0, 0, 1) | Default |
 
 Every animation has a `prefers-reduced-motion` alternative.
@@ -646,7 +647,7 @@ _The designer adds rows here before each build._
 | 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ✅ |
 | 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
 | 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ✅ |
-| 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ⬜ |
+| 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ✅ |
 | 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ⬜ |
 | 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ⬜ |
 | 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ⬜ |
@@ -6732,9 +6733,9 @@ import { NlBanner } from '@northline/ui';
 
 ### NlSnackbar
 
-**Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlIcon`, `NlButton`, `NlTextBlock` (see "Mapping notes") · **Public**
+**Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlIcon`, `NlButton` (`NlTextBlock` dropped, OD-93) · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-91, OD-92, OD-93, OD-104, OD-105, OD-110, OD-111.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-91 to OD-93, OD-104, OD-105, OD-110, OD-111 and OD-166 to OD-168 decided.
 
 A short message that appears at the edge of the screen after an action ("Reward saved"), with an optional action ("Undo") and close.
 
@@ -6754,12 +6755,12 @@ Two-line layout: icon and message on top, the buttons on a row of their own belo
 | Option | Values | Prop |
 |---|---|---|
 | State | neutral, success, warning, error | `tone`, default `neutral`, also `data-tone` |
-| Lines | single, two lines | Derived from the message length, or `layout?: 'single' \| 'stacked'` |
+| Lines | single, two lines | `layout?: 'single' \| 'stacked'`, default single (OD-167) |
 | Message | text | `children` |
 | Leading icon | on (default) or off | `showIcon?` |
 | Action | optional | `action?: { label, onClick }` |
-| Close | on (default) or off | `onClose?()` |
-| Duration | auto-dismiss time | See "Mapping notes" |
+| Close | on (default) or off | `showClose?` (OD-168), `onClose?()` |
+| Duration | auto-dismiss time | `--nl-duration-snackbar` (6s, OD-92); none with an action |
 
 #### Sizes and layout
 
@@ -6795,12 +6796,54 @@ Hidden, entering, shown, leaving. The buttons have their own states.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Message colour on status tints | `text-primary` (the text block's description recoloured from `text-secondary`) | `NlTextBlock`'s description is fixed to `text-secondary` (or `text-inverse` with `tone="inverse"`). Proposed: the message is plain text in the snackbar, not `NlTextBlock`, so the inventory dependency on `NlTextBlock` goes | **Needs approval** |
+| Message colour on status tints | `text-primary` (the text block's description recoloured from `text-secondary`) | `NlTextBlock`'s description is fixed to `text-secondary` (or `text-inverse` with `tone="inverse"`). The message is plain text in the snackbar, not `NlTextBlock`, so the inventory dependency on `NlTextBlock` goes | Approved (OD-93) |
 | Status snackbars on light tints | Success, warning and error use the light tinted backgrounds, not dark ones | Kept as in the reference | Matches |
-| Position and width | Not in the reference (drawn at a 343 mobile width) | Proposed: bottom-centre of the content panel, `Space-3XL` from the bottom. Width hugs the content. `Size-320` is too narrow for a message plus two buttons on one line, so the maximum width needs a new size token (for example 560) | **Designer to decide** |
-| Auto-dismiss duration | Not in the reference | Needs a motion/time token that doesn't exist (for example 6 s) | **Designer to decide** |
-| Keyboard access to the action | Not in the reference | As above | **Needs approval** |
-| Error icon | The warning triangle | `error`, as `NlBanner` | **Needs approval** |
+| Position and width | Not in the reference (drawn at a 343 mobile width) | Proposed: bottom-centre of the content panel, `Space-3XL` from the bottom. Width hugs the content. `Size-320` is too narrow for a message plus two buttons on one line, so the maximum width is a new token `Size-560` | Approved (OD-91, OD-104) |
+| Auto-dismiss duration | Not in the reference | `--nl-duration-snackbar`, 6000ms (§5) | Approved (OD-92, OD-105) |
+| Keyboard access to the action | Not in the reference | F6 moves focus into the snackbar while one shows | Approved (OD-110) |
+| Error icon | The warning triangle | `error`, as `NlBanner` | Approved (OD-111) |
+| How pages show it | Not in the reference | `NlSnackbarProvider` (region and live regions) and `useNlSnackbar()` (`show`, `hide`) | Approved (OD-166) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Look | `NlSnackbar`: `tone`, `children`, `layout`, `showIcon`, `action`, `showClose`, `onClose`; `data-tone`, `data-layout` |
+| Single line | `Size-48` tall, `w-fit` up to `Size-560`, `Radius-M`, gap `Space-M`; `Space-XL` start; end `Space-XS` with buttons, `Space-XL` without; message one line with an ellipsis |
+| Stacked | Column, gap `Space-M`; top row `Space-XL` top and sides, icon on the message's first line; button row at the end, `Space-XS` end and bottom; message wraps |
+| Buttons | Action `NlButton` tertiary small; close tertiary medium icon-only `close` "Dismiss"; content tone `inverse` (neutral) or `primary` |
+| Host | `NlSnackbarProvider` renders the page then a fixed region at the bottom centre (`Space-3XL` up, `--nl-z-snackbar`), with a `role="status"` and a `role="alert"` region present from load |
+| Show | `useNlSnackbar().show({ message, tone, layout, showIcon, action, showClose, onClose })`; `hide()` |
+| Timing | Without an action: `--nl-duration-snackbar`, read in the browser; restarts after hover or focus leaves. With an action: stays; the action runs then closes it |
+| Motion | Fade and slide up `Space-M`, `--nl-duration-base`, standard ease; reduced motion: no slide (durations are zero) |
+| Keyboard | Never takes focus; F6 focuses its first button |
+
+#### API
+
+```tsx
+import { NlSnackbarProvider, useNlSnackbar } from '@northline/ui';
+
+<NlSnackbarProvider>{page}</NlSnackbarProvider>
+
+const { show } = useNlSnackbar();
+show({ message: 'Reward deleted', action: { label: 'Undo', onClick: restore } });
+```
+
+`'use client'` (state, effects, context).
+
+#### Tokens used
+
+`Size-48`, `Size-560` (new), `Radius-M`, `Space-M`, `Space-XL`, `Space-XS`, `Space-3XL`; `bg-direct`, `bg-success_secondary`, `bg-warning_secondary`, `bg-error_secondary`; `fg-inverse`, `fg-success`, `fg-warning`, `fg-error`; `text-inverse`, `text-primary`; Body M; `--nl-z-snackbar`, `--nl-duration-base`, `--nl-duration-snackbar` (new), `--nl-ease-standard`; `NlButton`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Two live regions | Switching one region's role isn't announced reliably, so status and alert are separate and both exist from load |
+| Replacing | A new snackbar replaces the old at once (its `onClose` runs); the leaving one isn't animated out |
+| Region placement | Fixed to the window by default; `className` on the provider places it (for example in the content panel) |
+| Reading time token | `--nl-duration-snackbar` lives in `styles.css` with the other durations, but isn't zeroed under reduced motion |
+
 
 ---
 
@@ -8166,3 +8209,4 @@ Known issues
 | 20 Nov 2026 | NlRadioListItem (#55, public): `<label>` row on `NlListItemBase` around `NlRadio inRow`, inside `NlRadioListGroup` (`role="radiogroup"`, value, name, disabled, appearance; OD-101, OD-160); native arrow keys; ring round the row, radio on the title line; no menu mode (OD-161); group label from the page (OD-162). `showBody` added to it and to `NlCheckboxListItem`. Approved by the designer |
 | 20 Nov 2026 | NlSwitchListItem (#56, public): settings row on `NlListItemBase`, `<label>` around `NlSwitch size="small" inRow` in the trailing slot, optional leading icon; no highlight when on; switch named by the title and described by the description; ring round the row (OD-102); switch on the title line (OD-163); `body`, `showBody`, `divider` (OD-164). Approved by the designer |
 | 20 Nov 2026 | NlBanner (#58, public): tinted inline message in five tones; plain tone-coloured title and description (OD-93); icon on the first text line (OD-165), `error` icon for error (OD-108); action as an xsmall flush link in the tone colour (OD-106, designer's choice); close as an xsmall icon-only `NlButton` "Dismiss {title}" (OD-107); `live` for status or alert (OD-109). `NlButton` link gained `contentTone` and `flush`. Approved by the designer |
+| 20 Nov 2026 | NlSnackbar (#59, public): look (`NlSnackbar`, four tones, single or stacked, tertiary action and close) plus `NlSnackbarProvider` and `useNlSnackbar()` (OD-166): bottom-centre region, status and alert live regions from load, one at a time, 6s auto-dismiss without an action (pauses on hover or focus), F6 into it. New tokens `Size-560` (OD-91) and `--nl-duration-snackbar` (OD-92). Approved by the designer |

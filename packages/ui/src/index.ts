@@ -34,5 +34,6 @@ export * from './components/NlCheckboxListItem';
 export * from './components/NlRadioListItem';
 export * from './components/NlSwitchListItem';
 export * from './components/NlBanner';
+export * from './components/NlSnackbar';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

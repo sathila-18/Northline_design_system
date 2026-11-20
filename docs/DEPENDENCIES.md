@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-93, OD-97 to OD-102, OD-106 to OD-109 and OD-148 to OD-165 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56, #58 and #59 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-111 and OD-148 to OD-168 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -94,7 +94,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 56 | `NlSwitchListItem` | yes | `NlListItemBase`, `NlSwitch`, `NlIcon` | – | – | ✅ batch 6 | ✅ |
 | 57 | `NlAccordion` | yes | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | – | OD-14, OD-103a | ✅ batch 6 | ⬜ |
 | 58 | `NlBanner` | yes | `NlIcon`, `NlButton` | – | – | ✅ batch 6 | ✅ |
-| 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | OD-91, OD-92 | ✅ batch 6 | ⬜ |
+| 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | – | ✅ batch 6 | ✅ |
 | 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ⬜ |
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
 | 62 | `NlStatCard` | yes | `NlLabel` (`NlTextBlock` only if OD-113 is refused) | – | OD-113 | ✅ batch 7 | ⬜ |
@@ -157,8 +157,8 @@ Status: **Open** · **Decided** · **Dropped**
 | OD-1 | `NlButton variant="soft"` (filled `bg-action-secondary`, no border) | Open | Only if OD-40 goes that way. Would change D12. Left out of `NlButtonBase` for now (18 Nov 2026); adding it later is not breaking |
 | OD-2 | `NlTextBlock` types `label` and `body` | **Decided** 18 Nov 2026: both added | See OD-14 and OD-41 |
 | OD-3 | Focus ring colour on fields with an error: `border-error` instead of `border-focused` | Decided 19 Nov 2026: no; standard ring (OD-44) | Would add an exception to CLAUDE.md's focus ring rule. See OD-44 |
-| OD-91 | A maximum-width size token for snackbars (for example `Size-560`) | Open | See OD-104 |
-| OD-92 | A time token for snackbar auto-dismiss (for example 6 s) | Open | See OD-105 |
+| OD-91 | A maximum-width size token for snackbars (for example `Size-560`) | **Decided** 20 Nov 2026: `Size-560` added | See OD-104 |
+| OD-92 | A time token for snackbar auto-dismiss (for example 6 s) | **Decided** 20 Nov 2026: `--nl-duration-snackbar` 6000ms | See OD-105 |
 | OD-121 | Dialog width tokens, for example a small and a large width (480 and 720) in §3.5 | Open | See OD-115 |
 | OD-133 | A side sheet width token (the reference uses 600) in §3.5 | Open, **needs approval** (decide in Storybook) | Could share a scale with OD-121 |
 | OD-134 | A side nav column width token (240; the expanded nav is 240 + `Space-XL` either side) in §3.5 | Open, **needs approval** (decide in Storybook) | Minimized width uses the existing `Size-80` |
@@ -412,10 +412,13 @@ Decide these before building the components listed under "Affects".
 
 **NlSnackbar**
 - OD-93: see section 2
-- OD-104 · Position: bottom-centre of the content panel, `Space-3XL` up; maximum width needs a token (OD-91) · Open
-- OD-105 · Auto-dismiss duration needs a token (OD-92); none when there's an action · Open
-- OD-110 · Keyboard access to the action (F6 or next Tab into the region) · Open
-- OD-111 · Error icon `error` · Open
+- OD-104 · Position: bottom-centre of the content panel, `Space-3XL` up; maximum width needs a token (OD-91) · **Decided** 20 Nov 2026: bottom centre, `Space-3XL` up, `Size-560` max
+- OD-105 · Auto-dismiss duration needs a token (OD-92); none when there's an action · **Decided** 20 Nov 2026: 6s token; none with an action
+- OD-110 · Keyboard access to the action (F6 or next Tab into the region) · **Decided** 20 Nov 2026: F6
+- OD-111 · Error icon `error` · **Decided** 20 Nov 2026: approved
+- OD-166 · How pages show snackbars · **Decided** 20 Nov 2026: `NlSnackbarProvider` + `useNlSnackbar()`
+- OD-167 · Single or stacked · **Decided** 20 Nov 2026: explicit `layout`, default single
+- OD-168 · Close on by default · **Decided** 20 Nov 2026: `showClose`, default on
 
 **NlButtonDock**
 - No open items
