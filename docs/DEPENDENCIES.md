@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132, OD-136, OD-137, OD-139 to OD-141 and OD-148 to OD-211 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 and #74 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132, OD-136, OD-137, OD-139 to OD-141 and OD-148 to OD-215 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -108,13 +108,14 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 
 ### Organisms
 
+
 | # | Component | Public | Depends on | Used by | Blocked by | Spec | Build |
 |---|---|---|---|---|---|---|---|
 | 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | – | ✅ batch 8 | ✅ |
 | 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | – | ✅ batch 8 | ✅ |
 | 72 | `NlDateField` | yes | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | – | – | ✅ batch 8 | ✅ |
 | 73 | `NlStepper` | yes | `NlStep` | – | – | ✅ batch 8 | ⬜ |
-| 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ⬜ |
+| 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ✅ |
 | 75 | `NlSideSheet` | yes | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | – | OD-16, OD-133 | ✅ batch 8 | ⬜ |
 | 76 | `NlPageHeader` | yes | `NlTextBlock`, `NlButton`, `NlNotificationButton` | – | OD-16, OD-135 | ✅ batch 8 | ⬜ |
 | 77 | `NlTable` | yes | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` (and `NlTableColumnFilter` for column filters) | – | OD-138 | ✅ batch 8 | ⬜ |
@@ -522,7 +523,10 @@ Decide these before building the components listed under "Affects".
 - OD-142 · More than 5 steps: not supported · Open
 
 **NlTableColumnFilter**
-- No open items (behaviour comes from the reference's description)
+- OD-212 · Focus on open: search, else first checkbox or the checked radio · **Decided** 20 Nov 2026: approved
+- OD-213 · Apply with nothing chosen applies `[]` (no filter) · **Decided** 20 Nov 2026: approved
+- OD-214 · Search matches anywhere in the label, ignoring case · **Decided** 20 Nov 2026: approved
+- OD-215 · Radio: click or Space applies and closes; arrow keys apply and stay open · **Decided** 20 Nov 2026: approved
 
 **NlSideSheet**
 - OD-133: see section 1 (width)
