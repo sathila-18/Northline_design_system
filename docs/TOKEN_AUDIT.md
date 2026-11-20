@@ -347,3 +347,17 @@ Asked for by the designer (go-ahead on the NlDialog plan): one primitive added, 
 | References | The token build resolves every reference (no errors) |
 | Colour contrast | Not affected (no colour change) |
 
+## Addendum, 21 Nov 2026: `Size-240` (NlSideNav, OD-134)
+
+Asked for by the designer (go-ahead on the NlSideNav plan, option a): one primitive added, `Primitives.Sizes.Size-240` (dimension, 240 px, "Used only as a width (side nav column), never as spacing."), between `Size-120` and `Size-320`. The expanded side nav is this column plus `Space-XL` either side (272, as the reference).
+
+| Check | Result |
+|---|---|
+| JSON parses; tokens | Yes; 430 (was 429) |
+| `$type`, `$value`, `$description`, `$extensions.mode` on every token (§3.9 rule 1) | Pass (0 missing) |
+| Dimension as `{ value, unit: "px" }` (rule 5) | Pass |
+| Duplicate descriptions | 0 |
+| Duplicate values in `Primitives.Sizes` | 0 |
+| References | The token build resolves every reference (no errors); `--nl-size-240`, Tailwind `w-240` / `size-240` generated |
+| Token tests | Count updated to 430 (`packages/tokens/test/tokens.test.ts`); pass |
+| Colour contrast | Not affected (no colour change) |

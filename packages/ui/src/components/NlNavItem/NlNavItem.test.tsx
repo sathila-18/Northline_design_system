@@ -115,4 +115,15 @@ describe('NlNavItem', () => {
     const item = screen.getByRole('menuitem', { name: 'Reward X', hidden: true });
     expect(item).toHaveAttribute('href', '#x');
   });
+
+  it('tree={false}: pages without tree lines', () => {
+    render(
+      <NlNavItem icon="check_circle" pages={pages} defaultExpanded tree={false}>
+        Rewards
+      </NlNavItem>,
+    );
+    const links = screen.getAllByRole('link');
+    expect(links).toHaveLength(2);
+    for (const link of links) expect(link).toHaveAttribute('data-tree', 'none');
+  });
 });

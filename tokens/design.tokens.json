@@ -1224,6 +1224,17 @@
           "mode": {}
         }
       },
+      "Size-240": {
+        "$type": "dimension",
+        "$value": {
+          "value": 240,
+          "unit": "px"
+        },
+        "$description": "Size of 240 px. Used only as a width (side nav column), never as spacing.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
       "Size-320": {
         "$type": "dimension",
         "$value": {

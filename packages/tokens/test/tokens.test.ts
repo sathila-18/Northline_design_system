@@ -76,7 +76,7 @@ describe('tokens.css', () => {
   it('declares a CSS variable for every token in the JSON', () => {
     const missing = [...tokens.keys()].filter((path) => !css.includes(`--${cssName(path.split('.'))}:`));
     expect(missing).toEqual([]);
-    expect(tokens.size).toBe(429);
+    expect(tokens.size).toBe(430);
   });
 
   it('declares a font shorthand for every text style', () => {
