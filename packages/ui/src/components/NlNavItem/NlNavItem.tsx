@@ -49,6 +49,8 @@ export interface NlNavItemProps extends Omit<ComponentPropsWithRef<'div'>, 'chil
   as?: ElementType;
   /** Icon only (set by NlSideNav): the label is a tooltip; pages open in a menu to the end (OD-118, OD-189). */
   minimized?: boolean;
+  /** Tree lines from the open section to its pages (default). NlSideNav turns them off in its default style. */
+  tree?: boolean;
   /** Placement only. */
   className?: string;
 }
@@ -69,6 +71,7 @@ export function NlNavItem({
   href,
   as,
   minimized = false,
+  tree = true,
   className,
   ...rest
 }: NlNavItemProps) {
@@ -195,7 +198,7 @@ export function NlNavItem({
                 href={page.href}
                 as={page.as}
                 current={page.current}
-                tree={index === pages.length - 1 ? 'last' : 'middle'}
+                tree={!tree ? 'none' : index === pages.length - 1 ? 'last' : 'middle'}
               >
                 {page.label}
               </NlNavSubItem>

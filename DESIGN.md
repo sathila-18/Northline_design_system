@@ -356,7 +356,7 @@ _Collection `Alias Spacing & Radius`, group `Spacing`. Values point at `Primitiv
 
 The scale and names match the reference system, so extracted specs (§9) map one to one.
 
-`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 320, 560, 720` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-320` (rich tooltip), `Size-560` (snackbar and small dialog, added 20 Nov 2026, OD-91) and `Size-720` (large dialog, added 20 Nov 2026, OD-121) are widths only, never spacing values, so there are no matching `Space-*` tokens.
+`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 240, 320, 560, 720` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-240` (side nav column, added 21 Nov 2026, OD-134), `Size-320` (rich tooltip), `Size-560` (snackbar and small dialog, added 20 Nov 2026, OD-91) and `Size-720` (large dialog, added 20 Nov 2026, OD-121) are widths only, never spacing values, so there are no matching `Space-*` tokens.
 
 ### 3.6 Radius
 
@@ -671,7 +671,7 @@ _The designer adds rows here before each build._
 | 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ✅ |
 | 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ✅ |
 | 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ✅ |
-| 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ⬜ |
+| 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ✅ |
 
 Every row in §8.1 to §8.4 was checked against the composition rule (§7.1) on 17 Nov 2026: L0 contains no component, L1 only L0 atoms and icons, molecules only atoms, organisms only molecules and atoms. Mapped components take their base's level (§7.2) and slot content doesn't count (D15). Rows are in build order: a component comes after everything it depends on. `NlTable`'s toolbar, header row, rows and footer are internal parts, not rows (D15).
 
@@ -7818,6 +7818,9 @@ import { NlNavItem } from '@northline/ui';
 
 Checked in Chrome: minimized tooltip on focus, the pages menu opening beside its row with focus on the first page; axe clean with the menu open in every brand and theme.
 
+#### Tree lines (added 21 Nov 2026, with `NlSideNav` #78, OD-231)
+
+`tree?: boolean`, default `true`: the pages' tree lines (`NlNavSubItem tree`). `false` draws the pages without lines (`tree="none"`); `NlSideNav` passes it for its default style.
 
 ---
 
@@ -8731,7 +8734,7 @@ Checked in Chrome: axe in every brand and theme, at rest, hovered, with a row se
 
 **Level** Organism (contains `NlNavItem`, `NlSideNavUser`, molecules) · **Base** none · **Depends on** `NlNavItem`, `NlSideNavUser`, `NlButton` · **Public** (goes in `NlAppShell`'s nav slot)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-134, OD-146, OD-147.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-134, OD-146, OD-147 and OD-231 to OD-233 decided.
 
 The app's main navigation: a logo and collapse button at the top, the sections, and the signed-in user at the bottom.
 
@@ -8786,7 +8789,7 @@ Expanded, minimized; default or tree style.
 #### Behaviour and accessibility
 
 - A `<nav aria-label="Main">` with a list of sections.
-- Collapse button: "Collapse navigation" / "Expand navigation", `aria-expanded`.
+- Collapse button: "Collapse navigation" / "Expand navigation". No `aria-expanded`: the name says what it does, and `NlButton` would draw it pressed (OD-233).
 - From `Breakpoint-1280` the nav is expanded; below it, minimized. The user can toggle it until the window crosses 1280 again (from the reference's app shell description).
 - Minimized: section names are tooltips and visually hidden labels; sections with pages open them in a menu (OD-118). Tree lines show only when expanded.
 - The section holding the current page opens by default.
@@ -8795,13 +8798,52 @@ Expanded, minimized; default or tree style.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Expanded width | 272 (a 240 content column + 16 either side) | No `Size-240` or `Size-272` token. Proposed: a nav-column size token (240) added to §3.5 | **Designer to decide** |
+| Expanded width | 272 (a 240 content column + 16 either side) | `Size-240` added to §3.5 (token audit addendum, 21 Nov 2026): a 240 content column + `Space-XL` either side (272) | Approved (OD-134) |
 | Minimized width | 80 | `Size-80` | Matches |
 | Menu variants | Eight variants named after the reference product's sections | Left out; sections come from `items` data | Matches inventory |
 | Logo | A linked logo component with placeholder text | Generic `logo` slot | Matches inventory |
 | Header row gap | A raw 62 gap (space between) | Space between: logo fills, button at the end | Matches |
-| Collapse icon | `dock_to_right` | Material Symbols `dock_to_right` | **Needs approval** |
-| Width animation | Not in the reference | `--nl-duration-slow` | **Needs approval** |
+| Collapse icon | `dock_to_right` | Material Symbols `dock_to_right` | Approved (OD-146) |
+| Width animation | Not in the reference | `--nl-duration-slow`, standard ease; none under reduced motion | Approved (OD-147) |
+| Default vs tree style | Tree draws lines | `NlNavItem` gained `tree` (default `true`); the nav passes `variant === 'tree'` | Approved (OD-231) |
+| Breakpoint | Expanded from 1280, minimized below; the user toggles until the window crosses 1280 again | Uncontrolled and without `defaultMinimized`, it follows `matchMedia` on `--nl-breakpoint-1280` (read in the browser only) | Approved (OD-232) |
+| Collapse button state | `aria-expanded` | Left out (OD-233) | Approved (OD-233) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Nav | `<nav aria-label>` (default "Main"), full height, `bg-secondary`; `content-box` with `Space-XL` either side, so the width is the content column: expanded `Size-240` (272), minimized `Size-48` (`Size-80`); the width eases over `--nl-duration-slow` with the standard ease, none under reduced motion |
+| Column | `Space-3XL` top and bottom; top group (header row, then sections, `Space-L` apart) at the top, the user at the bottom |
+| Header row | `logo` (fills; hidden when minimized) + collapse `NlButton variant="tertiary" size="medium" icon="only-icon" contentTone="secondary" iconName="dock_to_right"`; minimized: the button alone, centred |
+| Sections | `items: { icon, label, href?, as?, pages? }[]` → `<ul>` of `NlNavItem` (`Space-XS` apart), `minimized` and `tree={variant === 'tree'}` passed down |
+| Current | `currentHref`: a matching page gets `current` (its section opens and is `current="section"`), a matching section link is `current="page"` |
+| Type | `minimized` / `defaultMinimized` / `onMinimizedChange`; without either, follows `Breakpoint-1280` |
+| User | `user` → `NlSideNavUser` with `minimized` |
+
+#### API
+
+```tsx
+import { NlSideNav } from '@northline/ui';
+
+<NlSideNav
+  logo={<Logo />}
+  items={[
+    { icon: 'person', label: 'Members', href: '/members' },
+    { icon: 'check_circle', label: 'Rewards', pages: [{ label: 'All rewards', href: '/rewards' }] },
+  ]}
+  currentHref={pathname}
+  user={{ name: 'Member 0042', email: 'm0042@example.test', menu: accountRows }}
+/>
+```
+
+Props: `items`, `currentHref?`, `variant?`, `logo?`, `user?`, `minimized?`, `defaultMinimized?`, `onMinimizedChange?`, `aria-label?`, `className?`, native `nav` attributes. `'use client'` (state, effects).
+
+#### Tokens used
+
+`Size-240` (new), `Size-48`, `Size-80`; `Space-XS`, `Space-L`, `Space-XL`, `Space-3XL`; `bg-secondary`; `Breakpoint-1280`; `--nl-duration-slow`, `--nl-ease-standard`; the parts' own (`NlNavItem`, `NlSideNavUser`, `NlButton`).
+
+Checked in Chrome: axe clean in every brand and theme, at rest, with the user menu open and (minimized) with a section's pages menu open; 272 wide at 1440 and 80 at 1100 (breakpoint).
 
 ---
 
@@ -8932,3 +8974,4 @@ Known issues
 | 20 Nov 2026 | NlSideSheet (#75, public): full-height panel on the end edge, a native modal `<dialog>` as `NlDialog` (focus kept inside, page inert, scroll locked, focus back to the opener); header with optional back and close `NlButton`s around the title (gap `Space-XS`, OD-216), optional edge-to-edge `NlDivider` (OD-218), scrolling body (its gaps inside the scroll area), optional sticky `NlButtonDock`; `size` small `Size-560` / large `Size-720` (OD-133); slides in, fade only with reduced motion (OD-143). Approved by the designer |
 | 20 Nov 2026 | NlPageHeader (#76, public): the bar at the top of the content panel, a `div` for `NlAppShell`'s `<header>` slot (OD-219); optional back `NlButton` or link ("Back" / `backLabel`), the title as an `h1` `NlTextBlock` headline-small cut with a tooltip (OD-144), an optional line or slot under it, and an optional `NlNotificationButton`; rising unread counts announced politely (OD-220); no bottom edge, `NlAppShell` leaves a `Space-XS` gap (OD-135). Approved by the designer |
 | 21 Nov 2026 | NlTable (#77, public): data table with an optional toolbar (search, filters slot, small primary action), a real `<table>` (hidden caption, grey `NlTableHeaderCell` headers with sort, `NlTableColumnFilter` from `column.filter` and select-all; `NlTableCell` rows with select, text, badge or link cells and a sticky row-actions `NlMenu`), and a footer (summary with the selected count, `NlRowsPerPage` + `NlMenu`, `NlPagination`); bordered variant; `Size-*` column widths; loading `Size-80` skeleton rows, empty `NlEmptyState` with `Space-4XL`; polite result and selection announcements. `NlTableHeaderCell` gained `stickyEnd`. OD-138, OD-145, OD-221 to OD-230 decided; K8 marked. Approved by the designer |
+| 21 Nov 2026 | NlSideNav (#78, public): the main `<nav>` with a logo slot and a `dock_to_right` collapse `NlButton` (no `aria-expanded`, OD-233), `NlNavItem` sections (`currentHref`, tree lines only in the tree style through the new `NlNavItem tree`, OD-231) and `NlSideNavUser` at the bottom; expanded `Size-240` column (new token, OD-134) or minimized `Size-80`, easing over Duration slow (OD-147); follows `Breakpoint-1280` until toggled (OD-232). Approved by the designer |
