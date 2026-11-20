@@ -82,4 +82,11 @@ describe('NlCheckboxListItem', () => {
     expect(screen.queryByText('Gone')).toBeNull();
     expect(screen.getByRole('checkbox', { name: /^A ?Custom$/ })).toBeInTheDocument();
   });
+  it('showBody off hides the description and the body', () => {
+    const body = <em>Custom</em>;
+    render(<NlCheckboxListItem title="A" description="Desc" body={body} showBody={false} />);
+    expect(screen.queryByText('Desc')).toBeNull();
+    expect(screen.queryByText('Custom')).toBeNull();
+    expect(screen.getByRole('checkbox', { name: 'A' })).toBeInTheDocument();
+  });
 });

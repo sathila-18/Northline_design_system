@@ -19,6 +19,8 @@ export interface NlCheckboxListItemProps extends Omit<
   title: ReactNode;
   /** Under the title; part of the name. */
   description?: ReactNode;
+  /** Shows the content under the title (description or body). On by default. */
+  showBody?: boolean;
   /** Custom content in place of the description (OD-158); part of the name. */
   body?: ReactNode;
   /** Called with the new checked state. `onChange` still gets the native event. */
@@ -49,6 +51,7 @@ export function NlCheckboxListItem({
   title,
   description,
   body,
+  showBody = true,
   onCheckedChange,
   controlSide = 'leading',
   appearance = 'plain',
@@ -90,8 +93,8 @@ export function NlCheckboxListItem({
       size={size}
       density={density}
       title={title}
-      description={description}
-      body={body}
+      description={showBody ? description : undefined}
+      body={showBody ? body : undefined}
       leading={controlSide === 'leading' ? control : undefined}
       trailing={controlSide === 'trailing' ? control : undefined}
       divider={divider}

@@ -31,5 +31,6 @@ export * from './components/NlTextArea';
 export * from './components/NlCalendar';
 export * from './components/NlListItem';
 export * from './components/NlCheckboxListItem';
+export * from './components/NlRadioListItem';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

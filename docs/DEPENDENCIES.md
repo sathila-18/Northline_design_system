@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 to #54 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 to OD-100, OD-102 and OD-148 to OD-159 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 to #55 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 to OD-102 and OD-148 to OD-162 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -90,7 +90,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-119 | ✅ batch 6 | ✅ |
 | 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ✅ |
 | 54 | `NlCheckboxListItem` | yes | `NlListItemBase`, `NlCheckboxControl` | `NlMultiSelect`, `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
-| 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ⬜ |
+| 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
 | 56 | `NlSwitchListItem` | yes | `NlListItemBase`, `NlSwitch`, `NlIcon` | – | – | ✅ batch 6 | ⬜ |
 | 57 | `NlAccordion` | yes | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | – | OD-14, OD-103a | ✅ batch 6 | ⬜ |
 | 58 | `NlBanner` | yes | `NlIcon`, `NlButton` | – | OD-93 | ✅ batch 6 | ⬜ |
@@ -383,7 +383,10 @@ Decide these before building the components listed under "Affects".
 
 **NlCheckboxListItem / NlRadioListItem / NlSwitchListItem**
 - OD-100 · The control's hover look follows the row hover · **Decided** 20 Nov 2026: `NlCheckboxControl inRow` + `NlListItemBase controlRow`
-- OD-101 · Radio group wrapper: plain `role="radiogroup"` or a provided `.Group` · Open
+- OD-101 · Radio group wrapper: plain `role="radiogroup"` or a provided `.Group` · **Decided** 20 Nov 2026: `NlRadioListGroup`, a separate export
+- OD-160 · Radio group layout · **Decided** 20 Nov 2026: the group passes `appearance`; filled cards `Space-L` apart
+- OD-161 · `NlRadioListItem` menu mode · **Decided** 20 Nov 2026: left out; menus use `NlListItem role="option"`
+- OD-162 · Radio group label · **Decided** 20 Nov 2026: the page's; `aria-label` or `aria-labelledby` required
 - OD-102 · Switch rows: focus ring around the row · **Decided** 20 Nov 2026: ring round the row for control rows (`controlRow`), first used by `NlCheckboxListItem`
 - OD-156 · `NlCheckboxListItem` indeterminate · **Decided** 20 Nov 2026: left out; table components handle it
 - OD-157 · `NlCheckboxListItem` menu mode (`role="option"`) · **Decided** 20 Nov 2026: left out
