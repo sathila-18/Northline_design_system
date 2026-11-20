@@ -653,7 +653,7 @@ _The designer adds rows here before each build._
 | 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ✅ |
 | 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ✅ |
 | 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ✅ |
-| 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ⬜ |
+| 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ✅ |
 | 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ⬜ |
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ⬜ |
 | 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon` | [§9](#nlnavitem) | ⬜ |
@@ -7366,7 +7366,7 @@ Checked open in Chrome: every story in all three brands and both themes with axe
 
 **Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlPaginationItem`, `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-126, OD-127, OD-128.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-126 to OD-128, OD-182 and OD-183 decided.
 
 Page numbers with previous and next buttons, used in the table footer.
 
@@ -7395,7 +7395,7 @@ The reference's three variants (limited, more than limit, only one) are results 
 - Horizontal, gap `Space-M`, items centred.
 - Previous and next: `NlButton variant="secondary" size="xsmall" icon="only-icon"` (`Size-32` square), icons `chevron_left` and `chevron_right`.
 - Pages: `NlPaginationItem`, gap `Space-M`.
-- Ellipsis rule: always show the first and last page, the current page and `siblingCount` pages either side; replace any other run with one "…" item.
+- Ellipsis rule: always show the first and last page, the current page and `siblingCount` pages either side; replace any other run with one "…" item. A run of one page shows that page instead, and every page shows when there are no more than `siblingCount × 2 + 5` (OD-182).
 
 #### Colours
 
@@ -7416,10 +7416,39 @@ From the parts.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Disabled previous at page 1 | Drawn as an enabled button with a grey icon | The real disabled state | **Needs approval** |
-| Number of visible pages | Four numbers, or three with "…" | `siblingCount` 1 (first, last, current ±1) | **Needs approval** |
+| Disabled previous at page 1 | Drawn as an enabled button with a grey icon | The real disabled state | Approved (OD-126) |
+| Number of visible pages | Four numbers, or three with "…" | `siblingCount` 1 (first, last, current ±1) | Approved (OD-127) |
 | Previous and next style | Secondary xsmall icon-only | Same | Matches |
-| Chevron icons | From the reference's icon set | Material Symbols `chevron_left`, `chevron_right` | **Needs approval** |
+| Chevron icons | From the reference's icon set | Material Symbols `chevron_left`, `chevron_right` | Approved (OD-128) |
+| Gaps that save nothing | Not described | No "…" for a single page, and none when every page fits in the gapped layout's slots | Approved (OD-182) |
+| Out-of-range page | Not described | Clamped to 1…`pageCount` for display | Approved (OD-183) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Page | `page` (1-based, clamped), `onPageChange(page)`; controlled |
+| Page count | `pageCount` (at least 1) |
+| Visible pages | `siblingCount` (default 1) → `paginationEntries()` (`pages.ts`) |
+| Structure | `<nav aria-label>` (default "Pagination") → `<ul>`: previous, `NlPaginationItem` pages and `kind="ellipsis"` gaps (their `<li>` hidden), next |
+| Previous, next | `NlButton variant="secondary" size="xsmall" icon="only-icon"`, `chevron_left` / `chevron_right`, "Previous page" / "Next page", native `disabled` at the ends |
+| Focus | Picking a page focuses the new current page; previous or next keep focus unless that end is now disabled, then the current page |
+| Layout | Row, gap `Space-M`, items centred |
+
+#### API
+
+```tsx
+import { NlPagination } from '@northline/ui';
+
+<NlPagination page={page} pageCount={pageCount} onPageChange={setPage} />
+```
+
+`'use client'` (refs, effects).
+
+#### Tokens used
+
+`Space-M`; `NlButton` and `NlPaginationItem`'s own.
+
 
 ---
 
@@ -8393,3 +8422,4 @@ Known issues
 | 20 Nov 2026 | NlStatCard (#62, public): `bg-active` card with `NlLabel` (medium, secondary, OD-50) over a Data M value drawn by the card (OD-113); `inList` for `<dt>` / `<dd>` (OD-175); long values wrap (OD-176). Approved by the designer |
 | 20 Nov 2026 | NlFileUpload (#63, public): dashed drop zone for one file (OD-114), large or small; state from the page (enabled, uploading, complete, error) with border, icon and button per state; hidden native input, card click and drop; drag-over (OD-122) and disabled (OD-123) looks; wrong-type drops rejected (OD-178); live announcements and focus return. Icons `cloud_upload` and `refresh` added (OD-124, OD-177). Approved by the designer |
 | 20 Nov 2026 | NlDialog (#64, public): native modal `<dialog>` with `NlOverlay`, small (`Size-560`) or large (new `Size-720`, OD-115, OD-121); `h2` title (OD-179) and ghost close icon 16 from the top and side; Body L text body; medium start, secondary and primary actions; alertdialog with focus on Cancel when the primary is destructive (OD-180); fade and scale from 95% (OD-125); long content scrolls in the body (OD-181). Approved by the designer |
+| 20 Nov 2026 | NlPagination (#65, public): named `<nav>` list with secondary xsmall previous and next (real disabled at the ends, OD-126; chevrons, OD-128) and `NlPaginationItem` pages; first, last, current ±`siblingCount` (default 1, OD-127) with "…" only where it saves space (OD-182); page clamped (OD-183); focus follows the change. Approved by the designer |
