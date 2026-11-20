@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56, #58 and #59 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-111 and OD-148 to OD-168 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #60 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-111 and OD-148 to OD-171 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -95,7 +95,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 57 | `NlAccordion` | yes | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | – | OD-14, OD-103a | ✅ batch 6 | ⬜ |
 | 58 | `NlBanner` | yes | `NlIcon`, `NlButton` | – | – | ✅ batch 6 | ✅ |
 | 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | – | ✅ batch 6 | ✅ |
-| 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ⬜ |
+| 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ✅ |
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
 | 62 | `NlStatCard` | yes | `NlLabel` (`NlTextBlock` only if OD-113 is refused) | – | OD-113 | ✅ batch 7 | ⬜ |
 | 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | OD-114 | ✅ batch 7 | ⬜ |
@@ -421,7 +421,9 @@ Decide these before building the components listed under "Affects".
 - OD-168 · Close on by default · **Decided** 20 Nov 2026: `showClose`, default on
 
 **NlButtonDock**
-- No open items
+- OD-169 · Destructive primary · **Decided** 20 Nov 2026: left out
+- OD-170 · Narrow containers · **Decided** 20 Nov 2026: the end group wraps, stays at the end
+- OD-171 · Nothing to show · **Decided** 20 Nov 2026: renders nothing
 
 **NlEmptyState**
 - OD-112 · `icon` (container built in) or `iconSlot` for anything else · Open

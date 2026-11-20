@@ -648,7 +648,7 @@ _The designer adds rows here before each build._
 | 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
 | 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ✅ |
 | 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ✅ |
-| 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ⬜ |
+| 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ✅ |
 | 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ⬜ |
 | 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ⬜ |
 | 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ⬜ |
@@ -6908,6 +6908,38 @@ Sticky or not. The buttons have their own states.
 | Sticky shadow | A "sticky" shadow style | `--nl-shadow-sticky` | Matches |
 | Bottom padding | `Space-6XL` (40) | Same | Matches |
 | Button sizes | Small, sized to their labels | Same | Matches |
+| Destructive primary | Not in the reference | Left out (normal tone only) | Approved (OD-169) |
+| Narrow containers | Not described | The end group wraps and stays at the end, `Space-XL` gaps | Approved (OD-170) |
+| Nothing to show | Not described | No accessory and no buttons renders nothing | Approved (OD-171) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Buttons | `primary?`, `secondary?`, `tertiary?`: `NlButton` props without `variant`, `size`, `tone`, `contentTone` (`NlButtonDockButtonProps`); the dock sets the variant and `size="small"` |
+| Accessory | `accessory?`: a string → `NlTextBlock type="headline-small"` description (Body M, `text-secondary`); any other node as is |
+| Sticky | `sticky?` → `shadow-sticky` (else `shadow-none`), `data-sticky` |
+| Layout | Column, gap `Space-3XL`; button row `justify-between`, wraps, gap `Space-XL`; end group `ms-auto`, wraps, `justify-end` |
+
+#### API
+
+```tsx
+import { NlButtonDock } from '@northline/ui';
+
+<NlButtonDock
+  accessory="Changes apply to every member in Tier 2."
+  tertiary={{ children: 'Reset', onClick: reset }}
+  secondary={{ children: 'Cancel', onClick: close }}
+  primary={{ children: 'Save', type: 'submit' }}
+/>
+```
+
+Presentational, no `'use client'`.
+
+#### Tokens used
+
+`Space-XL`, `Space-3XL`, `Space-6XL`; `bg-primary`; `--nl-shadow-sticky`; `NlButton` and `NlTextBlock`'s own.
+
 
 ---
 
@@ -8210,3 +8242,4 @@ Known issues
 | 20 Nov 2026 | NlSwitchListItem (#56, public): settings row on `NlListItemBase`, `<label>` around `NlSwitch size="small" inRow` in the trailing slot, optional leading icon; no highlight when on; switch named by the title and described by the description; ring round the row (OD-102); switch on the title line (OD-163); `body`, `showBody`, `divider` (OD-164). Approved by the designer |
 | 20 Nov 2026 | NlBanner (#58, public): tinted inline message in five tones; plain tone-coloured title and description (OD-93); icon on the first text line (OD-165), `error` icon for error (OD-108); action as an xsmall flush link in the tone colour (OD-106, designer's choice); close as an xsmall icon-only `NlButton` "Dismiss {title}" (OD-107); `live` for status or alert (OD-109). `NlButton` link gained `contentTone` and `flush`. Approved by the designer |
 | 20 Nov 2026 | NlSnackbar (#59, public): look (`NlSnackbar`, four tones, single or stacked, tertiary action and close) plus `NlSnackbarProvider` and `useNlSnackbar()` (OD-166): bottom-centre region, status and alert live regions from load, one at a time, 6s auto-dismiss without an action (pauses on hover or focus), F6 into it. New tokens `Size-560` (OD-91) and `--nl-duration-snackbar` (OD-92). Approved by the designer |
+| 20 Nov 2026 | NlButtonDock (#60, public): bottom action row; tertiary at the start, secondary and primary at the end, all small with fixed variants; optional note (string as `NlTextBlock` description); sticky shadow; end group wraps on narrow containers (OD-170); renders nothing when empty (OD-171); no destructive primary (OD-169). Approved by the designer |
