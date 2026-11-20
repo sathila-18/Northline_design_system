@@ -651,7 +651,7 @@ _The designer adds rows here before each build._
 | 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ✅ |
 | 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ✅ |
 | 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ✅ |
-| 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ⬜ |
+| 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ✅ |
 | 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ⬜ |
 | 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ⬜ |
 | 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ⬜ |
@@ -7131,7 +7131,7 @@ Presentational, no `'use client'`.
 
 **Level** Molecule (contains `NlIconContainer`, `NlButton`, L1) · **Base** none · **Depends on** `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-114, OD-122, OD-123, OD-124.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-114, OD-122 to OD-124, OD-177 and OD-178 decided.
 
 A drop zone for one file, which also shows the upload's progress, success or error.
 
@@ -7157,7 +7157,7 @@ Large: everything stacked and centred. Small: icon, text and button in a row, wi
 | Accept | file types | `accept?: string` |
 | Max size | for the hint text | `maxSizeLabel?: string` |
 | Text | prompt, file name, error | `title`, `description` |
-| Events | choose, cancel, delete, retry | `onFileSelect(file)`, `onCancel()`, `onDelete()`, `onRetry()` |
+| Events | choose, cancel, delete, retry, reject | `onFileSelect(file)`, `onCancel()`, `onDelete()`, `onRetry()`, `onFileReject?(file)` (OD-178) |
 | Disabled | on or off | `disabled?` |
 
 #### Sizes and layout
@@ -7194,12 +7194,52 @@ Enabled, uploading, complete, error. Drag-over and disabled: see "Mapping notes"
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Dashed border | 1px dashed with raw 4/4 dashes | Tailwind's `border-dashed` with the 1px width (§4.2). The browser draws the dash length, so it won't be exactly 4/4 | **Needs approval** |
+| Dashed border | 1px dashed with raw 4/4 dashes | Tailwind's `border-dashed` with the 1px width (§4.2). The browser draws the dash length, so it won't be exactly 4/4 | Approved (OD-114) |
 | Delete button | Tertiary with the label and icon in error colour | `NlButton tone="destructive" variant="tertiary"` (approved destructive tertiary) | Matches |
-| Drag-over look | Code only, not drawn | Proposed: border `border-active`, card `bg-active` | **Needs approval** |
-| Disabled | Code only, not drawn | Proposed: border `border-disabled`, icon `tone="disabled"`, button disabled | **Needs approval** |
-| Icons | Upload, check, delete, warning from the reference's icon set | Material Symbols `cloud_upload`, `check`, `delete`, `error` | **Needs approval** |
+| Drag-over look | Code only, not drawn | Border `border-active`, card `bg-active` | Approved (OD-122) |
+| Disabled | Code only, not drawn | Border `border-disabled`, icon `tone="disabled"`, button and input disabled, no drop | Approved (OD-123) |
+| Icons | Upload, check, delete, warning from the reference's icon set | Material Symbols `cloud_upload`, `check`, `delete`, `error` (`cloud_upload` added to the registry) | Approved (OD-124) |
 | Button labels | Reference copy | Generic labels as above | Matches |
+| Button icons | Not named except delete | Choose `cloud_upload`, Cancel `close`, Try again `refresh` (`refresh` added to the registry) | Approved (OD-177) |
+| Dropped file of the wrong type | Not described | Ignored; `onFileReject(file)` (the picker already filters by `accept`) | Approved (OD-178) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size`, `data-size`: large column centred, 48 icon, text centred; small row (40 icon, text `flex-1` start, button) with the progress bar below |
+| State | `state` from the page, `data-state`; border, icon and button per the table; `disabled` and drag-over override the border |
+| Input | Hidden native `<input type="file">` (`sr-only`, `tabIndex` -1), `aria-label` "Upload a file", `aria-describedby` the hint; opened by Choose file or a click on the empty card |
+| Hint | `description` and `maxSizeLabel` joined with " · " under the title; Choose file is described by it |
+| Drop | `dragover` → drag-over look; drop checks `accept` → `onFileSelect` or `onFileReject` |
+| Progress | `NlProgressBar` named `progressLabel` (default "Uploading {title}") |
+| Announcements | A polite `role="status"` region: "{title} uploaded" on complete, the title on error |
+| Focus | After Cancel or Delete, focus returns to Choose file when the page sets `enabled` |
+
+#### API
+
+```tsx
+import { NlFileUpload } from '@northline/ui';
+
+<NlFileUpload state={state} progress={progress} accept="image/png,image/jpeg" maxSizeLabel="Up to 5 MB"
+  title={title} description={details} onFileSelect={upload} onFileReject={showTypeError}
+  onCancel={cancel} onDelete={remove} onRetry={reset} />
+```
+
+`'use client'` (state, refs, events).
+
+#### Tokens used
+
+`bg-primary`, `bg-active`; `border-default`, `border-active`, `border-strong`, `border-error`, `border-disabled`; `Radius-L`, `Space-XL`; `--nl-duration-fast`; `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| The page uploads | The component reports the file and shows the state it's given; it never sends anything |
+| Size limit | Checked by the page (only `accept` is checked on drop) |
+| Disabled contrast | Known issue K3; disabled samples are marked |
+
 
 ---
 
@@ -8304,3 +8344,4 @@ Known issues
 | 20 Nov 2026 | NlButtonDock (#60, public): bottom action row; tertiary at the start, secondary and primary at the end, all small with fixed variants; optional note (string as `NlTextBlock` description); sticky shadow; end group wraps on narrow containers (OD-170); renders nothing when empty (OD-171); no destructive primary (OD-169). Approved by the designer |
 | 20 Nov 2026 | NlEmptyState (#61, public): centred icon (`NlIconContainer` 48 or 64, or `iconSlot`; none when neither, OD-112, OD-173), `NlTextBlock` heading (default `h2`, OD-172) and description, optional action; `live` for "No results" (OD-174). Approved by the designer |
 | 20 Nov 2026 | NlStatCard (#62, public): `bg-active` card with `NlLabel` (medium, secondary, OD-50) over a Data M value drawn by the card (OD-113); `inList` for `<dt>` / `<dd>` (OD-175); long values wrap (OD-176). Approved by the designer |
+| 20 Nov 2026 | NlFileUpload (#63, public): dashed drop zone for one file (OD-114), large or small; state from the page (enabled, uploading, complete, error) with border, icon and button per state; hidden native input, card click and drop; drag-over (OD-122) and disabled (OD-123) looks; wrong-type drops rejected (OD-178); live announcements and focus return. Icons `cloud_upload` and `refresh` added (OD-124, OD-177). Approved by the designer |
