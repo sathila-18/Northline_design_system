@@ -663,7 +663,7 @@ _The designer adds rows here before each build._
 
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
-| 70 | Select | `NlSelect` | `NlInputBase`, `NlMenu`, `NlListItem` | [§9](#nlselect) | ⬜ |
+| 70 | Select | `NlSelect` | `NlInputBase`, `NlMenu`, `NlListItem` | [§9](#nlselect) | ✅ |
 | 71 | Multi select | `NlMultiSelect` | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | [§9](#nlmultiselect) | ⬜ |
 | 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ⬜ |
 | 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
@@ -2114,6 +2114,8 @@ A panel `<div>` (header, content, footer). Render it right after its trigger, so
 #### Placement (added 20 Nov 2026)
 
 `placement?: 'bottom-start' | 'top-start' | 'end-start' | 'end-end'`, default `bottom-start`. `end-start` opens the menu beside its trigger at the end (right, or left in right-to-left), aligned to its top: the minimized `NlNavItem` (OD-118). `top-start` opens it above the trigger (expanded `NlSideNavUser`); `end-end` beside it at the end, aligned to its bottom (minimized `NlSideNavUser`) (OD-193, 20 Nov 2026). Each flips to the other side when there isn't room; the window margins and the minimum width (the trigger's) work as before.
+
+`returnFocusRef?` (added 20 Nov 2026, `NlSelect` #70): where focus goes back on close when the anchor can't take it (`NlSelect` anchors to the box and returns focus to the field inside).
 
 ---
 
@@ -5284,7 +5286,7 @@ The "Colours" table, as written; `Size-40`, `Radius-Full`, padding `Space-M`, `N
 
 **Level** Molecule (contains `NlHelperText`, L1) · **Base** – (this is the base) · **Depends on** `NlHelperText`, `NlIcon` · **Internal**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. `type="select"` is added with `NlSelect` (#70). OD-42, OD-43, OD-44, OD-76, OD-77 and OD-78 decided 19 Nov 2026.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. `type="select"` added with `NlSelect` (#70, 20 Nov 2026). OD-42, OD-43, OD-44, OD-76, OD-77 and OD-78 decided 19 Nov 2026.
 
 The shared field: an outlined box with a floating label, optional leading and trailing items, and a helper line below. `NlTextField`, `NlPasswordField`, `NlSearchField`, `NlSelect`, `NlMultiSelect` and `NlDateField` map onto it.
 
@@ -5413,6 +5415,16 @@ The "Sizes and layout" and "Colours" tables, as written, with the standard focus
 | Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
 
 Checked in the browser: the floating label is centred on the top border and lines up with the value; a filled field turns `border-strong` on blur.
+
+#### Select type (added 20 Nov 2026, with `NlSelect` #70)
+
+| Part | Detail |
+|---|---|
+| `type="select"` | The input becomes a read-only `role="combobox"` text field showing the chosen option's label; `NlSelect` adds `aria-haspopup`, `aria-expanded`, `aria-controls` and the keys. Pointer cursor, no caret, no text selection (`inputSelect`) |
+| Open look | While the input is `aria-expanded`, the box keeps the focused look (focus ring, `border` as focused) and the label floats (`peer-aria-expanded/input:`), because focus moves into the menu (OD-197). `nl:input-focus` in `tailwind.css` now also matches an expanded input (rule 9, approved 20 Nov 2026) |
+| Box click | A click anywhere on the box (the chevron too) focuses and clicks the input (OD-200) |
+| `boxRef` | A ref to the box, so a menu anchors to the box and not the helper line (OD-200) |
+| Hover contrast | The resting label (`text-placeholder`) on the hover fill (`bg-secondary`) is 4.17:1 in Light: known issue K9, every field |
 
 ---
 
@@ -7889,7 +7901,7 @@ Checked in Chrome: axe clean (WCAG 2.2 AA and the experimental name rule) in eve
 
 **Level** Organism (contains `NlListItem`, a molecule) · **Base** `NlInputBase` (`type="select"`) · **Depends on** `NlInputBase`, `NlMenu`, `NlListItem` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-139, OD-140.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-42, OD-43, OD-139, OD-140 and OD-197 to OD-201 decided.
 
 A field that opens a list of options and shows the chosen one, such as "Tier" or "Status".
 
@@ -7910,7 +7922,7 @@ NlSelect
 | Options | list | `options: { value, label, description?, disabled? }[]` |
 | Value | one option | `value` / `defaultValue`, `onValueChange` |
 | Error | off, on | `error?` |
-| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `disabled`, `required`, `name` |
+| Everything else | as `NlInputBase` | `label`, `helperText`, `disabled`, `required`, `name` (no `placeholder`: floating-label fields have no hint text, designer's choice 19 Nov 2026) |
 
 #### Sizes and layout
 
@@ -7932,10 +7944,54 @@ As `NlInputBase`: enabled, hover, focused, complete, disabled, each with and wit
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Typing state | Drawn (value text in the field while focused) | Means type-ahead on the focused field, no free text | **Needs approval** |
-| Helper text colour | `text-secondary` here, `text-tertiary` in other fields | Follows OD-43 (one colour for all fields) | **Needs approval** |
-| Option rows | Not drawn for select (only the menu's standard rows) | `NlListItem size="small"` | **Needs approval** |
+| Typing state | Drawn (value text in the field while focused) | Means type-ahead on the focused field, no free text | Approved (OD-139) |
+| Helper text colour | `text-secondary` here, `text-tertiary` in other fields | Follows OD-43: `text-tertiary` | Decided (OD-43) |
+| Option rows | Not drawn for select (only the menu's standard rows) | `NlListItem size="small" density="compact"`, no divider, as the other menus | Approved (OD-140) |
 | States | As in the table | Same | Matches |
+| Focus while open | Combobox (focus stays on the field, `aria-activedescendant`) | The field stays a `combobox`; focus moves into the list while open, reusing `NlMenu`'s keys and row focus ring (as Radix Select does). No active-row look to design | Approved (OD-197) |
+| Required | Native `required` | `aria-required` only (read-only fields skip browser validation); no visible marker (OD-78); the page validates with `error` + `helperText` | Approved (OD-198) |
+| Long lists | Not described | `NlMenu maxHeight="320"` (`Size-320`), then scrolls | Approved (OD-199) |
+| Box click | Not described | A click anywhere on the box opens it; the menu anchors to the box (`NlInputBase` `boxRef`) | Approved (OD-200) |
+| No options | Not described | The field shows; the menu doesn't open | Approved (OD-201) |
+| Hover contrast | Label `text-placeholder` on `bg-secondary` | 4.17:1 in Light (every field) | Known issue K9 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Field | `NlInputBase type="select"`: read-only `<input role="combobox">` with `nlMenuTriggerProps({ kind: 'select' })` (`aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`), named by its `<label>`; value text = the chosen option's label |
+| Size | `size` (`large` / `small`) to the base; chevron 24 / 20 |
+| Chevron | `NlIcon` in the trailing slot, `keyboard_arrow_down` / `keyboard_arrow_up` while open; `fg-secondary`, `fg-disabled` when disabled (the slot's colour) |
+| Open | The box's focused look while expanded; `NlMenu kind="select"` anchored to the box (`Space-XS` below, at least its width, `maxHeight="320"`), focus back to the field on close (`returnFocusRef`) |
+| Options | `NlListItem role="option" size="small" density="compact" divider={false}`, `selected` → `aria-selected` and the selected look, `disabled` → `aria-disabled` and skipped |
+| Value | `value` / `defaultValue` / `onValueChange`; a hidden `<input name>` carries the value |
+| Keys | Closed: Enter, Space, Down, Up open; a letter picks the next enabled option starting with it. Open: `NlMenu` (arrows, Home, End, letter jump, Enter or Space chooses and closes, Escape closes unchanged, Tab closes) |
+| Error, disabled, helper, required | As `NlInputBase`; `required` → `aria-required` |
+
+#### API
+
+```tsx
+import { NlSelect } from '@northline/ui';
+
+<NlSelect
+  label="Tier"
+  name="tier"
+  options={[
+    { value: 'tier-1', label: 'Tier 1' },
+    { value: 'tier-2', label: 'Tier 2', description: 'Earns double points' },
+  ]}
+  defaultValue="tier-1"
+  onValueChange={(value) => {}}
+/>
+```
+
+Props: `label`, `options`, `value?`, `defaultValue?`, `onValueChange?`, `size?`, `error?`, `helperText?`, `disabled?`, `required?`, `name?`, `id?`, `ref?` (the field), `onFocus?`, `onBlur?`, `className?`. `'use client'` (state, refs).
+
+#### Tokens used
+
+The parts' own: `NlInputBase` (`Size-48` / `Size-40`, `Space-L`, `Space-M`, `Space-XL`, `Radius-M`, borders, `bg-secondary` hover, the focus ring, Body L, Label S), `NlMenu` (`Space-XS`, `Size-320` max height), `NlListItem` small compact (`Space-M`, Label M, Body S, `bg-active`); `fg-secondary`, `fg-disabled` (chevron); `--nl-duration-fast`.
+
+Checked in Chrome: axe clean in every brand and theme, closed and with the menu open (all stories), except K9 on hover; Escape and choosing return focus to the field; the long list opens scrolled to the chosen option.
 
 ---
 
@@ -8505,6 +8561,7 @@ Known issues
 | K6 | The calendar range band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark (every brand), so in Dark the band behind range-middle days is close to invisible. The filled range-start and range-end days still show the range, and the cells carry `aria-selected`. Kept as specified. Found with `NlCalendarDay` (#15). Accepted by the designer, 19 Nov 2026 | Accepted |
 | K7 | The `NlRowsPerPage` label (`text-tertiary`, Body S) on `bg-tertiary` (hover, pressed, open) is 4.47:1 in Dark, every brand, under 4.5:1 (5.51 at rest; Light 7.73). Kept as specified. Open samples are marked `data-a11y-known-issue="K7"`. Found with `NlRowsPerPage` (#37). Accepted by the designer, 20 Nov 2026 | Accepted |
 | K8 | The `NlTableHeaderCell` title (`text-tertiary`, Label M) on the grey header (`bg-tertiary`) is 4.46:1 in Dark, every brand, under 4.5:1 (Light 7.73; plain header 6.36 in Dark). The same pair as K7. Kept as specified. Grey samples are marked `data-a11y-known-issue="K8"`. Found with `NlTableHeaderCell` (#66). Accepted by the designer, 20 Nov 2026 | Accepted |
+| K9 | The resting field label (`text-placeholder`, Body L) on the field hover fill (`bg-secondary`) is 4.17:1 in Light, every brand, under 4.5:1 (4.87 not hovered; Dark 5.51). Every `NlInputBase` field, only while hovering an empty field. The static a11y check doesn't hover, so no sample is marked. Kept as specified. Found with `NlSelect` (#70). Accepted by the designer, 20 Nov 2026 | Accepted |
 
 ---
 
@@ -8590,3 +8647,4 @@ Known issues
 | 20 Nov 2026 | NlTableCell (#67, public): `<td>` or row header `<th>`; text (one line, `title` when cut, OD-186), small badge, flush xsmall link (OD-117), row-actions menu button in a `Size-64` column, value checkbox, leading row-select checkbox; typed props per type (OD-188); `stickyEnd` (OD-187). Approved by the designer |
 | 20 Nov 2026 | NlNavItem (#68, public): side-nav section as a link or a toggle with `NlNavSubItem` pages (tree line, `Space-XS`, OD-131); `current` page or section (OD-130), worked out from the pages (OD-190); long labels cut with `title` (OD-191); minimized icon-only rows with an `NlTooltip` (OD-189) and pages in an `NlMenu` beside the row (OD-118). `NlMenu` gained `placement`; `NlListItem` menu rows can be links. Approved by the designer |
 | 20 Nov 2026 | NlSideNavUser (#69, public): the signed-in user row on `NlListItemBase appearance="nav"` (OD-119, new) with `NlAvatar` medium (OD-132), Label M name and Body M email (`NlTextBlock type="label-body"`, OD-120, new); opens its own account `NlMenu` from the rows passed in `menu` (OD-192), above it or to the end when minimized (new placements `top-start`, `end-end`, OD-193); named from its text plus a hidden menu label (OD-194); minimized `Space-L` all round with an `NlTooltip` (OD-195); long text cut with `title` (OD-196). Approved by the designer |
+| 20 Nov 2026 | NlSelect (#70, public): `NlInputBase type="select"` (new: read-only combobox field, open look while expanded, box click, `boxRef`) with a chevron, and an `NlMenu kind="select"` of small compact `NlListItem` options under the box (`maxHeight="320"`, new `returnFocusRef`); focus moves into the list (OD-197); type-ahead on the closed field (OD-139); value in a hidden input; `aria-required` (OD-198). OD-139, OD-140, OD-197 to OD-201 decided; K9 accepted. Approved by the designer |

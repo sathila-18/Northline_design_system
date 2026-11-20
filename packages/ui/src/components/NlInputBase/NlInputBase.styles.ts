@@ -48,6 +48,12 @@ export const input =
   'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:text-primary nl:search-cancel-none nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:text-disabled';
 
 /**
+ * The select type (NlSelect): pointer cursor and no caret, since the read-only field takes no typing (type-ahead only,
+ * OD-139). Disabled keeps the default cursor.
+ */
+export const inputSelect = 'nl:cursor-pointer nl:caret-transparent nl:select-none nl:disabled:cursor-default';
+
+/**
  * Placeholder text, only with a hidden label (NlSearchField: "Search", shown while empty, focused too; designer's
  * choice, 19 Nov 2026). Body L (the input's), text-placeholder; disabled text-disabled.
  */
@@ -55,20 +61,20 @@ export const placeholder = 'nl:placeholder:text-placeholder nl:disabled:placehol
 
 /**
  * The label (OD-42): at rest in the value position, Body L, text-placeholder. Floating (focused or filled): Label S,
- * text-tertiary (OD-77), on a bg-primary patch with Space-XS inline padding, centred on the box's top border.
+ * text-tertiary (OD-77), also while the field is expanded (an open NlSelect menu), on a bg-primary patch with Space-XS inline padding, centred on the box's top border.
  * The text keeps its start edge (-ms-xs undoes the patch padding). Its position eases with Duration fast; the size
  * switches; it jumps under reduced motion. Disabled text-disabled.
  */
 export const label =
-  'nl:pointer-events-none nl:absolute nl:start-none nl:top-1/2 nl:-ms-xs nl:max-w-full nl:-translate-y-1/2 nl:truncate nl:px-xs nl:text-body-l nl:text-placeholder nl:peer-focus/input:bg-primary nl:peer-focus/input:text-label-s nl:peer-focus/input:text-tertiary nl:peer-not-placeholder-shown/input:bg-primary nl:peer-not-placeholder-shown/input:text-label-s nl:peer-not-placeholder-shown/input:text-tertiary nl:peer-disabled/input:text-disabled nl:transition-all nl:duration-fast nl:motion-reduce:transition-none';
+  'nl:pointer-events-none nl:absolute nl:start-none nl:top-1/2 nl:-ms-xs nl:max-w-full nl:-translate-y-1/2 nl:truncate nl:px-xs nl:text-body-l nl:text-placeholder nl:peer-focus/input:bg-primary nl:peer-focus/input:text-label-s nl:peer-focus/input:text-tertiary nl:peer-not-placeholder-shown/input:bg-primary nl:peer-not-placeholder-shown/input:text-label-s nl:peer-not-placeholder-shown/input:text-tertiary nl:peer-aria-expanded/input:bg-primary nl:peer-aria-expanded/input:text-label-s nl:peer-aria-expanded/input:text-tertiary nl:peer-disabled/input:text-disabled nl:transition-all nl:duration-fast nl:motion-reduce:transition-none';
 
 /** A hidden label (NlSearchField): never drawn, still the input's accessible name. The placeholder shows instead. */
 export const labelHidden = 'nl:sr-only';
 
 /** Floating label offset per size: up by the box's block padding, onto the top border. */
 export const labelFloat = {
-  large: 'nl:peer-focus/input:-top-l nl:peer-not-placeholder-shown/input:-top-l',
-  small: 'nl:peer-focus/input:-top-m nl:peer-not-placeholder-shown/input:-top-m',
+  large: 'nl:peer-focus/input:-top-l nl:peer-not-placeholder-shown/input:-top-l nl:peer-aria-expanded/input:-top-l',
+  small: 'nl:peer-focus/input:-top-m nl:peer-not-placeholder-shown/input:-top-m nl:peer-aria-expanded/input:-top-m',
 } as const;
 
 /** Leading and trailing slots: fg-secondary; disabled fg-disabled. An NlIcon inside inherits it. */

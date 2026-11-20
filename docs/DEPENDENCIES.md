@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #69 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132 and OD-148 to OD-196 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #70 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132, OD-139, OD-140 and OD-148 to OD-201 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -110,7 +110,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 
 | # | Component | Public | Depends on | Used by | Blocked by | Spec | Build |
 |---|---|---|---|---|---|---|---|
-| 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | – | ✅ batch 8 | ⬜ |
+| 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | – | ✅ batch 8 | ✅ |
 | 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | OD-136 | ✅ batch 8 | ⬜ |
 | 72 | `NlDateField` | yes | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | – | OD-137 | ✅ batch 8 | ⬜ |
 | 73 | `NlStepper` | yes | `NlStep` | – | – | ✅ batch 8 | ⬜ |
@@ -492,8 +492,13 @@ Decide these before building the components listed under "Affects".
 ### Organisms
 
 **NlSelect**
-- OD-139 · "Typing" means type-ahead on the focused field, no free text · Open
-- OD-140 · Option rows are `NlListItem size="small"` · Open
+- OD-139 · "Typing" means type-ahead on the focused field, no free text · **Decided** 20 Nov 2026: approved
+- OD-140 · Option rows are `NlListItem size="small"` · **Decided** 20 Nov 2026: approved, `density="compact"`, no divider
+- OD-197 · Focus moves into the list while open; the field stays a `combobox` · **Decided** 20 Nov 2026: approved
+- OD-198 · `required` → `aria-required` only; the page validates · **Decided** 20 Nov 2026: approved
+- OD-199 · Menu `maxHeight="320"` · **Decided** 20 Nov 2026: approved
+- OD-200 · A click on the box opens it; `NlInputBase` `boxRef` · **Decided** 20 Nov 2026: approved
+- OD-201 · No options: the menu doesn't open · **Decided** 20 Nov 2026: approved
 
 **NlMultiSelect**
 - OD-136 · "+N" overflow chip, chips `Space-XS` apart · Open
