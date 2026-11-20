@@ -643,7 +643,7 @@ _The designer adds rows here before each build._
 | 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ✅ |
 | 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ✅ |
 | 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ✅ |
-| 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ⬜ |
+| 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ✅ |
 | 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
 | 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ⬜ |
 | 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ⬜ |
@@ -6447,7 +6447,7 @@ The base's tokens (`NlListItemBase`) and `NlRadio`'s own; `Space-none` and `Spac
 
 **Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlSwitch`, `NlIcon` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-100, OD-101, OD-102.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-102, OD-163 and OD-164 decided (OD-100 and OD-101 don't apply: the switch has no hover colours and no group).
 
 A settings row with a switch at the end, such as "Email updates".
 
@@ -6463,6 +6463,9 @@ As `NlListItemBase`: optional leading `NlIcon` (24), title, description, and `Nl
 | Leading | none, icon | `icon?: NlIconName` |
 | Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
 | Description | on or off | `description?` |
+| Body | optional, in place of the description | `body?` (OD-164) |
+| Show body | on (default) or off: hides the description or body | `showBody?: boolean` (OD-164) |
+| Divider | on (default) or off | `divider?` (OD-164) |
 | Disabled | on or off | `disabled?` |
 
 #### Sizes and layout
@@ -6495,7 +6498,41 @@ Default, hover, focus, disabled, each off and on.
 |---|---|---|---|
 | No highlight when on | As in the reference | Same | Matches |
 | Switch size | Small | Same | Matches |
-| Focus on the row | Not drawn | Standard ring around the row, as for checkbox rows | **Needs approval** |
+| Focus on the row | Not drawn | Standard ring around the row, as for checkbox rows | Approved (OD-102) |
+| Switch position | Not described | On the title's first line, as the checkbox and radio rows | Approved (OD-163) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Row | `NlListItemBase as="label"`, `actionable`, `controlRow`, `accessoryAlign="title"`; never `selected` |
+| Switch | `NlSwitch size="small" inRow` in the trailing slot; `checked` / `defaultChecked` / `onCheckedChange`, `disabled`, `ref` and native button attributes go to it |
+| Leading | `icon?` → `NlIcon` 24, `tone="inherit"` (slot gives `fg-primary`) |
+| Name | `aria-labelledby` the title; `aria-describedby` the description or body (`useId`). The switch shows no text of its own, so WCAG 2.5.3 isn't affected |
+| Toggle | Clicking the label presses the switch button (native label activation); Space or Enter on the switch |
+
+#### API
+
+```tsx
+import { NlSwitchListItem } from '@northline/ui';
+
+<NlSwitchListItem icon="notifications" title="Email updates" description="News about rewards" checked={on} onCheckedChange={setOn} />
+```
+
+`'use client'` (`useId`, state).
+
+#### Tokens used
+
+The base's tokens (`NlListItemBase`) and `NlSwitch`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Ring round the row (OD-102) | `NlSwitch inRow` drops its own ring (`focus-visible:outline-none` so the browser's default doesn't show); the row draws it with `controlRow` |
+| No hover follow | `NlSwitch` has no hover colours (OD-13b), so only the row's fill changes |
+| Disabled contrast | Known issue K3; disabled samples are marked |
+
 
 ---
 
@@ -8083,3 +8120,4 @@ Known issues
 | 20 Nov 2026 | NlListItem (#53, public): standard row on `NlListItemBase`; leading icon or avatar (medium), trailing `NlListCaption` and chevron; link, button, menu row or static; a chevron makes the whole row clickable (filled always); static rows no hover or focus (OD-98); `aria-current` from the page (OD-152); disabled per element (OD-153); `divider` and `body` exposed (OD-154, OD-155); name from the row's text (WCAG 2.5.3). Approved by the designer |
 | 20 Nov 2026 | NlCheckboxListItem (#54, public): `<label>` row on `NlListItemBase` around `NlCheckboxControl`, leading or trailing; checked rows take the selected colours; ring round the row and box hover following the row (OD-100, OD-102: `controlRow`, `inRow`); checkbox on the title's first line (`accessoryAlign="title"`); no indeterminate or menu mode (OD-156, OD-157); `body` exposed (OD-158); group label from the page (OD-159). Approved by the designer |
 | 20 Nov 2026 | NlRadioListItem (#55, public): `<label>` row on `NlListItemBase` around `NlRadio inRow`, inside `NlRadioListGroup` (`role="radiogroup"`, value, name, disabled, appearance; OD-101, OD-160); native arrow keys; ring round the row, radio on the title line; no menu mode (OD-161); group label from the page (OD-162). `showBody` added to it and to `NlCheckboxListItem`. Approved by the designer |
+| 20 Nov 2026 | NlSwitchListItem (#56, public): settings row on `NlListItemBase`, `<label>` around `NlSwitch size="small" inRow` in the trailing slot, optional leading icon; no highlight when on; switch named by the title and described by the description; ring round the row (OD-102); switch on the title line (OD-163); `body`, `showBody`, `divider` (OD-164). Approved by the designer |

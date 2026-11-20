@@ -12,6 +12,13 @@ export const track =
   'nl:group/switch nl:relative nl:inline-flex nl:shrink-0 nl:cursor-pointer nl:items-center nl:rounded-full nl:p-xs nl:bg-fg-placeholder nl:aria-checked:bg-fg-brand nl:disabled:cursor-default nl:disabled:bg-border-disabled nl:disabled:aria-checked:bg-disabled nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
 
 /** Track size, from Size-*. */
+/**
+ * In a list row (`inRow`, OD-102): no focus ring of its own; the row draws it (NlListItemBase `controlRow`).
+ * outline-none only while focus-visible, so it never sits next to a ring width.
+ */
+export const trackInRow =
+  'nl:group/switch nl:relative nl:inline-flex nl:shrink-0 nl:cursor-pointer nl:items-center nl:rounded-full nl:p-xs nl:bg-fg-placeholder nl:aria-checked:bg-fg-brand nl:disabled:cursor-default nl:disabled:bg-border-disabled nl:disabled:aria-checked:bg-disabled nl:focus-visible:outline-none nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+
 export const trackSize = {
   large: 'nl:h-32 nl:w-56',
   small: 'nl:h-24 nl:w-40',

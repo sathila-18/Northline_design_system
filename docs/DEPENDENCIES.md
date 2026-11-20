@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 to #55 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 to OD-102 and OD-148 to OD-162 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 to #56 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 to OD-102 and OD-148 to OD-164 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -91,7 +91,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ✅ |
 | 54 | `NlCheckboxListItem` | yes | `NlListItemBase`, `NlCheckboxControl` | `NlMultiSelect`, `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
 | 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
-| 56 | `NlSwitchListItem` | yes | `NlListItemBase`, `NlSwitch`, `NlIcon` | – | – | ✅ batch 6 | ⬜ |
+| 56 | `NlSwitchListItem` | yes | `NlListItemBase`, `NlSwitch`, `NlIcon` | – | – | ✅ batch 6 | ✅ |
 | 57 | `NlAccordion` | yes | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | – | OD-14, OD-103a | ✅ batch 6 | ⬜ |
 | 58 | `NlBanner` | yes | `NlIcon`, `NlButton` | – | OD-93 | ✅ batch 6 | ⬜ |
 | 59 | `NlSnackbar` | yes | `NlIcon`, `NlButton` | – | OD-93, OD-91, OD-92 | ✅ batch 6 | ⬜ |
@@ -387,6 +387,8 @@ Decide these before building the components listed under "Affects".
 - OD-160 · Radio group layout · **Decided** 20 Nov 2026: the group passes `appearance`; filled cards `Space-L` apart
 - OD-161 · `NlRadioListItem` menu mode · **Decided** 20 Nov 2026: left out; menus use `NlListItem role="option"`
 - OD-162 · Radio group label · **Decided** 20 Nov 2026: the page's; `aria-label` or `aria-labelledby` required
+- OD-163 · `NlSwitchListItem` switch position · **Decided** 20 Nov 2026: on the title's first line
+- OD-164 · `NlSwitchListItem` `body`, `showBody`, `divider` · **Decided** 20 Nov 2026: all three exposed
 - OD-102 · Switch rows: focus ring around the row · **Decided** 20 Nov 2026: ring round the row for control rows (`controlRow`), first used by `NlCheckboxListItem`
 - OD-156 · `NlCheckboxListItem` indeterminate · **Decided** 20 Nov 2026: left out; table components handle it
 - OD-157 · `NlCheckboxListItem` menu mode (`role="option"`) · **Decided** 20 Nov 2026: left out
