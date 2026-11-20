@@ -50,5 +50,6 @@ export * from './components/NlMultiSelect';
 export * from './components/NlDateField';
 export * from './components/NlTableColumnFilter';
 export * from './components/NlSideSheet';
+export * from './components/NlPageHeader';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

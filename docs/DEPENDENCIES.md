@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72, #74 and #75 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-133, OD-136, OD-137, OD-139 to OD-141, OD-143 and OD-148 to OD-218 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 and #74 to #76 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-133, OD-135 to OD-137, OD-139 to OD-141, OD-143, OD-144 and OD-148 to OD-220 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -117,7 +117,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 73 | `NlStepper` | yes | `NlStep` | – | – | ✅ batch 8 | ⬜ |
 | 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ✅ |
 | 75 | `NlSideSheet` | yes | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | – | – | ✅ batch 8 | ✅ |
-| 76 | `NlPageHeader` | yes | `NlTextBlock`, `NlButton`, `NlNotificationButton` | – | OD-16, OD-135 | ✅ batch 8 | ⬜ |
+| 76 | `NlPageHeader` | yes | `NlTextBlock`, `NlButton`, `NlNotificationButton` | – | – | ✅ batch 8 | ✅ |
 | 77 | `NlTable` | yes | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` (and `NlTableColumnFilter` for column filters) | – | OD-138 | ✅ batch 8 | ⬜ |
 | 78 | `NlSideNav` | yes | `NlNavItem`, `NlSideNavUser`, `NlButton` | – | OD-134 | ✅ batch 8 | ⬜ |
 
@@ -536,8 +536,10 @@ Decide these before building the components listed under "Affects".
 - OD-218 · Divider edge to edge · **Decided** 20 Nov 2026: approved
 
 **NlPageHeader**
-- OD-135 · Bottom edge: the reference uses a 4px `bg-secondary` stroke, which §4.2 doesn't allow. Options: no border with a `Space-XS` gap, or a 1px `border-default` divider · Open, **needs approval** (decide in Storybook)
-- OD-144 · Title as `h1` · Open
+- OD-135 · Bottom edge: the reference uses a 4px `bg-secondary` stroke, which §4.2 doesn't allow. Options: no border with a `Space-XS` gap, or a 1px `border-default` divider · **Decided** 20 Nov 2026: no border; `NlAppShell` leaves a `Space-XS` gap (no comparison stories)
+- OD-144 · Title as `h1` · **Decided** 20 Nov 2026: approved
+- OD-219 · Root is a `div`; the app shell's header slot is the `<header>` · **Decided** 20 Nov 2026: approved
+- OD-220 · Announce the total unread count when it rises · **Decided** 20 Nov 2026: approved
 
 **NlTable**
 - OD-138 · Empty (`NlEmptyState`) and loading (`NlSkeleton` rows) states; column widths and sideways scrolling · Open

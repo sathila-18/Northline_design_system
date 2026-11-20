@@ -669,7 +669,7 @@ _The designer adds rows here before each build._
 | 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
 | 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ✅ |
 | 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ✅ |
-| 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ⬜ |
+| 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ✅ |
 | 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ⬜ |
 | 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ⬜ |
 
@@ -2217,7 +2217,7 @@ NlAppShell (full window, horizontal)
 | Shell | Fills the window. Horizontal, gap `Space-none`. The window itself never scrolls |
 | Nav slot | Full height. Width is set by the nav (expanded or minimized), not by the shell |
 | Panel area | Fills the remaining width. Padding `Space-M` top, right and bottom, `Space-none` on the left |
-| Panel | Fills the panel area. Radius `Radius-L`, content clipped. Vertical stack: header slot, then content slot |
+| Panel | Fills the panel area. Radius `Radius-L`, content clipped. Vertical stack: header slot, then content slot, with a `Space-XS` gap between them that shows the page background (OD-135, decided with `NlPageHeader` #76, 20 Nov 2026) |
 | Content slot | Fills the rest of the panel and scrolls vertically. Padding `Space-3XL` all round. Page blocks are `Space-4XL` apart (the page sets that gap) |
 | Skip link | Positioned at the top left above everything. Pill: padding `Space-M` (block) and `Space-XL` (inline), `Radius-Full`, text `Label M`, shadow `--nl-shadow-menu` |
 
@@ -8486,7 +8486,7 @@ Checked in Chrome: axe clean with the sheet open in every brand and theme (all s
 
 **Level** Organism (contains `NlNotificationButton`, a molecule) · **Base** none · **Depends on** `NlTextBlock`, `NlButton`, `NlNotificationButton` · **Public** (goes in `NlAppShell`'s header slot)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-16, OD-135, OD-144.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-16, OD-135, OD-144, OD-219 and OD-220 decided.
 
 The bar at the top of the content panel: optional back button, page title with an optional line under it, and the notification button.
 
@@ -8522,7 +8522,7 @@ NlPageHeader (horizontal)
 | Part | Token |
 |---|---|
 | Background | `bg-primary` |
-| Bottom edge | `bg-secondary` (see "Mapping notes") |
+| Bottom edge | None on the header: `NlAppShell` leaves a `Space-XS` gap under it, showing the page background (OD-135) |
 | Title / body | `text-primary` / `text-secondary` |
 
 #### States
@@ -8540,10 +8540,46 @@ None of its own.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Bottom edge | A 4px bottom stroke in `bg-secondary` (the page background showing as a gap) | §4.2 allows only 1px and 2px borders. Proposed: no border; the header sits `Space-XS` above the content instead, so the panel's background shows through, or use a 1px `border-default` divider | **Designer to decide** |
+| Bottom edge | A 4px bottom stroke in `bg-secondary` (the page background showing as a gap) | §4.2 allows only 1px and 2px borders. No edge on the header; `NlAppShell` leaves a `Space-XS` gap under it, so the page background shows through (the reference's look, from spacing) | Approved (OD-135, option a; no comparison stories) |
 | Title truncation | One line with "…", per the reference's description | Same | Matches |
-| Title heading level | Not in the reference | `h1` | **Needs approval** |
+| Title heading level | Not in the reference | `h1` (`headingAs` changes it) | Approved (OD-144) |
+| Root element | "A `<header>` (the app shell provides it)" | A `div`; `NlAppShell`'s header slot is the `<header>`, so there's one banner landmark | Approved (OD-219) |
+| Announcement | "3 new notifications" | The total unread count when it rises ("1 new notification" singular); nothing on the first render or a fall; a polite `role="status"` | Approved (OD-220) |
 | Back button size | XSmall, icon 20 | Same | Matches |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Root | `div`, row, `Space-L` block and `Space-3XL` inline padding, gap `Space-XL`, items centred, `bg-primary`, full width; native attributes pass through |
+| Start group | Gap `Space-L`: back button, then the text column (gap `Space-XS`) |
+| Back | `onBack` → `NlButton` button, or `backHref` (+ `backAs`) → link; `variant="tertiary" size="xsmall" icon="only-icon" iconName="arrow_back"`; named `backLabel` (default "Back") |
+| Title | `title` in `NlTextBlock type="headline-small"`, `headingAs` (default `h1`); one line with an ellipsis, `title` tooltip only when cut |
+| Body | Text `children` → the same `NlTextBlock`'s description (Body M, `text-secondary`, `Space-XS` under the title); other content as a slot under the title |
+| Notifications | `notifications` → `NlNotificationButton` at the end; rises announced in a hidden polite status |
+
+#### API
+
+```tsx
+import { NlPageHeader } from '@northline/ui';
+
+<NlPageHeader
+  title="Track day voucher"
+  backHref="/rewards"
+  backLabel="Back to rewards"
+  notifications={{ count: 3, onClick: openNotifications }}
+>
+  Reward X · Tier 2 and up
+</NlPageHeader>
+```
+
+Props: `title`, `headingAs?`, `children?`, `onBack?`, `backHref?`, `backAs?`, `backLabel?`, `notifications?`, `className?`, native `div` attributes. `'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`Space-XS`, `Space-L`, `Space-XL`, `Space-3XL`; `bg-primary`; `text-primary`, `text-secondary` (through `NlTextBlock`); Headline Small-H6, Body M; the parts' own (`NlButton` xsmall tertiary, `NlNotificationButton`).
+
+Checked in Chrome: axe clean in every brand and theme (all stories); the cut title has its tooltip; a rising count is announced.
 
 ---
 
@@ -8834,3 +8870,4 @@ Known issues
 | 20 Nov 2026 | NlDateField (#72, public): typed date with a digit mask (`format`, default `DD/MM/YYYY`, OD-137; `dateFormat.ts`), the pattern shown while focused (new `NlInputBase formatHint`, OD-209), errors for invalid and out-of-range dates; calendar `NlButton` opening an `NlMenu` dialog with `NlCalendar` (new `NlMenu matchAnchorWidth`, `initialFocusSelector`, OD-207, OD-208); focus back to the input (OD-210); ISO value (OD-211); large only (OD-141). Approved by the designer |
 | 20 Nov 2026 | NlTableColumnFilter (#74, exported for custom tables): `NlMenu kind="filter"` dialog "Filter {column}" from the header cell's filter button; `NlCheckboxListItem` rows with Reset and Apply, or an `NlRadioListGroup` with "All" first (choosing applies and closes, arrow keys apply and stay open, OD-215); `NlSearchField` header above 8 values; starts from the applied values; focus back to the filter button. OD-212 to OD-215 decided. Approved by the designer |
 | 20 Nov 2026 | NlSideSheet (#75, public): full-height panel on the end edge, a native modal `<dialog>` as `NlDialog` (focus kept inside, page inert, scroll locked, focus back to the opener); header with optional back and close `NlButton`s around the title (gap `Space-XS`, OD-216), optional edge-to-edge `NlDivider` (OD-218), scrolling body (its gaps inside the scroll area), optional sticky `NlButtonDock`; `size` small `Size-560` / large `Size-720` (OD-133); slides in, fade only with reduced motion (OD-143). Approved by the designer |
+| 20 Nov 2026 | NlPageHeader (#76, public): the bar at the top of the content panel, a `div` for `NlAppShell`'s `<header>` slot (OD-219); optional back `NlButton` or link ("Back" / `backLabel`), the title as an `h1` `NlTextBlock` headline-small cut with a tooltip (OD-144), an optional line or slot under it, and an optional `NlNotificationButton`; rising unread counts announced politely (OD-220); no bottom edge, `NlAppShell` leaves a `Space-XS` gap (OD-135). Approved by the designer |
