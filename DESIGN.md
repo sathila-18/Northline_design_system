@@ -649,7 +649,7 @@ _The designer adds rows here before each build._
 | 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ✅ |
 | 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ✅ |
 | 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ✅ |
-| 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ⬜ |
+| 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ✅ |
 | 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ⬜ |
 | 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ⬜ |
 | 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ⬜ |
@@ -6947,7 +6947,7 @@ Presentational, no `'use client'`.
 
 **Level** Molecule (contains `NlIconContainer`, `NlButton`, L1) · **Base** none · **Depends on** `NlIconContainer`, `NlTextBlock`, `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-112.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-112 and OD-172 to OD-174 decided.
 
 What a list, table or page shows when there is nothing in it yet, with an optional action ("Add reward").
 
@@ -6970,6 +6970,8 @@ NlEmptyState (vertical, centred)
 | Heading | text | `heading` |
 | Description | text | `description?` |
 | Action | optional | `action?: ReactNode` (usually one `NlButton variant="primary" size="small"`) |
+| Heading level | h2 (default) to h6, p, span | `headingAs` (OD-172) |
+| Announced | off (default) or on | `live?: boolean` → `role="status"` (OD-174) |
 
 #### Sizes and layout
 
@@ -7004,7 +7006,36 @@ None of its own.
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Show button group | A boolean | `action` slot (absent = no button) | Matches |
-| Icon slot | A slot holding a 48 or 64 icon container | `icon` (container built in) or `iconSlot` for anything else | **Needs approval** |
+| Icon slot | A slot holding a 48 or 64 icon container | `icon` (container built in) or `iconSlot` for anything else | Approved (OD-112) |
+| Default heading level | Not described | `h2` (OD-172) | Approved |
+| No icon | Not described | Neither `icon` nor `iconSlot`: no icon (OD-173) | Approved |
+| "No results" announcement | The result region announces it | Opt-in `live` (`role="status"`), as `NlBanner` (OD-174) | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Size | `size`, `data-size`: small → `NlIconContainer size={48}`, `NlTextBlock type="headline-small"`; medium → 64, `headline-medium` |
+| Icon | `icon` → `NlIconContainer tone="primary"` (decorative); `iconSlot` wins over it |
+| Text | `NlTextBlock align="center"`, `heading`, `headingAs` (default `h2`), `description` |
+| Action | `action` slot, centred |
+| Layout | Column, items centred, text centred, gap `Space-3XL`; top group gap `Space-XL` |
+
+#### API
+
+```tsx
+import { NlEmptyState } from '@northline/ui';
+
+<NlEmptyState icon="add" heading="No rewards yet" description="Rewards you add show here."
+  action={<NlButton variant="primary" size="small">Add reward</NlButton>} />
+```
+
+Presentational, no `'use client'`.
+
+#### Tokens used
+
+`Space-3XL`, `Space-XL`; `NlIconContainer` (48, 64, `bg-icons`, `fg-primary`), `NlTextBlock` (Headline Small-H6, Headline Medium-H5, `text-primary`, `text-secondary`).
+
 | Gaps and sizes | `Space-3XL`, `Space-XL`, 48 / 64 | Same | Matches |
 
 ---
@@ -8243,3 +8274,4 @@ Known issues
 | 20 Nov 2026 | NlBanner (#58, public): tinted inline message in five tones; plain tone-coloured title and description (OD-93); icon on the first text line (OD-165), `error` icon for error (OD-108); action as an xsmall flush link in the tone colour (OD-106, designer's choice); close as an xsmall icon-only `NlButton` "Dismiss {title}" (OD-107); `live` for status or alert (OD-109). `NlButton` link gained `contentTone` and `flush`. Approved by the designer |
 | 20 Nov 2026 | NlSnackbar (#59, public): look (`NlSnackbar`, four tones, single or stacked, tertiary action and close) plus `NlSnackbarProvider` and `useNlSnackbar()` (OD-166): bottom-centre region, status and alert live regions from load, one at a time, 6s auto-dismiss without an action (pauses on hover or focus), F6 into it. New tokens `Size-560` (OD-91) and `--nl-duration-snackbar` (OD-92). Approved by the designer |
 | 20 Nov 2026 | NlButtonDock (#60, public): bottom action row; tertiary at the start, secondary and primary at the end, all small with fixed variants; optional note (string as `NlTextBlock` description); sticky shadow; end group wraps on narrow containers (OD-170); renders nothing when empty (OD-171); no destructive primary (OD-169). Approved by the designer |
+| 20 Nov 2026 | NlEmptyState (#61, public): centred icon (`NlIconContainer` 48 or 64, or `iconSlot`; none when neither, OD-112, OD-173), `NlTextBlock` heading (default `h2`, OD-172) and description, optional action; `live` for "No results" (OD-174). Approved by the designer |
