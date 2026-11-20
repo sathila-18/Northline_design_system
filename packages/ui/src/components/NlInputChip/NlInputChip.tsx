@@ -14,6 +14,8 @@ export interface NlInputChipProps extends Omit<ComponentPropsWithRef<'span'>, 'c
   children: ReactNode;
   /** Optional leading item, usually an NlIcon (sized by the caller; it inherits fg-secondary). Off by default. */
   leading?: ReactNode;
+  /** Shows the remove button (default). false: a chip with no remove button (NlMultiSelect's "+N" chip, OD-136). */
+  removable?: boolean;
   /** Called when the remove button is activated (click, Enter, Space) or gets Backspace or Delete. */
   onRemove?: () => void;
   /** The remove button's name. Default: "Remove" followed by the chip's label, for example "Remove Tier 2". */
@@ -33,6 +35,7 @@ export function NlInputChip({
   leading,
   onRemove,
   removeLabel,
+  removable = true,
   ...rest
 }: NlInputChipProps) {
   const labelId = useId();
@@ -45,25 +48,26 @@ export function NlInputChip({
     }
   };
 
-  const removeButton = disabled ? undefined : (
-    <button
-      type="button"
-      className={`${styles.remove} ${styles.removeMargin[size]}`}
-      onClick={onRemove}
-      onKeyDown={handleKeyDown}
-      {...(removeLabel === undefined
-        ? { 'aria-labelledby': `${removeWordId} ${labelId}` }
-        : { 'aria-label': removeLabel })}
-      data-slot="remove"
-    >
-      {removeLabel === undefined && (
-        <span id={removeWordId} className={styles.hidden}>
-          Remove
-        </span>
-      )}
-      <NlIcon name="close" size={styles.iconSize[size]} tone="inherit" />
-    </button>
-  );
+  const removeButton =
+    disabled || !removable ? undefined : (
+      <button
+        type="button"
+        className={`${styles.remove} ${styles.removeMargin[size]}`}
+        onClick={onRemove}
+        onKeyDown={handleKeyDown}
+        {...(removeLabel === undefined
+          ? { 'aria-labelledby': `${removeWordId} ${labelId}` }
+          : { 'aria-label': removeLabel })}
+        data-slot="remove"
+      >
+        {removeLabel === undefined && (
+          <span id={removeWordId} className={styles.hidden}>
+            Remove
+          </span>
+        )}
+        <NlIcon name="close" size={styles.iconSize[size]} tone="inherit" />
+      </button>
+    );
 
   return (
     <NlChipBase

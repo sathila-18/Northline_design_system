@@ -45,13 +45,29 @@ export const value = 'nl:relative nl:flex nl:min-w-0 nl:flex-1 nl:items-center';
  * draws an NlButton); it does nothing for other types.
  */
 export const input =
-  'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:text-primary nl:search-cancel-none nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:text-disabled';
+  'nl:peer/input nl:w-full nl:min-w-0 nl:bg-transparent nl:p-none nl:text-body-l nl:search-cancel-none nl:focus:outline-hidden nl:disabled:cursor-default';
 
 /**
  * The select type (NlSelect): pointer cursor and no caret, since the read-only field takes no typing (type-ahead only,
  * OD-139). Disabled keeps the default cursor.
  */
 export const inputSelect = 'nl:cursor-pointer nl:caret-transparent nl:select-none nl:disabled:cursor-default';
+
+/**
+ * The input's text colour: text-primary, disabled text-disabled. Under a value overlay (NlMultiSelect) the value text
+ * stays in the input for assistive tech, unseen (OD-203).
+ */
+export const inputColour = {
+  normal: 'nl:text-primary nl:disabled:text-disabled',
+  underOverlay: 'nl:text-transparent',
+} as const;
+
+/**
+ * The value overlay (NlMultiSelect's chips): over the value area, one row, items centred, gap Space-XS (OD-136),
+ * cut at the end. Clipped sideways only: an xsmall chip with its border is a little taller than the Body L line, so
+ * it spills into the box's block padding instead of losing its top and bottom border.
+ */
+export const valueOverlay = 'nl:absolute nl:inset-none nl:flex nl:min-w-0 nl:items-center nl:gap-xs nl:overflow-x-clip';
 
 /**
  * Placeholder text, only with a hidden label (NlSearchField: "Search", shown while empty, focused too; designer's

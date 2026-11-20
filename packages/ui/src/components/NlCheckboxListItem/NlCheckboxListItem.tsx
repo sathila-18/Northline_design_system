@@ -13,8 +13,13 @@ export type NlCheckboxListItemControlSide = 'leading' | 'trailing';
 
 export interface NlCheckboxListItemProps extends Omit<
   ComponentPropsWithRef<'input'>,
-  'type' | 'children' | 'title' | 'className' | 'size'
+  'type' | 'children' | 'title' | 'className' | 'size' | 'role'
 > {
+  /**
+   * option: a row inside a listbox (NlMultiSelect's NlMenu). The row is the option (aria-selected, tabIndex -1, a click
+   * toggles it); the checkbox is drawn but inert, so there's no control nested in the option (OD-202).
+   */
+  role?: 'option';
   /** The title: first in the checkbox's name. */
   title: ReactNode;
   /** Under the title; part of the name. */
@@ -44,7 +49,7 @@ export interface NlCheckboxListItemProps extends Omit<
  * NlListItemBase. The row is a <label> around NlCheckboxControl's native checkbox, so the whole row toggles, Space
  * toggles, and the row's text (title, then description or body) names it. Checked rows take the selected colours;
  * the focus ring goes round the row and the box follows the row's hover (OD-100, OD-102). No indeterminate and no
- * menu mode (OD-156, OD-157). Native input attributes (`checked` / `defaultChecked`, `name`, `value`, `disabled`,
+ * menu mode (OD-156, OD-157), except `role="option"` for NlMultiSelect's listbox (OD-202). Native input attributes (`checked` / `defaultChecked`, `name`, `value`, `disabled`,
  * `onChange`) and `ref` go to the input. 'use client' for the checked state.
  */
 export function NlCheckboxListItem({
@@ -62,9 +67,11 @@ export function NlCheckboxListItem({
   checked,
   defaultChecked = false,
   onChange,
+  role,
   className,
   ...rest
 }: NlCheckboxListItemProps) {
+  const isOption = role === 'option';
   const [uncontrolled, setUncontrolled] = useState(defaultChecked);
   const isControlled = checked !== undefined;
   const isChecked = isControlled ? checked : uncontrolled;
@@ -75,7 +82,15 @@ export function NlCheckboxListItem({
     onCheckedChange?.(event.currentTarget.checked);
   };
 
-  const control = (
+  const toggle = () => {
+    if (disabled) return;
+    if (!isControlled) setUncontrolled(!isChecked);
+    onCheckedChange?.(!isChecked);
+  };
+
+  const control = isOption ? (
+    <NlCheckboxControl inRow checked={isChecked} disabled={disabled} readOnly tabIndex={-1} inert />
+  ) : (
     <NlCheckboxControl
       {...rest}
       inRow
@@ -86,9 +101,21 @@ export function NlCheckboxListItem({
     />
   );
 
+  const optionProps = isOption
+    ? {
+        role: 'option',
+        'aria-selected': isChecked,
+        'aria-disabled': disabled || undefined,
+        tabIndex: -1,
+        onClick: toggle,
+        id: rest.id,
+      }
+    : {};
+
   return (
     <NlListItemBase
-      as="label"
+      {...optionProps}
+      as={isOption ? 'div' : 'label'}
       appearance={appearance}
       size={size}
       density={density}

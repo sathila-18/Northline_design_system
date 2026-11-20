@@ -46,6 +46,11 @@ interface NlMenuBaseProps extends Omit<
   children?: ReactNode;
   /** Optional slot that stays at the top, for example a search field. */
   header?: ReactNode;
+  /**
+   * Where focus goes on open: rows (default: the selected row, else the first) or header (its first field, for a
+   * search; Down then moves into the rows) (NlMultiSelect, OD-205).
+   */
+  initialFocus?: 'rows' | 'header';
   /** Optional slot that stays at the bottom, for example two buttons. Laid out in a row, aligned to the end. */
   footer?: ReactNode;
   /** Optional maximum height, as a Size-* token name. The menu never grows past the window either way. */
@@ -133,6 +138,7 @@ export function NlMenu({
   multiple = false,
   children,
   header,
+  initialFocus = 'rows',
   footer,
   maxHeight,
   placement = 'bottom-start',
@@ -147,6 +153,7 @@ export function NlMenu({
   const menuId = id ?? generatedId;
   const panelRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<Record<string, string> | null>(null);
 
   const role = ROLE[kind];
@@ -199,12 +206,16 @@ export function NlMenu({
       panelRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
       return;
     }
+    if (initialFocus === 'header' && header !== undefined) {
+      headerRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
+      return;
+    }
     const enabled = rows();
     const selected = enabled.find((row) => row.getAttribute('aria-selected') === 'true');
     (selected ?? enabled[0])?.focus();
     // rows() reads the DOM at the moment the menu opens; it isn't a dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, kind, positioned]);
+  }, [open, kind, positioned, initialFocus]);
 
   // A click outside the panel and the trigger closes the menu.
   useEffect(() => {
@@ -230,6 +241,15 @@ export function NlMenu({
       event.preventDefault();
       close(true);
     }
+  };
+
+  // Down from the header (a search field) moves into the rows.
+  const onHeaderKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowDown') return;
+    const first = rows()[0];
+    if (!first) return;
+    event.preventDefault();
+    first.focus();
   };
 
   // Arrow keys (wrapping), Home and End, a letter to jump, Enter or Space to activate, Tab to close (OD-19).
@@ -318,7 +338,11 @@ export function NlMenu({
       data-open={open}
       data-placement={position?.placement}
     >
-      {header !== undefined && <div className={styles.header}>{header}</div>}
+      {header !== undefined && (
+        <div ref={headerRef} className={styles.header} onKeyDown={onHeaderKeyDown}>
+          {header}
+        </div>
+      )}
       <div
         ref={contentRef}
         className={styles.content}
