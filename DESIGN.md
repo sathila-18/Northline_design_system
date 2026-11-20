@@ -356,7 +356,7 @@ _Collection `Alias Spacing & Radius`, group `Spacing`. Values point at `Primitiv
 
 The scale and names match the reference system, so extracted specs (§9) map one to one.
 
-`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 320, 560` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-320` (rich tooltip) and `Size-560` (snackbar, added 20 Nov 2026, OD-91) are maximum widths only, never spacing values, so there are no matching `Space-*` tokens.
+`Primitives.Sizes` holds `Size-0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 36, 40, 48, 56, 64, 80, 96, 120, 320, 560, 720` and `Size-full` (9999). Component sizes (icon, avatar, control heights) use these `Size-*` tokens. `Size-320` (rich tooltip), `Size-560` (snackbar and small dialog, added 20 Nov 2026, OD-91) and `Size-720` (large dialog, added 20 Nov 2026, OD-121) are widths only, never spacing values, so there are no matching `Space-*` tokens.
 
 ### 3.6 Radius
 
@@ -652,7 +652,7 @@ _The designer adds rows here before each build._
 | 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ✅ |
 | 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ✅ |
 | 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ✅ |
-| 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ⬜ |
+| 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ✅ |
 | 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ⬜ |
 | 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ⬜ |
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ⬜ |
@@ -7247,7 +7247,7 @@ import { NlFileUpload } from '@northline/ui';
 
 **Level** Molecule (all parts are atoms) · **Base** none · **Depends on** `NlTextBlock`, `NlButton`, `NlOverlay` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-16, OD-41, OD-115, OD-121, OD-125.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-16, OD-41, OD-115, OD-121, OD-125 and OD-179 to OD-181 decided.
 
 A modal window for a short task or a confirmation ("Delete this reward?").
 
@@ -7271,7 +7271,8 @@ NlOverlay
 | Close button | on (default) or off | `hideClose?` |
 | Buttons | optional | `primaryAction?`, `secondaryAction?`, `startAction?` (each `NlButtonProps`) |
 | Destructive | confirmation of a destructive action | Pass `tone="destructive"` on the primary action |
-| Width | see "Mapping notes" | `size?` |
+| Width | small (default), large | `size?`: `Size-560` or `Size-720` (OD-115, OD-121) |
+| Overlay closes it | on (default) or off | `dismissible?` |
 
 #### Sizes and layout
 
@@ -7306,12 +7307,58 @@ Closed, open. The buttons have their own states.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Width | Raw 696 | No size token is near 696. Proposed: two widths, small and large, from new size tokens (for example 480 and 720), added to §3.5 | **Designer to decide** |
+| Width | Raw 696 | Two widths: small `Size-560` (existing), large `Size-720` (new, §3.5) | Approved (OD-115, OD-121) |
 | Footer | A row of medium buttons, not the button dock | A plain row of `NlButton`s in the dialog, not `NlButtonDock` (which has small buttons and different padding) | Matches |
 | Shadow | None in the reference | None (the overlay separates it) | Matches |
 | Start action | A hidden "leading button" option | `startAction` | Matches |
-| Heading level | Not in the reference | Title as `h2` (`headingAs`) | **Needs approval** |
-| Open motion | Not in the reference | As above | **Needs approval** |
+| Heading level | Not in the reference | Title as `h2` (`headingAs`) | Approved (OD-179) |
+| Open motion | Not in the reference | Fade and scale from 95%, `--nl-duration-slow`; reduced motion: no scale | Approved (OD-125) |
+| Alert dialog | "Use `role=\"alertdialog\"`" | Set automatically when the primary is destructive | Approved (OD-180) |
+| Long content | Not described | Panel stays `Space-3XL` from the window edges; the body scrolls (and takes focus when it does) | Approved (OD-181) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Modal | Native `<dialog>` with `showModal()`: focus kept inside, page inert, Escape (`cancel` → `onOpenChange(false)`), focus back to the opener. The dialog locks page scroll |
+| Overlay | `NlOverlay` inside the dialog, behind the centred panel; a click on it (or around the panel) closes it when `dismissible` |
+| Panel | `Radius-L`, `bg-primary`, `max-w-560` / `max-w-720`, column no taller than the frame, `--nl-z-modal` above the overlay |
+| Header | `NlTextBlock type="headline-large"` title (`headingAs`, default `h2`) + ghost close button (`NlButton` tertiary medium icon-only `close`, `contentTone="secondary"`, "Close"), pulled up `Space-L` and out `Space-2XL` so the icon sits 16 from the top and 16 from the side, and the 48 hit area stays |
+| Body | String → `NlTextBlock type="body"` (Body L, `text-secondary`) and `aria-describedby`; other content as is |
+| Footer | `startAction` (tertiary) · end group `secondaryAction` (secondary) + `primaryAction` (primary, `tone` normal or destructive), all medium, gap `Space-L`, padding `Space-3XL` |
+| First focus | First focusable in the body; else the primary (the secondary when the primary is destructive); else the close button |
+| Motion | Panel `starting:` 95% and transparent → 100%; closing back to 95% before `close()` after `--nl-duration-slow`; overlay fades |
+
+#### API
+
+```tsx
+import { NlDialog } from '@northline/ui';
+
+<NlDialog open={open} onOpenChange={setOpen} title="Delete Reward X?"
+  primaryAction={{ children: 'Delete', tone: 'destructive', onClick: remove }}
+  secondaryAction={{ children: 'Cancel', onClick: () => setOpen(false) }}>
+  Members who saved it lose it. This can't be undone.
+</NlDialog>
+```
+
+`'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`Size-560`, `Size-720` (new); `Radius-L`; `Space-XL`, `Space-3XL`, `Space-L`; `bg-primary`; `--nl-z-modal`, `--nl-duration-slow`, `--nl-ease-standard`; `NlOverlay`, `NlTextBlock`, `NlButton`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Native dialog | The browser's modal handling instead of a hand-made focus trap; it renders in the top layer, so `--nl-z-modal` only orders the panel above the overlay inside it |
+| Scale value | `scale-95` is Tailwind's built-in 95% (no token covers it; approved, OD-125) |
+| Escape | Always closes, also when not `dismissible` (as the spec says) |
+| Close button alignment | Designer's choice, 20 Nov 2026: the icon sits 16 from the top and 16 from the side, not inset by the button's own space (`-mt-l -me-2xl`) |
+| No `max-*-none` | In this theme `none` is the `Space-none` token (0), so `max-h-none` collapses the dialog; it uses `max-*-full` |
+
+Checked open in Chrome: every story in all three brands and both themes with axe (no violations); small 560 and large 720 wide; long content 752 tall, `Space-3XL` (24) from the window edges; first focus as above; Escape closes and returns focus to the opener.
+
 
 ---
 
@@ -8345,3 +8392,4 @@ Known issues
 | 20 Nov 2026 | NlEmptyState (#61, public): centred icon (`NlIconContainer` 48 or 64, or `iconSlot`; none when neither, OD-112, OD-173), `NlTextBlock` heading (default `h2`, OD-172) and description, optional action; `live` for "No results" (OD-174). Approved by the designer |
 | 20 Nov 2026 | NlStatCard (#62, public): `bg-active` card with `NlLabel` (medium, secondary, OD-50) over a Data M value drawn by the card (OD-113); `inList` for `<dt>` / `<dd>` (OD-175); long values wrap (OD-176). Approved by the designer |
 | 20 Nov 2026 | NlFileUpload (#63, public): dashed drop zone for one file (OD-114), large or small; state from the page (enabled, uploading, complete, error) with border, icon and button per state; hidden native input, card click and drop; drag-over (OD-122) and disabled (OD-123) looks; wrong-type drops rejected (OD-178); live announcements and focus return. Icons `cloud_upload` and `refresh` added (OD-124, OD-177). Approved by the designer |
+| 20 Nov 2026 | NlDialog (#64, public): native modal `<dialog>` with `NlOverlay`, small (`Size-560`) or large (new `Size-720`, OD-115, OD-121); `h2` title (OD-179) and ghost close icon 16 from the top and side; Body L text body; medium start, secondary and primary actions; alertdialog with focus on Cancel when the primary is destructive (OD-180); fade and scale from 95% (OD-125); long content scrolls in the body (OD-181). Approved by the designer |
