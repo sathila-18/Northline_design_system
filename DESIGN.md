@@ -664,7 +664,7 @@ _The designer adds rows here before each build._
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
 | 70 | Select | `NlSelect` | `NlInputBase`, `NlMenu`, `NlListItem` | [§9](#nlselect) | ✅ |
-| 71 | Multi select | `NlMultiSelect` | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | [§9](#nlmultiselect) | ⬜ |
+| 71 | Multi select | `NlMultiSelect` | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | [§9](#nlmultiselect) | ✅ |
 | 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ⬜ |
 | 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
 | 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ⬜ |
@@ -2116,6 +2116,8 @@ A panel `<div>` (header, content, footer). Render it right after its trigger, so
 `placement?: 'bottom-start' | 'top-start' | 'end-start' | 'end-end'`, default `bottom-start`. `end-start` opens the menu beside its trigger at the end (right, or left in right-to-left), aligned to its top: the minimized `NlNavItem` (OD-118). `top-start` opens it above the trigger (expanded `NlSideNavUser`); `end-end` beside it at the end, aligned to its bottom (minimized `NlSideNavUser`) (OD-193, 20 Nov 2026). Each flips to the other side when there isn't room; the window margins and the minimum width (the trigger's) work as before.
 
 `returnFocusRef?` (added 20 Nov 2026, `NlSelect` #70): where focus goes back on close when the anchor can't take it (`NlSelect` anchors to the box and returns focus to the field inside).
+
+`initialFocus?: 'rows' | 'header'` (added 20 Nov 2026, `NlMultiSelect` #71, OD-205): `header` puts focus in the header's first field on open (a search); Down from the header moves to the first row.
 
 ---
 
@@ -4412,6 +4414,10 @@ Rendered heights measured in the browser: 26, 33 and 40, the same as `NlChipBase
 | Focus ring | Around the 24 × 24 target, `Radius-XS` (designer's choice, 19 Nov 2026) |
 | Disabled contrast | Under 4.5:1 by design; known issue K5 (accepted by the designer, 19 Nov 2026) |
 
+#### Not removable (added 20 Nov 2026, with `NlMultiSelect` #71, OD-136)
+
+`removable?: boolean`, default `true`. `false` leaves out the remove button, for `NlMultiSelect`'s "+N" chip (same look, no remove button).
+
 ---
 
 ### NlSegment
@@ -5426,6 +5432,10 @@ Checked in the browser: the floating label is centred on the top border and line
 | `boxRef` | A ref to the box, so a menu anchors to the box and not the helper line (OD-200) |
 | Hover contrast | The resting label (`text-placeholder`) on the hover fill (`bg-secondary`) is 4.17:1 in Light: known issue K9, every field |
 
+#### Value overlay (added 20 Nov 2026, with `NlMultiSelect` #71, OD-203)
+
+`valueOverlay` (select type only): content drawn over the value area (`NlMultiSelect`'s chips), one row, gap `Space-XS`, clipped sideways only (`overflow-x: clip`): an xsmall chip with its border (26) is taller than the Body L line (24), so it spills into the box's block padding rather than losing its top and bottom border. The input keeps its value (the chosen labels) for assistive tech and the floating label, with its text `text-transparent` (`inputColour.underOverlay`; the input's text colour moved into the `inputColour` lookup so no list sets it twice). A click on a button inside the box (a chip's remove button) doesn't open the menu.
+
 ---
 
 ### NlTextField
@@ -6390,6 +6400,9 @@ The base's tokens (`NlListItemBase`) and `NlCheckboxControl`'s own; the row ring
 | Checkbox lines up with the title | Designer's choice, 20 Nov 2026: `NlListItemBase accessoryAlign="title"`: content aligned to the top, the accessory slots one title line high (`h-lh` in the title's text style), the box centred in it. Other list items keep `center` |
 | Disabled contrast | Known issue K3; disabled samples are marked |
 
+#### Option mode (added 20 Nov 2026, with `NlMultiSelect` #71, OD-202)
+
+`role="option"`: a row inside a listbox (`NlMultiSelect`'s `NlMenu`). Replaces OD-157's "left out". The row is a `div` with `role="option"`, `aria-selected` (checked), `aria-disabled`, `tabIndex -1`; a click (or `NlMenu`'s Enter and Space) toggles it and calls `onCheckedChange`. The checkbox is drawn by the same `NlCheckboxControl` but `inert` (no focus, hidden from assistive tech), so there's no control nested in the option and the checked, hover and disabled looks are unchanged. The name comes from the row's text.
 
 ---
 
@@ -7999,7 +8012,7 @@ Checked in Chrome: axe clean in every brand and theme, closed and with the menu 
 
 **Level** Organism (contains `NlCheckboxListItem`, a molecule) · **Base** `NlInputBase` (`type="select"`) · **Depends on** `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-42, OD-43, OD-136.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-42, OD-43, OD-136 and OD-202 to OD-206 decided.
 
 A field for choosing several options, shown as chips in the field.
 
@@ -8023,7 +8036,7 @@ NlMultiSelect
 | Value | several options | `value` / `defaultValue` (array), `onValueChange` |
 | Search | off, on (for long lists) | `searchable?` |
 | Error | off, on | `error?` |
-| Everything else | as `NlInputBase` | `label`, `placeholder`, `helperText`, `disabled`, `required`, `name` |
+| Everything else | as `NlInputBase` | `label`, `helperText`, `disabled`, `required`, `name` (no `placeholder`, as `NlSelect`) |
 
 #### Sizes and layout
 
@@ -8048,9 +8061,55 @@ As `NlInputBase`. Complete shows the chips.
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Typing state | Drawn in the field, but the reference's description says code uses a button and puts search in the menu | Search in the menu header (`searchable`) | Matches the description |
-| "+N" overflow chip | Code only, per the reference's description | As above | **Needs approval** |
-| Chip gap | Not given | `Space-XS` | **Needs approval** |
-| Helper text colour | `text-secondary` | Follows OD-43 | **Needs approval** |
+| "+N" overflow chip | Code only, per the reference's description | `NlInputChip removable={false}`, decorative (`aria-hidden`): the field's value already reads every chosen option, so "and N more" isn't announced; a click on it opens the menu (box click) | Approved (OD-136) |
+| Chip gap | Not given | `Space-XS` | Approved (OD-136) |
+| Helper text colour | `text-secondary` | Follows OD-43: `text-tertiary` | Decided (OD-43) |
+| Rows in a listbox | `NlCheckboxListItem` (a label around a checkbox) | `NlCheckboxListItem role="option"`: the row is the option, the checkbox inert | Approved (OD-202) |
+| Chips in the field | Drawn in the value area | `NlInputBase` `valueOverlay`; the field's value is the chosen labels (unseen) | Approved (OD-203) |
+| Search | `NlSearchField` header | Small, hidden label "Search {label}", placeholder "Search"; matches anywhere in the label, ignoring case; "No results" as a small static `NlListItem` in a polite `role="status"` | Approved (OD-204) |
+| Focus with search | Not described | Focus starts in the search; Down moves into the rows (`NlMenu initialFocus="header"`) | Approved (OD-205) |
+| After removing a chip | Not described | Focus to the next chip's remove button, else the previous, else the field | Approved (OD-206) |
+| Long lists, no options, disabled | As `NlSelect` | `maxHeight="320"`; no options: no menu; disabled chips have no remove button (K5 contrast) | As OD-199, OD-201 |
+| Hover contrast | As `NlInputBase` | Known issue K9 | Known issue K9 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Field | `NlInputBase type="select"` combobox (`aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`), value = the chosen labels joined with ", " (unseen under the chips), chevron as `NlSelect` |
+| Chips | `valueOverlay`: `NlInputChip size="xsmall"` per chosen option in option order, gap `Space-XS`, remove buttons "Remove {label}" after the field in Tab order |
+| "+N" | An unseen measuring row holds every chip and a "+N" chip at natural width; the visible row shows as many as fit plus `NlInputChip removable={false} aria-hidden` "+N". Re-measured on resize |
+| Menu | `NlMenu kind="select" multiple` (listbox, `aria-multiselectable`), anchored to the box, `maxHeight="320"`, `returnFocusRef` the field; stays open while choosing; Escape or Tab closes |
+| Rows | `NlCheckboxListItem role="option" size="small" density="compact" divider={false}` |
+| Search | `searchable`: `NlSearchField size="small"` in the header, `initialFocus="header"`; filter, "No results" status; Backspace in an empty search removes the last chip |
+| Value | `value` / `defaultValue` (`string[]`) / `onValueChange`; a hidden `<input name>` per chosen value |
+| Error, disabled, helper, required | As `NlSelect` |
+
+#### API
+
+```tsx
+import { NlMultiSelect } from '@northline/ui';
+
+<NlMultiSelect
+  label="Tiers"
+  name="tiers"
+  options={[
+    { value: 'tier-1', label: 'Tier 1' },
+    { value: 'tier-2', label: 'Tier 2' },
+  ]}
+  defaultValue={['tier-1']}
+  searchable
+  onValueChange={(values) => {}}
+/>
+```
+
+Props: `label`, `options`, `value?`, `defaultValue?`, `onValueChange?`, `searchable?`, `size?`, `error?`, `helperText?`, `disabled?`, `required?`, `name?`, `id?`, `ref?` (the field), `onFocus?`, `onBlur?`, `className?`. `'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`Space-XS` (chip gap); the parts' own: `NlInputBase` (sizes, borders, focus ring, Body L, Label S), `NlInputChip` xsmall (`Space-XS`, `Space-M`, Label S, `Radius-S`), `NlMenu` (`Size-320` max height), `NlCheckboxListItem` small compact, `NlSearchField` small, `NlListItem` small compact; `fg-secondary`, `fg-disabled` (chevron).
+
+Checked in Chrome: axe clean in every brand and theme, closed, hovered and open (all stories), and with "No results", except K9 on hover and K5 on the marked disabled chips; Backspace in an empty search removes the last chip; the "+N" chip appears when chips don't fit.
 
 ---
 
@@ -8648,3 +8707,4 @@ Known issues
 | 20 Nov 2026 | NlNavItem (#68, public): side-nav section as a link or a toggle with `NlNavSubItem` pages (tree line, `Space-XS`, OD-131); `current` page or section (OD-130), worked out from the pages (OD-190); long labels cut with `title` (OD-191); minimized icon-only rows with an `NlTooltip` (OD-189) and pages in an `NlMenu` beside the row (OD-118). `NlMenu` gained `placement`; `NlListItem` menu rows can be links. Approved by the designer |
 | 20 Nov 2026 | NlSideNavUser (#69, public): the signed-in user row on `NlListItemBase appearance="nav"` (OD-119, new) with `NlAvatar` medium (OD-132), Label M name and Body M email (`NlTextBlock type="label-body"`, OD-120, new); opens its own account `NlMenu` from the rows passed in `menu` (OD-192), above it or to the end when minimized (new placements `top-start`, `end-end`, OD-193); named from its text plus a hidden menu label (OD-194); minimized `Space-L` all round with an `NlTooltip` (OD-195); long text cut with `title` (OD-196). Approved by the designer |
 | 20 Nov 2026 | NlSelect (#70, public): `NlInputBase type="select"` (new: read-only combobox field, open look while expanded, box click, `boxRef`) with a chevron, and an `NlMenu kind="select"` of small compact `NlListItem` options under the box (`maxHeight="320"`, new `returnFocusRef`); focus moves into the list (OD-197); type-ahead on the closed field (OD-139); value in a hidden input; `aria-required` (OD-198). OD-139, OD-140, OD-197 to OD-201 decided; K9 accepted. Approved by the designer |
+| 20 Nov 2026 | NlMultiSelect (#71, public): `NlInputBase type="select"` field whose value reads the chosen labels, with `NlInputChip` xsmall chips drawn over it (new `valueOverlay`, clipped sideways only) and a decorative "+N" chip for those that don't fit (new `NlInputChip removable`, OD-136); `NlMenu kind="select" multiple` of `NlCheckboxListItem` option rows (new `role="option"` mode, OD-202) with an optional `NlSearchField` header (new `NlMenu initialFocus`, OD-204, OD-205); focus after a removal (OD-206). OD-136, OD-202 to OD-206 decided. Approved by the designer |

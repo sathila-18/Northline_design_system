@@ -94,4 +94,10 @@ describe('NlInputChip', () => {
     expect(chip).toHaveAttribute('id', 'probe');
     expect(chip.className.split(' ').at(-1)).toBe('nl:ms-xs');
   });
+
+  it('removable={false}: no remove button (the "+N" chip)', () => {
+    render(<NlInputChip removable={false}>+2</NlInputChip>);
+    expect(screen.getByText('+2')).toBeInTheDocument();
+    expect(screen.queryByRole('button')).toBeNull();
+  });
 });

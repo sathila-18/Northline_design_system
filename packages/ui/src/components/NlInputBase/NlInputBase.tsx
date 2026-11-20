@@ -14,6 +14,11 @@ export interface NlInputBaseProps extends Omit<
   type?: ComponentPropsWithRef<'input'>['type'] | 'select';
   /** The box (border and padding), for anchoring a menu to it (NlSelect). */
   boxRef?: Ref<HTMLDivElement>;
+  /**
+   * Select only: content drawn over the value area in place of the value text (NlMultiSelect's chips). The input keeps
+   * its value for assistive tech and the floating label; its text is hidden (OD-203).
+   */
+  valueOverlay?: ReactNode;
   /** The field's name, always shown: in the value position at rest, floating when focused or filled (OD-42). */
   label: string;
   /** Box height, padding and icon size. Default large. */
@@ -67,11 +72,13 @@ export function NlInputBase({
   disabled,
   type,
   boxRef,
+  valueOverlay,
   ref,
   'aria-describedby': describedBy,
   ...rest
 }: NlInputBaseProps) {
   const isSelect = type === 'select';
+  const hasOverlay = isSelect && valueOverlay !== undefined && valueOverlay !== null;
   const inputRef = useRef<HTMLInputElement | null>(null);
   const setInputRef = (node: HTMLInputElement | null) => {
     inputRef.current = node;
@@ -82,6 +89,8 @@ export function NlInputBase({
   const onBoxClick = (event: MouseEvent<HTMLDivElement>) => {
     const input = inputRef.current;
     if (!input || input.disabled || event.target === input) return;
+    // Buttons inside the box (a chip's remove button) do their own thing.
+    if (event.target instanceof Element && event.target.closest('button')) return;
     input.focus();
     input.click();
   };
@@ -119,12 +128,18 @@ export function NlInputBase({
             aria-describedby={[describedBy, helperText ? helperId : undefined].filter(Boolean).join(' ') || undefined}
             className={[
               styles.input,
+              styles.inputColour[hasOverlay ? 'underOverlay' : 'normal'],
               hideLabel ? styles.placeholder : undefined,
               isSelect ? styles.inputSelect : undefined,
             ]
               .filter(Boolean)
               .join(' ')}
           />
+          {hasOverlay && (
+            <span className={styles.valueOverlay} data-slot="value-overlay">
+              {valueOverlay}
+            </span>
+          )}
           <label
             htmlFor={inputId}
             className={hideLabel ? styles.labelHidden : `${styles.label} ${styles.labelFloat[size]}`}

@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #70 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132, OD-139, OD-140 and OD-148 to OD-201 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #71 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132, OD-136, OD-139, OD-140 and OD-148 to OD-206 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -111,7 +111,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | # | Component | Public | Depends on | Used by | Blocked by | Spec | Build |
 |---|---|---|---|---|---|---|---|
 | 70 | `NlSelect` | yes | `NlInputBase`, `NlMenu`, `NlListItem` | – | – | ✅ batch 8 | ✅ |
-| 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | OD-136 | ✅ batch 8 | ⬜ |
+| 71 | `NlMultiSelect` | yes | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | – | – | ✅ batch 8 | ✅ |
 | 72 | `NlDateField` | yes | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | – | OD-137 | ✅ batch 8 | ⬜ |
 | 73 | `NlStepper` | yes | `NlStep` | – | – | ✅ batch 8 | ⬜ |
 | 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ⬜ |
@@ -391,7 +391,7 @@ Decide these before building the components listed under "Affects".
 - OD-164 · `NlSwitchListItem` `body`, `showBody`, `divider` · **Decided** 20 Nov 2026: all three exposed
 - OD-102 · Switch rows: focus ring around the row · **Decided** 20 Nov 2026: ring round the row for control rows (`controlRow`), first used by `NlCheckboxListItem`
 - OD-156 · `NlCheckboxListItem` indeterminate · **Decided** 20 Nov 2026: left out; table components handle it
-- OD-157 · `NlCheckboxListItem` menu mode (`role="option"`) · **Decided** 20 Nov 2026: left out
+- OD-157 · `NlCheckboxListItem` menu mode (`role="option"`) · **Decided** 20 Nov 2026: left out; replaced by OD-202 (added for `NlMultiSelect`)
 - OD-158 · `NlCheckboxListItem` body slot · **Decided** 20 Nov 2026: exposed
 - OD-159 · Group label for checkbox rows · **Decided** 20 Nov 2026: the page provides `role="group"` with a name
 
@@ -501,7 +501,12 @@ Decide these before building the components listed under "Affects".
 - OD-201 · No options: the menu doesn't open · **Decided** 20 Nov 2026: approved
 
 **NlMultiSelect**
-- OD-136 · "+N" overflow chip, chips `Space-XS` apart · Open
+- OD-136 · "+N" overflow chip, chips `Space-XS` apart · **Decided** 20 Nov 2026: approved; "+N" is `NlInputChip removable={false}`, decorative
+- OD-202 · Rows: `NlCheckboxListItem role="option"` (checkbox inert); replaces OD-157 · **Decided** 20 Nov 2026: approved
+- OD-203 · Chips over the field (`NlInputBase` `valueOverlay`); the field's value is the chosen labels · **Decided** 20 Nov 2026: approved
+- OD-204 · Search: small, "Search {label}", contains match, "No results" status row · **Decided** 20 Nov 2026: approved
+- OD-205 · Focus starts in the search; Down into the rows (`NlMenu initialFocus`) · **Decided** 20 Nov 2026: approved
+- OD-206 · Focus after removing a chip: next, previous, then the field · **Decided** 20 Nov 2026: approved
 
 **NlDateField**
 - OD-31: see section 2 (calendar button size)
