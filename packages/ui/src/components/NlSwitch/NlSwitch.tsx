@@ -17,6 +17,8 @@ interface NlSwitchBaseProps extends Omit<
   onCheckedChange?: (checked: boolean) => void;
   /** Track and handle size. Default large (OD-13d). */
   size?: NlSwitchSize;
+  /** Inside a list row (NlListItemBase `controlRow`): the row draws the focus ring. */
+  inRow?: boolean;
 }
 
 /** An accessible name is required: either aria-label, or the id of a visible label. */
@@ -34,6 +36,7 @@ export function NlSwitch({
   defaultChecked = false,
   onCheckedChange,
   size = 'large',
+  inRow = false,
   onClick,
   className,
   ...rest
@@ -49,7 +52,9 @@ export function NlSwitch({
     onCheckedChange?.(!on);
   };
 
-  const classes = [styles.track, styles.trackSize[size], className].filter(Boolean).join(' ');
+  const classes = [inRow ? styles.trackInRow : styles.track, styles.trackSize[size], className]
+    .filter(Boolean)
+    .join(' ');
   const handleClasses = [styles.handle, styles.handleSize[size]].join(' ');
 
   return (
