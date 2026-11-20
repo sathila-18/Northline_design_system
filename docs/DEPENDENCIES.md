@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #64 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-115, OD-121 to OD-125 and OD-148 to OD-181 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #65 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-115, OD-121 to OD-128 and OD-148 to OD-183 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -100,7 +100,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 62 | `NlStatCard` | yes | `NlLabel` | – | – | ✅ batch 7 | ✅ |
 | 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | – | ✅ batch 7 | ✅ |
 | 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | – | ✅ batch 7 | ✅ |
-| 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
+| 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | OD-116 | ✅ batch 7 | ⬜ |
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | OD-117 | ✅ batch 7 | ⬜ |
 | 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon` (`NlMenu` if OD-118 is approved) | `NlSideNav` | OD-118 | ✅ batch 7 | ⬜ |
@@ -454,9 +454,11 @@ Decide these before building the components listed under "Affects".
 - OD-181 · Long content: panel `Space-3XL` from the edges, body scrolls · **Decided** 20 Nov 2026: approved
 
 **NlPagination**
-- OD-126 · Previous at page 1 uses the real disabled state (the reference draws it enabled with a grey icon) · Open
-- OD-127 · `siblingCount` 1 (first, last, current ±1) · Open
-- OD-128 · Icons `chevron_left`, `chevron_right` · Open
+- OD-126 · Previous at page 1 uses the real disabled state (the reference draws it enabled with a grey icon) · **Decided** 20 Nov 2026: approved
+- OD-127 · `siblingCount` 1 (first, last, current ±1) · **Decided** 20 Nov 2026: approved
+- OD-128 · Icons `chevron_left`, `chevron_right` · **Decided** 20 Nov 2026: approved
+- OD-182 · No gaps that save nothing (one hidden page, or every page fits) · **Decided** 20 Nov 2026: approved
+- OD-183 · Out-of-range page clamped · **Decided** 20 Nov 2026: approved
 
 **NlTableHeaderCell**
 - OD-116 · Sort and filter controls are plain native buttons inside the cell, not `NlButton` · Open
