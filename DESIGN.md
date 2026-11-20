@@ -656,7 +656,7 @@ _The designer adds rows here before each build._
 | 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ✅ |
 | 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ✅ |
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ✅ |
-| 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon` | [§9](#nlnavitem) | ⬜ |
+| 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | [§9](#nlnavitem) | ✅ |
 | 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ⬜ |
 
 ### 8.4 Organisms
@@ -2111,7 +2111,12 @@ A panel `<div>` (header, content, footer). Render it right after its trigger, so
 | Hidden until positioned | The panel is invisible until its first position is measured, so it never flashes at the window corner. Focus moves in after that, because hidden elements can't take focus |
 | Closed | Stays in the page with `display: none` (like `NlOverlay`), so it fades out as well as in |
 
+#### Placement (added 20 Nov 2026)
+
+`placement?: 'bottom-start' | 'end-start'`, default `bottom-start`. `end-start` opens the menu beside its trigger at the end (right, or left in right-to-left), aligned to its top: the minimized `NlNavItem` (OD-118). Flipping and the window margins work as before.
+
 ---
+
 
 ### NlChipGroup
 
@@ -6267,8 +6272,12 @@ The base's tokens (`NlListItemBase`), plus `NlIcon`, `NlAvatar` and `NlListCapti
 | Chevron without `onClick` | Still a focusable button; the page adds the handler |
 | Disabled contrast | `text-disabled` text: known issue K3; disabled samples are marked |
 
+#### Menu links (added 20 Nov 2026)
+
+With `role` and `href`, the row is an `<a role="menuitem">` (or `as`), for navigation menus (`NlNavItem` minimized). Without `href` it stays a `<div>`.
 
 ---
+
 
 ### NlCheckboxListItem
 
@@ -7663,9 +7672,9 @@ import { NlTableCell } from '@northline/ui';
 
 ### NlNavItem
 
-**Level** Molecule (contains `NlNavIcon`, L1) · **Base** none · **Depends on** `NlNavIcon`, `NlNavSubItem`, `NlIcon` · **Public** (used by `NlSideNav`)
+**Level** Molecule (contains `NlNavIcon`, L1) · **Base** none · **Depends on** `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` (minimized) · **Public** (used by `NlSideNav`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-118, OD-130, OD-131.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-118, OD-130, OD-131 and OD-189 to OD-191 decided.
 
 A section in the side nav: an icon and name, which either links to a page or expands to show its pages.
 
@@ -7726,11 +7735,43 @@ Default, hover, pressed, focus, current (page or section), expanded.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| State names | "Selected - BG" (white row) and "Selected" (grey row) | `current="page"` and `current="section"` | **Needs approval** |
-| Pages gap | `Space-XS` in one variant, `Space-M` in another | `Space-XS` (as the reference's description says) | **Needs approval** |
-| Minimized with pages | Not drawn | Pages in an `NlMenu` (`kind="navigation"`) to the right of the nav | **Needs approval** |
+| State names | "Selected - BG" (white row) and "Selected" (grey row) | `current="page"` and `current="section"` | Approved (OD-130) |
+| Pages gap | `Space-XS` in one variant, `Space-M` in another | `Space-XS` (as the reference's description says) | Approved (OD-131) |
+| Minimized with pages | Not drawn | Pages in an `NlMenu` (`kind="navigation"`, new `placement="end-start"`) beside the row; rows are `NlListItem role="menuitem"` links | Approved (OD-118) |
 | Tree line position | Raw 21–22 from the start | `Space-L` + half `Size-20` = the icon centre | Resolves OD-30a |
 | Pressed `bg-neutral` | Same as `bg-tertiary` in Light today | Kept; hover and pressed look the same in Light (K1) | Known issue K1 |
+| Minimized label | "Shows in a tooltip" | `NlTooltip placement="end"`; it describes the row, so a screen reader hears the name twice | Approved (OD-189) |
+| Current section from pages | Not described | A current page makes the row `current="section"` and opens it, unless `current` or `expanded` is passed | Approved (OD-190) |
+| Long labels | Not described | One line, ellipsis, `title` when cut (as `NlNavSubItem`) | Approved (OD-191) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Row | Without pages: link (`href`, `as`), `aria-current="page"` when current. With pages: `<button aria-expanded aria-controls>`; minimized: a menu trigger (`aria-haspopup="menu"`) |
+| Layout | `Space-M` block, `Space-L` inline, `Radius-M`, gap `Space-L`, full width; `NlNavIcon` 20 (filled when current), Label M label, 20 chevron |
+| Colours | `state.default` / `page` / `section` lookups per the table; chevron `fg-secondary` or `fg-active` |
+| Pages | `<ul>` `Space-XS` below and apart; `NlNavSubItem` with `tree` `middle` and `last` |
+| Expanded | `expanded` / `defaultExpanded` (default: a page is current) / `onExpandedChange` |
+| Minimized | Icon only (44 × 36), name in `sr-only` and an `NlTooltip` to the end; pages in `NlMenu kind="navigation" placement="end-start"` with `NlListItem role="menuitem" href` rows (small, compact, no divider) |
+
+#### API
+
+```tsx
+import { NlNavItem } from '@northline/ui';
+
+<NlNavItem icon="person" href="/members" current="page">Members</NlNavItem>
+<NlNavItem icon="check_circle" pages={[{ label: 'All rewards', href: '/rewards', current: true }]}>Rewards</NlNavItem>
+```
+
+`'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`Space-M`, `Space-L`, `Space-XS`, `Radius-M`, `Size-20`; `bg-secondary`, `bg-tertiary`, `bg-neutral`, `bg-primary`; `text-secondary`, `text-action`; `fg-secondary`, `fg-active`; Label M; `--nl-duration-fast`; the parts' own.
+
+Checked in Chrome: minimized tooltip on focus, the pages menu opening beside its row with focus on the first page; axe clean with the menu open in every brand and theme.
+
 
 ---
 
@@ -8497,3 +8538,4 @@ Known issues
 | 20 Nov 2026 | NlPagination (#65, public): named `<nav>` list with secondary xsmall previous and next (real disabled at the ends, OD-126; chevrons, OD-128) and `NlPaginationItem` pages; first, last, current ±`siblingCount` (default 1, OD-127) with "…" only where it saves space (OD-182); page clamped (OD-183); focus follows the change. Approved by the designer |
 | 20 Nov 2026 | NlTableHeaderCell (#66, public): `<th scope="col">`, plain or grey, narrow; sort as a plain native button (title + icon, `aria-sort`, OD-116, OD-129); filter button "Filter {column}" (", applied" when applied, OD-185) with `filterRef`; select all; sort announcement left to `NlTable` (OD-184); K8 accepted. Approved by the designer |
 | 20 Nov 2026 | NlTableCell (#67, public): `<td>` or row header `<th>`; text (one line, `title` when cut, OD-186), small badge, flush xsmall link (OD-117), row-actions menu button in a `Size-64` column, value checkbox, leading row-select checkbox; typed props per type (OD-188); `stickyEnd` (OD-187). Approved by the designer |
+| 20 Nov 2026 | NlNavItem (#68, public): side-nav section as a link or a toggle with `NlNavSubItem` pages (tree line, `Space-XS`, OD-131); `current` page or section (OD-130), worked out from the pages (OD-190); long labels cut with `title` (OD-191); minimized icon-only rows with an `NlTooltip` (OD-189) and pages in an `NlMenu` beside the row (OD-118). `NlMenu` gained `placement`; `NlListItem` menu rows can be links. Approved by the designer |

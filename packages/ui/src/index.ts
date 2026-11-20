@@ -43,5 +43,6 @@ export * from './components/NlDialog';
 export * from './components/NlPagination';
 export * from './components/NlTableHeaderCell';
 export * from './components/NlTableCell';
+export * from './components/NlNavItem';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

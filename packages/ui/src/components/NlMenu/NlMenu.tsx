@@ -17,6 +17,9 @@ import * as styles from './NlMenu.styles';
 
 export type NlMenuKind = 'action' | 'select' | 'filter' | 'navigation';
 
+/** Where the menu opens: below the trigger (default), or beside it at the end, aligned to its top (minimized nav). */
+export type NlMenuPlacement = 'bottom-start' | 'end-start';
+
 /** Size-* token names, for maxHeight (OD-20). */
 export type NlMenuMaxHeight = '24' | '32' | '36' | '40' | '48' | '56' | '64' | '80' | '96' | '120' | '320';
 
@@ -42,6 +45,8 @@ interface NlMenuBaseProps extends Omit<
   footer?: ReactNode;
   /** Optional maximum height, as a Size-* token name. The menu never grows past the window either way. */
   maxHeight?: NlMenuMaxHeight;
+  /** bottom-start (default): below the trigger. end-start: beside it, at the end (OD-118). */
+  placement?: NlMenuPlacement;
 }
 
 /** An accessible name is required: aria-label, or the id of a visible label (usually the trigger). */
@@ -106,6 +111,7 @@ export function NlMenu({
   header,
   footer,
   maxHeight,
+  placement = 'bottom-start',
   id,
   className,
   style,
@@ -135,7 +141,12 @@ export function NlMenu({
     const update = () => {
       void computePosition(anchor, panel, {
         strategy: 'fixed',
-        placement: 'bottom-start',
+        placement:
+          placement === 'end-start'
+            ? getComputedStyle(anchor).direction === 'rtl'
+              ? 'left-start'
+              : 'right-start'
+            : 'bottom-start',
         middleware: [
           offset(gap),
           flip({ padding: edge }),
@@ -158,7 +169,7 @@ export function NlMenu({
       stop();
       setPosition(null);
     };
-  }, [open, anchorRef]);
+  }, [open, anchorRef, placement]);
 
   // Focus on open: the selected row (select), the first row (action, navigation), the first field (filter).
   // Waits for the first position: until then the panel is visibility hidden, and hidden elements can't take focus.
