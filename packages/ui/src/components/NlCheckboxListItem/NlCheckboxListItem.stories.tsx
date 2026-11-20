@@ -16,6 +16,7 @@ const meta = {
     size: 'large',
     density: 'default',
     divider: true,
+    showBody: true,
     disabled: false,
     defaultChecked: false,
   },
@@ -27,6 +28,7 @@ const meta = {
     size: { control: 'inline-radio', options: ['large', 'small'] },
     density: { control: 'inline-radio', options: ['default', 'compact'] },
     body: { control: false },
+    showBody: { control: 'boolean' },
     checked: { control: false },
   },
   decorators: [
@@ -124,7 +126,7 @@ export const SizesAndDensity: Story = {
   ),
 };
 
-/** Body in place of the description (OD-158). */
+/** Body in place of the description; showBody turns it (or the description) off (OD-158). */
 export const Body: Story = {
   render: (args) => <NlCheckboxListItem {...args} title="Reward X" body={<NlBadge tone="success">Active</NlBadge>} />,
 };

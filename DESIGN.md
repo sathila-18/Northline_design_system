@@ -642,7 +642,7 @@ _The designer adds rows here before each build._
 | 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ✅ |
 | 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ✅ |
 | 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ✅ |
-| 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ⬜ |
+| 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ✅ |
 | 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ⬜ |
 | 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
 | 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ⬜ |
@@ -6286,6 +6286,7 @@ As `NlListItemBase`, with `NlCheckboxControl` in the leading slot (default) or t
 | Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
 | Description | on or off | `description?` |
 | Body | optional, in place of the description | `body?` (OD-158) |
+| Show body | on (default) or off: hides the description or body | `showBody?: boolean` (designer's choice, 20 Nov 2026) |
 | Divider | on (default) or off | `divider?` |
 | Disabled | on or off | `disabled?` |
 | Value | for forms and menus | `value` |
@@ -6358,7 +6359,7 @@ The base's tokens (`NlListItemBase`) and `NlCheckboxControl`'s own; the row ring
 
 **Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlRadio` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-100, OD-101, OD-102.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-100, OD-101, OD-102 and OD-160 to OD-162 decided.
 
 A list row with a radio, for picking exactly one item from a short list.
 
@@ -6370,10 +6371,13 @@ As `NlListItemBase`, with `NlRadio` in the leading slot (default) or the trailin
 
 | Option | Values | Prop |
 |---|---|---|
-| Selected | set by the group | `value`; the group holds the selected value |
+| Selected | set by the group | `value`; `NlRadioListGroup` holds the selected value |
 | Radio side | leading (default), trailing | `controlSide` |
 | Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
 | Description | on or off | `description?` |
+| Body | optional, in place of the description | `body?` |
+| Show body | on (default) or off: hides the description or body | `showBody?: boolean` (designer's choice, 20 Nov 2026) |
+| Divider | on (default) or off | `divider?` |
 | Disabled | on or off | `disabled?` |
 
 #### Sizes, layout and colours
@@ -6388,14 +6392,53 @@ Default, hover, selected, selected + hover, focus, disabled.
 
 - Rows sit in a radio group (`role="radiogroup"` with a name) that owns the value.
 - Keyboard: one tab stop; arrow keys move and select (native radio behaviour). Focus ring around the row.
-- Inside a single-select `NlMenu`, rows become `role="option"` instead.
+- No menu mode (OD-161): single-select menus use `NlListItem role="option"`.
 
 #### Mapping notes
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Types | Default, country, payment | Default only | Matches |
-| Group wrapper | Not a separate component in the reference | The group is a plain `role="radiogroup"` container, written in place by the caller, or provided as `NlRadioListItem.Group` | **Needs approval** |
+| Group wrapper | Not a separate component in the reference | `NlRadioListGroup`, a separate export (a `.Group` property breaks across the Next.js client boundary) | Approved (OD-101) |
+| Group layout | Not described | The group passes `appearance` to its rows; plain rows touch, filled cards `Space-L` apart | Approved (OD-160) |
+| Group label | Not described | The page's; the group needs `aria-label` or `aria-labelledby` | Approved (OD-162) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Group | `NlRadioListGroup`: `role="radiogroup"`, `value` / `defaultValue` / `onValueChange`, `name` (default from `useId`), `disabled` (all rows, `aria-disabled`), `appearance`; flex column, gap `Space-none` (plain) or `Space-L` (filled) |
+| Row | `NlListItemBase as="label"`, `actionable`, `controlRow`, `accessoryAlign="title"`; `selected` when its `value` matches the group's; `data-checked`, `data-control-side` |
+| Radio | `NlRadio inRow` (controlled from the group) in the `controlSide` slot |
+| Name | The label's text: title, then description or body |
+| Keyboard | Native radios: one Tab stop, arrows move and select, disabled rows skipped |
+| Outside a group | Throws |
+
+#### API
+
+```tsx
+import { NlRadioListGroup, NlRadioListItem } from '@northline/ui';
+
+<NlRadioListGroup aria-label="Tier" defaultValue="tier-2" onValueChange={setTier}>
+  <NlRadioListItem value="tier-1" title="Tier 1" description="3,400 members" />
+  <NlRadioListItem value="tier-2" title="Tier 2" description="1,200 members" />
+</NlRadioListGroup>
+```
+
+`'use client'` (group state and context).
+
+#### Tokens used
+
+The base's tokens (`NlListItemBase`) and `NlRadio`'s own; `Space-none` and `Space-L` (group gap).
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Ring and hover (OD-100, OD-102) | As `NlCheckboxListItem`: `NlRadio inRow` drops its own ring and follows the row's `list-item` group |
+| Title alignment | The radio sits on the title's first line, as the checkbox rows |
+| Disabled contrast | Known issue K3; disabled samples are marked |
+
 | Focus ring on the row | As for checkbox rows | Same | Matches |
 
 ---
@@ -8039,3 +8082,4 @@ Known issues
 | 20 Nov 2026 | NlListItemBase (#52, internal): shared list row, plain (divider) or filled (card), large or small, default or compact; leading and trailing accessories take any component; top label (`NlLabel` small, OD-149), extra icon 8 from the title (OD-150); hover and pressed only when actionable (OD-97, OD-151); divider stays `border-default` (OD-148); `as` for the mapped item's element. Approved by the designer |
 | 20 Nov 2026 | NlListItem (#53, public): standard row on `NlListItemBase`; leading icon or avatar (medium), trailing `NlListCaption` and chevron; link, button, menu row or static; a chevron makes the whole row clickable (filled always); static rows no hover or focus (OD-98); `aria-current` from the page (OD-152); disabled per element (OD-153); `divider` and `body` exposed (OD-154, OD-155); name from the row's text (WCAG 2.5.3). Approved by the designer |
 | 20 Nov 2026 | NlCheckboxListItem (#54, public): `<label>` row on `NlListItemBase` around `NlCheckboxControl`, leading or trailing; checked rows take the selected colours; ring round the row and box hover following the row (OD-100, OD-102: `controlRow`, `inRow`); checkbox on the title's first line (`accessoryAlign="title"`); no indeterminate or menu mode (OD-156, OD-157); `body` exposed (OD-158); group label from the page (OD-159). Approved by the designer |
+| 20 Nov 2026 | NlRadioListItem (#55, public): `<label>` row on `NlListItemBase` around `NlRadio inRow`, inside `NlRadioListGroup` (`role="radiogroup"`, value, name, disabled, appearance; OD-101, OD-160); native arrow keys; ring round the row, radio on the title line; no menu mode (OD-161); group label from the page (OD-162). `showBody` added to it and to `NlCheckboxListItem`. Approved by the designer |

@@ -29,3 +29,17 @@ export const ring =
  */
 export const dot =
   'nl:pointer-events-none nl:absolute nl:size-12 nl:rounded-full nl:bg-fg-action nl:opacity-0 nl:group-has-checked/radio:opacity-100 nl:group-hover/radio:bg-fg-hovered nl:group-active/radio:bg-fg-pressed nl:group-has-disabled/radio:bg-fg-disabled nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+
+/**
+ * In a list row (`inRow`, OD-100, OD-102): no focus ring of its own (the row draws it), and the ring and dot take
+ * their hover and pressed looks from the row's named group "list-item" (NlListItemBase `controlRow`). The row only
+ * carries that group while enabled.
+ */
+export const rootInRow =
+  'nl:group/radio nl:relative nl:inline-flex nl:size-24 nl:shrink-0 nl:items-center nl:justify-center nl:rounded-full nl:has-disabled:pointer-events-none';
+
+export const ringInRow =
+  'nl:pointer-events-none nl:size-20 nl:rounded-full nl:border-2 nl:border-strong nl:group-hover/list-item:border-hovered nl:group-hover/list-item:bg-active nl:group-active/list-item:border-pressed nl:group-active/list-item:bg-active-hover nl:group-has-disabled/radio:border-fg-disabled nl:group-has-checked/radio:border-fg-action nl:group-has-checked/radio:group-hover/list-item:border-fg-hovered nl:group-has-checked/radio:group-hover/list-item:bg-transparent nl:group-has-checked/radio:group-active/list-item:border-fg-pressed nl:group-has-checked/radio:group-active/list-item:bg-transparent nl:group-has-checked/radio:group-has-disabled/radio:border-fg-disabled nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+
+export const dotInRow =
+  'nl:pointer-events-none nl:absolute nl:size-12 nl:rounded-full nl:bg-fg-action nl:opacity-0 nl:group-has-checked/radio:opacity-100 nl:group-hover/list-item:bg-fg-hovered nl:group-active/list-item:bg-fg-pressed nl:group-has-disabled/radio:bg-fg-disabled nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
