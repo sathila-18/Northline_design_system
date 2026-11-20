@@ -51,6 +51,13 @@ interface NlMenuBaseProps extends Omit<
    * search; Down then moves into the rows) (NlMultiSelect, OD-205).
    */
   initialFocus?: 'rows' | 'header';
+  /**
+   * A selector for the element to focus on open, inside the panel, before the usual order (NlDateField: the
+   * calendar's tab-stop day, OD-208). Falls back to the usual order when nothing matches.
+   */
+  initialFocusSelector?: string;
+  /** At least as wide as the trigger (default). false: as wide as its content (NlDateField's calendar, OD-207). */
+  matchAnchorWidth?: boolean;
   /** Optional slot that stays at the bottom, for example two buttons. Laid out in a row, aligned to the end. */
   footer?: ReactNode;
   /** Optional maximum height, as a Size-* token name. The menu never grows past the window either way. */
@@ -139,6 +146,8 @@ export function NlMenu({
   children,
   header,
   initialFocus = 'rows',
+  initialFocusSelector,
+  matchAnchorWidth = true,
   footer,
   maxHeight,
   placement = 'bottom-start',
@@ -180,7 +189,10 @@ export function NlMenu({
           size({
             padding: edge,
             apply({ availableWidth, availableHeight, rects }) {
-              panel.style.setProperty('--nl-menu-min-width', `${String(rects.reference.width)}px`);
+              panel.style.setProperty(
+                '--nl-menu-min-width',
+                matchAnchorWidth ? `${String(rects.reference.width)}px` : 'auto',
+              );
               panel.style.setProperty('--nl-menu-available-width', `${String(Math.max(0, availableWidth))}px`);
               panel.style.setProperty('--nl-menu-available-height', `${String(Math.max(0, availableHeight))}px`);
             },
@@ -195,13 +207,20 @@ export function NlMenu({
       stop();
       setPosition(null);
     };
-  }, [open, anchorRef, placement]);
+  }, [open, anchorRef, placement, matchAnchorWidth]);
 
   // Focus on open: the selected row (select), the first row (action, navigation), the first field (filter).
   // Waits for the first position: until then the panel is visibility hidden, and hidden elements can't take focus.
   const positioned = position !== null;
   useEffect(() => {
     if (!open || !positioned) return;
+    if (initialFocusSelector !== undefined) {
+      const target = panelRef.current?.querySelector<HTMLElement>(initialFocusSelector);
+      if (target) {
+        target.focus();
+        return;
+      }
+    }
     if (kind === 'filter') {
       panelRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
       return;
@@ -215,7 +234,7 @@ export function NlMenu({
     (selected ?? enabled[0])?.focus();
     // rows() reads the DOM at the moment the menu opens; it isn't a dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, kind, positioned, initialFocus]);
+  }, [open, kind, positioned, initialFocus, initialFocusSelector]);
 
   // A click outside the panel and the trigger closes the menu.
   useEffect(() => {

@@ -665,7 +665,7 @@ _The designer adds rows here before each build._
 |---|---|---|---|---|---|
 | 70 | Select | `NlSelect` | `NlInputBase`, `NlMenu`, `NlListItem` | [§9](#nlselect) | ✅ |
 | 71 | Multi select | `NlMultiSelect` | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | [§9](#nlmultiselect) | ✅ |
-| 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ⬜ |
+| 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ✅ |
 | 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
 | 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ⬜ |
 | 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ⬜ |
@@ -2118,6 +2118,8 @@ A panel `<div>` (header, content, footer). Render it right after its trigger, so
 `returnFocusRef?` (added 20 Nov 2026, `NlSelect` #70): where focus goes back on close when the anchor can't take it (`NlSelect` anchors to the box and returns focus to the field inside).
 
 `initialFocus?: 'rows' | 'header'` (added 20 Nov 2026, `NlMultiSelect` #71, OD-205): `header` puts focus in the header's first field on open (a search); Down from the header moves to the first row.
+
+`initialFocusSelector?: string` and `matchAnchorWidth?: boolean` (added 20 Nov 2026, `NlDateField` #72, OD-207, OD-208): a selector for the element to focus on open (falls back to the usual order), and `false` to size the menu to its content instead of at least the trigger's width.
 
 ---
 
@@ -5436,6 +5438,10 @@ Checked in the browser: the floating label is centred on the top border and line
 
 `valueOverlay` (select type only): content drawn over the value area (`NlMultiSelect`'s chips), one row, gap `Space-XS`, clipped sideways only (`overflow-x: clip`): an xsmall chip with its border (26) is taller than the Body L line (24), so it spills into the box's block padding rather than losing its top and bottom border. The input keeps its value (the chosen labels) for assistive tech and the floating label, with its text `text-transparent` (`inputColour.underOverlay`; the input's text colour moved into the `inputColour` lookup so no list sets it twice). A click on a button inside the box (a chip's remove button) doesn't open the menu.
 
+#### Format hint (added 20 Nov 2026, with `NlDateField` #72, OD-209)
+
+`formatHint` (a pattern such as "DD/MM/YYYY", with a controlled string `value`): a layer over the value area, Body L `text-placeholder` on one line, shown only while the input has focus (`peer-focus/input:visible`). It draws the typed text unseen (for its width), then the rest of the pattern ("01/0" + "M/YYYY"). Hidden from assistive tech; clicks pass through. At rest the label sits in the value position as usual (OD-42).
+
 ---
 
 ### NlTextField
@@ -8117,7 +8123,7 @@ Checked in Chrome: axe clean in every brand and theme, closed, hovered and open 
 
 **Level** Organism (contains `NlCalendar`, a molecule) · **Base** `NlInputBase` · **Depends on** `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-137, OD-141. OD-31 decided 19 Nov 2026 (xsmall calendar button).
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-31 (xsmall calendar button), OD-43, OD-137, OD-141 and OD-207 to OD-211 decided.
 
 A date input that accepts typing and opens a calendar.
 
@@ -8163,12 +8169,55 @@ As `NlInputBase`: enabled, hover, focused, typing, complete, disabled, each with
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Date format | Day/month/year with slashes | `format` prop, default `DD/MM/YYYY`. Locale-aware formats are left for later; no locale formatting during render (§7.4) | **Needs approval** |
+| Date format | Day/month/year with slashes | `format` prop, default `DD/MM/YYYY`: `DD`, `MM`, `YYYY` once each in any order, one separator. Locale-aware formats are left for later; no locale formatting during render (§7.4) | Approved (OD-137) |
 | Placeholder visible while focused | As in the reference | Same | Matches |
 | Mask, caret, keyboard, limits | Code only, per the reference's description | As above | Matches |
 | Calendar in a menu | From the reference's description | `NlMenu` holding `NlCalendar` | Matches |
-| Helper text colour | `text-tertiary` here | Follows OD-43 | **Needs approval** |
-| Small size | Not in the reference | Not specified | Open |
+| Helper text colour | `text-tertiary` here | Follows OD-43: `text-tertiary` | Decided (OD-43) |
+| Small size | Not in the reference | Left out: large only, no `size` prop | Approved (OD-141) |
+| Menu width | As wide as the calendar | `NlMenu matchAnchorWidth={false}` | Approved (OD-207) |
+| Focus on open | Not described | The calendar's tab-stop day (the chosen date, else today), through `NlMenu initialFocusSelector` | Approved (OD-208) |
+| Pattern while focused | Visible while focused, unlike other fields (hint text was removed from the other fields 19 Nov 2026) | Kept: `NlInputBase formatHint`, only while focused; the label sits in the field at rest | Approved (OD-209) |
+| Escape | Not described | Closes and returns focus to the input, as choosing does | Approved (OD-210) |
+| Value reported, form value | Not described | `onValueChange` gets the ISO date when complete and real, else `''`; a hidden input with `name` submits the ISO date | Approved (OD-211) |
+| Hover contrast | As `NlInputBase` | Known issue K9 | Known issue K9 |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Field | `NlInputBase` (large), `<input type="text" inputMode="numeric" autoComplete="off">` with a digit mask: separators added once the next part starts ("010" → "01/0"), at most 8 digits, the caret kept after the same digits (`dateFormat.ts`) |
+| Format | `format` (default `DD/MM/YYYY`), parsed by `parsePattern`; a hidden "Format: {pattern}" joins `aria-describedby` |
+| Pattern hint | `formatHint={pattern}` on the base: shown while focused, after the typed text |
+| Value | `value` / `defaultValue` (ISO) / `onValueChange`; a hidden `<input name>` with the ISO date |
+| Errors | "Enter a date as {pattern}", "Choose a date from {min}", "Choose a date until {max}" (dates in the pattern); shown once the date is complete, or after blur; they replace `helperText` and set `error` |
+| Calendar button | `NlButton variant="tertiary" icon="only-icon" contentTone="secondary" size="xsmall" iconName="calendar_today"` in the trailing slot; "Choose date" / "Change date, {date}"; `nlMenuTriggerProps({ kind: 'filter' })` (`aria-haspopup="dialog"`, `aria-expanded`, `aria-controls`) |
+| Menu | `NlMenu kind="filter"` (dialog) "Choose date", anchored to the box, `matchAnchorWidth={false}`, focus on the calendar's tab-stop day, focus back to the input |
+| Calendar | `NlCalendar mode="single"`, value = the typed date, `minDate` / `maxDate`; remounted on each open so it shows the typed date's month (or today's) |
+| Disabled, required | As `NlInputBase`; the button is disabled too; `required` is native |
+
+#### API
+
+```tsx
+import { NlDateField } from '@northline/ui';
+
+<NlDateField
+  label="Start date"
+  name="start"
+  defaultValue="2026-11-21"
+  minDate="2026-11-10"
+  maxDate="2026-12-15"
+  onValueChange={(iso) => {}}
+/>
+```
+
+Props: `label`, `value?`, `defaultValue?`, `onValueChange?`, `format?`, `minDate?`, `maxDate?`, `error?`, `helperText?`, `disabled?`, `required?`, `name?`, `id?`, `ref?` (the input), `onFocus?`, `onBlur?`, `className?`. `'use client'` (state, refs).
+
+#### Tokens used
+
+The parts' own: `NlInputBase` (large: `Size-48`, `Space-L`, `Space-XL`, `Radius-M`, borders, focus ring, Body L, Label S, `text-placeholder` for the hint), `NlButton` xsmall tertiary, `NlMenu` (`Space-XS`), `NlCalendar`.
+
+Checked in Chrome: axe clean in every brand and theme, closed, hovered, typing (hint shown) and with the calendar open, except K9 on hover; focus starts on the chosen day; Escape returns focus to the input.
 
 ---
 
@@ -8708,3 +8757,4 @@ Known issues
 | 20 Nov 2026 | NlSideNavUser (#69, public): the signed-in user row on `NlListItemBase appearance="nav"` (OD-119, new) with `NlAvatar` medium (OD-132), Label M name and Body M email (`NlTextBlock type="label-body"`, OD-120, new); opens its own account `NlMenu` from the rows passed in `menu` (OD-192), above it or to the end when minimized (new placements `top-start`, `end-end`, OD-193); named from its text plus a hidden menu label (OD-194); minimized `Space-L` all round with an `NlTooltip` (OD-195); long text cut with `title` (OD-196). Approved by the designer |
 | 20 Nov 2026 | NlSelect (#70, public): `NlInputBase type="select"` (new: read-only combobox field, open look while expanded, box click, `boxRef`) with a chevron, and an `NlMenu kind="select"` of small compact `NlListItem` options under the box (`maxHeight="320"`, new `returnFocusRef`); focus moves into the list (OD-197); type-ahead on the closed field (OD-139); value in a hidden input; `aria-required` (OD-198). OD-139, OD-140, OD-197 to OD-201 decided; K9 accepted. Approved by the designer |
 | 20 Nov 2026 | NlMultiSelect (#71, public): `NlInputBase type="select"` field whose value reads the chosen labels, with `NlInputChip` xsmall chips drawn over it (new `valueOverlay`, clipped sideways only) and a decorative "+N" chip for those that don't fit (new `NlInputChip removable`, OD-136); `NlMenu kind="select" multiple` of `NlCheckboxListItem` option rows (new `role="option"` mode, OD-202) with an optional `NlSearchField` header (new `NlMenu initialFocus`, OD-204, OD-205); focus after a removal (OD-206). OD-136, OD-202 to OD-206 decided. Approved by the designer |
+| 20 Nov 2026 | NlDateField (#72, public): typed date with a digit mask (`format`, default `DD/MM/YYYY`, OD-137; `dateFormat.ts`), the pattern shown while focused (new `NlInputBase formatHint`, OD-209), errors for invalid and out-of-range dates; calendar `NlButton` opening an `NlMenu` dialog with `NlCalendar` (new `NlMenu matchAnchorWidth`, `initialFocusSelector`, OD-207, OD-208); focus back to the input (OD-210); ISO value (OD-211); large only (OD-141). Approved by the designer |

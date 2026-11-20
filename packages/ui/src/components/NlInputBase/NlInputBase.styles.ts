@@ -70,6 +70,16 @@ export const inputColour = {
 export const valueOverlay = 'nl:absolute nl:inset-none nl:flex nl:min-w-0 nl:items-center nl:gap-xs nl:overflow-x-clip';
 
 /**
+ * The format hint (NlDateField, OD-209): over the value area, Body L text-placeholder on one line, shown only while the
+ * input has focus. Clicks pass through to the input.
+ */
+export const formatHint =
+  'nl:pointer-events-none nl:invisible nl:absolute nl:inset-none nl:flex nl:items-center nl:whitespace-pre nl:text-body-l nl:text-placeholder nl:peer-focus/input:visible';
+
+/** The typed part of the hint: kept for its width, unseen (the input draws the real text). */
+export const formatHintTyped = 'nl:text-transparent';
+
+/**
  * Placeholder text, only with a hidden label (NlSearchField: "Search", shown while empty, focused too; designer's
  * choice, 19 Nov 2026). Body L (the input's), text-placeholder; disabled text-disabled.
  */
