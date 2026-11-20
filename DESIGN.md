@@ -655,7 +655,7 @@ _The designer adds rows here before each build._
 | 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ✅ |
 | 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ✅ |
 | 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ✅ |
-| 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ⬜ |
+| 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ✅ |
 | 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon` | [§9](#nlnavitem) | ⬜ |
 | 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ⬜ |
 
@@ -7566,7 +7566,7 @@ import { NlTableHeaderCell } from '@northline/ui';
 
 **Level** Molecule (contains `NlCheckboxControl`, `NlBadge`, `NlButton`, L1) · **Base** none · **Depends on** `NlCheckboxControl`, `NlBadge`, `NlButton` · **Public** (used by `NlTable`; exported for custom tables)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-117.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-117 and OD-186 to OD-188 decided.
 
 One body cell: text, a badge, a link, a row-actions button, or a checkbox.
 
@@ -7584,7 +7584,9 @@ NlTableCell (td, horizontal)
 |---|---|---|
 | Type | default (text), badge, link, row actions, checkbox | `type`, default `default`, also `data-type` |
 | Narrow | off, on | `narrow?: boolean` |
-| Content | text or node | `children` |
+| Content | text, or a typed prop per type (OD-188) | `children` (text); `badge`, `link`, `actions`, `checkbox` |
+| Row header | off, on | `rowHeader?` (`<th scope="row">`) |
+| Sticky at the end | off, on | `stickyEnd?` (OD-187) |
 | Leading checkbox | optional | `select?: { checked, onChange, label }` |
 | Row actions | for `type="row-actions"` | `onActionsClick`, `actionsExpanded` |
 
@@ -7619,12 +7621,43 @@ From the parts. Row hover and selected belong to the row (`NlTable`).
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Link padding | A tertiary xsmall button with its side padding set to 0, so the text lines up with the header | `NlButton variant="link"` with no inline padding. Needs the link variant to have 0 inline padding (it currently follows tertiary padding) | **Needs approval** |
+| Link padding | A tertiary xsmall button with its side padding set to 0, so the text lines up with the header | `NlButton variant="link"` with no inline padding. Uses `flush` (added to the link variant for `NlBanner`) | Approved (OD-117) |
 | Dedicated row-actions button | A dedicated "row actions" button (enabled, hovered, pressed, open) | `NlButton` icon-only (D12), open = pressed look (OD-57) | Matches D12 |
 | Row-actions column width | 64 (32 + 16 either side) | `Size-64` | Matches |
 | Sticky row-actions column | Code only; the shadow isn't drawn | `--nl-shadow-sticky-end`, `--nl-z-sticky` | Matches §4.1, §4.3 |
 | Checkbox type | Unselected, selected, disabled (no indeterminate) | Same | Matches |
 | Text colour | `text-secondary` | Same | Matches |
+| Full text when cut | "A tooltip" | `title` when the text is actually cut (measured after layout), as `NlNavSubItem`; a text cell isn't focusable, so `NlTooltip` can't hang on it | Approved (OD-186) |
+| Sticky column | Code only | `stickyEnd`: `sticky`, `end-none`, `--nl-z-sticky`, `--nl-shadow-sticky-end`, fill inherited from the row | Approved (OD-187) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Cell | `<td>` (or `<th scope="row">` with `rowHeader`), `Size-40`, `Space-3XL` inline (`narrow` or row actions: `Space-XL`), `Space-none` block, Body M `text-secondary`, `data-type` |
+| Default | `children` in a one-line span, `truncate`, `title` when cut |
+| Badge | `badge: { tone, label }` → `NlBadge size="small"` |
+| Link | `link: { label, href?, as?, onClick? }` → `NlButton variant="link" size="xsmall" flush` (an `<a>` with `href`) |
+| Row actions | `actions: { label, expanded?, onClick, ref? }` → `NlButton` tertiary xsmall icon-only `more_vert`, `contentTone="secondary"`, `aria-haspopup="menu"`, `aria-expanded`; column `w-64` |
+| Checkbox | `checkbox: { checked, onChange, label, disabled? }` → `NlCheckboxControl` |
+| Select | `select: { checked, onChange, label, disabled? }` → leading `NlCheckboxControl`, gap `Space-M` |
+
+#### API
+
+```tsx
+import { NlTableCell } from '@northline/ui';
+
+<NlTableCell rowHeader select={{ checked, onChange, label: 'Select Member 0042' }}>Member 0042</NlTableCell>
+<NlTableCell type="badge" badge={{ tone: 'success', label: 'Tier 2' }} />
+<NlTableCell type="row-actions" stickyEnd actions={{ label: 'Actions for Member 0042', expanded, onClick, ref }} />
+```
+
+`'use client'` (measuring).
+
+#### Tokens used
+
+`Size-40`, `Size-64`, `Space-3XL`, `Space-XL`, `Space-M`, `Space-none`; Body M, `text-secondary`; `--nl-z-sticky`, `--nl-shadow-sticky-end`; `NlBadge`, `NlButton`, `NlCheckboxControl`'s own.
+
 
 ---
 
@@ -8463,3 +8496,4 @@ Known issues
 | 20 Nov 2026 | NlDialog (#64, public): native modal `<dialog>` with `NlOverlay`, small (`Size-560`) or large (new `Size-720`, OD-115, OD-121); `h2` title (OD-179) and ghost close icon 16 from the top and side; Body L text body; medium start, secondary and primary actions; alertdialog with focus on Cancel when the primary is destructive (OD-180); fade and scale from 95% (OD-125); long content scrolls in the body (OD-181). Approved by the designer |
 | 20 Nov 2026 | NlPagination (#65, public): named `<nav>` list with secondary xsmall previous and next (real disabled at the ends, OD-126; chevrons, OD-128) and `NlPaginationItem` pages; first, last, current ±`siblingCount` (default 1, OD-127) with "…" only where it saves space (OD-182); page clamped (OD-183); focus follows the change. Approved by the designer |
 | 20 Nov 2026 | NlTableHeaderCell (#66, public): `<th scope="col">`, plain or grey, narrow; sort as a plain native button (title + icon, `aria-sort`, OD-116, OD-129); filter button "Filter {column}" (", applied" when applied, OD-185) with `filterRef`; select all; sort announcement left to `NlTable` (OD-184); K8 accepted. Approved by the designer |
+| 20 Nov 2026 | NlTableCell (#67, public): `<td>` or row header `<th>`; text (one line, `title` when cut, OD-186), small badge, flush xsmall link (OD-117), row-actions menu button in a `Size-64` column, value checkbox, leading row-select checkbox; typed props per type (OD-188); `stickyEnd` (OD-187). Approved by the designer |
