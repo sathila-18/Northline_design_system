@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #63 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-114, OD-122 to OD-124 and OD-148 to OD-178 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #64 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-115, OD-121 to OD-125 and OD-148 to OD-181 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -99,7 +99,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 62 | `NlStatCard` | yes | `NlLabel` | – | – | ✅ batch 7 | ✅ |
 | 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | – | ✅ batch 7 | ✅ |
-| 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | OD-16, OD-41, OD-115 | ✅ batch 7 | ⬜ |
+| 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | – | ✅ batch 7 | ✅ |
 | 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
 | 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | OD-116 | ✅ batch 7 | ⬜ |
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | OD-117 | ✅ batch 7 | ⬜ |
@@ -159,7 +159,7 @@ Status: **Open** · **Decided** · **Dropped**
 | OD-3 | Focus ring colour on fields with an error: `border-error` instead of `border-focused` | Decided 19 Nov 2026: no; standard ring (OD-44) | Would add an exception to CLAUDE.md's focus ring rule. See OD-44 |
 | OD-91 | A maximum-width size token for snackbars (for example `Size-560`) | **Decided** 20 Nov 2026: `Size-560` added | See OD-104 |
 | OD-92 | A time token for snackbar auto-dismiss (for example 6 s) | **Decided** 20 Nov 2026: `--nl-duration-snackbar` 6000ms | See OD-105 |
-| OD-121 | Dialog width tokens, for example a small and a large width (480 and 720) in §3.5 | Open | See OD-115 |
+| OD-121 | Dialog width tokens, for example a small and a large width (480 and 720) in §3.5 | **Decided** 20 Nov 2026: small `Size-560` (existing), large `Size-720` (added) | See OD-115 |
 | OD-133 | A side sheet width token (the reference uses 600) in §3.5 | Open, **needs approval** (decide in Storybook) | Could share a scale with OD-121 |
 | OD-134 | A side nav column width token (240; the expanded nav is 240 + `Space-XL` either side) in §3.5 | Open, **needs approval** (decide in Storybook) | Minimized width uses the existing `Size-80` |
 
@@ -447,8 +447,11 @@ Decide these before building the components listed under "Affects".
 
 **NlDialog**
 - OD-16, OD-41: see section 2 (heading level; `Body L` body text)
-- OD-115 · Width: needs tokens (OD-121) · Open
-- OD-125 · Open motion: fade and slight scale, `--nl-duration-slow`; reduced motion fade only · Open
+- OD-115 · Width: needs tokens (OD-121) · **Decided** 20 Nov 2026: `Size-560` / `Size-720`, default small
+- OD-125 · Open motion: fade and slight scale, `--nl-duration-slow`; reduced motion fade only · **Decided** 20 Nov 2026: scale from 95%
+- OD-179 · Title as `h2` · **Decided** 20 Nov 2026: approved
+- OD-180 · `role="alertdialog"` when the primary is destructive · **Decided** 20 Nov 2026: approved
+- OD-181 · Long content: panel `Space-3XL` from the edges, body scrolls · **Decided** 20 Nov 2026: approved
 
 **NlPagination**
 - OD-126 · Previous at page 1 uses the real disabled state (the reference draws it enabled with a grey icon) · Open

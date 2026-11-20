@@ -331,3 +331,19 @@ Change asked for by the designer (go-ahead on the NlSnackbar plan): one primitiv
 
 Also added, outside the JSON (hand-written motion values in `packages/tokens/src/styles.css`, §5): `--nl-duration-snackbar: 6000ms` (OD-92), not zeroed under reduced motion because it is reading time, not an animation.
 
+---
+
+## Addendum, 20 Nov 2026: `Size-720` (NlDialog, OD-121)
+
+Asked for by the designer (go-ahead on the NlDialog plan): one primitive added, `Primitives.Sizes.Size-720` (dimension, 720 px, "Used only as a width (large dialog), never as spacing."). `Size-560`'s description now also names the small dialog.
+
+| Check | Result |
+|---|---|
+| JSON parses; tokens | Yes; 429 (was 428) |
+| `$type`, `$value`, `$description`, `$extensions.mode` on every token (§3.9 rule 1) | Pass |
+| Dimension as `{ value, unit: "px" }` (rule 5) | Pass |
+| Duplicate descriptions | 0 |
+| Duplicate values in `Primitives.Sizes` | 0 |
+| References | The token build resolves every reference (no errors) |
+| Colour contrast | Not affected (no colour change) |
+

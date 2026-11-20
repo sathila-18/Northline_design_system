@@ -39,5 +39,6 @@ export * from './components/NlButtonDock';
 export * from './components/NlEmptyState';
 export * from './components/NlStatCard';
 export * from './components/NlFileUpload';
+export * from './components/NlDialog';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';
