@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 and #74 to #76 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-133, OD-135 to OD-137, OD-139 to OD-141, OD-143, OD-144 and OD-148 to OD-220 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 and #74 to #77 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-133, OD-135 to OD-141, OD-143 to OD-145 and OD-148 to OD-230 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -118,7 +118,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ✅ |
 | 75 | `NlSideSheet` | yes | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | – | – | ✅ batch 8 | ✅ |
 | 76 | `NlPageHeader` | yes | `NlTextBlock`, `NlButton`, `NlNotificationButton` | – | – | ✅ batch 8 | ✅ |
-| 77 | `NlTable` | yes | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` (and `NlTableColumnFilter` for column filters) | – | OD-138 | ✅ batch 8 | ⬜ |
+| 77 | `NlTable` | yes | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` (and `NlTableColumnFilter` for column filters) | – | – | ✅ batch 8 | ✅ |
 | 78 | `NlSideNav` | yes | `NlNavItem`, `NlSideNavUser`, `NlButton` | – | OD-134 | ✅ batch 8 | ⬜ |
 
 **Note on `NlTable` and `NlTableColumnFilter`.** Both are organisms. The table only opens the filter from a header cell, so the filter is rendered as the menu's content when a filter button is used. Under D15 that counts as slot content, so `NlTable` stays an organism that doesn't contain another organism. If the designer prefers, the filter can be passed in by the page instead.
@@ -542,8 +542,18 @@ Decide these before building the components listed under "Affects".
 - OD-220 · Announce the total unread count when it rises · **Decided** 20 Nov 2026: approved
 
 **NlTable**
-- OD-138 · Empty (`NlEmptyState`) and loading (`NlSkeleton` rows) states; column widths and sideways scrolling · Open
-- OD-145 · `NlTableColumnFilter` rendered as menu content from the header cell (slot content, D15), or passed in by the page · Open, **needs approval** (decide in Storybook)
+- OD-138 · Empty (`NlEmptyState`) and loading (`NlSkeleton` rows) states; column widths and sideways scrolling · **Decided** 21 Nov 2026: approved
+- OD-145 · `NlTableColumnFilter` rendered as menu content from the header cell (slot content, D15), or passed in by the page · **Decided** 21 Nov 2026: the table renders it from `column.filter`
+- OD-221 · `rowActions(row)` items `{ label, onSelect, disabled? }` in an `NlMenu` (action) · **Decided** 21 Nov 2026: approved
+- OD-222 · Column `width` / `minWidth` as `Size-*` token names; no width is flexible · **Decided** 21 Nov 2026: approved
+- OD-223 · `NlTableHeaderCell stickyEnd` for the row-actions header · **Decided** 21 Nov 2026: approved
+- OD-224 · Row names: `getRowLabel`, else the row-header or first column's text · **Decided** 21 Nov 2026: approved
+- OD-225 · Selected count leads the footer summary · **Decided** 21 Nov 2026: approved
+- OD-226 · Caption always visually hidden · **Decided** 21 Nov 2026: approved
+- OD-227 · Rows `bg-primary` at rest (not none), so the sticky actions cell covers scrolled cells · **Decided** 21 Nov 2026: approved
+- OD-228 · Loading skeleton bars `Size-80` wide · **Decided** 21 Nov 2026: Size-80
+- OD-229 · `Space-4XL` above and below the empty state · **Decided** 21 Nov 2026: Space-4XL
+- OD-230 · No row click; every row keeps its actions button · **Decided** 21 Nov 2026: approved
 
 **NlSideNav**
 - OD-134: see section 1 (column width)

@@ -41,6 +41,8 @@ export interface NlTableHeaderCellProps extends Omit<
   filterRef?: Ref<HTMLButtonElement>;
   /** A "Select all rows" checkbox. */
   selectAll?: NlTableHeaderCellSelectAll;
+  /** Stays at the end when the table scrolls sideways: NlTable sets it on the row-actions column. */
+  stickyEnd?: boolean;
   /** Placement only. */
   className?: string;
 }
@@ -75,10 +77,17 @@ export function NlTableHeaderCell({
   onFilterClick,
   filterRef,
   selectAll,
+  stickyEnd = false,
   className,
   ...rest
 }: NlTableHeaderCellProps) {
-  const classes = [styles.root, styles.padding[narrow ? 'narrow' : 'default'], styles.appearance[appearance], className]
+  const classes = [
+    styles.root,
+    styles.padding[narrow ? 'narrow' : 'default'],
+    styles.appearance[appearance],
+    stickyEnd ? styles.stickyEnd : undefined,
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -94,6 +103,7 @@ export function NlTableHeaderCell({
       data-appearance={appearance}
       data-sort={sortable ? sort : undefined}
       data-filter={filter}
+      data-sticky={stickyEnd || undefined}
     >
       <div className={styles.row}>
         {selectAll && (

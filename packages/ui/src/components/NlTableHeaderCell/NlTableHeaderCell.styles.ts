@@ -18,6 +18,12 @@ export const appearance = {
   grey: 'nl:bg-tertiary',
 } as const;
 
+/**
+ * Sticky at the end (added with NlTable #77): the row-actions header stays put with its column when the table scrolls
+ * sideways, above the scrolled cells (--nl-z-sticky), with --nl-shadow-sticky-end. Its fill is the appearance's.
+ */
+export const stickyEnd = 'nl:sticky nl:end-none nl:z-sticky nl:shadow-sticky-end';
+
 /** The row inside the cell: horizontal, gap Space-L, items centred. */
 export const row = 'nl:flex nl:items-center nl:gap-l';
 
