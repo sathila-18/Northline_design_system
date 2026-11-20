@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #40 to #50 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90 decided; OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50 and #52 approved. OD-27 to OD-39, OD-72, OD-78, OD-80 to OD-90, OD-97 and OD-148 to OD-151 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -87,7 +87,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38 and #4
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ✅ |
 | 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | – | ✅ batch 5 | ✅ |
 | 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | – | ✅ batch 6 | ⬜ |
-| 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-14, OD-15, OD-119 | ✅ batch 6 | ⬜ |
+| 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-119 | ✅ batch 6 | ✅ |
 | 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ⬜ |
 | 54 | `NlCheckboxListItem` | yes | `NlListItemBase`, `NlCheckboxControl` | `NlMultiSelect`, `NlTableColumnFilter` | – | ✅ batch 6 | ⬜ |
 | 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ⬜ |
@@ -133,7 +133,7 @@ Build and settle these early. A change to them ripples widely.
 | `NlTextBlock` | 11 | OD-120 (OD-14, OD-15, OD-16, OD-41 decided) |
 | `NlLabel` | 6 | – |
 | `NlInputBase` | 6 | – |
-| `NlListItemBase` | 5 | OD-14, OD-15 |
+| `NlListItemBase` | 5 | OD-119 (OD-14, OD-15, OD-97, OD-148 to OD-151 decided) |
 | `NlCheckboxControl` | 5 | – |
 | `NlMenu` | 5 | OD-19 |
 
@@ -367,7 +367,11 @@ Decide these before building the components listed under "Affects".
 
 **NlListItemBase**
 - OD-14, OD-15: see section 2 (small-row text, disabled text)
-- OD-97 · Pressed: same as hover · Open
+- OD-97 · Pressed: same as hover · **Decided** 20 Nov 2026: approved
+- OD-148 · Divider colour when disabled · **Decided** 20 Nov 2026: stays `border-default`
+- OD-149 · Top label style · **Decided** 20 Nov 2026: `NlLabel` small, hidden by default
+- OD-150 · Extra icon after the title · **Decided** 20 Nov 2026: in the title row, `Space-M` (8) gap, decorative
+- OD-151 · Hover and pressed · **Decided** 20 Nov 2026: only on actionable rows
 
 **NlListItem**
 - OD-98 · Static rows (no action) have no hover or focus · Open

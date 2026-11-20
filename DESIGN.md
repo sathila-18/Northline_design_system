@@ -639,7 +639,7 @@ _The designer adds rows here before each build._
 | 49 | Text area | `NlTextArea` | `NlTextAreaBase` | [§9](#nltextarea) | ✅ |
 | 50 | Calendar | `NlCalendar` | `NlCalendarDay`, `NlButton`, `NlLabel` | [§9](#nlcalendar) | ✅ |
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
-| 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ⬜ |
+| 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ✅ |
 | 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ⬜ |
 | 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ⬜ |
 | 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ⬜ |
@@ -6031,7 +6031,7 @@ Done, current, upcoming. Done steps that go back also have hover and focus (see 
 
 **Level** Molecule (contains `NlLabel`, L1) · **Base** – (this is the base) · **Depends on** `NlLabel`, `NlTextBlock`, `NlDivider` · **Internal**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-14, OD-15, OD-97, OD-119.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-119 (open, left for `NlSideNavUser` #69). OD-14, OD-15, OD-97 and OD-148 to OD-151 decided.
 
 The shared list row: leading item, title and description, trailing item, and a divider (plain) or a card (filled). Every list item maps onto it.
 
@@ -6057,8 +6057,8 @@ NlListItemBase (vertical)
 | Size | large, small | `size`, default `large` |
 | Density | default, compact | `density`, default `default` |
 | Title, description | text | `title`, `description?` |
-| Top label | optional | `topLabel?: string` |
-| Leading, trailing, extra icon, body | slots | `leading?`, `trailing?`, `extraIcon?`, `body?` |
+| Top label | optional, hidden by default | `topLabel?: string`, `NlLabel size="small"` (OD-149) |
+| Leading, trailing accessory, extra icon, body | slots (accessories hold any component) | `leading?`, `trailing?`, `extraIcon?`, `body?` |
 | Divider | on (default) or off (plain only) | `divider?: boolean` |
 | Selected, disabled | set by the mapped item | `selected?`, `disabled?` |
 
@@ -6072,7 +6072,7 @@ NlListItemBase (vertical)
 | Card | – | `Radius-L`, 1px inside border (§4.2); cards `Space-L` apart (set by the list) |
 
 - Content: horizontal, gap `Space-L`, items centred vertically.
-- Text column: gap `Space-XS`. Title row: gap `Space-M`.
+- Text column: gap `Space-XS`. Title row: gap `Space-M` (8) between the title text and the extra icon (OD-150).
 - Trailing slot: gap `Space-S`.
 - Text styles: large = `NlTextBlock type="headline-small"` (title `Headline Small-H6`, description `Body M`); small = `type="label"` (title `Label M`, description `Body S`) (OD-14).
 - Leading avatars are 40, icons 24. Trailing icons 24.
@@ -6092,7 +6092,7 @@ NlListItemBase (vertical)
 | Title | `text-primary` | see "Mapping notes" |
 | Description | `text-secondary` | `text-disabled` |
 | Leading and trailing icons | `fg-primary` (leading), `fg-secondary` (trailing) | `fg-disabled` |
-| Divider | `border-default` | `border-disabled` |
+| Divider | `border-default` | `border-default` (OD-148) |
 
 - Focus: the standard ring from CLAUDE.md around the whole row (or card, following its corners).
 
@@ -6109,11 +6109,58 @@ The role comes from the mapped item (link, button, option, checkbox, radio, swit
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Plain and filled | Two separate bases | One base with `appearance` | Matches inventory |
-| Disabled title | `text-disabled-on_bg`, while the description is `text-disabled` | Both `text-disabled` through `NlTextBlock disabled` (OD-15) | **Needs approval** |
-| Small-row text | Overrides on the text block | `NlTextBlock type="label"` (OD-14) | **Needs approval** |
-| Pressed | Not drawn | Proposed: same as hover | **Needs approval** |
+| Disabled title | `text-disabled-on_bg`, while the description is `text-disabled` | Both `text-disabled` through `NlTextBlock disabled` (OD-15) | Approved |
+| Small-row text | Overrides on the text block | `NlTextBlock type="label"` (OD-14) | Approved |
+| Pressed | Not drawn | Same as hover (OD-97) | Approved |
 | Focus ring | Code only: around the row, following card corners | Same | Matches |
 | Card gap | `Space-L`, from the reference's description | Set by the parent list, not the item | Matches |
+| Disabled divider | `border-disabled` | `border-default`, unchanged when disabled (OD-148) | Approved |
+| Top label | Optional label above the title | `NlLabel size="small"` (tertiary), not shown unless given (OD-149) | Approved |
+| Extra icon | Icon after the title | Inside the title row, `Space-M` (8) from the text, hidden from assistive tech, takes the title colour (OD-150) | Approved |
+| Hover and pressed | On every row | Only on rows the mapped item makes actionable (`actionable`, OD-151) | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Appearance | `appearance?: 'plain' \| 'filled'`, default `plain`, `data-appearance` |
+| Size | `size?: 'large' \| 'small'`, default `large`: `NlTextBlock type="headline-small"` or `type="label"`, heading as a `span` |
+| Density | `density?: 'default' \| 'compact'`, default `default`, `data-density` |
+| Title, description | `title`, `description?` into one `NlTextBlock` (keeps its heading → description gap) |
+| Top label | `topLabel?: string` → `NlLabel size="small"`; nothing rendered when empty |
+| Leading, trailing accessory | `leading?`, `trailing?`: any component, in a slot that sets `currentColor` (`fg-primary` / `fg-secondary`, `fg-disabled` when disabled) |
+| Extra icon | `extraIcon?`, `aria-hidden`, `Space-M` after the title |
+| Body | `body?` replaces the description, below the text block (`Space-XS`) |
+| Divider | `divider?: boolean`, default on, plain only: decorative `NlDivider` |
+| Selected, disabled | `selected?`, `disabled?`: look only, `data-selected` / `data-disabled`. The mapped item sets ARIA and native disabled |
+| Actionable | `actionable?: boolean`, default off: adds the hover and pressed fills |
+| Element | `as?` (default `div`; `li`, `label`, `button`, `a`, a router link), with `type`, `href`, `htmlFor` and native props passed through |
+
+#### API
+
+```tsx
+import { NlListItemBase } from '../NlListItemBase'; // internal, not exported from @northline/ui
+
+<NlListItemBase as="button" type="button" actionable title="Member 0042" description="Tier 2"
+  leading={<NlIcon name="person" tone="inherit" />} trailing={<NlIcon name="chevron_right" tone="inherit" />} />
+```
+
+Presentational, no `'use client'`.
+
+#### Tokens used
+
+`Space-XL`, `Space-M`, `Space-none` (padding, divider gap), `Space-L` (content gap), `Space-XS` (text column), `Space-M` (title row), `Space-S` (trailing gap), `Radius-L`, 1px `inset-ring`; `bg-primary`, `bg-secondary`, `bg-active`, `bg-active-hover`; `border-subtle`, `border-active`, `border-disabled` (card ring); `fg-primary`, `fg-secondary`, `fg-disabled`; the standard focus ring; `Duration fast` colour transition (none under reduced motion); the parts' own tokens (`NlTextBlock`, `NlLabel`, `NlDivider`).
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| States | Hover and pressed classes are picked in the TSX only when `actionable` and not disabled, so plain `hover:` / `active:` work on any root element (as in `NlNavSubItem`) |
+| Disabled wins | Disabled drops the selected and hover looks |
+| Inner parts | `span`s with flex, so a `button` or `a` root stays valid where possible (`NlTextBlock` still renders a `div`) |
+| Focus ring | On the root. Mapped items whose focus sits on an inner control (checkbox, radio, switch) decide their own ring |
+| Disabled contrast | `text-disabled` title and description: known issue K3; disabled samples are marked |
+
 
 ---
 
@@ -7905,3 +7952,4 @@ Known issues
 | 19 Nov 2026 | NlPageDot (#19, internal): decorative `Size-6` dot in `fg-placeholder`; the current page a `Size-24` pill in `fg-brand` (OD-36), `Radius-Full` (OD-37); width and fill ease with Duration base (OD-38); not interactive (OD-39, OD-72). Approved by the designer |
 | 20 Nov 2026 | NlRowsPerPage (#37, public): table footer pill trigger (`aria-haspopup="listbox"`, `aria-expanded`), Body S label, Label S value, 24 arrow (up when open), `open` / `onOpenChange` for `NlTable`'s `NlMenu`; disabled. Label kept `text-tertiary`: K7 accepted (4.47:1 on `bg-tertiary` in Dark). Approved by the designer |
 | 20 Nov 2026 | NlCalendar (#50, public): single date or range month grid; 6 weeks of `NlCalendarDay`, `NlLabel` weekday headers (`tone="secondary"`, OD-50), `NlButton` previous and next; one tab stop with roving focus and full keyboard; range preview; limits and unavailable dates; ISO dates in UTC; `names` instead of locale formatting; today read after hydration; `bg-primary` (OD-90). Approved by the designer |
+| 20 Nov 2026 | NlListItemBase (#52, internal): shared list row, plain (divider) or filled (card), large or small, default or compact; leading and trailing accessories take any component; top label (`NlLabel` small, OD-149), extra icon 8 from the title (OD-150); hover and pressed only when actionable (OD-97, OD-151); divider stays `border-default` (OD-148); `as` for the mapped item's element. Approved by the designer |
