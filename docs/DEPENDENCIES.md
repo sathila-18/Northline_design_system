@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #62 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-113 and OD-148 to OD-176 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #63 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-114, OD-122 to OD-124 and OD-148 to OD-178 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -98,7 +98,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 60 | `NlButtonDock` | yes | `NlButton`, `NlTextBlock` | `NlSideSheet` | – | ✅ batch 6 | ✅ |
 | 61 | `NlEmptyState` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 62 | `NlStatCard` | yes | `NlLabel` | – | – | ✅ batch 7 | ✅ |
-| 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | OD-114 | ✅ batch 7 | ⬜ |
+| 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | – | ✅ batch 7 | ✅ |
 | 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | OD-16, OD-41, OD-115 | ✅ batch 7 | ⬜ |
 | 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ⬜ |
 | 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | OD-116 | ✅ batch 7 | ⬜ |
@@ -438,10 +438,12 @@ Decide these before building the components listed under "Affects".
 - OD-176 · Long values · **Decided** 20 Nov 2026: wrap
 
 **NlFileUpload**
-- OD-114 · Dashed border via Tailwind's `border-dashed` (dash length set by the browser, not exactly 4/4) · Open
-- OD-122 · Drag-over look: `border-active` + `bg-active` · Open
-- OD-123 · Disabled look: `border-disabled`, icon `tone="disabled"`, button disabled · Open
-- OD-124 · Icons `cloud_upload`, `check`, `delete`, `error` · Open
+- OD-114 · Dashed border via Tailwind's `border-dashed` (dash length set by the browser, not exactly 4/4) · **Decided** 20 Nov 2026: approved
+- OD-122 · Drag-over look: `border-active` + `bg-active` · **Decided** 20 Nov 2026: approved
+- OD-123 · Disabled look: `border-disabled`, icon `tone="disabled"`, button disabled · **Decided** 20 Nov 2026: approved
+- OD-124 · Icons `cloud_upload`, `check`, `delete`, `error` · **Decided** 20 Nov 2026: approved (`cloud_upload` added)
+- OD-177 · Button icons: `cloud_upload`, `close`, `refresh` · **Decided** 20 Nov 2026: approved (`refresh` added)
+- OD-178 · Wrong-type drops ignored, `onFileReject` · **Decided** 20 Nov 2026: approved
 
 **NlDialog**
 - OD-16, OD-41: see section 2 (heading level; `Body L` body text)

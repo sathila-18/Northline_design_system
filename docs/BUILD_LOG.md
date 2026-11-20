@@ -71,3 +71,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlButtonDock | 2026-11-20 12:03 | 2026-11-20 13:20 | OD-169 to OD-171 decided; buttons small, variants fixed; string accessory as NlTextBlock description. Approved by the designer |
 | NlEmptyState | 2026-11-20 13:22 | 2026-11-20 13:56 | OD-112, OD-172 to OD-174 decided; iconSlot wins over icon; live adds role status. Approved by the designer |
 | NlStatCard | 2026-11-20 14:02 | 2026-11-20 14:12 | OD-50, OD-113, OD-175, OD-176 decided; value in Data M drawn by the card; inList for dt/dd. Approved by the designer |
+| NlFileUpload | 2026-11-20 14:14 | 2026-11-20 14:37 | OD-114, OD-122 to OD-124, OD-177, OD-178 decided; cloud_upload and refresh added to the icon registry (code points checked against the font's ligatures); page owns the upload. Approved by the designer |
