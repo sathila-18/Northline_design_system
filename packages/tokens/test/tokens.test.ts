@@ -76,7 +76,7 @@ describe('tokens.css', () => {
   it('declares a CSS variable for every token in the JSON', () => {
     const missing = [...tokens.keys()].filter((path) => !css.includes(`--${cssName(path.split('.'))}:`));
     expect(missing).toEqual([]);
-    expect(tokens.size).toBe(427);
+    expect(tokens.size).toBe(428);
   });
 
   it('declares a font shorthand for every text style', () => {
@@ -245,7 +245,7 @@ describe('styles.css (hand-written, S3)', () => {
 
   it('has every shadow, layer and motion value from DESIGN.md §4.1, §4.3 and §5', () => {
     const rows = [...design.matchAll(/^\| `(--nl-(?:shadow|z|duration|ease)-[\w-]+)` \| ([^|]+) \|/gm)];
-    expect(rows.length).toBe(17);
+    expect(rows.length).toBe(18);
     for (const [, name = '', value = ''] of rows) {
       const actual = new RegExp(`${name}: ([^;]+);`).exec(rootBlock)?.[1] ?? '';
       const expected = value
@@ -266,9 +266,12 @@ describe('styles.css (hand-written, S3)', () => {
     expect(used.filter((name) => !defined.has(name))).toEqual([]);
   });
 
-  it('turns every duration off for prefers-reduced-motion', () => {
-    const durations = [...rootBlock.matchAll(/(--nl-duration-[\w-]+):/g)].map((m) => m[1]);
+  it('turns every animation duration off for prefers-reduced-motion (not the snackbar reading time)', () => {
+    const durations = [...rootBlock.matchAll(/(--nl-duration-[\w-]+):/g)]
+      .map((m) => m[1])
+      .filter((name) => name !== '--nl-duration-snackbar');
     expect(durations.length).toBe(4);
     for (const name of durations) expect(reduced, name).toContain(`${name}: 0ms;`);
+    expect(reduced).not.toContain('--nl-duration-snackbar');
   });
 });

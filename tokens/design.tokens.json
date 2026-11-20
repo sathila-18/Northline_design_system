@@ -1235,6 +1235,17 @@
           "mode": {}
         }
       },
+      "Size-560": {
+        "$type": "dimension",
+        "$value": {
+          "value": 560,
+          "unit": "px"
+        },
+        "$description": "Size of 560 px. Used only as a maximum width (snackbar), never as spacing.",
+        "$extensions": {
+          "mode": {}
+        }
+      },
       "Size-full": {
         "$type": "dimension",
         "$value": {

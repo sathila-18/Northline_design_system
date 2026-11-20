@@ -312,3 +312,22 @@ Disabled (`fg-disabled` on `bg-primary`, 3.00 / 1.79) is exempt from 1.4.11.
 The spec asked for Voltic Light on `fg-brand` especially: 5.84, a pass. The lowest is Garnet Dark, 3.04.
 
 Not built, for the record (OD-13b): the white handle on `fg-hovered` would be 2.14 / 2.00 / 2.55 and on `fg-pressed` 1.43 / 1.39 / 1.87 in Dark (Northline / Garnet / Voltic). Hover and pressed are outside the audit (D17), but the switch has no hover or pressed colours because of this.
+
+---
+
+## Addendum, 20 Nov 2026: `Size-560` (NlSnackbar, OD-91)
+
+Change asked for by the designer (go-ahead on the NlSnackbar plan): one primitive added, `Primitives.Sizes.Size-560` (dimension, 560 px, "Used only as a maximum width (snackbar), never as spacing.").
+
+| Check | Result |
+|---|---|
+| JSON parses; tokens | Yes; 428 (was 427) |
+| `$type`, `$value`, `$description`, `$extensions.mode` on every token (§3.9 rule 1) | Pass |
+| Dimension as `{ value, unit: "px" }` (rule 5) | Pass |
+| Duplicate descriptions | 0 |
+| Duplicate values in `Primitives.Sizes` | 0 |
+| References | The token build resolves every reference (no errors) |
+| Colour contrast | Not affected (no colour change) |
+
+Also added, outside the JSON (hand-written motion values in `packages/tokens/src/styles.css`, §5): `--nl-duration-snackbar: 6000ms` (OD-92), not zeroed under reduced motion because it is reading time, not an animation.
+
