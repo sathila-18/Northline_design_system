@@ -149,8 +149,10 @@
  * uses it, for the box's focus ring and hover fill. has-focus would also match a focused button in the trailing slot
  * (the NlPasswordField show/hide), drawing two rings; the button has its own. Classes can't target "the input inside"
  * without an arbitrary value. Approved by the designer, 19 Nov 2026 (rule 9, from NlPasswordField #46).
+ * It also matches while the input is expanded: an open NlSelect moves focus into its menu, and the spec draws "open"
+ * with the focused look (approved 20 Nov 2026, NlSelect #70).
  */
-@custom-variant input-focus (&:has(input:focus));
+@custom-variant input-focus (&:has(input:focus, input[aria-expanded='true']));
 
 /*
  * nl:search-cancel-none: hides the browser's own clear button and decoration in <input type="search"> (DESIGN.md §9,

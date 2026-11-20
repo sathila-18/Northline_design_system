@@ -36,6 +36,8 @@ interface NlMenuBaseProps extends Omit<
   onOpenChange: (open: boolean) => void;
   /** The trigger. The menu sits below it (or above, when there isn't room) and is at least as wide. */
   anchorRef: RefObject<HTMLElement | null>;
+  /** Where focus goes back when the menu closes, when that isn't the anchor (NlSelect: the field inside the box). */
+  returnFocusRef?: RefObject<HTMLElement | null>;
   /** Sets the role and keyboard. Default action. */
   kind?: NlMenuKind;
   /** Select only: several options can be selected; selecting doesn't close the menu. */
@@ -126,6 +128,7 @@ export function NlMenu({
   open,
   onOpenChange,
   anchorRef,
+  returnFocusRef,
   kind = 'action',
   multiple = false,
   children,
@@ -219,7 +222,7 @@ export function NlMenu({
 
   const close = (returnFocus: boolean) => {
     onOpenChange(false);
-    if (returnFocus) anchorRef.current?.focus();
+    if (returnFocus) (returnFocusRef ?? anchorRef).current?.focus();
   };
 
   const onPanelKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {

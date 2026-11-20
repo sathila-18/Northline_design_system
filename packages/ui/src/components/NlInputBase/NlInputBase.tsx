@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, type ComponentPropsWithRef, type ReactNode } from 'react';
+import { useId, useRef, type ComponentPropsWithRef, type MouseEvent, type ReactNode, type Ref } from 'react';
 import { NlHelperText, type NlHelperTextTone } from '../NlHelperText';
 import * as styles from './NlInputBase.styles';
 
@@ -8,8 +8,12 @@ export type NlInputBaseSize = keyof typeof styles.size;
 
 export interface NlInputBaseProps extends Omit<
   ComponentPropsWithRef<'input'>,
-  'size' | 'prefix' | 'children' | 'className'
+  'size' | 'prefix' | 'children' | 'className' | 'type'
 > {
+  /** The native input type, or select (NlSelect): a read-only combobox field showing the chosen option's label. */
+  type?: ComponentPropsWithRef<'input'>['type'] | 'select';
+  /** The box (border and padding), for anchoring a menu to it (NlSelect). */
+  boxRef?: Ref<HTMLDivElement>;
   /** The field's name, always shown: in the value position at rest, floating when focused or filled (OD-42). */
   label: string;
   /** Box height, padding and icon size. Default large. */
@@ -43,7 +47,9 @@ export interface NlInputBaseProps extends Omit<
  * onto it. A native <input> with a real <label>; `aria-describedby` points to the helper text; `error` sets
  * `aria-invalid`. The label floats through CSS (focus, or a value), so controlled and uncontrolled both work.
  * Native input attributes (`value` / `defaultValue`, `onChange`, `type`, `name`, `required`, `disabled`) and `ref` go to
- * the input; `className` (placement only) to the root. 'use client' for useId.
+ * the input; `className` (placement only) to the root. `type="select"` makes the input a read-only combobox (NlSelect
+ * adds the popup ARIA and the menu); while it is expanded the box keeps the focused look. 'use client' for useId and
+ * refs.
  */
 export function NlInputBase({
   label,
@@ -59,9 +65,26 @@ export function NlInputBase({
   className,
   id,
   disabled,
+  type,
+  boxRef,
+  ref,
   'aria-describedby': describedBy,
   ...rest
 }: NlInputBaseProps) {
+  const isSelect = type === 'select';
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const setInputRef = (node: HTMLInputElement | null) => {
+    inputRef.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) ref.current = node;
+  };
+  // Select: a click anywhere on the box (the chevron too) acts as a click on the field.
+  const onBoxClick = (event: MouseEvent<HTMLDivElement>) => {
+    const input = inputRef.current;
+    if (!input || input.disabled || event.target === input) return;
+    input.focus();
+    input.click();
+  };
   const ownId = useId();
   const inputId = id ?? `${ownId}-input`;
   const helperId = `${ownId}-helper`;
@@ -72,7 +95,7 @@ export function NlInputBase({
 
   return (
     <div className={rootClasses} data-size={size} data-error={error || undefined}>
-      <div className={boxClasses}>
+      <div ref={boxRef} className={boxClasses} onClick={isSelect ? onBoxClick : undefined}>
         {leading !== undefined && (
           <span className={styles.slot} data-slot="leading">
             {leading}
@@ -82,15 +105,25 @@ export function NlInputBase({
         <div className={styles.value}>
           <input
             {...rest}
+            ref={setInputRef}
             id={inputId}
             disabled={disabled}
+            type={isSelect ? 'text' : type}
+            readOnly={isSelect || rest.readOnly}
+            role={isSelect ? 'combobox' : rest.role}
             // No hint text (designer's choice, 19 Nov 2026): the box stays empty while focused, the label is the only
             // text. A single space keeps :placeholder-shown working, so it means empty and the label floats on a value.
             // With a hidden label, the placeholder text shows instead (NlSearchField).
             placeholder={hideLabel && placeholder ? placeholder : ' '}
             aria-invalid={error || undefined}
             aria-describedby={[describedBy, helperText ? helperId : undefined].filter(Boolean).join(' ') || undefined}
-            className={hideLabel ? `${styles.input} ${styles.placeholder}` : styles.input}
+            className={[
+              styles.input,
+              hideLabel ? styles.placeholder : undefined,
+              isSelect ? styles.inputSelect : undefined,
+            ]
+              .filter(Boolean)
+              .join(' ')}
           />
           <label
             htmlFor={inputId}
