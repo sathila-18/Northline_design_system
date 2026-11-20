@@ -76,3 +76,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlPagination | 2026-11-20 16:30 | 2026-11-20 16:54 | OD-126 to OD-128, OD-182, OD-183 decided; no gaps that save nothing (one hidden page, or every page fits); focus follows the change. Approved by the designer |
 | NlTableHeaderCell | 2026-11-20 17:02 | 2026-11-20 17:32 | OD-116, OD-129, OD-184, OD-185 decided; plain native sort and filter buttons; K8 accepted (grey header title 4.46:1 in Dark). Approved by the designer |
 | NlTableCell | 2026-11-20 17:37 | 2026-11-20 17:57 | OD-117 (settled by link flush), OD-186 to OD-188 decided; typed props per type; title when cut; stickyEnd for the actions column. Approved by the designer |
+| NlNavItem | 2026-11-20 18:04 | 2026-11-20 18:25 | OD-118, OD-130, OD-131, OD-189 to OD-191 decided; NlMenu placement end-start and NlListItem menu links added; minimized tooltip and menu checked in Chrome. Approved by the designer |

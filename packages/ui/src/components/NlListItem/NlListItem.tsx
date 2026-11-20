@@ -47,7 +47,8 @@ export interface NlListItemProps extends Omit<
   href?: string;
   /** Makes the row a button when there is no `href`. */
   onClick?: MouseEventHandler<HTMLElement>;
-  /** Inside NlMenu: menuitem (action, navigation) or option (select). The row then takes tabIndex -1. */
+  /** Inside NlMenu: menuitem (action, navigation) or option (select). The row then takes tabIndex -1. With `href`
+   * it is a link (navigation menus). */
   role?: NlListItemRole;
   /** A router link component, for link rows. */
   as?: ElementType;
@@ -115,12 +116,18 @@ export function NlListItem({
       </>
     ) : undefined;
 
-  const element: Record<Kind, ElementType> = { menu: 'div', link: as ?? 'a', button: 'button', static: 'div' };
+  const element: Record<Kind, ElementType> = {
+    menu: href !== undefined ? (as ?? 'a') : 'div',
+    link: as ?? 'a',
+    button: 'button',
+    static: 'div',
+  };
 
   const kindProps: Record<string, unknown> =
     kind === 'menu'
       ? {
           role,
+          href: disabled ? undefined : href,
           tabIndex: tabIndex ?? -1,
           'aria-selected': role === 'option' ? selected : undefined,
           'aria-disabled': disabled || undefined,

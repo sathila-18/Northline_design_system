@@ -95,4 +95,11 @@ describe('NlListItem', () => {
     rerender(<NlListItem title="A" divider={false} />);
     expect(container.querySelector('[data-type="divider"]')).toBeNull();
   });
+  it('a menu row with href is a link with role menuitem (navigation menus)', () => {
+    render(<NlListItem role="menuitem" href="#rewards" title="Rewards" />);
+    const row = screen.getByRole('menuitem', { name: 'Rewards' });
+    expect(row.tagName).toBe('A');
+    expect(row).toHaveAttribute('href', '#rewards');
+    expect(row).toHaveAttribute('tabindex', '-1');
+  });
 });

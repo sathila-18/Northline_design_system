@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #67 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-117, OD-121 to OD-129 and OD-148 to OD-188 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #68 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-118, OD-121 to OD-131 and OD-148 to OD-191 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -103,7 +103,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
-| 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon` (`NlMenu` if OD-118 is approved) | `NlSideNav` | OD-118 | ✅ batch 7 | ⬜ |
+| 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | `NlSideNav` | – | ✅ batch 7 | ✅ |
 | 69 | `NlSideNavUser` | yes | `NlListItemBase`, `NlAvatar` | `NlSideNav` | OD-119, OD-120 | ✅ batch 7 | ⬜ |
 
 ### Organisms
@@ -473,9 +473,12 @@ Decide these before building the components listed under "Affects".
 - OD-188 · Typed props per cell type · **Decided** 20 Nov 2026: approved
 
 **NlNavItem**
-- OD-118 · Minimized nav: a section's pages open in an `NlMenu` (`kind="navigation"`) to the right · Open
-- OD-130 · State names `current="page"` (white row) and `current="section"` (grey row) · Open
-- OD-131 · Pages `Space-XS` apart (the reference also uses `Space-M` in one place) · Open
+- OD-118 · Minimized nav: a section's pages open in an `NlMenu` (`kind="navigation"`) to the right · **Decided** 20 Nov 2026: approved; `NlMenu` gained `placement="end-start"`
+- OD-130 · State names `current="page"` (white row) and `current="section"` (grey row) · **Decided** 20 Nov 2026: approved
+- OD-131 · Pages `Space-XS` apart (the reference also uses `Space-M` in one place) · **Decided** 20 Nov 2026: approved
+- OD-189 · Minimized name in an `NlTooltip` (end) · **Decided** 20 Nov 2026: approved
+- OD-190 · Current section and open state from the pages · **Decided** 20 Nov 2026: approved
+- OD-191 · Long labels cut, `title` when cut · **Decided** 20 Nov 2026: approved
 
 **NlSideNavUser**
 - OD-119, OD-120: see section 2
