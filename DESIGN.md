@@ -657,7 +657,7 @@ _The designer adds rows here before each build._
 | 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ✅ |
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ✅ |
 | 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | [§9](#nlnavitem) | ✅ |
-| 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ⬜ |
+| 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ✅ |
 
 ### 8.4 Organisms
 
@@ -1837,7 +1837,7 @@ A native `<button type="button" role="switch">` (the track) with the handle insi
 
 **Level** Atom L0 (D15) · **Base** none · **Depends on** nothing (the label is a slot) · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-120 (OD-2, OD-14, OD-15, OD-16 and OD-41 decided).
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-2, OD-14, OD-15, OD-16, OD-41 and OD-120 decided.
 
 A heading with an optional description under it, and an optional label slot above. It is the text part of list items, dialogs, empty states, snackbars, tooltips and cards.
 
@@ -1955,7 +1955,7 @@ A root `<div>` stack: label slot, then a content stack with the heading and the 
 | Decision | Detail |
 |---|---|
 | Body type | Option (b) of OD-41: `type="body"` says what it means. The type takes no `heading` or `headingAs`, so no heading style is invented (designer's choice, 18 Nov 2026) |
-| OD-120 | Left open until `NlSideNavUser` (#69), so nothing is built ahead |
+| OD-120 | `type="label-body"` (added 20 Nov 2026): Label M heading, Body M description, gap `Space-none`. Used by `NlListItemBase appearance="nav"` (`NlSideNavUser`) |
 | Disabled text contrast | `text-disabled` is under 4.5:1 by design and exempt as part of an inactive control (WCAG 1.4.3). Accepted as known issue K3; the Disabled story's sample is marked for the contrast check (designer's choice, 18 Nov 2026) |
 | Label slot story | `NlLabel` (#30) isn't built yet, so the stories pass plain text in the slot |
 
@@ -2113,7 +2113,7 @@ A panel `<div>` (header, content, footer). Render it right after its trigger, so
 
 #### Placement (added 20 Nov 2026)
 
-`placement?: 'bottom-start' | 'end-start'`, default `bottom-start`. `end-start` opens the menu beside its trigger at the end (right, or left in right-to-left), aligned to its top: the minimized `NlNavItem` (OD-118). Flipping and the window margins work as before.
+`placement?: 'bottom-start' | 'top-start' | 'end-start' | 'end-end'`, default `bottom-start`. `end-start` opens the menu beside its trigger at the end (right, or left in right-to-left), aligned to its top: the minimized `NlNavItem` (OD-118). `top-start` opens it above the trigger (expanded `NlSideNavUser`); `end-end` beside it at the end, aligned to its bottom (minimized `NlSideNavUser`) (OD-193, 20 Nov 2026). Each flips to the other side when there isn't room; the window margins and the minimum width (the trigger's) work as before.
 
 ---
 
@@ -6041,7 +6041,7 @@ Done, current, upcoming. Done steps that go back also have hover and focus (see 
 
 **Level** Molecule (contains `NlLabel`, L1) · **Base** – (this is the base) · **Depends on** `NlLabel`, `NlTextBlock`, `NlDivider` · **Internal**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-119 (open, left for `NlSideNavUser` #69). OD-14, OD-15, OD-97 and OD-148 to OD-151 decided.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-14, OD-15, OD-97, OD-119 and OD-148 to OD-151 decided.
 
 The shared list row: leading item, title and description, trailing item, and a divider (plain) or a card (filled). Every list item maps onto it.
 
@@ -6171,6 +6171,18 @@ Presentational, no `'use client'`.
 | Focus ring | On the root. Mapped items whose focus sits on an inner control (checkbox, radio, switch) decide their own ring |
 | Disabled contrast | `text-disabled` title and description: known issue K3; disabled samples are marked |
 
+#### Nav appearance (added 20 Nov 2026, OD-119)
+
+`appearance="nav"`, for `NlSideNavUser` only (the list items' `NlListItemBaseAppearance` stays `plain | filled`). Small type only; no divider; density has no effect.
+
+| Part | Value |
+|---|---|
+| Padding | Actionable: `Space-L` block, `Space-XL` inline. Not actionable: `Space-L` block, no inline. Text hidden: `Space-L` all round (OD-195) |
+| Radius | `Radius-M` |
+| Fill | none; hover `bg-tertiary`; pressed `bg-neutral`; selected (an open menu) `bg-tertiary` |
+| Text | `NlTextBlock type="label-body"`: Label M title, Body M description (OD-120) |
+
+`hideText?: boolean` keeps the text column for assistive tech only (`sr-only`, out of the layout), so the row shows only its accessories (the minimized side nav).
 
 ---
 
@@ -7779,7 +7791,7 @@ Checked in Chrome: minimized tooltip on focus, the pages menu opening beside its
 
 **Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlAvatar` · **Public** (used by `NlSideNav`)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-119, OD-120, OD-132.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-119, OD-120, OD-132 and OD-192 to OD-196 decided.
 
 The signed-in user at the bottom of the side nav, which opens the account menu.
 
@@ -7795,7 +7807,7 @@ As `NlListItemBase` (small): `NlAvatar` (40), name, email, and a chevron. Minimi
 | Open | closed, open | `open`, set by the menu it opens |
 | Name, email | text | `name`, `email` |
 | Avatar | as `NlAvatar` | `avatar` |
-| Menu | the account menu | `menu: ReactNode` (an `NlMenu`), or `onClick` |
+| Menu | the account menu | `menu: ReactNode`: the menu's rows; the component renders the `NlMenu` (OD-192). Or `onClick` |
 
 #### Sizes and layout
 
@@ -7820,7 +7832,7 @@ Default, hover, pressed, open, focus. A user row with no menu has no hover and n
 
 #### Behaviour and accessibility
 
-- A `<button aria-haspopup="menu" aria-expanded>`, named "{name}, account menu".
+- A `<button aria-haspopup="menu" aria-expanded>`, named from its text: "{name} {email} {menu label}" (OD-194).
 - Minimized: the avatar is the button; the name is a visually hidden label and a tooltip.
 - Escape in the menu closes it and returns focus here.
 
@@ -7828,10 +7840,48 @@ Default, hover, pressed, open, focus. A user row with no menu has no hover and n
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Padding | `Space-L` block, `Space-XL` inline, and `Radius-M`, unlike list rows | `NlListItemBase` needs a third density (for example `density="nav"`) with this padding and radius; a mapped component can't change its base's padding | **Needs approval** |
-| Email text style | `Body M`, while small list rows use `Body S` (OD-14) | Needs `NlTextBlock` to allow `Label M` + `Body M`, or a second small type | **Needs approval** |
-| Avatar size | Set to the xsmall variant but drawn 40 | `NlAvatar size="medium"` (40) | **Needs approval** |
+| Padding | `Space-L` block, `Space-XL` inline, and `Radius-M`, unlike list rows | `NlListItemBase appearance="nav"`: this padding and radius, and the nav fills (`bg-tertiary`, `bg-neutral`), which differ from list rows too | Approved (OD-119) |
+| Email text style | `Body M`, while small list rows use `Body S` (OD-14) | New `NlTextBlock type="label-body"` (Label M + Body M) | Approved (OD-120) |
+| Avatar size | Set to the xsmall variant but drawn 40 | `NlAvatar size="medium"` (40) | Approved (OD-132) |
 | Standalone | Placed into the side nav where needed (reference decision) | Same: `NlSideNav` takes it in a slot or prop | Matches |
+| Menu prop | "An `NlMenu`" | `menu` takes the rows; the component owns the `NlMenu` (anchor, open state, id), as `NlNavItem` does | Approved (OD-192) |
+| Menu placement | Above (expanded); to the right of the nav, along its bottom (minimized) | New `NlMenu` placements `top-start` and `end-end`. Minimized, the menu sits `Space-XS` from the avatar button, not the nav's edge; `NlSideNav` (#78) can adjust | Approved (OD-193) |
+| Accessible name | "{name}, account menu" | Named from its text plus the menu label as hidden text: "{name} {email} Account menu". An `aria-label` without the visible email fails WCAG 2.5.3 (axe `label-content-name-mismatch`) | Approved (OD-194) |
+| Minimized padding | `Space-L` block only | `Space-L` all round (a 72 × 72 target) | Approved (OD-195) |
+| Long name or email | Not described | One line each, ellipsis, `title` when cut (as OD-191) | Approved (OD-196) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Row | `NlListItemBase appearance="nav" size="small"`, `as="button"` with `menu` or `onClick`, else a `div` (not actionable: no hover, no inline padding, no chevron) |
+| Avatar | `avatar` (NlAvatar props without `size`), drawn at `size="medium"` (40) in the leading slot |
+| Name, email | `name`, `email`: title and description, one line each, `title` when cut |
+| Chevron | `NlIcon` 24 in the trailing slot, `keyboard_arrow_down` / `keyboard_arrow_up` while open, `fg-secondary` (the base's trailing colour) |
+| Open | Internal state, or `open` / `onOpenChange`; the base's `selected` gives the `bg-tertiary` fill |
+| Menu | `NlMenu` (action) with `nlMenuTriggerProps`, `aria-label={menuLabel}` (default "Account menu"), `placement` `top-start`, or `end-end` when minimized. Escape closes it and returns focus (from `NlMenu`) |
+| Minimized | `hideText` on the base (avatar only, `Space-L` all round), no chevron, the name in an `NlTooltip` to the end |
+
+#### API
+
+```tsx
+import { NlListItem, NlSideNavUser } from '@northline/ui';
+
+<NlSideNavUser
+  name="Member 0042"
+  email="m0042@example.test"
+  avatar={{ initials: 'M4' }}
+  menu={<NlListItem role="menuitem" title="Sign out" size="small" density="compact" divider={false} />}
+/>
+```
+
+Props: `name`, `email`, `avatar?`, `menu?`, `menuLabel?`, `open?`, `onOpenChange?`, `onClick?`, `minimized?`, `className?`. `'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`Space-L`, `Space-XL`, `Space-XS` (menu gap, from `NlMenu`), `Radius-M`, `Size-40` (avatar), `Size-24` (chevron); `bg-tertiary`, `bg-neutral`; `text-primary`, `text-secondary`, `fg-secondary`; Label M, Body M; `--nl-duration-fast`; the parts' own.
+
+Checked in Chrome: axe clean (WCAG 2.2 AA and the experimental name rule) in every brand and theme, closed, hovered (email `text-secondary` on `bg-tertiary`) and with the menu open, expanded and minimized; Escape returns focus to the row.
 
 ---
 
@@ -8539,3 +8589,4 @@ Known issues
 | 20 Nov 2026 | NlTableHeaderCell (#66, public): `<th scope="col">`, plain or grey, narrow; sort as a plain native button (title + icon, `aria-sort`, OD-116, OD-129); filter button "Filter {column}" (", applied" when applied, OD-185) with `filterRef`; select all; sort announcement left to `NlTable` (OD-184); K8 accepted. Approved by the designer |
 | 20 Nov 2026 | NlTableCell (#67, public): `<td>` or row header `<th>`; text (one line, `title` when cut, OD-186), small badge, flush xsmall link (OD-117), row-actions menu button in a `Size-64` column, value checkbox, leading row-select checkbox; typed props per type (OD-188); `stickyEnd` (OD-187). Approved by the designer |
 | 20 Nov 2026 | NlNavItem (#68, public): side-nav section as a link or a toggle with `NlNavSubItem` pages (tree line, `Space-XS`, OD-131); `current` page or section (OD-130), worked out from the pages (OD-190); long labels cut with `title` (OD-191); minimized icon-only rows with an `NlTooltip` (OD-189) and pages in an `NlMenu` beside the row (OD-118). `NlMenu` gained `placement`; `NlListItem` menu rows can be links. Approved by the designer |
+| 20 Nov 2026 | NlSideNavUser (#69, public): the signed-in user row on `NlListItemBase appearance="nav"` (OD-119, new) with `NlAvatar` medium (OD-132), Label M name and Body M email (`NlTextBlock type="label-body"`, OD-120, new); opens its own account `NlMenu` from the rows passed in `menu` (OD-192), above it or to the end when minimized (new placements `top-start`, `end-end`, OD-193); named from its text plus a hidden menu label (OD-194); minimized `Space-L` all round with an `NlTooltip` (OD-195); long text cut with `title` (OD-196). Approved by the designer |

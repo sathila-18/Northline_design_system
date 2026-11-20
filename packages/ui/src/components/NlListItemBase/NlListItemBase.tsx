@@ -4,14 +4,15 @@ import { NlLabel } from '../NlLabel';
 import { NlTextBlock } from '../NlTextBlock';
 import * as styles from './NlListItemBase.styles';
 
+/** The list items' appearances. The base also takes 'nav', for NlSideNavUser only (OD-119). */
 export type NlListItemBaseAppearance = 'plain' | 'filled';
 export type NlListItemBaseSize = 'large' | 'small';
 export type NlListItemBaseDensity = 'default' | 'compact';
 export type NlListItemBaseAccessoryAlign = 'center' | 'title';
 
 export interface NlListItemBaseProps extends Omit<ComponentPropsWithRef<'div'>, 'title' | 'className' | 'children'> {
-  /** plain: rows with dividers (default). filled: separate cards. */
-  appearance?: NlListItemBaseAppearance;
+  /** plain: rows with dividers (default). filled: separate cards. nav: the side nav user row (OD-119), small only. */
+  appearance?: NlListItemBaseAppearance | 'nav';
   /** large: Headline Small-H6 title, Body M description (default). small: Label M, Body S (OD-14). */
   size?: NlListItemBaseSize;
   /** default: Space-XL padding. compact: Space-M. */
@@ -50,6 +51,8 @@ export interface NlListItemBaseProps extends Omit<ComponentPropsWithRef<'div'>, 
   href?: string;
   /** Passed through when `as` is a label. */
   htmlFor?: string;
+  /** The text column for assistive tech only: the row shows just its accessories (minimized side nav). */
+  hideText?: boolean;
   /** Placement only. */
   className?: string;
 }
@@ -77,13 +80,25 @@ export function NlListItemBase({
   actionable = false,
   controlRow = false,
   accessoryAlign = 'center',
+  hideText = false,
   as,
   className,
   ...rest
 }: NlListItemBaseProps) {
   const Element: ElementType = as ?? 'div';
   const showDivider = appearance === 'plain' && divider;
-  const layoutKey = appearance === 'filled' ? 'filled' : showDivider ? 'plainDivider' : 'plain';
+  const layoutKey =
+    appearance === 'nav'
+      ? hideText
+        ? 'navTextHidden'
+        : actionable
+          ? 'nav'
+          : 'navStatic'
+      : appearance === 'filled'
+        ? 'filled'
+        : showDivider
+          ? 'plainDivider'
+          : 'plain';
   const stateKey = disabled
     ? 'disabled'
     : selected
@@ -141,10 +156,10 @@ export function NlListItemBase({
             {leading}
           </span>
         )}
-        <span className={styles.textColumn} data-slot="text">
+        <span className={hideText ? styles.textColumnHidden : styles.textColumn} data-slot="text">
           {topLabel !== undefined && topLabel !== '' && <NlLabel size="small">{topLabel}</NlLabel>}
           <NlTextBlock
-            type={size === 'small' ? 'label' : 'headline-small'}
+            type={appearance === 'nav' ? 'label-body' : size === 'small' ? 'label' : 'headline-small'}
             heading={heading}
             headingAs="span"
             description={hasBody ? undefined : description}

@@ -17,8 +17,11 @@ import * as styles from './NlMenu.styles';
 
 export type NlMenuKind = 'action' | 'select' | 'filter' | 'navigation';
 
-/** Where the menu opens: below the trigger (default), or beside it at the end, aligned to its top (minimized nav). */
-export type NlMenuPlacement = 'bottom-start' | 'end-start';
+/**
+ * Where the menu opens: below the trigger (default); above it (side nav user); or beside it at the end, aligned to its
+ * top (minimized nav item) or its bottom (minimized side nav user).
+ */
+export type NlMenuPlacement = 'bottom-start' | 'top-start' | 'end-start' | 'end-end';
 
 /** Size-* token names, for maxHeight (OD-20). */
 export type NlMenuMaxHeight = '24' | '32' | '36' | '40' | '48' | '56' | '64' | '80' | '96' | '120' | '320';
@@ -45,7 +48,10 @@ interface NlMenuBaseProps extends Omit<
   footer?: ReactNode;
   /** Optional maximum height, as a Size-* token name. The menu never grows past the window either way. */
   maxHeight?: NlMenuMaxHeight;
-  /** bottom-start (default): below the trigger. end-start: beside it, at the end (OD-118). */
+  /**
+   * bottom-start (default): below the trigger. top-start: above it. end-start, end-end: beside it at the end, aligned
+   * to its top (OD-118) or bottom (NlSideNavUser minimized). Each flips to the other side when there isn't room.
+   */
   placement?: NlMenuPlacement;
 }
 
@@ -90,6 +96,21 @@ const FOCUSABLE =
 
 const isEnabled = (row: HTMLElement) =>
   row.getAttribute('aria-disabled') !== 'true' && !(row as HTMLButtonElement).disabled;
+
+/** Our logical placement as a @floating-ui placement; "end" is the right in left-to-right, the left in right-to-left. */
+const floatingPlacement = (placement: NlMenuPlacement, rtl: boolean) => {
+  const end = rtl ? 'left' : 'right';
+  switch (placement) {
+    case 'top-start':
+      return 'top-start';
+    case 'end-start':
+      return `${end}-start` as const;
+    case 'end-end':
+      return `${end}-end` as const;
+    default:
+      return 'bottom-start';
+  }
+};
 
 /** A design token in pixels, read from the page (Space-* are length custom properties). */
 const tokenPx = (name: string) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
@@ -141,12 +162,7 @@ export function NlMenu({
     const update = () => {
       void computePosition(anchor, panel, {
         strategy: 'fixed',
-        placement:
-          placement === 'end-start'
-            ? getComputedStyle(anchor).direction === 'rtl'
-              ? 'left-start'
-              : 'right-start'
-            : 'bottom-start',
+        placement: floatingPlacement(placement, getComputedStyle(anchor).direction === 'rtl'),
         middleware: [
           offset(gap),
           flip({ padding: edge }),

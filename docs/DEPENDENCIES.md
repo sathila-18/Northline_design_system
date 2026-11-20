@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #68 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-118, OD-121 to OD-131 and OD-148 to OD-191 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #69 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-132 and OD-148 to OD-196 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -36,7 +36,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 8 | `NlSlider` | yes | – | – | – | ✅ batch 1 | ✅ |
 | 9 | `NlRadio` | yes | – | `NlRadioListItem` | – | ✅ batch 1 | ✅ |
 | 10 | `NlSwitch` | yes | – | `NlSwitchListItem` | – | ✅ batch 1 | ✅ |
-| 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | OD-120 | ✅ batch 2 | ✅ |
+| 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | – | ✅ batch 2 | ✅ |
 | 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | – | ✅ batch 2 | ✅ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
 | 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
@@ -87,7 +87,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 49 | `NlTextArea` | yes | `NlTextAreaBase` | – | – | ✅ batch 5 | ✅ |
 | 50 | `NlCalendar` | yes | `NlCalendarDay`, `NlButton`, `NlLabel` | `NlDateField` | – | ✅ batch 5 | ✅ |
 | 51 | `NlStep` | internal | `NlIcon`, `NlLabel` | `NlStepper` | – | ✅ batch 6 | ⬜ |
-| 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | OD-119 | ✅ batch 6 | ✅ |
+| 52 | `NlListItemBase` | internal | `NlLabel`, `NlTextBlock`, `NlDivider` | `NlListItem`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSwitchListItem`, `NlSideNavUser` | – | ✅ batch 6 | ✅ |
 | 53 | `NlListItem` | yes | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | `NlSelect`, `NlTable` | – | ✅ batch 6 | ✅ |
 | 54 | `NlCheckboxListItem` | yes | `NlListItemBase`, `NlCheckboxControl` | `NlMultiSelect`, `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
 | 55 | `NlRadioListItem` | yes | `NlListItemBase`, `NlRadio` | `NlTableColumnFilter` | – | ✅ batch 6 | ✅ |
@@ -104,7 +104,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | `NlSideNav` | – | ✅ batch 7 | ✅ |
-| 69 | `NlSideNavUser` | yes | `NlListItemBase`, `NlAvatar` | `NlSideNav` | OD-119, OD-120 | ✅ batch 7 | ⬜ |
+| 69 | `NlSideNavUser` | yes | `NlListItemBase`, `NlAvatar` | `NlSideNav` | – | ✅ batch 7 | ✅ |
 
 ### Organisms
 
@@ -130,10 +130,10 @@ Build and settle these early. A change to them ripples widely.
 |---|---|---|
 | `NlIcon` | 21 | – |
 | `NlButton` | 17 | OD-1 / OD-40 |
-| `NlTextBlock` | 11 | OD-120 (OD-14, OD-15, OD-16, OD-41 decided) |
+| `NlTextBlock` | 11 | – (OD-14, OD-15, OD-16, OD-41, OD-120 decided) |
 | `NlLabel` | 6 | – |
 | `NlInputBase` | 6 | – |
-| `NlListItemBase` | 5 | OD-119 (OD-14, OD-15, OD-97, OD-148 to OD-151 decided) |
+| `NlListItemBase` | 5 | – (OD-14, OD-15, OD-97, OD-119, OD-148 to OD-151 decided) |
 | `NlCheckboxControl` | 5 | – |
 | `NlMenu` | 5 | OD-19 |
 
@@ -181,8 +181,8 @@ Decide these before building the components listed under "Affects".
 | OD-50 | `NlLabel` | Tone option | Batch 6 makes this stronger: add `tone` (tertiary default, primary, secondary, action). `NlStep` needs three colours, `NlCalendar` weekday names want `text-secondary` | `NlCalendar`, `NlStep` | **Decided** 19 Nov 2026: `tone` added to `NlLabel` (tertiary default, primary, secondary, action) |
 | OD-93 | `NlBanner`, `NlSnackbar` | Their text is recoloured by tone, which `NlTextBlock` can't do | Plain text inside these components, not `NlTextBlock` (inventory dependency for the snackbar goes) | `NlBanner`, `NlSnackbar` | **Decided** 20 Nov 2026: plain text |
 | OD-117 | `NlButton` | The table's link cell needs a link button with no inline padding, so its text lines up with the header | `variant="link"` gets no inline padding (instead of tertiary padding) | `NlTableCell`, any inline link | **Decided** 20 Nov 2026: `NlButton` link `flush` |
-| OD-119 | `NlListItemBase` | The side nav user row uses different padding (`Space-L` / `Space-XL`) and `Radius-M` | A third density, `density="nav"` | `NlSideNavUser` | Open |
-| OD-120 | `NlTextBlock` | The side nav user row pairs a `Label M` title with a `Body M` description, which neither proposed small type gives | A second small type, or let `type="label"` take `Body M` | `NlSideNavUser`, maybe list rows | Open |
+| OD-119 | `NlListItemBase` | The side nav user row uses different padding (`Space-L` / `Space-XL`) and `Radius-M` | A third density, `density="nav"` | `NlSideNavUser` | **Decided** 20 Nov 2026: `appearance="nav"` instead (padding, radius and the nav fills) |
+| OD-120 | `NlTextBlock` | The side nav user row pairs a `Label M` title with a `Body M` description, which neither proposed small type gives | A second small type, or let `type="label"` take `Body M` | `NlSideNavUser`, maybe list rows | **Decided** 20 Nov 2026: new `type="label-body"` |
 
 ### 3. By component
 
@@ -482,7 +482,12 @@ Decide these before building the components listed under "Affects".
 
 **NlSideNavUser**
 - OD-119, OD-120: see section 2
-- OD-132 · Avatar `size="medium"` (40); the reference sets the xsmall variant but draws 40 · Open
+- OD-132 · Avatar `size="medium"` (40); the reference sets the xsmall variant but draws 40 · **Decided** 20 Nov 2026: approved
+- OD-192 · `menu` takes the rows; the component renders the `NlMenu` · **Decided** 20 Nov 2026: approved
+- OD-193 · `NlMenu` placements `top-start` (expanded) and `end-end` (minimized) · **Decided** 20 Nov 2026: approved
+- OD-194 · Named from its text plus the menu label as hidden text (WCAG 2.5.3) · **Decided** 20 Nov 2026: approved
+- OD-195 · Minimized padding `Space-L` all round · **Decided** 20 Nov 2026: approved
+- OD-196 · Long name or email cut, `title` when cut · **Decided** 20 Nov 2026: approved
 
 ### Organisms
 

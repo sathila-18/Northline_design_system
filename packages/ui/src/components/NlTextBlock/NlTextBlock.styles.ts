@@ -22,6 +22,7 @@ export const contentGap = {
   'headline-medium': 'nl:gap-xs',
   'headline-small': 'nl:gap-xs',
   label: 'nl:gap-none',
+  'label-body': 'nl:gap-none',
   body: 'nl:gap-none',
 } as const;
 
@@ -34,6 +35,7 @@ export const heading = {
   'headline-medium': 'nl:m-none nl:text-headline-medium-h5',
   'headline-small': 'nl:m-none nl:text-headline-small-h6',
   label: 'nl:m-none nl:text-label-m',
+  'label-body': 'nl:m-none nl:text-label-m',
 } as const;
 
 /** Description text style, per type. */
@@ -45,6 +47,8 @@ export const description = {
   'headline-medium': 'nl:m-none nl:text-body-m',
   'headline-small': 'nl:m-none nl:text-body-m',
   label: 'nl:m-none nl:text-body-s',
+  /** Label M heading with a Body M description, for the side nav user (OD-120). */
+  'label-body': 'nl:m-none nl:text-body-m',
   body: 'nl:m-none nl:text-body-l',
 } as const;
 

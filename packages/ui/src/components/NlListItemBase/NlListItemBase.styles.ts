@@ -28,6 +28,21 @@ export const layout = {
     default: 'nl:p-xl nl:rounded-l nl:inset-ring',
     compact: 'nl:p-m nl:rounded-l nl:inset-ring',
   },
+  /** Nav (OD-119): Space-L block, Space-XL inline, Radius-M. Density doesn't change it. */
+  nav: {
+    default: 'nl:px-xl nl:py-l nl:rounded-m',
+    compact: 'nl:px-xl nl:py-l nl:rounded-m',
+  },
+  /** Nav, not actionable: no side padding (NlSideNavUser with no menu). */
+  navStatic: {
+    default: 'nl:px-none nl:py-l nl:rounded-m',
+    compact: 'nl:px-none nl:py-l nl:rounded-m',
+  },
+  /** Nav with the text hidden (minimized side nav): Space-L all round (designer's choice 20 Nov 2026). */
+  navTextHidden: {
+    default: 'nl:p-l nl:rounded-m',
+    compact: 'nl:p-l nl:rounded-m',
+  },
 } as const;
 
 /**
@@ -50,6 +65,14 @@ export const state = {
     selected: 'nl:bg-primary nl:inset-ring-active',
     selectedActionable: 'nl:bg-primary nl:inset-ring-active nl:hover:bg-secondary nl:active:bg-secondary',
     disabled: 'nl:bg-primary nl:inset-ring-disabled',
+  },
+  /** Nav (OD-119): none; hover bg-tertiary; pressed bg-neutral; selected (an open menu) bg-tertiary. */
+  nav: {
+    default: 'nl:bg-transparent',
+    defaultActionable: 'nl:bg-transparent nl:hover:bg-tertiary nl:active:bg-neutral',
+    selected: 'nl:bg-tertiary',
+    selectedActionable: 'nl:bg-tertiary nl:active:bg-neutral',
+    disabled: 'nl:bg-transparent',
   },
 } as const;
 
@@ -93,6 +116,9 @@ export const leadingColour = {
 
 /** The text column: vertical, gap Space-XS, takes the remaining width. */
 export const textColumn = 'nl:flex nl:min-w-0 nl:flex-1 nl:flex-col nl:gap-xs';
+
+/** The text column kept for assistive tech only (`hideText`): out of the layout, so the row is the leading slot. */
+export const textColumnHidden = 'nl:sr-only';
 
 /** The title row inside the heading: title text → extra icon, gap Space-M (8, OD-150). */
 export const titleRow = 'nl:inline-flex nl:min-w-0 nl:items-center nl:gap-m';
