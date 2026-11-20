@@ -641,7 +641,7 @@ _The designer adds rows here before each build._
 | 51 | Step (internal) | `NlStep` | `NlIcon`, `NlLabel` | [§9](#nlstep) | ⬜ |
 | 52 | List item base (internal) | `NlListItemBase` | `NlLabel`, `NlTextBlock`, `NlDivider` | [§9](#nllistitembase) | ✅ |
 | 53 | List item | `NlListItem` | `NlListItemBase`, `NlAvatar`, `NlListCaption`, `NlIcon` | [§9](#nllistitem) | ✅ |
-| 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ⬜ |
+| 54 | Checkbox list item | `NlCheckboxListItem` | `NlListItemBase`, `NlCheckboxControl` | [§9](#nlcheckboxlistitem) | ✅ |
 | 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ⬜ |
 | 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ⬜ |
 | 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
@@ -6071,7 +6071,7 @@ NlListItemBase (vertical)
 | Gap content → divider | `Space-XL` (compact `Space-M`) | – |
 | Card | – | `Radius-L`, 1px inside border (§4.2); cards `Space-L` apart (set by the list) |
 
-- Content: horizontal, gap `Space-L`, items centred vertically.
+- Content: horizontal, gap `Space-L`, items centred vertically. `accessoryAlign="title"` puts the accessories on the title's first line instead (control rows, designer's choice 20 Nov 2026).
 - Text column: gap `Space-XS`. Title row: gap `Space-M` (8) between the title text and the extra icon (OD-150).
 - Trailing slot: gap `Space-S`.
 - Text styles: large = `NlTextBlock type="headline-small"` (title `Headline Small-H6`, description `Body M`); small = `type="label"` (title `Label M`, description `Body S`) (OD-14).
@@ -6269,7 +6269,7 @@ The base's tokens (`NlListItemBase`), plus `NlIcon`, `NlAvatar` and `NlListCapti
 
 **Level** Molecule (mapped) · **Base** `NlListItemBase` · **Depends on** `NlCheckboxControl` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-100, OD-101, OD-102.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-100, OD-102 and OD-156 to OD-159 decided (OD-101 belongs to `NlRadioListItem`).
 
 A list row with a checkbox, for picking several items from a list (for example in a multi-select menu or a filter).
 
@@ -6281,10 +6281,12 @@ As `NlListItemBase`, with `NlCheckboxControl` in the leading slot (default) or t
 
 | Option | Values | Prop |
 |---|---|---|
-| Checked | unchecked, checked, indeterminate | `checked` / `defaultChecked`, `indeterminate?`, `onCheckedChange` |
+| Checked | unchecked, checked | `checked` / `defaultChecked`, `onCheckedChange`. No indeterminate (OD-156): that is for the table components |
 | Checkbox side | leading (default), trailing | `controlSide` |
 | Appearance, size, density | as `NlListItemBase` | `appearance`, `size`, `density` |
 | Description | on or off | `description?` |
+| Body | optional, in place of the description | `body?` (OD-158) |
+| Divider | on (default) or off | `divider?` |
 | Disabled | on or off | `disabled?` |
 | Value | for forms and menus | `value` |
 
@@ -6298,19 +6300,57 @@ Default, hover, checked, checked + hover, focus, disabled. The checkbox follows 
 
 #### Behaviour and accessibility
 
-- The whole row toggles. It is a `<label>` around a native checkbox, or `role="option"` with `aria-selected` inside a multi-select listbox.
+- The whole row toggles. It is a `<label>` around a native checkbox. No menu mode (OD-157).
 - Keyboard: Space toggles. The focus ring goes around the row, not the box.
-- Indeterminate is for a "select all" row above a group.
-- A group of these takes a group label (`role="group"` with a name), for example "Tiers".
+- A group of these takes a group label (`role="group"` with a name), for example "Tiers". The page provides the wrapper (OD-159).
 
 #### Mapping notes
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Types | Default, country, payment | Default only | Matches |
-| Indeterminate | Code only (select all), per the reference's description | Same | Matches |
+| Indeterminate | Code only (select all), per the reference's description | Left out; table components handle select all (OD-156) | Approved |
 | Focus ring on the row | Code only, per the reference's description | Same | Matches |
-| Checkbox hover follows the row | Not drawn | As above | **Needs approval** |
+| Checkbox hover follows the row | Not drawn | `NlCheckboxControl inRow` follows the row's named group `list-item` (OD-100) | Approved |
+| Menu rows | `role="option"` in a multi-select listbox | Left out (OD-157) | Approved |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Row | `NlListItemBase as="label"`, `actionable`, `controlRow`; `selected` = checked; `data-checked`, `data-control-side` |
+| Checkbox | `NlCheckboxControl inRow` in the `controlSide` slot (`leading` default, `trailing`) |
+| Checked | Native `checked` / `defaultChecked`; internal state for uncontrolled use so the row colour follows; `onCheckedChange(checked)` and native `onChange` |
+| Name | The label's text: title, then description or body |
+| Disabled | Native `disabled` on the input; the row drops the hover group |
+| Value, name, ref and other input attributes | Go to the input |
+
+#### API
+
+```tsx
+import { NlCheckboxListItem } from '@northline/ui';
+
+<div role="group" aria-labelledby="tiers-label">
+  <NlCheckboxListItem name="tiers" value="tier-2" title="Tier 2" description="1,200 members" defaultChecked />
+</div>
+```
+
+`'use client'` (checked state).
+
+#### Tokens used
+
+The base's tokens (`NlListItemBase`) and `NlCheckboxControl`'s own; the row ring is the standard focus ring through `has-focus-visible`.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Ring round the row (OD-102) | `NlListItemBase controlRow` adds the standard ring with `has-focus-visible:`; `NlCheckboxControl inRow` drops its own ring |
+| Hover follows the row (OD-100) | The row is the named group `list-item` while enabled; `inRow` swaps the box's `group-hover/checkbox` and `group-active/checkbox` for `group-hover/list-item` and `group-active/list-item` |
+| Pointer | The row shows the pointer cursor while enabled, like the checkbox |
+| Checkbox lines up with the title | Designer's choice, 20 Nov 2026: `NlListItemBase accessoryAlign="title"`: content aligned to the top, the accessory slots one title line high (`h-lh` in the title's text style), the box centred in it. Other list items keep `center` |
+| Disabled contrast | Known issue K3; disabled samples are marked |
+
 
 ---
 
@@ -7998,3 +8038,4 @@ Known issues
 | 20 Nov 2026 | NlCalendar (#50, public): single date or range month grid; 6 weeks of `NlCalendarDay`, `NlLabel` weekday headers (`tone="secondary"`, OD-50), `NlButton` previous and next; one tab stop with roving focus and full keyboard; range preview; limits and unavailable dates; ISO dates in UTC; `names` instead of locale formatting; today read after hydration; `bg-primary` (OD-90). Approved by the designer |
 | 20 Nov 2026 | NlListItemBase (#52, internal): shared list row, plain (divider) or filled (card), large or small, default or compact; leading and trailing accessories take any component; top label (`NlLabel` small, OD-149), extra icon 8 from the title (OD-150); hover and pressed only when actionable (OD-97, OD-151); divider stays `border-default` (OD-148); `as` for the mapped item's element. Approved by the designer |
 | 20 Nov 2026 | NlListItem (#53, public): standard row on `NlListItemBase`; leading icon or avatar (medium), trailing `NlListCaption` and chevron; link, button, menu row or static; a chevron makes the whole row clickable (filled always); static rows no hover or focus (OD-98); `aria-current` from the page (OD-152); disabled per element (OD-153); `divider` and `body` exposed (OD-154, OD-155); name from the row's text (WCAG 2.5.3). Approved by the designer |
+| 20 Nov 2026 | NlCheckboxListItem (#54, public): `<label>` row on `NlListItemBase` around `NlCheckboxControl`, leading or trailing; checked rows take the selected colours; ring round the row and box hover following the row (OD-100, OD-102: `controlRow`, `inRow`); checkbox on the title's first line (`accessoryAlign="title"`); no indeterminate or menu mode (OD-156, OD-157); `body` exposed (OD-158); group label from the page (OD-159). Approved by the designer |

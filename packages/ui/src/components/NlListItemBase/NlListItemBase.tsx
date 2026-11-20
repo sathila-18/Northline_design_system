@@ -7,6 +7,7 @@ import * as styles from './NlListItemBase.styles';
 export type NlListItemBaseAppearance = 'plain' | 'filled';
 export type NlListItemBaseSize = 'large' | 'small';
 export type NlListItemBaseDensity = 'default' | 'compact';
+export type NlListItemBaseAccessoryAlign = 'center' | 'title';
 
 export interface NlListItemBaseProps extends Omit<ComponentPropsWithRef<'div'>, 'title' | 'className' | 'children'> {
   /** plain: rows with dividers (default). filled: separate cards. */
@@ -37,6 +38,10 @@ export interface NlListItemBaseProps extends Omit<ComponentPropsWithRef<'div'>, 
   disabled?: boolean;
   /** Hover and pressed colours, for rows the mapped item makes actionable (OD-151). */
   actionable?: boolean;
+  /** Accessories centred on the row (default) or on the title's first line (control rows). */
+  accessoryAlign?: NlListItemBaseAccessoryAlign;
+  /** The row wraps a control (checkbox, radio, switch): ring round the row, control follows the row's hover. */
+  controlRow?: boolean;
   /** The root element: 'div' (default), 'li', 'label', 'button', 'a' or a router link component. */
   as?: ElementType;
   /** Passed through when `as` is a button. */
@@ -70,6 +75,8 @@ export function NlListItemBase({
   selected = false,
   disabled = false,
   actionable = false,
+  controlRow = false,
+  accessoryAlign = 'center',
   as,
   className,
   ...rest
@@ -88,8 +95,15 @@ export function NlListItemBase({
         : 'default';
   const colour = disabled ? 'disabled' : 'enabled';
   const hasBody = body !== undefined && body !== null;
+  const slotLine = accessoryAlign === 'title' ? styles.slotTitleLine[size] : undefined;
 
-  const classes = [styles.root, styles.layout[layoutKey][density], styles.state[appearance][stateKey], className]
+  const classes = [
+    styles.root,
+    styles.layout[layoutKey][density],
+    styles.state[appearance][stateKey],
+    controlRow ? styles.controlRow[disabled ? 'disabled' : 'enabled'] : undefined,
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -116,10 +130,14 @@ export function NlListItemBase({
       data-selected={selected || undefined}
       data-disabled={disabled || undefined}
       data-actionable={actionable || undefined}
+      data-accessory-align={accessoryAlign}
     >
-      <span className={styles.content} data-slot="content">
+      <span className={[styles.content, styles.contentAlign[accessoryAlign]].join(' ')} data-slot="content">
         {leading !== undefined && leading !== null && (
-          <span className={[styles.leading, styles.leadingColour[colour]].join(' ')} data-slot="leading">
+          <span
+            className={[styles.leading, styles.leadingColour[colour], slotLine].filter(Boolean).join(' ')}
+            data-slot="leading"
+          >
             {leading}
           </span>
         )}
@@ -139,7 +157,10 @@ export function NlListItemBase({
           )}
         </span>
         {trailing !== undefined && trailing !== null && (
-          <span className={[styles.trailing, styles.trailingColour[colour]].join(' ')} data-slot="trailing">
+          <span
+            className={[styles.trailing, styles.trailingColour[colour], slotLine].filter(Boolean).join(' ')}
+            data-slot="trailing"
+          >
             {trailing}
           </span>
         )}
