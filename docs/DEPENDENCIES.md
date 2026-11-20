@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #65 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-115, OD-121 to OD-128 and OD-148 to OD-183 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #66 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-116, OD-121 to OD-129 and OD-148 to OD-185 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -101,7 +101,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 63 | `NlFileUpload` | yes | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | – | – | ✅ batch 7 | ✅ |
 | 64 | `NlDialog` | yes | `NlTextBlock`, `NlButton`, `NlOverlay` | – | – | ✅ batch 7 | ✅ |
 | 65 | `NlPagination` | yes | `NlPaginationItem`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
-| 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | OD-116 | ✅ batch 7 | ⬜ |
+| 66 | `NlTableHeaderCell` | yes | `NlCheckboxControl`, `NlLabel`, `NlIcon` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | OD-117 | ✅ batch 7 | ⬜ |
 | 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon` (`NlMenu` if OD-118 is approved) | `NlSideNav` | OD-118 | ✅ batch 7 | ⬜ |
 | 69 | `NlSideNavUser` | yes | `NlListItemBase`, `NlAvatar` | `NlSideNav` | OD-119, OD-120 | ✅ batch 7 | ⬜ |
@@ -461,8 +461,10 @@ Decide these before building the components listed under "Affects".
 - OD-183 · Out-of-range page clamped · **Decided** 20 Nov 2026: approved
 
 **NlTableHeaderCell**
-- OD-116 · Sort and filter controls are plain native buttons inside the cell, not `NlButton` · Open
-- OD-129 · Icons `unfold_more`, `arrow_upward`, `arrow_downward`, `keyboard_arrow_down/up` · Open
+- OD-116 · Sort and filter controls are plain native buttons inside the cell, not `NlButton` · **Decided** 20 Nov 2026: approved
+- OD-129 · Icons `unfold_more`, `arrow_upward`, `arrow_downward`, `keyboard_arrow_down/up` · **Decided** 20 Nov 2026: approved
+- OD-184 · Sort announcement · **Decided** 20 Nov 2026: left to `NlTable`
+- OD-185 · Applied filter in the button's name · **Decided** 20 Nov 2026: approved
 
 **NlTableCell**
 - OD-117: see section 2 (link with no inline padding)
