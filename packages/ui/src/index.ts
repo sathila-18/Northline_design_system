@@ -48,5 +48,6 @@ export * from './components/NlSideNavUser';
 export * from './components/NlSelect';
 export * from './components/NlMultiSelect';
 export * from './components/NlDateField';
+export * from './components/NlTableColumnFilter';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

@@ -667,7 +667,7 @@ _The designer adds rows here before each build._
 | 71 | Multi select | `NlMultiSelect` | `NlInputBase`, `NlMenu`, `NlCheckboxListItem`, `NlInputChip` | [§9](#nlmultiselect) | ✅ |
 | 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ✅ |
 | 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
-| 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ⬜ |
+| 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ✅ |
 | 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ⬜ |
 | 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ⬜ |
 | 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ⬜ |
@@ -8281,7 +8281,7 @@ From `NlStep`: done, current, upcoming.
 
 **Level** Organism (contains list items and `NlSearchField`, molecules) · **Base** none · **Depends on** `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` · **Internal to tables** (exported for custom tables)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-212 to OD-215 decided.
 
 The menu that opens from a column header's filter button, to filter the table by that column's values.
 
@@ -8334,6 +8334,40 @@ From the parts. Opening always starts from the applied values with an empty sear
 | Behaviour (apply, reset, radio applies at once, search threshold 8) | From the reference's description (code only) | As above | Matches |
 | Width | Drawn at 377 | `NlMenu` sizing (fits the content, at least the trigger) | Matches |
 | Button labels | Reset and Apply | Same | Matches |
+| Focus on open | Not described | The search when shown; else the first checkbox, or the checked radio ("All" with no filter) | Approved (OD-212) |
+| Empty Apply | Not described | Applies `[]` (no filter), so Reset then Apply clears the column's filter | Approved (OD-213) |
+| Search match | Not described | Anywhere in the label, ignoring case (as OD-204) | Approved (OD-214) |
+| Radio: choose vs arrow | "Choosing applies and closes; arrow keys apply and keep it open" | A click or Space applies and closes; a change that follows an arrow key applies and stays open | Approved (OD-215) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Panel | `NlMenu kind="filter"` (non-modal dialog) "Filter {column}"; `open`, `onOpenChange`, `anchorRef` (the header cell's `filterRef`), `id` from the caller; focus back to the anchor on close |
+| Type | `multiple` (default `true`): `value: string[]`, `onApply(string[])`; `multiple={false}`: `value: string` (`''` = "All"), `onApply(string)` |
+| Search | `NlSearchField size="small"` "Search {column}" in the header when `options.length > 8`, or as `searchable` says; "All" hidden while searching; "No results" as a small static `NlListItem` in a polite `role="status"` |
+| Checkbox rows | `NlCheckboxListItem size="small"`, divider on every row but the last (whose plain padding gives `Space-XL` at the bottom); a draft from the applied values on each open |
+| Footer | Checkbox only: `NlButton variant="tertiary" size="small"` Reset (clears the draft), `variant="primary" size="small"` Apply (applies in option order and closes) |
+| Radio rows | `NlRadioListGroup` "Filter {column}" of `NlRadioListItem size="small"`, "All" first, dividers as above; a change applies, and closes unless it came from an arrow key |
+
+#### API
+
+```tsx
+import { NlTableColumnFilter, NlTableHeaderCell } from '@northline/ui';
+
+<NlTableHeaderCell filter={open ? 'open' : applied ? 'applied' : 'available'} filterRef={filterRef} onFilterClick={() => setOpen(!open)}>
+  Tier
+</NlTableHeaderCell>
+<NlTableColumnFilter open={open} onOpenChange={setOpen} anchorRef={filterRef} column="Tier" options={tiers} value={tiersApplied} onApply={setTiersApplied} />
+```
+
+Props: `open`, `onOpenChange`, `anchorRef`, `column`, `options`, `multiple?`, `value`, `onApply`, `searchable?`, `id?`. `'use client'` (state, refs).
+
+#### Tokens used
+
+The parts' own: `NlMenu` (`Space-XS` gap, header `Space-L`, footer `Space-XL` and `Space-M`), `NlCheckboxListItem` and `NlRadioListItem` small (`Space-XL`, dividers), `NlSearchField` small, `NlButton` small, `NlListItem` small.
+
+Checked in Chrome: axe clean in every brand and theme, closed, open and with "No results"; Escape returns focus to the filter button.
 
 ---
 
@@ -8758,3 +8792,4 @@ Known issues
 | 20 Nov 2026 | NlSelect (#70, public): `NlInputBase type="select"` (new: read-only combobox field, open look while expanded, box click, `boxRef`) with a chevron, and an `NlMenu kind="select"` of small compact `NlListItem` options under the box (`maxHeight="320"`, new `returnFocusRef`); focus moves into the list (OD-197); type-ahead on the closed field (OD-139); value in a hidden input; `aria-required` (OD-198). OD-139, OD-140, OD-197 to OD-201 decided; K9 accepted. Approved by the designer |
 | 20 Nov 2026 | NlMultiSelect (#71, public): `NlInputBase type="select"` field whose value reads the chosen labels, with `NlInputChip` xsmall chips drawn over it (new `valueOverlay`, clipped sideways only) and a decorative "+N" chip for those that don't fit (new `NlInputChip removable`, OD-136); `NlMenu kind="select" multiple` of `NlCheckboxListItem` option rows (new `role="option"` mode, OD-202) with an optional `NlSearchField` header (new `NlMenu initialFocus`, OD-204, OD-205); focus after a removal (OD-206). OD-136, OD-202 to OD-206 decided. Approved by the designer |
 | 20 Nov 2026 | NlDateField (#72, public): typed date with a digit mask (`format`, default `DD/MM/YYYY`, OD-137; `dateFormat.ts`), the pattern shown while focused (new `NlInputBase formatHint`, OD-209), errors for invalid and out-of-range dates; calendar `NlButton` opening an `NlMenu` dialog with `NlCalendar` (new `NlMenu matchAnchorWidth`, `initialFocusSelector`, OD-207, OD-208); focus back to the input (OD-210); ISO value (OD-211); large only (OD-141). Approved by the designer |
+| 20 Nov 2026 | NlTableColumnFilter (#74, exported for custom tables): `NlMenu kind="filter"` dialog "Filter {column}" from the header cell's filter button; `NlCheckboxListItem` rows with Reset and Apply, or an `NlRadioListGroup` with "All" first (choosing applies and closes, arrow keys apply and stay open, OD-215); `NlSearchField` header above 8 values; starts from the applied values; focus back to the filter button. OD-212 to OD-215 decided. Approved by the designer |
