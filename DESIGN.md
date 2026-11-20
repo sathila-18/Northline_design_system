@@ -650,7 +650,7 @@ _The designer adds rows here before each build._
 | 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ✅ |
 | 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ✅ |
 | 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ✅ |
-| 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ⬜ |
+| 62 | Stat card | `NlStatCard` | `NlLabel` | [§9](#nlstatcard) | ✅ |
 | 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ⬜ |
 | 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ⬜ |
 | 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ⬜ |
@@ -7044,7 +7044,7 @@ Presentational, no `'use client'`.
 
 **Level** Molecule (contains `NlLabel`, L1) · **Base** none · **Depends on** `NlLabel` (see "Mapping notes") · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-50, OD-113.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-50, OD-113, OD-175 and OD-176 decided.
 
 A summary number with its label, for dashboards and report headers ("Total points: 806,400").
 
@@ -7063,6 +7063,7 @@ NlStatCard (rounded tinted card)
 | Label | text | `label` |
 | Value | a formatted string | `value: string` (the page formats it, so output matches on server and client) |
 | Element | for grouping | `as`, default `div` |
+| In a list | off (default) or on | `inList?: boolean`: label `<dt>`, value `<dd>`, inside the page's `<dl>` (OD-175) |
 
 #### Sizes and layout
 
@@ -7092,12 +7093,39 @@ None. Not interactive.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Value text style | `Headline Large-H4` (24) inside a text block | `Data M` (24, tabular figures), the style §3.4 made for stat cards. The card renders the value itself, so it no longer depends on `NlTextBlock` | **Needs approval** |
-| Label colour | `NlLabel` recoloured to `text-secondary` (the reference's own note: the default label is too light on `bg-active` in Dark) | Needs `NlLabel tone="secondary"` (OD-50) | **Needs approval** |
+| Value text style | `Headline Large-H4` (24) inside a text block | `Data M` (24, tabular figures), the style §3.4 made for stat cards. The card renders the value itself, so it no longer depends on `NlTextBlock` | Approved (OD-113) |
+| Label colour | `NlLabel` recoloured to `text-secondary` (the reference's own note: the default label is too light on `bg-active` in Dark) | `NlLabel tone="secondary"` (OD-50) | Approved |
+| Long values | Not described | Wrap, never cut off (OD-176) | Approved |
+| Description list | "Use a `<dl>`" | Opt-in `inList`; the page provides the `<dl>` (OD-175) | Approved |
 | Card gap and width | From the reference's description | Set by the page | Matches |
 | Card colour, padding, radius | As in the table | Same | Matches |
 
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Label | `label` → `NlLabel size="medium" tone="secondary"`, in a `<div>` (or `<dt>` with `inList`) |
+| Value | `value` → `<p>` (or `<dd>`), Data M with tabular figures, `text-primary`, wraps |
+| Card | `as` (default `div`); `bg-active`, `Radius-L`, padding `Space-2XL`, column, gap `Space-none`, centred vertically, full width |
+
+#### API
+
+```tsx
+import { NlStatCard } from '@northline/ui';
+
+<dl className="grid">
+  <NlStatCard inList label="Total points" value={formattedPoints} />
+</dl>
+```
+
+Presentational, no `'use client'`.
+
+#### Tokens used
+
+`bg-active`, `Radius-L`, `Space-2XL`, `Space-none`; Data M, `text-primary`; `NlLabel`'s own (Label M, `text-secondary`).
+
 ---
+
 
 ### NlFileUpload
 
@@ -8275,3 +8303,4 @@ Known issues
 | 20 Nov 2026 | NlSnackbar (#59, public): look (`NlSnackbar`, four tones, single or stacked, tertiary action and close) plus `NlSnackbarProvider` and `useNlSnackbar()` (OD-166): bottom-centre region, status and alert live regions from load, one at a time, 6s auto-dismiss without an action (pauses on hover or focus), F6 into it. New tokens `Size-560` (OD-91) and `--nl-duration-snackbar` (OD-92). Approved by the designer |
 | 20 Nov 2026 | NlButtonDock (#60, public): bottom action row; tertiary at the start, secondary and primary at the end, all small with fixed variants; optional note (string as `NlTextBlock` description); sticky shadow; end group wraps on narrow containers (OD-170); renders nothing when empty (OD-171); no destructive primary (OD-169). Approved by the designer |
 | 20 Nov 2026 | NlEmptyState (#61, public): centred icon (`NlIconContainer` 48 or 64, or `iconSlot`; none when neither, OD-112, OD-173), `NlTextBlock` heading (default `h2`, OD-172) and description, optional action; `live` for "No results" (OD-174). Approved by the designer |
+| 20 Nov 2026 | NlStatCard (#62, public): `bg-active` card with `NlLabel` (medium, secondary, OD-50) over a Data M value drawn by the card (OD-113); `inList` for `<dt>` / `<dd>` (OD-175); long values wrap (OD-176). Approved by the designer |

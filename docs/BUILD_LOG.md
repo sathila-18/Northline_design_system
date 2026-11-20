@@ -70,3 +70,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlSnackbar | 2026-11-20 11:28 | 2026-11-20 11:53 | OD-91, OD-92 (Size-560 and --nl-duration-snackbar tokens added, audit addendum), OD-93, OD-104, OD-105, OD-110, OD-111, OD-166 to OD-168 decided; NlSnackbarProvider + useNlSnackbar. Approved by the designer |
 | NlButtonDock | 2026-11-20 12:03 | 2026-11-20 13:20 | OD-169 to OD-171 decided; buttons small, variants fixed; string accessory as NlTextBlock description. Approved by the designer |
 | NlEmptyState | 2026-11-20 13:22 | 2026-11-20 13:56 | OD-112, OD-172 to OD-174 decided; iconSlot wins over icon; live adds role status. Approved by the designer |
+| NlStatCard | 2026-11-20 14:02 | 2026-11-20 14:12 | OD-50, OD-113, OD-175, OD-176 decided; value in Data M drawn by the card; inList for dt/dd. Approved by the designer |
