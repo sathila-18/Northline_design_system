@@ -668,7 +668,7 @@ _The designer adds rows here before each build._
 | 72 | Date field | `NlDateField` | `NlInputBase`, `NlMenu`, `NlCalendar`, `NlButton` | [§9](#nldatefield) | ✅ |
 | 73 | Stepper | `NlStepper` | `NlStep` | [§9](#nlstepper) | ⬜ |
 | 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ✅ |
-| 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ⬜ |
+| 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ✅ |
 | 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ⬜ |
 | 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ⬜ |
 | 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ⬜ |
@@ -8375,7 +8375,7 @@ Checked in Chrome: axe clean in every brand and theme, closed, open and with "No
 
 **Level** Organism (contains `NlButtonDock`, a molecule) · **Base** none · **Depends on** `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-16, OD-133, OD-143.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-16, OD-133, OD-143 and OD-216 to OD-218 decided.
 
 A full-height panel that slides in from the right, for creating or editing something without leaving the page ("Edit reward").
 
@@ -8434,11 +8434,51 @@ Closed, open.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Width | Raw 600 | No size token near 600. Proposed: a width token added to §3.5 (with the dialog widths, OD-121) | **Designer to decide** |
+| Width | Raw 600 | `size`: small `Size-560` (default) or large `Size-720`, the dialog widths; no new token | Approved (OD-133) |
 | Gap between back button and title | `Space-XS` | Same | Matches |
 | Title as a slot | The reference has a title slot | Default `NlTextBlock`, or any slot content | Matches |
 | Shadow | None | None (the overlay separates it) | Matches |
-| Motion | Not in the reference | As above | **Needs approval** |
+| Motion | Not in the reference | Slides in from the end edge (`translate-x-full` → none), Duration slow, standard ease; reduced motion: fade only | Approved (OD-143) |
+| Title → close gap | Not given (back → title is `Space-XS`) | `Space-XS` on both sides of the title | Approved (OD-216) |
+| Body bottom without a footer | Not given | `Space-3XL` | Approved (OD-217) |
+| Divider | Not described | Edge to edge across the panel | Approved (OD-218) |
+| Gaps and scrolling | Panel gap `Space-3XL` | The header → body and body → footer gaps are the body's own `Space-3XL` padding, inside its scroll area, so a focused field's floating label at the top isn't cut off (found in Chrome) | Same look |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Sheet | Native `<dialog>` with `showModal()` (aria-modal, focus kept inside, page inert, Escape, focus back to the opener), labelled by the title; page scroll locked while open; closes after sliding out (as `NlDialog`) |
+| Overlay | `NlOverlay`; a click requests close unless `dismissible={false}` |
+| Panel | Fixed to the end edge, `h-dvh`, `bg-primary`, `--nl-z-modal`; `size` small `Size-560` / large `Size-720`; motion as above |
+| Header | `Space-4XL` top, `Space-3XL` sides, gap `Space-XS`: back `NlButton` (`onBack`, "Back", `arrow_back`), title (text → `NlTextBlock type="headline-large"`, `headingAs` default `h2`; or a slot), close `NlButton` ("Close", `close`, hidden with `hideClose`); buttons tertiary, medium, icon-only, `contentTone="secondary"` |
+| Divider | `divider`: decorative `NlDivider`, `Space-3XL` under the header, edge to edge |
+| Body | `children`; `Space-3XL` padding all round and between blocks, scrolls (focusable while it scrolls) |
+| Footer | `footer` (`NlButtonDockProps`): `NlButtonDock` at the bottom, `sticky` while the body scrolls |
+| First focus | The body's first field, else close, back, then the panel |
+
+#### API
+
+```tsx
+import { NlSideSheet, NlTextField } from '@northline/ui';
+
+<NlSideSheet
+  open={open}
+  onOpenChange={setOpen}
+  title="Edit reward"
+  footer={{ primary: { children: 'Save', onClick: save }, secondary: { children: 'Cancel', onClick: () => setOpen(false) } }}
+>
+  <NlTextField label="Reward name" />
+</NlSideSheet>
+```
+
+Props: `open`, `onOpenChange`, `title`, `headingAs?`, `onBack?`, `hideClose?`, `divider?`, `dismissible?`, `size?`, `children?`, `footer?`, `className?`. `'use client'` (state, refs, effects).
+
+#### Tokens used
+
+`Space-XS`, `Space-3XL`, `Space-4XL`, `Size-560`, `Size-720`; `bg-primary`; `--nl-z-modal`; `--nl-duration-slow`, `--nl-ease-standard`; the parts' own (`NlOverlay`, `NlButton`, `NlTextBlock`, `NlDivider`, `NlButtonDock` with `--nl-shadow-sticky`).
+
+Checked in Chrome: axe clean with the sheet open in every brand and theme (all stories); first focus on the first field (the panel when there's nothing to focus); Escape closes and returns focus to the trigger.
 
 ---
 
@@ -8793,3 +8833,4 @@ Known issues
 | 20 Nov 2026 | NlMultiSelect (#71, public): `NlInputBase type="select"` field whose value reads the chosen labels, with `NlInputChip` xsmall chips drawn over it (new `valueOverlay`, clipped sideways only) and a decorative "+N" chip for those that don't fit (new `NlInputChip removable`, OD-136); `NlMenu kind="select" multiple` of `NlCheckboxListItem` option rows (new `role="option"` mode, OD-202) with an optional `NlSearchField` header (new `NlMenu initialFocus`, OD-204, OD-205); focus after a removal (OD-206). OD-136, OD-202 to OD-206 decided. Approved by the designer |
 | 20 Nov 2026 | NlDateField (#72, public): typed date with a digit mask (`format`, default `DD/MM/YYYY`, OD-137; `dateFormat.ts`), the pattern shown while focused (new `NlInputBase formatHint`, OD-209), errors for invalid and out-of-range dates; calendar `NlButton` opening an `NlMenu` dialog with `NlCalendar` (new `NlMenu matchAnchorWidth`, `initialFocusSelector`, OD-207, OD-208); focus back to the input (OD-210); ISO value (OD-211); large only (OD-141). Approved by the designer |
 | 20 Nov 2026 | NlTableColumnFilter (#74, exported for custom tables): `NlMenu kind="filter"` dialog "Filter {column}" from the header cell's filter button; `NlCheckboxListItem` rows with Reset and Apply, or an `NlRadioListGroup` with "All" first (choosing applies and closes, arrow keys apply and stay open, OD-215); `NlSearchField` header above 8 values; starts from the applied values; focus back to the filter button. OD-212 to OD-215 decided. Approved by the designer |
+| 20 Nov 2026 | NlSideSheet (#75, public): full-height panel on the end edge, a native modal `<dialog>` as `NlDialog` (focus kept inside, page inert, scroll locked, focus back to the opener); header with optional back and close `NlButton`s around the title (gap `Space-XS`, OD-216), optional edge-to-edge `NlDivider` (OD-218), scrolling body (its gaps inside the scroll area), optional sticky `NlButtonDock`; `size` small `Size-560` / large `Size-720` (OD-133); slides in, fade only with reduced motion (OD-143). Approved by the designer |
