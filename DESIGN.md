@@ -654,7 +654,7 @@ _The designer adds rows here before each build._
 | 63 | File upload | `NlFileUpload` | `NlIconContainer`, `NlTextBlock`, `NlButton`, `NlProgressBar` | [§9](#nlfileupload) | ✅ |
 | 64 | Dialog | `NlDialog` | `NlTextBlock`, `NlButton`, `NlOverlay` | [§9](#nldialog) | ✅ |
 | 65 | Pagination | `NlPagination` | `NlPaginationItem`, `NlButton` | [§9](#nlpagination) | ✅ |
-| 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ⬜ |
+| 66 | Table header cell | `NlTableHeaderCell` | `NlCheckboxControl`, `NlLabel`, `NlIcon` | [§9](#nltableheadercell) | ✅ |
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ⬜ |
 | 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon` | [§9](#nlnavitem) | ⬜ |
 | 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ⬜ |
@@ -7456,7 +7456,7 @@ import { NlPagination } from '@northline/ui';
 
 **Level** Molecule (contains `NlCheckboxControl`, `NlLabel`, L1) · **Base** none · **Depends on** `NlCheckboxControl`, `NlLabel`, `NlIcon` · **Public** (used by `NlTable`; exported for custom tables)
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-116, OD-129.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-116, OD-129, OD-184 and OD-185 decided.
 
 A column header: the column name, with optional sort and filter controls, or a "select all" checkbox.
 
@@ -7509,18 +7509,56 @@ Sort none, unsorted, ascending, descending; filter available, open, applied; ico
 #### Behaviour and accessibility
 
 - A `<th scope="col">` with `aria-sort` (`ascending`, `descending`, or `none` when sortable).
-- The sort button's name is the column name; clicking cycles none → ascending → descending → none. The new order is announced politely ("Sorted by points, ascending").
-- The filter button's name is "Filter {column}", with `aria-haspopup="dialog"` and `aria-expanded`. It opens `NlTableColumnFilter`.
+- The sort button's name is the column name; clicking cycles none → ascending → descending → none. The table announces the new order politely ("Sorted by points, ascending"); the cell doesn't (OD-184).
+- The filter button's name is "Filter {column}" ("Filter {column}, applied" when a filter is applied, OD-185), with `aria-haspopup="dialog"` and `aria-expanded`. It opens `NlTableColumnFilter` (an `NlMenu kind="filter"`).
 - Select all: the checkbox is named "Select all rows" and shows indeterminate when some rows are selected.
 
 #### Mapping notes
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Sort and filter buttons | Bare icons (and title) that act as buttons, no button chrome | Native buttons styled as plain text and icon, inside the cell. They aren't `NlButton` because they have no button look. Treated as part of the cell, not a separate button (D12 is about button components) | **Needs approval** |
+| Sort and filter buttons | Bare icons (and title) that act as buttons, no button chrome | Native buttons styled as plain text and icon, inside the cell. They aren't `NlButton` because they have no button look. Treated as part of the cell, not a separate button (D12 is about button components) | Approved (OD-116) |
 | Hover and pressed on icons | Code only, per the reference's description | `fg-hovered` / `fg-pressed` | Matches |
 | Background names | White and grey | `plain` and `grey` | Matches |
-| Icons | From the reference's icon set | Material Symbols `unfold_more`, `arrow_upward`, `arrow_downward`, `keyboard_arrow_down`, `keyboard_arrow_up` | **Needs approval** |
+| Icons | From the reference's icon set | Material Symbols `unfold_more`, `arrow_upward`, `arrow_downward`, `keyboard_arrow_down`, `keyboard_arrow_up` | Approved (OD-129) |
+| Sort announcement | "Announced politely" | Left to `NlTable` | Approved (OD-184) |
+| Applied filter | Colour only | Also in the filter button's name (WCAG 1.4.1) | Approved (OD-185) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Cell | `<th scope="col">`, `aria-sort` when `sortable`; `Size-40` high, `Space-3XL` inline (`narrow`: `Space-XL`), `Space-none` block; `appearance` `plain` (no fill) or `grey` (`bg-tertiary`) |
+| Title | `children: string` → `NlLabel size="medium"` (`text-tertiary`); `hideTitle` wraps it in `sr-only` |
+| Sort | `sortable`, `sort`, `onSortChange(next)`; native button (title + 20 icon, gap `Space-XS`, at least `Size-24` high), `unfold_more` `fg-secondary` / `arrow_upward`, `arrow_downward` `fg-action`; icon hover `fg-hovered`, pressed `fg-pressed` through the named group `sort` |
+| Filter | `filter`, `onFilterClick`, `filterRef` (anchor for the column filter); native 24 button, `keyboard_arrow_down` / `_up` when open; `fg-secondary` or `fg-action`, hover and pressed as sort |
+| Select all | `selectAll: { checked, indeterminate, onChange }` → `NlCheckboxControl` "Select all rows" |
+| Focus | Standard ring on each button, `Radius-XS` |
+
+#### API
+
+```tsx
+import { NlTableHeaderCell } from '@northline/ui';
+
+<NlTableHeaderCell sortable sort={order} onSortChange={setOrder} filter="available" onFilterClick={open} filterRef={anchor}>
+  Points
+</NlTableHeaderCell>
+```
+
+`'use client'` (handlers).
+
+#### Tokens used
+
+`Size-40`, `Size-24`, `Space-3XL`, `Space-XL`, `Space-L`, `Space-XS`, `Space-none`, `Radius-XS`; `bg-tertiary`; `fg-secondary`, `fg-action`, `fg-hovered`, `fg-pressed`; `NlLabel`, `NlIcon`, `NlCheckboxControl`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Sort button height | At least `Size-24` so the pointer target meets WCAG 2.5.8 (the Label M line alone is 21) |
+| Focus ring radius | `Radius-XS`, as `NlCheckboxControl` |
+| Grey header contrast | Title on `bg-tertiary` in Dark is 4.46:1: known issue K8 (accepted); grey samples are marked |
+
 
 ---
 
@@ -8342,6 +8380,7 @@ Known issues
 | K5 | A disabled `NlInputChip`'s label (`text-disabled-on_bg` on `bg-disabled`) is under 4.5:1 (about 3.5 Light, 1.6 Dark, every brand). By design: WCAG 1.4.3 exempts text that is part of an inactive control. axe can't tell, because the chip is a `<span>` (its remove button is left out when disabled), so story samples are marked `data-a11y-known-issue="K5"`. Found by `pnpm test:a11y` with `NlInputChip`. Accepted by the designer, 19 Nov 2026 | Accepted |
 | K6 | The calendar range band (`bg-active`) against `bg-primary` is 1.16 to 1.19 in Light and 1.00 to 1.06 in Dark (every brand), so in Dark the band behind range-middle days is close to invisible. The filled range-start and range-end days still show the range, and the cells carry `aria-selected`. Kept as specified. Found with `NlCalendarDay` (#15). Accepted by the designer, 19 Nov 2026 | Accepted |
 | K7 | The `NlRowsPerPage` label (`text-tertiary`, Body S) on `bg-tertiary` (hover, pressed, open) is 4.47:1 in Dark, every brand, under 4.5:1 (5.51 at rest; Light 7.73). Kept as specified. Open samples are marked `data-a11y-known-issue="K7"`. Found with `NlRowsPerPage` (#37). Accepted by the designer, 20 Nov 2026 | Accepted |
+| K8 | The `NlTableHeaderCell` title (`text-tertiary`, Label M) on the grey header (`bg-tertiary`) is 4.46:1 in Dark, every brand, under 4.5:1 (Light 7.73; plain header 6.36 in Dark). The same pair as K7. Kept as specified. Grey samples are marked `data-a11y-known-issue="K8"`. Found with `NlTableHeaderCell` (#66). Accepted by the designer, 20 Nov 2026 | Accepted |
 
 ---
 
@@ -8423,3 +8462,4 @@ Known issues
 | 20 Nov 2026 | NlFileUpload (#63, public): dashed drop zone for one file (OD-114), large or small; state from the page (enabled, uploading, complete, error) with border, icon and button per state; hidden native input, card click and drop; drag-over (OD-122) and disabled (OD-123) looks; wrong-type drops rejected (OD-178); live announcements and focus return. Icons `cloud_upload` and `refresh` added (OD-124, OD-177). Approved by the designer |
 | 20 Nov 2026 | NlDialog (#64, public): native modal `<dialog>` with `NlOverlay`, small (`Size-560`) or large (new `Size-720`, OD-115, OD-121); `h2` title (OD-179) and ghost close icon 16 from the top and side; Body L text body; medium start, secondary and primary actions; alertdialog with focus on Cancel when the primary is destructive (OD-180); fade and scale from 95% (OD-125); long content scrolls in the body (OD-181). Approved by the designer |
 | 20 Nov 2026 | NlPagination (#65, public): named `<nav>` list with secondary xsmall previous and next (real disabled at the ends, OD-126; chevrons, OD-128) and `NlPaginationItem` pages; first, last, current ±`siblingCount` (default 1, OD-127) with "…" only where it saves space (OD-182); page clamped (OD-183); focus follows the change. Approved by the designer |
+| 20 Nov 2026 | NlTableHeaderCell (#66, public): `<th scope="col">`, plain or grey, narrow; sort as a plain native button (title + icon, `aria-sort`, OD-116, OD-129); filter button "Filter {column}" (", applied" when applied, OD-185) with `filterRef`; select all; sort announcement left to `NlTable` (OD-184); K8 accepted. Approved by the designer |

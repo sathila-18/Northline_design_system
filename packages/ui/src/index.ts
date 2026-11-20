@@ -41,5 +41,6 @@ export * from './components/NlStatCard';
 export * from './components/NlFileUpload';
 export * from './components/NlDialog';
 export * from './components/NlPagination';
+export * from './components/NlTableHeaderCell';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';
