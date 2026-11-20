@@ -53,5 +53,6 @@ export * from './components/NlSideSheet';
 export * from './components/NlPageHeader';
 export * from './components/NlTable';
 export * from './components/NlSideNav';
+export * from './components/NlAppShell';
 export * from './components/NlTooltip';
 export * from './components/NlStatusDot';

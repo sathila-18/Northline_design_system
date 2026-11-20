@@ -16,7 +16,7 @@ DESIGN.md stays the spec and keeps the official status (§8). This file is where
 
 Spec: ✅ written · ⬜ not yet. Build: ⬜ not started · 🟨 in progress · ✅ built and approved.
 
-Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 and #74 to #78 approved. OD-27 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-141, OD-143 to OD-147 and OD-148 to OD-233 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
+Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #14, #15 to #38, #40 to #50, #52 to #56 and #58 to #72 and #74 to #78 approved. OD-24 to OD-39, OD-50, OD-72, OD-78, OD-80 to OD-93, OD-97 to OD-102, OD-104 to OD-141, OD-143 to OD-147 and OD-148 to OD-233, OD-235, OD-236 decided; OD-14, OD-15 and OD-50 cleared from Blocked by).
 
 ---
 
@@ -39,7 +39,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #15 to #38, #40 t
 | 11 | `NlTextBlock` | yes | – | `NlTooltip`, `NlCheckbox`, `NlListItemBase`, `NlAccordion`, `NlButtonDock`, `NlEmptyState`, `NlStatCard`, `NlFileUpload`, `NlDialog`, `NlSideSheet`, `NlPageHeader` | – | ✅ batch 2 | ✅ |
 | 12 | `NlMenu` | yes | – | `NlSelect`, `NlMultiSelect`, `NlDateField`, `NlTableColumnFilter`, `NlTable` | – | ✅ batch 2 | ✅ |
 | 13 | `NlChipGroup` | yes | – | – | – | ✅ batch 2 | ⬜ |
-| 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ⬜ |
+| 14 | `NlAppShell` | yes | – | – | – | ✅ batch 2 | ✅ |
 | 15 | `NlCalendarDay` | internal | – | `NlCalendar` | – | ✅ batch 2 | ✅ |
 | 16 | `NlListCaption` | internal | – | `NlListItem` | – | ✅ batch 2 | ✅ |
 | 17 | `NlNavSubItem` | internal | – | `NlNavItem` | – | ✅ batch 2 | ✅ |
@@ -229,9 +229,11 @@ Decide these before building the components listed under "Affects".
 - OD-23 · `selection` model (none, single, multiple) · Open
 
 **NlAppShell**
-- OD-24 · Content padding `Space-3XL`, block gap `Space-4XL` · Open
-- OD-25 · Skip link: standard focus ring · Open
-- OD-26 · Content focus ring: 2px inset `border-focused` · Open
+- OD-24 · Content padding `Space-3XL`, block gap `Space-4XL` · **Decided** 21 Nov 2026: approved; the page sets the block gap
+- OD-25 · Skip link: standard focus ring · **Decided** 21 Nov 2026: approved
+- OD-26 · Content focus ring: 2px inset `border-focused` · **Decided** 21 Nov 2026: `outline-2` with a −2 offset (inside, on top of the content)
+- OD-235 · Skip link `Space-M` from top and start, `--nl-z-snackbar` · **Decided** 21 Nov 2026: approved
+- OD-236 · The shell adds no `<nav>`; the nav slot provides it · **Decided** 21 Nov 2026: approved
 
 **NlCalendarDay**
 - OD-27 · `today` as a separate boolean (combines with selected and range) · **Decided** 19 Nov 2026: approved; no border on filled types, `border-disabled` when disabled
