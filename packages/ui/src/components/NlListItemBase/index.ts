@@ -1,5 +1,6 @@
 export {
   NlListItemBase,
+  type NlListItemBaseAccessoryAlign,
   type NlListItemBaseAppearance,
   type NlListItemBaseDensity,
   type NlListItemBaseProps,

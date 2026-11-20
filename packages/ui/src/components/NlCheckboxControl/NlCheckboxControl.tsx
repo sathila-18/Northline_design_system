@@ -12,6 +12,8 @@ import * as styles from './NlCheckboxControl.styles';
 export interface NlCheckboxControlProps extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'children'> {
   /** Shows the dash and is announced as "mixed". Set on the input in code: HTML has no attribute for it. */
   indeterminate?: boolean;
+  /** Inside a list row (NlListItemBase `controlRow`): the row draws the focus ring and its hover shows here. */
+  inRow?: boolean;
 }
 
 /** Sets a caller's ref, callback or object. */
@@ -28,6 +30,7 @@ function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
  */
 export function NlCheckboxControl({
   indeterminate = false,
+  inRow = false,
   className,
   ref,
   onChange,
@@ -54,12 +57,12 @@ export function NlCheckboxControl({
     event.currentTarget.indeterminate = indeterminate;
   };
 
-  const classes = [styles.root, className].filter(Boolean).join(' ');
+  const classes = [inRow ? styles.rootInRow : styles.root, className].filter(Boolean).join(' ');
 
   return (
     <span className={classes}>
       <input {...rest} ref={setRefs} onChange={handleChange} type="checkbox" className={styles.input} />
-      <span aria-hidden="true" className={styles.box}>
+      <span aria-hidden="true" className={inRow ? styles.boxInRow : styles.box}>
         <span className={styles.check} data-slot="check">
           <NlIcon name="check" size={16} tone="inherit" />
         </span>

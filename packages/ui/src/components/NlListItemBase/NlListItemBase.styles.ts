@@ -53,8 +53,35 @@ export const state = {
   },
 } as const;
 
-/** The content row: horizontal, gap Space-L, items centred vertically. */
-export const content = 'nl:flex nl:w-full nl:min-w-0 nl:items-center nl:gap-l';
+/**
+ * A row around a control (`controlRow`, OD-100, OD-102): the focus ring goes round the row while the control inside
+ * has keyboard focus. While enabled the row is also the named group "list-item" the control's hover and pressed
+ * looks follow (NlCheckboxControl `inRow`).
+ */
+export const controlRow = {
+  enabled:
+    'nl:group/list-item nl:cursor-pointer nl:has-focus-visible:outline-2 nl:has-focus-visible:-outline-offset-1 nl:has-focus-visible:outline-focused',
+  disabled:
+    'nl:has-focus-visible:outline-2 nl:has-focus-visible:-outline-offset-1 nl:has-focus-visible:outline-focused',
+} as const;
+
+/** The content row: horizontal, gap Space-L. */
+export const content = 'nl:flex nl:w-full nl:min-w-0 nl:gap-l';
+
+/**
+ * Accessory alignment: centre (default, items centred vertically) or title (items at the top; the accessory slots
+ * are one title line high, so a control sits centred on the title's first line, designer's choice 20 Nov 2026).
+ */
+export const contentAlign = {
+  center: 'nl:items-center',
+  title: 'nl:items-start',
+} as const;
+
+/** Slot height for title alignment: 1lh of the title's text style per size (Headline Small-H6, Label M). */
+export const slotTitleLine = {
+  large: 'nl:h-lh nl:text-headline-small-h6',
+  small: 'nl:h-lh nl:text-label-m',
+} as const;
 
 /** The leading slot: holds any component. Icons that inherit take fg-primary (fg-disabled when disabled). */
 export const leading = 'nl:flex nl:shrink-0 nl:items-center';
