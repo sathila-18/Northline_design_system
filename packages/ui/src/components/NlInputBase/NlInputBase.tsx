@@ -19,6 +19,12 @@ export interface NlInputBaseProps extends Omit<
    * its value for assistive tech and the floating label; its text is hidden (OD-203).
    */
   valueOverlay?: ReactNode;
+  /**
+   * A pattern shown while focused (NlDateField: "DD/MM/YYYY"): after the typed text, the rest of the pattern in
+   * text-placeholder ("01/0" + "M/YYYY"). Needs a controlled string `value`. Hidden at rest, where the label sits
+   * (OD-209).
+   */
+  formatHint?: string;
   /** The field's name, always shown: in the value position at rest, floating when focused or filled (OD-42). */
   label: string;
   /** Box height, padding and icon size. Default large. */
@@ -73,11 +79,13 @@ export function NlInputBase({
   type,
   boxRef,
   valueOverlay,
+  formatHint,
   ref,
   'aria-describedby': describedBy,
   ...rest
 }: NlInputBaseProps) {
   const isSelect = type === 'select';
+  const typedValue = typeof rest.value === 'string' ? rest.value : '';
   const hasOverlay = isSelect && valueOverlay !== undefined && valueOverlay !== null;
   const inputRef = useRef<HTMLInputElement | null>(null);
   const setInputRef = (node: HTMLInputElement | null) => {
@@ -135,6 +143,12 @@ export function NlInputBase({
               .filter(Boolean)
               .join(' ')}
           />
+          {formatHint !== undefined && (
+            <span aria-hidden="true" className={styles.formatHint} data-slot="format-hint">
+              <span className={styles.formatHintTyped}>{typedValue}</span>
+              {formatHint.slice(typedValue.length)}
+            </span>
+          )}
           {hasOverlay && (
             <span className={styles.valueOverlay} data-slot="value-overlay">
               {valueOverlay}
