@@ -90,6 +90,57 @@ export const contentTone = {
   },
 } as const;
 
+/**
+ * Content tones for the link variant (normal tone only; designer's choice for NlBanner, 20 Nov 2026). The label and
+ * icon keep the tone's colour in every state except disabled, with no background; the label is underlined on hover,
+ * press and expanded, as the plain link. `default` is the plain link.
+ */
+export const linkContentTone = {
+  default: normal.link,
+  inverse: {
+    button: 'nl:text-inverse nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-inverse nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+  primary: {
+    button: 'nl:text-primary nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-primary nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+  secondary: {
+    button: 'nl:text-secondary nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-secondary nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+  info: {
+    button: 'nl:text-info nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-info nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+  success: {
+    button: 'nl:text-success nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-success nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+  error: {
+    button: 'nl:text-error nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-error nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+  warning: {
+    button: 'nl:text-warning nl:disabled:text-disabled nl:aria-disabled:text-disabled',
+    label:
+      'nl:group-hover/button:underline nl:group-active/button:underline nl:group-aria-expanded/button:underline nl:group-disabled/button:no-underline nl:group-aria-disabled/button:no-underline',
+    icon: 'nl:text-fg-warning nl:group-disabled/button:text-fg-disabled nl:group-aria-disabled/button:text-fg-disabled',
+  },
+} as const;
+
 /** tone="white" (NlWhiteButton): one look, 1px border-subtle (inset ring) in every state. */
 export const white = {
   button:

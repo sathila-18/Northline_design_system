@@ -645,7 +645,7 @@ _The designer adds rows here before each build._
 | 55 | Radio list item | `NlRadioListItem` | `NlListItemBase`, `NlRadio` | [§9](#nlradiolistitem) | ✅ |
 | 56 | Switch list item | `NlSwitchListItem` | `NlListItemBase`, `NlSwitch`, `NlIcon` | [§9](#nlswitchlistitem) | ✅ |
 | 57 | Accordion | `NlAccordion` | `NlTextBlock`, `NlBadge`, `NlLabel`, `NlDivider`, `NlIcon` | [§9](#nlaccordion) | ⬜ |
-| 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ⬜ |
+| 58 | Banner | `NlBanner` | `NlIcon`, `NlButton` | [§9](#nlbanner) | ✅ |
 | 59 | Snackbar | `NlSnackbar` | `NlIcon`, `NlButton` | [§9](#nlsnackbar) | ⬜ |
 | 60 | Button dock | `NlButtonDock` | `NlButton`, `NlTextBlock` | [§9](#nlbuttondock) | ⬜ |
 | 61 | Empty state | `NlEmptyState` | `NlIconContainer`, `NlTextBlock`, `NlButton` | [§9](#nlemptystate) | ⬜ |
@@ -3670,6 +3670,10 @@ The tables in "Colours by state", as written. Colour changes use `--nl-duration-
 | Link underline | On a label span added to `NlButtonBase` (`data-slot="label"`, `appearance.label`), because an underline on the button also ran under the icon. Disabled links have none |
 | Icon states | The icon slot follows the button through the named group `button`; disabled sorts last, so a disabled button's icon keeps the disabled colour |
 
+#### Link content tones and flush (added 20 Nov 2026)
+
+For `NlBanner` (designer's choice): `variant="link"` takes `contentTone` (the tertiary set: label and icon keep the tone in every state except disabled, no background, underline on hover, press and expanded) and `flush` (link only: `labelledFlush` in `NlButtonBase`, the labelled height with `Space-none` side padding, so the label lines up with the text around it). Types: content tones are tertiary and link only; `flush` is link only.
+
 ---
 
 ### NlCheckboxControl
@@ -6619,7 +6623,7 @@ Closed, open, header hover, header focus, disabled (see "Mapping notes" for hove
 
 **Level** Molecule (contains `NlButton`, L1) · **Base** none · **Depends on** `NlIcon`, `NlButton` · **Public**
 
-**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-93, OD-106, OD-107, OD-108, OD-109.
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): none. OD-93 and OD-106 to OD-109, OD-165 decided.
 
 An inline message in the page about something the user should know, such as a sync warning or a successful import, with an optional action and close.
 
@@ -6645,12 +6649,13 @@ NlBanner (rounded, tinted, horizontal)
 | Leading icon | on (default) or off | `showIcon?` |
 | Action | optional | `action?: { label, onClick }` |
 | Close | optional | `onClose?()` (shows the close button) |
+| Announced | off (default) or on | `live?: boolean` (OD-109) |
 
 #### Sizes and layout
 
 - Padding `Space-XL` all round, `Radius-M`. Width fills its container.
 - Content: horizontal, gap `Space-M`, aligned to the top.
-- Leading icon 20. Close button: `NlButton` icon-only, tertiary, `contentTone` matching the tone, icon `close`.
+- Leading icon 20, centred on the first text line (title, or description without one) (OD-165). Close button: `NlButton` icon-only, tertiary, xsmall (32), `contentTone` matching the tone, icon `close` (OD-107).
 - Text column: gap `Space-XS`. Title `Headline Small-H6`, description `Body M`, then the action button.
 
 #### Colours
@@ -6678,11 +6683,50 @@ None of its own. The buttons have theirs.
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Title and description | Plain text inside the banner, coloured by tone | Plain text in the banner, not `NlTextBlock` (whose colours are fixed). A short title and paragraph aren't a reuse of the text block's layout | **Needs approval** |
-| Action button size | A small tertiary button squeezed to 24 tall (no padding) | No `NlButton` is 24 tall, and `variant="link"` is normal tone only, so it can't take the banner's colour. Proposed: `NlButton variant="tertiary" size="xsmall" contentTone`, 36 tall, so the banner grows slightly | **Needs approval** |
-| Close icon | A bare 24 icon | `NlButton` icon-only, tertiary, `contentTone`, so it's a real button | **Needs approval** |
-| Error icon | The warning triangle, the same as warning | `error` (a circle with "!"), so error and warning differ in shape | **Needs approval** |
-| Live announcement | Not in the reference | Roles as above | **Needs approval** |
+| Title and description | Plain text inside the banner, coloured by tone | Plain text in the banner, not `NlTextBlock` (whose colours are fixed). A short title and paragraph aren't a reuse of the text block's layout | Approved (OD-93) |
+| Action button size | A small tertiary button squeezed to 24 tall (no padding) | No `NlButton` is 24 tall, and `variant="link"` is normal tone only, so it can't take the banner's colour. `NlButton variant="link" size="xsmall" flush contentTone`: a link in the tone's colour, label lined up with the text, 36 tall | Approved (OD-106, changed to a toned flush link by the designer, 20 Nov 2026) |
+| Close icon | A bare 24 icon | `NlButton` icon-only, tertiary, xsmall (32), `contentTone`, so it's a real button | Approved (OD-107) |
+| Error icon | The warning triangle, the same as warning | `error` (a circle with "!"), so error and warning differ in shape | Approved (OD-108) |
+| Live announcement | Not in the reference | Roles as above, opt-in with `live` | Approved (OD-109) |
+| Icon alignment | Not described | Centred on the first text line; the 32 close button stays top-aligned, 4 above the title line | Approved (OD-165) |
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Type | `tone`, default `info`, `data-tone`; lookups for background, icon colour, title and description colour |
+| Title | `title?` → `<p>` Headline Small-H6 |
+| Description | `children` → `<div>` Body M |
+| Leading icon | `showIcon?` (default on) → `NlIcon` 20 in a `1lh` slot of the first line's text style |
+| Action | `action?: { label, onClick }` → `NlButton variant="link" size="xsmall" flush contentTone` (tone colour; `primary` for neutral) |
+| Close | `onClose?` → `NlButton` icon-only `close`, xsmall, named "Dismiss {title}" (or "Dismiss") |
+| Live | `live?` → `role="status"` (info, success, neutral) or `role="alert"` (error, warning) |
+
+#### API
+
+```tsx
+import { NlBanner } from '@northline/ui';
+
+<NlBanner tone="warning" title="Sync delayed" action={{ label: 'View details', onClick: open }} onClose={hide}>
+  Rewards may show old balances until the next sync.
+</NlBanner>
+```
+
+`'use client'` (button handlers).
+
+#### Tokens used
+
+`Space-XL` (padding), `Radius-M`, `Space-M` (content gap), `Space-XS` (text column); `bg-info_secondary`, `bg-success_secondary`, `bg-error_secondary`, `bg-warning_secondary`, `bg-neutral`; `fg-info`, `fg-success`, `fg-error`, `fg-warning`, `fg-secondary`; `text-info`, `text-success`, `text-error`, `text-warning`, `text-primary`, `text-secondary`; Headline Small-H6, Body M; `NlButton`'s own.
+
+#### Build decisions
+
+| Decision | Detail |
+|---|---|
+| Title element | A `<p>`, not a heading: the banner can't know the page's heading level |
+| Description element | A `<div>`, so it can hold a link or more than one line |
+| Close name | "Dismiss {title}" when the title is a string, else "Dismiss" |
+| Link in the tone colour | The plain link (`text-action`) failed AA on some tints (neutral in Dark 4.02 to 4.42; Voltic Light neutral 4.23, error 4.34). `NlButton` link gained content tones and `flush` (see `NlButton`) |
+
 
 ---
 
@@ -8121,3 +8165,4 @@ Known issues
 | 20 Nov 2026 | NlCheckboxListItem (#54, public): `<label>` row on `NlListItemBase` around `NlCheckboxControl`, leading or trailing; checked rows take the selected colours; ring round the row and box hover following the row (OD-100, OD-102: `controlRow`, `inRow`); checkbox on the title's first line (`accessoryAlign="title"`); no indeterminate or menu mode (OD-156, OD-157); `body` exposed (OD-158); group label from the page (OD-159). Approved by the designer |
 | 20 Nov 2026 | NlRadioListItem (#55, public): `<label>` row on `NlListItemBase` around `NlRadio inRow`, inside `NlRadioListGroup` (`role="radiogroup"`, value, name, disabled, appearance; OD-101, OD-160); native arrow keys; ring round the row, radio on the title line; no menu mode (OD-161); group label from the page (OD-162). `showBody` added to it and to `NlCheckboxListItem`. Approved by the designer |
 | 20 Nov 2026 | NlSwitchListItem (#56, public): settings row on `NlListItemBase`, `<label>` around `NlSwitch size="small" inRow` in the trailing slot, optional leading icon; no highlight when on; switch named by the title and described by the description; ring round the row (OD-102); switch on the title line (OD-163); `body`, `showBody`, `divider` (OD-164). Approved by the designer |
+| 20 Nov 2026 | NlBanner (#58, public): tinted inline message in five tones; plain tone-coloured title and description (OD-93); icon on the first text line (OD-165), `error` icon for error (OD-108); action as an xsmall flush link in the tone colour (OD-106, designer's choice); close as an xsmall icon-only `NlButton` "Dismiss {title}" (OD-107); `live` for status or alert (OD-109). `NlButton` link gained `contentTone` and `flush`. Approved by the designer |
