@@ -686,6 +686,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 | # | Page | Area | Status |
 |---|---|---|---|
+| P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
 
 ---
 
@@ -8908,6 +8909,7 @@ Checked in Chrome: axe clean in every brand and theme, at rest, with the user me
 | D15 | 17 Nov 2026 | Slot content doesn't count toward a component's level (§7.1). `NlTextBlock` takes its label as a slot. Table toolbar, header row, row and footer are internal parts of `NlTable`. `NlAppShell` takes nav, header and content as slots |
 | D16 | 17 Nov 2026 | Border widths use Tailwind's 1px and 2px utilities (§4.2). New z-index scale (§4.3) and a pulse duration for skeletons (§5) |
 | D17 | 17 Nov 2026 | Token file (S0). Colours stay hex strings, as TokensBrücke exports them. Alpha tokens are an alias reference plus the opacity in `$extensions["com.northline.alpha"]`, applied by the token build. White and black primitives sit at `Primitives.Colors.base.white` and `.black`. Decimal line heights use an underscore in their names (`Line Height-62_4`). Two contrast results are accepted: `text-action` on `bg-active-hover` in Voltic (a chip hover state only), and `border-warning` as a decorative outline beside text, never a control's only outline. Hover and pressed states aren't flagged in contrast audits |
+| D18 | 22 Nov 2026 | Required fields on pages. Pressing a form's main button with required fields left empty puts each empty field in `error`, with an error helper text (with its leading icon, as `NlHelperText` draws it in error) saying what to enter. Focus moves to the first empty field. A field's error clears once it has a value. Native browser bubbles are off (`noValidate`); fields keep `required` |
 
 Known issues
 
@@ -9017,3 +9019,4 @@ Known issues
 | 21 Nov 2026 | NlSideNav (#78, public): the main `<nav>` with a logo slot and a `dock_to_right` collapse `NlButton` (no `aria-expanded`, OD-233), `NlNavItem` sections (`currentHref`, tree lines only in the tree style through the new `NlNavItem tree`, OD-231) and `NlSideNavUser` at the bottom; expanded `Size-240` column (new token, OD-134) or minimized `Size-80`, easing over Duration slow (OD-147); follows `Breakpoint-1280` until toggled (OD-232). Approved by the designer |
 | 21 Nov 2026 | NlAppShell (#14, public): the page frame, full window on `bg-secondary`: nav slot, then a `Radius-L` panel (no fill) with the header slot in `<header>` and the content in a scrolling, focusable `<main>` (`Space-3XL` padding, inside focus ring, OD-24, OD-26), `Space-XS` apart (OD-135); optional skip link pill (`Space-M` from top and start, `--nl-z-snackbar`, standard ring, OD-25, OD-235); no `<nav>` added (OD-236). Approved by the designer |
 | 22 Nov 2026 | NlCheckbox `size`: medium (default, `Body L`, top-aligned) and small (`Body M`, text centred on the control), OD-237. NlTextBlock `body-m` type (`Body M` description, no heading), OD-238. Approved by the designer |
+| 22 Nov 2026 | Page P1, Login (`Pages/Login`, §8.6): the first Storybook page. Wordmark, h1 heading, username and password fields, small forgot password link, small remember me checkbox and a full-width Log in button; the form spans 4 of the 12 grid columns, centred. D18 added: empty required fields go to error with an error helper text when the form's main button is pressed. Approved by the designer |
