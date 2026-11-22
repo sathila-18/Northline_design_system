@@ -55,6 +55,12 @@ export const Body: Story = {
   render: () => <NlTextBlock type="body" description="Send me offers and reward updates by email." />,
 };
 
+/** Body M type (OD-238): a description in Body M, no heading. For small checkbox text. */
+export const BodyM: Story = {
+  name: 'Body M',
+  render: () => <NlTextBlock type="body-m" description="Remember me on this device." />,
+};
+
 /** The three alignments. Alignment also lines up the label slot. */
 export const Alignment: Story = {
   render: () => (

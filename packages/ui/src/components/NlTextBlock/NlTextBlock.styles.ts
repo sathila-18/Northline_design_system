@@ -24,9 +24,10 @@ export const contentGap = {
   label: 'nl:gap-none',
   'label-body': 'nl:gap-none',
   body: 'nl:gap-none',
+  'body-m': 'nl:gap-none',
 } as const;
 
-/** Heading text style, per type. The body type has no heading (OD-41). */
+/** Heading text style, per type. The body types have no heading (OD-41, OD-238). */
 export const heading = {
   'display-large': 'nl:m-none nl:text-display-large-h1',
   'display-medium': 'nl:m-none nl:text-display-medium-h2',
@@ -50,6 +51,8 @@ export const description = {
   /** Label M heading with a Body M description, for the side nav user (OD-120). */
   'label-body': 'nl:m-none nl:text-body-m',
   body: 'nl:m-none nl:text-body-l',
+  /** Body M with no heading, for small checkbox text (OD-238). */
+  'body-m': 'nl:m-none nl:text-body-m',
 } as const;
 
 /** Heading colour: text-primary; inverse text-inverse; disabled text-disabled (OD-15). */

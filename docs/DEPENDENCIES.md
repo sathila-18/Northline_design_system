@@ -216,6 +216,7 @@ Decide these before building the components listed under "Affects".
 
 **NlTextBlock**
 - OD-14, OD-15, OD-16: see section 2
+- OD-238 · `body-m` type: a Body M description with no heading, for small checkbox text · **Decided** 22 Nov 2026: approved
 
 **NlMenu**
 - OD-17 · Shadow: `--nl-shadow-menu` · **Decided** 18 Nov 2026: approved
@@ -327,6 +328,7 @@ Decide these before building the components listed under "Affects".
 
 **NlCheckbox**
 - OD-41, OD-15: see section 2
+- OD-237 · `size` prop: medium (default, Body L, top-aligned) and small (Body M, text centred on the control), for the login page · **Decided** 22 Nov 2026: approved. Small for `NlRadio` and `NlSwitch` only when a page needs it
 
 **NlNotificationButton**
 - OD-40: see section 2

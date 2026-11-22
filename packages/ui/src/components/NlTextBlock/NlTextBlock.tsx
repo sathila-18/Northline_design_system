@@ -21,8 +21,8 @@ interface NlTextBlockCommonProps extends Omit<ComponentPropsWithRef<'div'>, 'chi
 }
 
 /**
- * `type` sets the look only. The body type (OD-41) is a description in Body L with no heading, so it takes no
- * `heading` or `headingAs`.
+ * `type` sets the look only. The body types are a description with no heading, in Body L (body, OD-41) or Body M
+ * (body-m, OD-238), so they take no `heading` or `headingAs`.
  */
 export type NlTextBlockProps = NlTextBlockCommonProps &
   (
@@ -34,7 +34,7 @@ export type NlTextBlockProps = NlTextBlockCommonProps &
         /** The heading's element, separate from its look (OD-16). Default p. */
         headingAs?: NlTextBlockHeadingAs;
       }
-    | { type: 'body'; heading?: never; headingAs?: never }
+    | { type: 'body' | 'body-m'; heading?: never; headingAs?: never }
   );
 
 /**
@@ -57,7 +57,7 @@ export function NlTextBlock(props: NlTextBlockProps) {
   } = props;
   const colour = disabled ? 'disabled' : tone;
   const Heading = headingAs;
-  const showHeading = type !== 'body' && heading !== undefined && heading !== null;
+  const showHeading = type !== 'body' && type !== 'body-m' && heading !== undefined && heading !== null;
   const showDescription = description !== undefined && description !== null;
 
   const classes = [styles.root, styles.align[align], className].filter(Boolean).join(' ');
