@@ -22,6 +22,15 @@ describe('NlCheckbox', () => {
     expect(text).toHaveClass('nl:text-body-l', 'nl:text-secondary');
   });
 
+  it('size small: Body M text, centred on the control (OD-237)', () => {
+    render(<NlCheckbox size="small">Remember me</NlCheckbox>);
+    const row = rowOf(screen.getByRole('checkbox', { name: 'Remember me' }));
+    expect(row).toHaveClass('nl:items-center');
+    expect(row).not.toHaveClass('nl:items-start');
+    expect(row).toHaveAttribute('data-size', 'small');
+    expect(screen.getByText('Remember me')).toHaveClass('nl:text-body-m', 'nl:text-secondary');
+  });
+
   it('clicking the text toggles it; Space toggles it from the keyboard', async () => {
     const onChange = vi.fn();
     render(<NlCheckbox onChange={onChange}>Send a welcome email</NlCheckbox>);
