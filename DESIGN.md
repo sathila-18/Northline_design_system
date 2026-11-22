@@ -686,7 +686,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 | # | Page | Area | Status |
 |---|---|---|---|
-| P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link, `NlCheckbox`, `NlButton`; form 4 of the 12 grid columns, centred | Login | 🟨 |
+| P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
 
 ---
 
@@ -9018,3 +9018,5 @@ Known issues
 | 21 Nov 2026 | NlTable (#77, public): data table with an optional toolbar (search, filters slot, small primary action), a real `<table>` (hidden caption, grey `NlTableHeaderCell` headers with sort, `NlTableColumnFilter` from `column.filter` and select-all; `NlTableCell` rows with select, text, badge or link cells and a sticky row-actions `NlMenu`), and a footer (summary with the selected count, `NlRowsPerPage` + `NlMenu`, `NlPagination`); bordered variant; `Size-*` column widths; loading `Size-80` skeleton rows, empty `NlEmptyState` with `Space-4XL`; polite result and selection announcements. `NlTableHeaderCell` gained `stickyEnd`. OD-138, OD-145, OD-221 to OD-230 decided; K8 marked. Approved by the designer |
 | 21 Nov 2026 | NlSideNav (#78, public): the main `<nav>` with a logo slot and a `dock_to_right` collapse `NlButton` (no `aria-expanded`, OD-233), `NlNavItem` sections (`currentHref`, tree lines only in the tree style through the new `NlNavItem tree`, OD-231) and `NlSideNavUser` at the bottom; expanded `Size-240` column (new token, OD-134) or minimized `Size-80`, easing over Duration slow (OD-147); follows `Breakpoint-1280` until toggled (OD-232). Approved by the designer |
 | 21 Nov 2026 | NlAppShell (#14, public): the page frame, full window on `bg-secondary`: nav slot, then a `Radius-L` panel (no fill) with the header slot in `<header>` and the content in a scrolling, focusable `<main>` (`Space-3XL` padding, inside focus ring, OD-24, OD-26), `Space-XS` apart (OD-135); optional skip link pill (`Space-M` from top and start, `--nl-z-snackbar`, standard ring, OD-25, OD-235); no `<nav>` added (OD-236). Approved by the designer |
+| 22 Nov 2026 | NlCheckbox `size`: medium (default, `Body L`, top-aligned) and small (`Body M`, text centred on the control), OD-237. NlTextBlock `body-m` type (`Body M` description, no heading), OD-238. Approved by the designer |
+| 22 Nov 2026 | Page P1, Login (`Pages/Login`, §8.6): the first Storybook page. Wordmark, h1 heading, username and password fields, small forgot password link, small remember me checkbox and a full-width Log in button; the form spans 4 of the 12 grid columns, centred. D18 added: empty required fields go to error with an error helper text when the form's main button is pressed. Approved by the designer |
