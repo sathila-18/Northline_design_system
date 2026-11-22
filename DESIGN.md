@@ -8902,6 +8902,7 @@ Checked in Chrome: axe clean in every brand and theme, at rest, with the user me
 | D15 | 17 Nov 2026 | Slot content doesn't count toward a component's level (§7.1). `NlTextBlock` takes its label as a slot. Table toolbar, header row, row and footer are internal parts of `NlTable`. `NlAppShell` takes nav, header and content as slots |
 | D16 | 17 Nov 2026 | Border widths use Tailwind's 1px and 2px utilities (§4.2). New z-index scale (§4.3) and a pulse duration for skeletons (§5) |
 | D17 | 17 Nov 2026 | Token file (S0). Colours stay hex strings, as TokensBrücke exports them. Alpha tokens are an alias reference plus the opacity in `$extensions["com.northline.alpha"]`, applied by the token build. White and black primitives sit at `Primitives.Colors.base.white` and `.black`. Decimal line heights use an underscore in their names (`Line Height-62_4`). Two contrast results are accepted: `text-action` on `bg-active-hover` in Voltic (a chip hover state only), and `border-warning` as a decorative outline beside text, never a control's only outline. Hover and pressed states aren't flagged in contrast audits |
+| D18 | 22 Nov 2026 | Required fields on pages. Pressing a form's main button with required fields left empty puts each empty field in `error`, with an error helper text (with its leading icon, as `NlHelperText` draws it in error) saying what to enter. Focus moves to the first empty field. A field's error clears once it has a value. Native browser bubbles are off (`noValidate`); fields keep `required` |
 
 Known issues
 
