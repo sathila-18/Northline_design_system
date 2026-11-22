@@ -2550,7 +2550,7 @@ Hover and pressed are CSS states (§7.3).
 - Radius `Radius-S` (D19).
 - Text style `Label M`, single line, truncated with an ellipsis if too long.
 - Height comes from the padding and line height (no fixed height).
-- Tree line: 1px (§4.2), runs down from `Space-XS` above the item to its vertical middle, then curves with `Radius-S` towards the text, ending `Space-XS` before it. "Middle" continues down to the next item. "Last" stops at the curve. Its horizontal position is under the centre of the section icon in `NlNavItem` (see "Mapping notes").
+- Tree line: 1px (§4.2), one connected line (OD-239). It runs down from `Space-XS` + `Space-M` above the item (the first page's line reaches up to the section icon) to its vertical middle, then curves with `Radius-S` towards the text, ending `Space-XS` before it. "Middle" continues down to the next item from where the curve leaves the vertical, so there is no break at the curve. "Last" stops at the curve. Its horizontal position is under the centre of the section icon in `NlNavItem` (see "Mapping notes").
 
 #### Colours
 
@@ -2578,7 +2578,7 @@ Default, hover, pressed, selected, focus. There is no disabled state in the refe
 | Item | Reference | Northline | Status |
 |---|---|---|---|
 | Tree line horizontal position | From the reference's description: under the section icon centre, given as raw distances from the left edge | `NlNavItem`'s padding + half the icon: `Space-L` + half `Size-20` = 22 from the start, through the `nl:nav-tree-line` utility (rule 9) | Approved (OD-30a) |
-| Tree line ends | `Space-XS` above, `Space-XS` before the text, `Radius-S` curve | Same | Matches |
+| Tree line ends | `Space-XS` above, `Space-XS` before the text, `Radius-S` curve | `Space-XS` + `Space-M` above, so the line joins the section icon and runs unbroken through every page; `Space-XS` before the text; `Radius-S` curve | Changed 22 Nov 2026 (OD-239) |
 | Width | Drawn 280 wide | Fills the nav | Matches |
 | Selected background | `bg-primary` (a white chip on the grey nav) | Same | Matches |
 | Pressed background | `bg-neutral` | Same. In Light it equals `bg-tertiary` today, so hover and pressed look the same (K1) | Known issue K1 |
@@ -2613,8 +2613,8 @@ Padding `Space-M` block, `Space-XL` end, `Space-6XL` start; `Radius-S` (D19); La
 
 | Decision | Detail |
 |---|---|
-| Tree line utilities | `nl:nav-tree-line` (curve leg: from `Space-XS` above the item to its middle, ending `Space-XS` before the text) and `nl:nav-tree-continue` (middle to bottom) in `tailwind.css`, position and size only (rule 9, approved 19 Nov 2026) |
-| Gap between pages | The curve leg starts `Space-XS` above the item, so it bridges `NlNavItem`'s `Space-XS` gap and joins the item above |
+| Tree line utilities | `nl:nav-tree-line` (curve leg: from `Space-XS` + `Space-M` above the item to its middle, ending `Space-XS` before the text) and `nl:nav-tree-continue` (from `Radius-S` above the middle to the bottom) in `tailwind.css`, position and size only (rule 9, approved 19 Nov 2026; extended 22 Nov 2026, OD-239) |
+| Connected line | `Space-XS` + `Space-M` is `NlNavItem`'s `Space-XS` gap plus the section row's `Space-M` bottom padding, so the first page's line reaches the section icon. On later pages the extra length overlaps the previous page's continuation (same opaque `border-default`, no visible change). The continuation starts `Radius-S` above the middle, where the curve leaves the vertical, so the line doesn't break at each curve (OD-239) |
 | Selected hover | None: the spec gives no hover for the current page |
 
 Checked in the browser: line at 22, curve ending at 36, text at 40; the curve meets the item's middle; middle items reach the next item's line; long text gets its full title.

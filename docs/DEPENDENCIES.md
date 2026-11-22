@@ -246,6 +246,7 @@ Decide these before building the components listed under "Affects".
 **NlNavSubItem**
 - OD-30a · Tree line position: the icon centre, `Space-L` + half of `Size-20` from the row's start (worked out in the `NlNavItem` spec, matches the reference) · **Decided** 19 Nov 2026: approved, through `nl:nav-tree-line`
 - OD-30b · Focus: standard ring · **Decided** 19 Nov 2026: approved
+- OD-239 · Connected tree line: the curve leg starts `Space-XS` + `Space-M` above the item (reaches the section icon) and the continuation starts `Radius-S` above the middle (no break at the curve) · **Decided** 22 Nov 2026: designer asked for the tree to be connected
 
 **NlPaginationItem**
 - OD-32 · Minimum width `Size-32`, hugs longer numbers · **Decided** 19 Nov 2026: approved
