@@ -6,11 +6,11 @@
 export const root = 'nl:flex nl:w-full nl:flex-col';
 
 /**
- * The row: padding Space-M block, Space-L inline, Radius-M, gap Space-L, items centred, fills the nav. Native link or
+ * The row: padding Space-M block, Space-L inline, Radius-S (D19), gap Space-L, items centred, fills the nav. Native link or
  * button with its chrome cleared. Standard focus ring, keyboard only. Colours ease with Duration fast.
  */
 export const row =
-  'nl:flex nl:w-full nl:min-w-0 nl:cursor-pointer nl:items-center nl:gap-l nl:rounded-m nl:border-0 nl:px-l nl:py-m nl:text-start nl:no-underline nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused nl:focus:not-focus-visible:outline-none nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+  'nl:flex nl:w-full nl:min-w-0 nl:cursor-pointer nl:items-center nl:gap-l nl:rounded-s nl:border-0 nl:px-l nl:py-m nl:text-start nl:no-underline nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused nl:focus:not-focus-visible:outline-none nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
 
 /** Minimized: only the icon, centred. */
 export const rowMinimized = 'nl:justify-center';

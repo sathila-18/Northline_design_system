@@ -23,7 +23,7 @@ describe('NlSideNavUser', () => {
     expect(button).toHaveClass(
       'nl:px-xl',
       'nl:py-l',
-      'nl:rounded-m',
+      'nl:rounded-s',
       'nl:bg-transparent',
       'nl:hover:bg-tertiary',
       'nl:active:bg-neutral',

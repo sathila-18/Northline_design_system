@@ -2547,7 +2547,7 @@ Hover and pressed are CSS states (§7.3).
 
 - Horizontal, items centred. Width fills the nav.
 - Padding: `Space-M` top and bottom, `Space-XL` right, `Space-6XL` left (the text lines up under the section's text).
-- Radius `Radius-M`.
+- Radius `Radius-S` (D19).
 - Text style `Label M`, single line, truncated with an ellipsis if too long.
 - Height comes from the padding and line height (no fixed height).
 - Tree line: 1px (§4.2), runs down from `Space-XS` above the item to its vertical middle, then curves with `Radius-S` towards the text, ending `Space-XS` before it. "Middle" continues down to the next item. "Last" stops at the curve. Its horizontal position is under the centre of the section icon in `NlNavItem` (see "Mapping notes").
@@ -2607,7 +2607,7 @@ import { NlNavSubItem } from '../NlNavSubItem'; // internal, not exported from @
 
 #### Tokens used
 
-Padding `Space-M` block, `Space-XL` end, `Space-6XL` start; `Radius-M`; Label M; `bg-secondary`, `bg-tertiary` (hover), `bg-neutral` (pressed, K1), `bg-primary` (selected); `text-secondary`, `text-action`; tree line 1px `border-default`, `Radius-S` curve, positioned from `Space-L`, `Size-20`, `Space-XS` and `Space-6XL`; the standard focus ring; Duration fast.
+Padding `Space-M` block, `Space-XL` end, `Space-6XL` start; `Radius-S` (D19); Label M; `bg-secondary`, `bg-tertiary` (hover), `bg-neutral` (pressed, K1), `bg-primary` (selected); `text-secondary`, `text-action`; tree line 1px `border-default`, `Radius-S` curve, positioned from `Space-L`, `Size-20`, `Space-XS` and `Space-6XL`; the standard focus ring; Duration fast.
 
 #### Build decisions
 
@@ -3270,10 +3270,10 @@ NlButtonBase (native button, rounded)
 
 | Size | Height | Padding (block / inline) | Radius | Icon size | Text style | Icon-only (square) |
 |---|---|---|---|---|---|---|
-| large | `Size-56` | `Space-XL` / `Space-3XL` | `Radius-M` | 24 | `Button XL` (new, see "Mapping notes") | `Size-56` |
-| medium | `Size-48` | `Space-L` / `Space-3XL` | `Radius-M` | 24 | `Button L` | `Size-48` |
-| small | `Size-40` | `Space-M` / `Space-XL` | `Radius-S` | 20 | `Button M` | `Size-36` (see "Mapping notes") |
-| xsmall | `Size-36` | `Space-S` / `Space-XL` | `Radius-S` | 20 | `Button M` | `Size-32` (see "Mapping notes") |
+| large | `Size-56` | `Space-XL` / `Space-3XL` | `Radius-S` (D19) | 24 | `Button XL` (new, see "Mapping notes") | `Size-56` |
+| medium | `Size-48` | `Space-L` / `Space-3XL` | `Radius-S` (D19) | 24 | `Button L` | `Size-48` |
+| small | `Size-40` | `Space-M` / `Space-XL` | `Radius-XS` (D19) | 20 | `Button M` | `Size-36` (see "Mapping notes") |
+| xsmall | `Size-36` | `Space-S` / `Space-XL` | `Radius-XS` (D19) | 20 | `Button M` | `Size-32` (see "Mapping notes") |
 
 - Content gap between icon and label: `Space-M`.
 - Width hugs the content. Single-line label, no wrapping.
@@ -3342,7 +3342,7 @@ import { NlButtonBase } from '../NlButtonBase'; // internal, not exported from @
 |---|---|
 | Labelled | Heights `Size-56`, `Size-48`, `Size-40`, `Size-36`; padding as in the table; gap `Space-M` |
 | Icon-only | `Size-56`, `Size-48`, `Size-36`, `Size-32` squares, padding `Space-none` |
-| Radius, text | `Radius-M` / `Radius-S`; `Button XL`, `Button L`, `Button M` |
+| Radius, text | `Radius-S` / `Radius-XS` (D19); `Button XL`, `Button L`, `Button M` |
 | Icon | `NlIcon` 24 (large, medium), 20 (small, xsmall) |
 | Resting colours | primary `bg-action-primary`, `text-white_both`, `fg-white_both`; secondary 2px inset ring `border-active`, `text-action`, `fg-action`; tertiary and link `text-action`, `fg-action` |
 | Focus | The standard ring: `outline-2`, offset −1, `border-focused`, keyboard only |
@@ -4086,7 +4086,7 @@ NlChipBase (rounded, horizontal)
 | small | `Space-S` / `Space-L` | `Space-M` | 16 | `Label M` | 33 (hugs) |
 | large | `Space-M` / `Space-L` | `Space-M` | 20 | `Label L` | 40 (hugs) |
 
-- Radius `Radius-S`. 1px inside border (§4.2).
+- Radius `Radius-XS` (D19). 1px inside border (§4.2).
 - Height and width hug the content. Single line.
 
 #### Colours (resting)
@@ -4146,7 +4146,7 @@ Presentational, so no `'use client'`.
 |---|---|
 | Padding / gap / text | xsmall `Space-XS` / `Space-M`, `Space-XS`, `Label S`; small `Space-S` / `Space-L`, `Space-M`, `Label M`; large `Space-M` / `Space-L`, `Space-M`, `Label L` |
 | Icons | 16, 16, 20 |
-| Shape | `Radius-S`, 1px inset ring |
+| Shape | `Radius-XS` (D19), 1px inset ring |
 | Colours | The "Colours (resting)" table, as written; `--nl-shadow-resting` (`nl:shadow-resting`) on unselected-bordered |
 
 Rendered heights measured in the browser: 26, 33 and 40, as in the reference.
@@ -4241,7 +4241,7 @@ import { NlFilterChip } from '@northline/ui';
 
 #### Tokens used
 
-The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0. Focus: the standard ring, following `Radius-S`. Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
+The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0. Focus: the standard ring, following `Radius-XS` (D19). Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
 
 ---
 
@@ -4336,7 +4336,7 @@ import { NlAssistChip, NlMenu } from '@northline/ui';
 
 #### Tokens used
 
-The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0, "no shadow" is `nl:shadow-none`. Focus: the standard ring, following `Radius-S`. Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
+The "Colours by state" table, as written. "No border" is the 1px inset ring at width 0, "no shadow" is `nl:shadow-none`. Focus: the standard ring, following `Radius-XS` (D19). Colour changes use `--nl-duration-fast`, none under reduced motion. Sizes from `NlChipBase`.
 
 #### Build decisions
 
@@ -4489,8 +4489,8 @@ NlSegment (rounded, horizontal)
 
 | Size | Height | Padding (block / inline) | Gap | Radius | Icon | Text style | Icon-only square (padding) |
 |---|---|---|---|---|---|---|---|
-| medium | `Size-40` | `Space-M` / `Space-3XL` | `Space-M` | `Radius-M` | 20 | `Button M` | `Size-36` (`Space-M`) |
-| small | `Size-32` | `Space-XS` / `Space-L` | `Space-XS` | `Radius-S` | 20 | `Button S` | see "Mapping notes" (`Space-XS`) |
+| medium | `Size-40` | `Space-M` / `Space-3XL` | `Space-M` | `Radius-XS` (D19) | 20 | `Button M` | `Size-36` (`Space-M`) |
+| small | `Size-32` | `Space-XS` / `Space-L` | `Space-XS` | `Radius-XS` (D19) | 20 | `Button S` | see "Mapping notes" (`Space-XS`) |
 | xsmall | `Size-24` | `Space-none` / `Space-M` | `Space-XS` | `Radius-S` | 16 | `Button S` | `Size-24` (`Space-XS`) |
 
 - Width: the group decides (equal widths filling the group, or hugging for icon-only).
@@ -5052,8 +5052,8 @@ NlSegmentedButton (track)
 
 | Size | Track padding | Gap between segments | Track radius | Track height |
 |---|---|---|---|---|
-| medium | `Space-XS` | `Space-L` | `Radius-L` | `Size-48` |
-| small | `Space-XS` | `Space-XS` | `Radius-M` | `Size-40` |
+| medium | `Space-XS` | `Space-L` | `Radius-S` (D19) | `Size-48` |
+| small | `Space-XS` | `Space-XS` | `Radius-S` (D19) | `Size-40` |
 | xsmall | `Space-none` | `Space-none` | `Radius-S` | `Size-24` |
 
 - Labelled: the track fills its container and the segments share the width equally.
@@ -5375,7 +5375,7 @@ NlInputBase (vertical)
 | large | `Size-48` | `Space-L` / `Space-XL` | `Space-M` | 24 |
 | small | `Size-40` | `Space-M` / `Space-XL` | `Space-M` | 20 |
 
-- Box: radius `Radius-M`, 1px inside border (§4.2).
+- Box: radius `Radius-XS` (D19), 1px inside border (§4.2).
 - Value and placeholder text: `Body L`.
 - Floating label: `Label S`, on a `bg-primary` patch with `Space-XS` inline padding, centred on the top border, starting at the content's inline padding.
 - Gap box → helper: `Space-M`. Helper text indented by `Space-XL` to line up with the value.
@@ -5768,7 +5768,7 @@ NlTextAreaBase (vertical)
 
 #### Sizes and layout
 
-- Box: radius `Radius-M`, 1px inside border (§4.2), padding `Space-XL` all round.
+- Box: radius `Radius-XS` (D19), 1px inside border (§4.2), padding `Space-XL` all round.
 - Height: `rows` lines of `Body L` plus padding. Four rows give the reference's 128.
 - Floating label, helper gap and helper indent: as `NlInputBase`.
 - Width fills its container.
@@ -5821,7 +5821,7 @@ import { NlTextAreaBase } from '../NlTextAreaBase'; // internal, not exported fr
 
 #### Tokens used
 
-Box `Radius-M` with a 1px inset border; `Space-XL` padding on the textarea; Body L `text-primary`; borders `border-default`, `border-strong` (filled, not focused), `border-error`, `border-disabled`; hover `bg-secondary`; the standard `border-focused` ring; label at rest Body L `text-placeholder`, floating Label S `text-tertiary` on `bg-primary` with `Space-XS` inline padding; disabled `text-disabled`; helper as `NlInputBase`. Motion `--nl-duration-fast`, none under reduced motion.
+Box `Radius-XS` (D19) with a 1px inset border; `Space-XL` padding on the textarea; Body L `text-primary`; borders `border-default`, `border-strong` (filled, not focused), `border-error`, `border-disabled`; hover `bg-secondary`; the standard `border-focused` ring; label at rest Body L `text-placeholder`, floating Label S `text-tertiary` on `bg-primary` with `Space-XS` inline padding; disabled `text-disabled`; helper as `NlInputBase`. Motion `--nl-duration-fast`, none under reduced motion.
 
 #### Build decisions
 
@@ -6247,7 +6247,7 @@ Presentational, no `'use client'`.
 | Part | Value |
 |---|---|
 | Padding | Actionable: `Space-L` block, `Space-XL` inline. Not actionable: `Space-L` block, no inline. Text hidden: `Space-L` all round (OD-195) |
-| Radius | `Radius-M` |
+| Radius | `Radius-S`, like the side nav rows (D19) |
 | Fill | none; hover `bg-tertiary`; pressed `bg-neutral`; selected (an open menu) `bg-tertiary` |
 | Text | `NlTextBlock type="label-body"`: Label M title, Body M description (OD-120) |
 
@@ -7160,7 +7160,7 @@ NlStatCard (rounded tinted card)
 
 #### Sizes and layout
 
-- Padding `Space-2XL` all round, `Radius-L`. Vertical, gap `Space-none` between label and value. Content centred vertically.
+- Padding `Space-2XL` all round, `Radius-S` (D19). Vertical, gap `Space-none` between label and value. Content centred vertically.
 - Label: `NlLabel size="medium"`.
 - Value: text style `Data M` (tabular figures, §3.4). See "Mapping notes".
 - Width fills its grid column. Cards in a row sit `Space-4XL` apart (set by the page).
@@ -7199,7 +7199,7 @@ None. Not interactive.
 |---|---|
 | Label | `label` → `NlLabel size="medium" tone="secondary"`, in a `<div>` (or `<dt>` with `inList`) |
 | Value | `value` → `<p>` (or `<dd>`), Data M with tabular figures, `text-primary`, wraps |
-| Card | `as` (default `div`); `bg-active`, `Radius-L`, padding `Space-2XL`, column, gap `Space-none`, centred vertically, full width |
+| Card | `as` (default `div`); `bg-active`, `Radius-S` (D19), padding `Space-2XL`, column, gap `Space-none`, centred vertically, full width |
 
 #### API
 
@@ -7215,7 +7215,7 @@ Presentational, no `'use client'`.
 
 #### Tokens used
 
-`bg-active`, `Radius-L`, `Space-2XL`, `Space-none`; Data M, `text-primary`; `NlLabel`'s own (Label M, `text-secondary`).
+`bg-active`, `Radius-S` (D19), `Space-2XL`, `Space-none`; Data M, `text-primary`; `NlLabel`'s own (Label M, `text-secondary`).
 
 ---
 
@@ -7790,7 +7790,7 @@ NlNavItem (vertical)
 
 #### Sizes and layout
 
-- Row: padding `Space-M` block, `Space-L` inline; `Radius-M`; gap `Space-L`; items centred; width fills the nav.
+- Row: padding `Space-M` block, `Space-L` inline; `Radius-S` (D19); gap `Space-L`; items centred; width fills the nav.
 - Icon `NlNavIcon` (20). Label `Label M`, single line, truncated. Chevron 20 (`keyboard_arrow_down`, `keyboard_arrow_up` when expanded).
 - Minimized: only the icon, the row is a square-ish button (padding as above).
 - Pages: below the row, `Space-XS` apart and `Space-XS` below the row.
@@ -7836,7 +7836,7 @@ Default, hover, pressed, focus, current (page or section), expanded.
 | Spec option | Code |
 |---|---|
 | Row | Without pages: link (`href`, `as`), `aria-current="page"` when current. With pages: `<button aria-expanded aria-controls>`; minimized: a menu trigger (`aria-haspopup="menu"`) |
-| Layout | `Space-M` block, `Space-L` inline, `Radius-M`, gap `Space-L`, full width; `NlNavIcon` 20 (filled when current), Label M label, 20 chevron |
+| Layout | `Space-M` block, `Space-L` inline, `Radius-S` (D19), gap `Space-L`, full width; `NlNavIcon` 20 (filled when current), Label M label, 20 chevron |
 | Colours | `state.default` / `page` / `section` lookups per the table; chevron `fg-secondary` or `fg-active` |
 | Pages | `<ul>` `Space-XS` below and apart; `NlNavSubItem` with `tree` `middle` and `last` |
 | Expanded | `expanded` / `defaultExpanded` (default: a page is current) / `onExpandedChange` |
@@ -7855,7 +7855,7 @@ import { NlNavItem } from '@northline/ui';
 
 #### Tokens used
 
-`Space-M`, `Space-L`, `Space-XS`, `Radius-M`, `Size-20`; `bg-secondary`, `bg-tertiary`, `bg-neutral`, `bg-primary`; `text-secondary`, `text-action`; `fg-secondary`, `fg-active`; Label M; `--nl-duration-fast`; the parts' own.
+`Space-M`, `Space-L`, `Space-XS`, `Radius-S` (D19), `Size-20`; `bg-secondary`, `bg-tertiary`, `bg-neutral`, `bg-primary`; `text-secondary`, `text-action`; `fg-secondary`, `fg-active`; Label M; `--nl-duration-fast`; the parts' own.
 
 Checked in Chrome: minimized tooltip on focus, the pages menu opening beside its row with focus on the first page; axe clean with the menu open in every brand and theme.
 
@@ -7889,7 +7889,7 @@ As `NlListItemBase` (small): `NlAvatar` (40), name, email, and a chevron. Minimi
 
 #### Sizes and layout
 
-- Expanded: width fills the nav column. Padding `Space-L` block, `Space-XL` inline; `Radius-M`. Avatar 40, gap `Space-L`. Name `Label M`, email `Body M`. Chevron 24 (`keyboard_arrow_down`, `keyboard_arrow_up` while open).
+- Expanded: width fills the nav column. Padding `Space-L` block, `Space-XL` inline; `Radius-S` (D19). Avatar 40, gap `Space-L`. Name `Label M`, email `Body M`. Chevron 24 (`keyboard_arrow_down`, `keyboard_arrow_up` while open).
 - Minimized: the avatar alone, padding `Space-L` block.
 - The account menu opens above it (expanded), as wide as the user area, `Space-XS` away; or to the right of the nav, along its bottom (minimized).
 
@@ -7918,7 +7918,7 @@ Default, hover, pressed, open, focus. A user row with no menu has no hover and n
 
 | Item | Reference | Northline | Status |
 |---|---|---|---|
-| Padding | `Space-L` block, `Space-XL` inline, and `Radius-M`, unlike list rows | `NlListItemBase appearance="nav"`: this padding and radius, and the nav fills (`bg-tertiary`, `bg-neutral`), which differ from list rows too | Approved (OD-119) |
+| Padding | `Space-L` block, `Space-XL` inline, and `Radius-S` (D19; was `Radius-M`), unlike list rows | `NlListItemBase appearance="nav"`: this padding and radius, and the nav fills (`bg-tertiary`, `bg-neutral`), which differ from list rows too | Approved (OD-119) |
 | Email text style | `Body M`, while small list rows use `Body S` (OD-14) | New `NlTextBlock type="label-body"` (Label M + Body M) | Approved (OD-120) |
 | Avatar size | Set to the xsmall variant but drawn 40 | `NlAvatar size="medium"` (40) | Approved (OD-132) |
 | Standalone | Placed into the side nav where needed (reference decision) | Same: `NlSideNav` takes it in a slot or prop | Matches |
@@ -7957,7 +7957,7 @@ Props: `name`, `email`, `avatar?`, `menu?`, `menuLabel?`, `open?`, `onOpenChange
 
 #### Tokens used
 
-`Space-L`, `Space-XL`, `Space-XS` (menu gap, from `NlMenu`), `Radius-M`, `Size-40` (avatar), `Size-24` (chevron); `bg-tertiary`, `bg-neutral`; `text-primary`, `text-secondary`, `fg-secondary`; Label M, Body M; `--nl-duration-fast`; the parts' own.
+`Space-L`, `Space-XL`, `Space-XS` (menu gap, from `NlMenu`), `Radius-S` (D19), `Size-40` (avatar), `Size-24` (chevron); `bg-tertiary`, `bg-neutral`; `text-primary`, `text-secondary`, `fg-secondary`; Label M, Body M; `--nl-duration-fast`; the parts' own.
 
 Checked in Chrome: axe clean (WCAG 2.2 AA and the experimental name rule) in every brand and theme, closed, hovered (email `text-secondary` on `bg-tertiary`) and with the menu open, expanded and minimized; Escape returns focus to the row.
 
@@ -8055,7 +8055,7 @@ Props: `label`, `options`, `value?`, `defaultValue?`, `onValueChange?`, `size?`,
 
 #### Tokens used
 
-The parts' own: `NlInputBase` (`Size-48` / `Size-40`, `Space-L`, `Space-M`, `Space-XL`, `Radius-M`, borders, `bg-secondary` hover, the focus ring, Body L, Label S), `NlMenu` (`Space-XS`, `Size-320` max height), `NlListItem` small compact (`Space-M`, Label M, Body S, `bg-active`); `fg-secondary`, `fg-disabled` (chevron); `--nl-duration-fast`.
+The parts' own: `NlInputBase` (`Size-48` / `Size-40`, `Space-L`, `Space-M`, `Space-XL`, `Radius-XS`, borders, `bg-secondary` hover, the focus ring, Body L, Label S), `NlMenu` (`Space-XS`, `Size-320` max height), `NlListItem` small compact (`Space-M`, Label M, Body S, `bg-active`); `fg-secondary`, `fg-disabled` (chevron); `--nl-duration-fast`.
 
 Checked in Chrome: axe clean in every brand and theme, closed and with the menu open (all stories), except K9 on hover; Escape and choosing return focus to the field; the long list opens scrolled to the chosen option.
 
@@ -8160,7 +8160,7 @@ Props: `label`, `options`, `value?`, `defaultValue?`, `onValueChange?`, `searcha
 
 #### Tokens used
 
-`Space-XS` (chip gap); the parts' own: `NlInputBase` (sizes, borders, focus ring, Body L, Label S), `NlInputChip` xsmall (`Space-XS`, `Space-M`, Label S, `Radius-S`), `NlMenu` (`Size-320` max height), `NlCheckboxListItem` small compact, `NlSearchField` small, `NlListItem` small compact; `fg-secondary`, `fg-disabled` (chevron).
+`Space-XS` (chip gap); the parts' own: `NlInputBase` (sizes, borders, focus ring, Body L, Label S), `NlInputChip` xsmall (`Space-XS`, `Space-M`, Label S, `Radius-XS`), `NlMenu` (`Size-320` max height), `NlCheckboxListItem` small compact, `NlSearchField` small, `NlListItem` small compact; `fg-secondary`, `fg-disabled` (chevron).
 
 Checked in Chrome: axe clean in every brand and theme, closed, hovered and open (all stories), and with "No results", except K9 on hover and K5 on the marked disabled chips; Backspace in an empty search removes the last chip; the "+N" chip appears when chips don't fit.
 
@@ -8262,7 +8262,7 @@ Props: `label`, `value?`, `defaultValue?`, `onValueChange?`, `format?`, `minDate
 
 #### Tokens used
 
-The parts' own: `NlInputBase` (large: `Size-48`, `Space-L`, `Space-XL`, `Radius-M`, borders, focus ring, Body L, Label S, `text-placeholder` for the hint), `NlButton` xsmall tertiary, `NlMenu` (`Space-XS`), `NlCalendar`.
+The parts' own: `NlInputBase` (large: `Size-48`, `Space-L`, `Space-XL`, `Radius-XS`, borders, focus ring, Body L, Label S, `text-placeholder` for the hint), `NlButton` xsmall tertiary, `NlMenu` (`Space-XS`), `NlCalendar`.
 
 Checked in Chrome: axe clean in every brand and theme, closed, hovered, typing (hint shown) and with the calendar open, except K9 on hover; focus starts on the chosen day; Escape returns focus to the input.
 
@@ -8910,6 +8910,7 @@ Checked in Chrome: axe clean in every brand and theme, at rest, with the user me
 | D16 | 17 Nov 2026 | Border widths use Tailwind's 1px and 2px utilities (§4.2). New z-index scale (§4.3) and a pulse duration for skeletons (§5) |
 | D17 | 17 Nov 2026 | Token file (S0). Colours stay hex strings, as TokensBrücke exports them. Alpha tokens are an alias reference plus the opacity in `$extensions["com.northline.alpha"]`, applied by the token build. White and black primitives sit at `Primitives.Colors.base.white` and `.black`. Decimal line heights use an underscore in their names (`Line Height-62_4`). Two contrast results are accepted: `text-action` on `bg-active-hover` in Voltic (a chip hover state only), and `border-warning` as a decorative outline beside text, never a control's only outline. Hover and pressed states aren't flagged in contrast audits |
 | D18 | 22 Nov 2026 | Required fields on pages. Pressing a form's main button with required fields left empty puts each empty field in `error`, with an error helper text (with its leading icon, as `NlHelperText` draws it in error) saying what to enter. Focus moves to the first empty field. A field's error clears once it has a value. Native browser bubbles are off (`noValidate`); fields keep `required` |
+| D19 | 22 Nov 2026 | Smaller corners (designer's choice). Buttons: large and medium `Radius-S` (8), small and xsmall `Radius-XS` (4). Input fields (`NlInputBase`) and text area (`NlTextAreaBase`) `Radius-XS`. Chips (`NlChipBase`) `Radius-XS`. Side nav rows (`NlNavItem`, `NlNavSubItem`, and the `NlSideNavUser` row through `NlListItemBase` nav) `Radius-S`. `NlStatCard` `Radius-S`. `NlSegmentedButton` track `Radius-S` at every size; segments inside the padded medium and small tracks `Radius-XS`, xsmall segments `Radius-S`. The side nav tree line keeps its `Radius-S` curve |
 
 Known issues
 

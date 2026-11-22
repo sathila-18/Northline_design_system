@@ -35,12 +35,12 @@ export const iconOnly = {
   xsmall: 'nl:size-32 nl:p-none',
 } as const;
 
-/** Radius and text style per size. */
+/** Radius and text style per size. Radius-S for large and medium, Radius-XS for small and xsmall (D19). */
 export const size = {
-  large: 'nl:rounded-m nl:text-button-xl',
-  medium: 'nl:rounded-m nl:text-button-l',
-  small: 'nl:rounded-s nl:text-button-m',
-  xsmall: 'nl:rounded-s nl:text-button-m',
+  large: 'nl:rounded-s nl:text-button-xl',
+  medium: 'nl:rounded-s nl:text-button-l',
+  small: 'nl:rounded-xs nl:text-button-m',
+  xsmall: 'nl:rounded-xs nl:text-button-m',
 } as const;
 
 /** NlIcon size per button size. */

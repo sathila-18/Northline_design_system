@@ -3,11 +3,11 @@
 // Structure: card (vertical) → label (NlLabel) → value.
 
 /**
- * The card: fills its grid column, bg-active, Radius-L, padding Space-2XL, vertical, gap Space-none, content centred
+ * The card: fills its grid column, bg-active, Radius-S (D19), padding Space-2XL, vertical, gap Space-none, content centred
  * vertically.
  */
 export const root =
-  'nl:flex nl:w-full nl:min-w-0 nl:flex-col nl:justify-center nl:gap-none nl:rounded-l nl:bg-active nl:p-2xl';
+  'nl:flex nl:w-full nl:min-w-0 nl:flex-col nl:justify-center nl:gap-none nl:rounded-s nl:bg-active nl:p-2xl';
 
 /** The label's wrapper (a <dt> in a list): no margin of its own. */
 export const term = 'nl:m-none';

@@ -10,11 +10,11 @@
 export const root = 'nl:flex nl:w-full nl:flex-col';
 
 /**
- * The box: Radius-M, 1px inside border. Hover fills bg-secondary (enabled and not focused). The standard focus ring
+ * The box: Radius-XS (D19), 1px inside border. Hover fills bg-secondary (enabled and not focused). The standard focus ring
  * shows while the textarea has focus (OD-44), any focus, as for text inputs. Colour changes use Duration fast.
  */
 export const box =
-  'nl:group/field nl:relative nl:flex nl:w-full nl:rounded-m nl:inset-ring nl:hover:has-enabled:not-has-focus:bg-secondary nl:has-focus:outline-2 nl:has-focus:-outline-offset-1 nl:has-focus:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+  'nl:group/field nl:relative nl:flex nl:w-full nl:rounded-xs nl:inset-ring nl:hover:has-enabled:not-has-focus:bg-secondary nl:has-focus:outline-2 nl:has-focus:-outline-offset-1 nl:has-focus:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
 
 /**
  * Border per error state. Normal: border-default; filled and not focused border-strong (enabled only); disabled
@@ -33,7 +33,7 @@ export const border = {
  * outline is hidden. No hint text (designer's choice, 19 Nov 2026). Disabled text-disabled.
  */
 export const textarea =
-  'nl:peer/input nl:block nl:w-full nl:min-w-0 nl:resize-y nl:rounded-m nl:bg-transparent nl:p-xl nl:text-body-l nl:text-primary nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:resize-none nl:disabled:text-disabled';
+  'nl:peer/input nl:block nl:w-full nl:min-w-0 nl:resize-y nl:rounded-xs nl:bg-transparent nl:p-xl nl:text-body-l nl:text-primary nl:focus:outline-hidden nl:disabled:cursor-default nl:disabled:resize-none nl:disabled:text-disabled';
 
 /**
  * The label (OD-42): at rest on the first line (Space-XL in from the top and start), Body L, text-placeholder.

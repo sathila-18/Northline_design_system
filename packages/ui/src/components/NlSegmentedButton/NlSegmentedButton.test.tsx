@@ -15,7 +15,7 @@ describe('NlSegmentedButton', () => {
     render(<NlSegmentedButton aria-label="Period" options={period} />);
     const group = screen.getByRole('radiogroup', { name: 'Period' });
     expect(group).toHaveAttribute('data-size', 'medium');
-    expect(group).toHaveClass('nl:bg-tertiary', 'nl:h-48', 'nl:p-xs', 'nl:gap-l', 'nl:rounded-l', 'nl:w-full');
+    expect(group).toHaveClass('nl:bg-tertiary', 'nl:h-48', 'nl:p-xs', 'nl:gap-l', 'nl:rounded-s', 'nl:w-full');
     const radios = screen.getAllByRole('radio');
     expect(radios).toHaveLength(3);
     expect(radios[0]).toBeChecked();
@@ -55,7 +55,7 @@ describe('NlSegmentedButton', () => {
   });
 
   it.each([
-    ['small', ['nl:h-40', 'nl:p-xs', 'nl:gap-xs', 'nl:rounded-m']],
+    ['small', ['nl:h-40', 'nl:p-xs', 'nl:gap-xs', 'nl:rounded-s']],
     ['xsmall', ['nl:h-24', 'nl:p-none', 'nl:gap-none', 'nl:rounded-s']],
   ] as const)('size %s', (size, classes) => {
     render(<NlSegmentedButton aria-label="Period" options={period} size={size} />);

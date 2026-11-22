@@ -9,14 +9,14 @@
 export const root = 'nl:flex nl:w-full nl:flex-col';
 
 /**
- * The box: a row, gap Space-M, Radius-M, 1px inside border. Hover fills bg-secondary (enabled and not focused).
+ * The box: a row, gap Space-M, Radius-XS (D19), 1px inside border. Hover fills bg-secondary (enabled and not focused).
  * The focus ring shows while the box's own input has focus (OD-44: the standard border-focused ring; the spec draws
  * it on :focus, not only keyboard focus, as text inputs usually do). nl:input-focus (tailwind.css) rather than
  * has-focus, so a focused trailing button shows only its own ring (approved 19 Nov 2026, rule 9). Colour changes use
  * Duration fast.
  */
 export const box =
-  'nl:group/field nl:relative nl:flex nl:w-full nl:items-center nl:rounded-m nl:inset-ring nl:hover:has-enabled:not-input-focus:bg-secondary nl:input-focus:outline-2 nl:input-focus:-outline-offset-1 nl:input-focus:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+  'nl:group/field nl:relative nl:flex nl:w-full nl:items-center nl:rounded-xs nl:inset-ring nl:hover:has-enabled:not-input-focus:bg-secondary nl:input-focus:outline-2 nl:input-focus:-outline-offset-1 nl:input-focus:outline-focused nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
 
 /** Height, padding and gap per size. Large Size-48, Space-L / Space-XL; small Size-40, Space-M / Space-XL. */
 export const size = {

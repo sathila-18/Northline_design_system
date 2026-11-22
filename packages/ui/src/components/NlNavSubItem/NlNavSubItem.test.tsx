@@ -16,7 +16,7 @@ describe('NlNavSubItem', () => {
       'nl:py-m',
       'nl:ps-6xl',
       'nl:pe-xl',
-      'nl:rounded-m',
+      'nl:rounded-s',
       'nl:bg-secondary',
       'nl:text-secondary',
       'nl:hover:bg-tertiary',

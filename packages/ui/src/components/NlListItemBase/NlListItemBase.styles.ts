@@ -28,20 +28,20 @@ export const layout = {
     default: 'nl:p-xl nl:rounded-l nl:inset-ring',
     compact: 'nl:p-m nl:rounded-l nl:inset-ring',
   },
-  /** Nav (OD-119): Space-L block, Space-XL inline, Radius-M. Density doesn't change it. */
+  /** Nav (OD-119): Space-L block, Space-XL inline, Radius-S like the side nav rows (D19). Density doesn't change it. */
   nav: {
-    default: 'nl:px-xl nl:py-l nl:rounded-m',
-    compact: 'nl:px-xl nl:py-l nl:rounded-m',
+    default: 'nl:px-xl nl:py-l nl:rounded-s',
+    compact: 'nl:px-xl nl:py-l nl:rounded-s',
   },
   /** Nav, not actionable: no side padding (NlSideNavUser with no menu). */
   navStatic: {
-    default: 'nl:px-none nl:py-l nl:rounded-m',
-    compact: 'nl:px-none nl:py-l nl:rounded-m',
+    default: 'nl:px-none nl:py-l nl:rounded-s',
+    compact: 'nl:px-none nl:py-l nl:rounded-s',
   },
   /** Nav with the text hidden (minimized side nav): Space-L all round (designer's choice 20 Nov 2026). */
   navTextHidden: {
-    default: 'nl:p-l nl:rounded-m',
-    compact: 'nl:p-l nl:rounded-m',
+    default: 'nl:p-l nl:rounded-s',
+    compact: 'nl:p-l nl:rounded-s',
   },
 } as const;
 

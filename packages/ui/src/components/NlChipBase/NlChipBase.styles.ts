@@ -1,11 +1,11 @@
 // NlChipBase classes (DESIGN.md §9, NlChipBase). Whole literal class strings only (CLAUDE.md, Tailwind rule 1).
 
 /**
- * The chip: a row on one line that hugs its content, Radius-S. Carries the named group `chip`, so the slots can follow
+ * The chip: a row on one line that hugs its content, Radius-XS (D19). Carries the named group `chip`, so the slots can follow
  * the states a mapped chip adds. No states of its own (§7.2).
  */
 export const root =
-  'nl:group/chip nl:inline-flex nl:shrink-0 nl:items-center nl:whitespace-nowrap nl:rounded-s nl:no-underline';
+  'nl:group/chip nl:inline-flex nl:shrink-0 nl:items-center nl:whitespace-nowrap nl:rounded-xs nl:no-underline';
 
 /** Padding (block / inline), gap and text style per size. */
 export const size = {

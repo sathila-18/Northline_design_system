@@ -17,7 +17,7 @@ describe('NlChipBase', () => {
     expect(chip.tagName).toBe('SPAN');
     expect(chip).toHaveAttribute('data-look', 'unselected');
     expect(chip).toHaveAttribute('data-size', 'small');
-    expect(chip).toHaveClass('nl:group/chip', 'nl:inline-flex', 'nl:whitespace-nowrap', 'nl:rounded-s');
+    expect(chip).toHaveClass('nl:group/chip', 'nl:inline-flex', 'nl:whitespace-nowrap', 'nl:rounded-xs');
     expect(chip.querySelector('[data-slot="leading"]')).toBeNull();
     expect(chip.querySelector('[data-slot="trailing"]')).toBeNull();
   });
