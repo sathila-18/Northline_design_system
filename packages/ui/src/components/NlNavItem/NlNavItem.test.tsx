@@ -21,7 +21,7 @@ describe('NlNavItem', () => {
     expect(link).toHaveClass(
       'nl:px-l',
       'nl:py-m',
-      'nl:rounded-m',
+      'nl:rounded-s',
       'nl:gap-l',
       'nl:bg-secondary',
       'nl:text-secondary',

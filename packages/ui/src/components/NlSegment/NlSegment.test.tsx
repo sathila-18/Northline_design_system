@@ -60,14 +60,14 @@ describe('NlSegment', () => {
   it.each([
     [
       'medium',
-      ['nl:h-40', 'nl:py-m', 'nl:px-3xl', 'nl:gap-m', 'nl:rounded-m', 'nl:text-button-m'],
-      ['nl:size-36', 'nl:p-m'],
+      ['nl:h-40', 'nl:py-m', 'nl:px-3xl', 'nl:gap-m', 'nl:rounded-xs', 'nl:text-button-m'],
+      ['nl:size-36', 'nl:p-m', 'nl:rounded-xs'],
       '20',
     ],
     [
       'small',
-      ['nl:h-32', 'nl:py-xs', 'nl:px-l', 'nl:gap-xs', 'nl:rounded-s', 'nl:text-button-s'],
-      ['nl:p-xs', 'nl:rounded-s'],
+      ['nl:h-32', 'nl:py-xs', 'nl:px-l', 'nl:gap-xs', 'nl:rounded-xs', 'nl:text-button-s'],
+      ['nl:p-xs', 'nl:rounded-xs'],
       '20',
     ],
     [

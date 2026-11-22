@@ -7,7 +7,7 @@ describe('NlStatCard', () => {
     const { container } = render(<NlStatCard label="Total points" value="806,400" />);
     const root = container.firstElementChild as HTMLElement;
     expect(root.tagName).toBe('DIV');
-    expect(root).toHaveClass('nl:bg-active', 'nl:rounded-l', 'nl:p-2xl', 'nl:gap-none', 'nl:justify-center');
+    expect(root).toHaveClass('nl:bg-active', 'nl:rounded-s', 'nl:p-2xl', 'nl:gap-none', 'nl:justify-center');
     expect(screen.getByText('Total points')).toHaveClass('nl:text-label-m', 'nl:text-secondary');
     const value = screen.getByText('806,400');
     expect(value.tagName).toBe('P');

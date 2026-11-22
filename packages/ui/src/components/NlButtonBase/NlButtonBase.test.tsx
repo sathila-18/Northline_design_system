@@ -31,10 +31,10 @@ describe('NlButtonBase', () => {
   });
 
   it.each([
-    ['large', ['nl:h-56', 'nl:px-3xl', 'nl:py-xl', 'nl:rounded-m', 'nl:text-button-xl'], 'nl:size-56', '24'],
-    ['medium', ['nl:h-48', 'nl:px-3xl', 'nl:py-l', 'nl:rounded-m', 'nl:text-button-l'], 'nl:size-48', '24'],
-    ['small', ['nl:h-40', 'nl:px-xl', 'nl:py-m', 'nl:rounded-s', 'nl:text-button-m'], 'nl:size-36', '20'],
-    ['xsmall', ['nl:h-36', 'nl:px-xl', 'nl:py-s', 'nl:rounded-s', 'nl:text-button-m'], 'nl:size-32', '20'],
+    ['large', ['nl:h-56', 'nl:px-3xl', 'nl:py-xl', 'nl:rounded-s', 'nl:text-button-xl'], 'nl:size-56', '24'],
+    ['medium', ['nl:h-48', 'nl:px-3xl', 'nl:py-l', 'nl:rounded-s', 'nl:text-button-l'], 'nl:size-48', '24'],
+    ['small', ['nl:h-40', 'nl:px-xl', 'nl:py-m', 'nl:rounded-xs', 'nl:text-button-m'], 'nl:size-36', '20'],
+    ['xsmall', ['nl:h-36', 'nl:px-xl', 'nl:py-s', 'nl:rounded-xs', 'nl:text-button-m'], 'nl:size-32', '20'],
   ] as const)('size %s', (size, labelled, square, iconSize) => {
     const { rerender } = render(
       <NlButtonBase size={size} icon="leading" iconName="add">

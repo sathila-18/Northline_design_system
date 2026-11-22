@@ -172,24 +172,27 @@
 /*
  * nl:nav-tree-line and nl:nav-tree-continue: where the side nav's tree line sits in an NlNavSubItem (DESIGN.md §9,
  * NlNavSubItem, OD-30a). Only NlNavSubItem uses them. The line runs under the section icon's centre, Space-L + half of
- * Size-20 from the start; the curve leg starts Space-XS above the item (bridging the gap between pages), meets the
- * item's middle and runs towards the text, stopping Space-XS before it (the text starts at Space-6XL). The
- * continuation runs from the middle to the bottom for a "middle" item. Position and size only: the 1px border, its
- * colour and the Radius-S curve are normal classes. Classes can't add tokens without arbitrary values. Approved by the
+ * Size-20 from the start; the curve leg starts Space-XS + Space-M above the item, meets the item's middle and runs
+ * towards the text, stopping Space-XS before it (the text starts at Space-6XL). Space-XS + Space-M is the pages'
+ * Space-XS gap plus the section row's Space-M bottom padding, so the first page's line reaches up to the section
+ * icon; on later pages it overlaps the previous page's continuation (same opaque colour, so no visible change). The
+ * continuation runs from Radius-S above the middle (where the curve leaves the vertical) to the bottom for a "middle"
+ * item, so the vertical line has no break at the curve (OD-239). Position and size only: the 1px border, its colour
+ * and the Radius-S curve are normal classes. Classes can't add tokens without arbitrary values. Approved by the
  * designer, 19 Nov 2026 (rule 9).
  */
 @utility nav-tree-line {
   position: absolute;
   inset-inline-start: calc(var(--nl-space-l) + var(--nl-size-20) / 2);
-  inset-block-start: calc(var(--nl-space-xs) * -1);
+  inset-block-start: calc((var(--nl-space-xs) + var(--nl-space-m)) * -1);
   inline-size: calc(var(--nl-space-6xl) - var(--nl-space-xs) - var(--nl-space-l) - var(--nl-size-20) / 2);
-  block-size: calc(50% + var(--nl-space-xs));
+  block-size: calc(50% + var(--nl-space-xs) + var(--nl-space-m));
 }
 
 @utility nav-tree-continue {
   position: absolute;
   inset-inline-start: calc(var(--nl-space-l) + var(--nl-size-20) / 2);
-  inset-block: 50% 0;
+  inset-block: calc(50% - var(--nl-radius-s)) 0;
 }
 
 @keyframes nl-skeleton-pulse {

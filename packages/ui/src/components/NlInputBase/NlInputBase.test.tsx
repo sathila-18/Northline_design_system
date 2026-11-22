@@ -24,7 +24,7 @@ describe('NlInputBase', () => {
       'nl:py-l',
       'nl:px-xl',
       'nl:gap-m',
-      'nl:rounded-m',
+      'nl:rounded-xs',
       'nl:inset-ring',
       'nl:inset-ring-default',
     );

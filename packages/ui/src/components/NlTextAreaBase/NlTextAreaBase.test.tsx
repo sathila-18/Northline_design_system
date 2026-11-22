@@ -20,7 +20,7 @@ describe('NlTextAreaBase', () => {
     expect(textarea).not.toHaveAttribute('aria-invalid');
     expect(textarea).toHaveClass('nl:p-xl', 'nl:text-body-l', 'nl:resize-y', 'nl:disabled:resize-none');
     expect(boxOf(textarea)).toHaveClass(
-      'nl:rounded-m',
+      'nl:rounded-xs',
       'nl:inset-ring',
       'nl:inset-ring-default',
       'nl:has-focus:outline-2',

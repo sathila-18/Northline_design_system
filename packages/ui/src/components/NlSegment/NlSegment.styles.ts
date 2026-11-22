@@ -13,10 +13,13 @@ export const root =
 export const input =
   'nl:absolute nl:inset-none nl:m-none nl:size-full nl:cursor-pointer nl:appearance-none nl:opacity-0';
 
-/** Height, padding, gap, radius and text style per size, with a label. */
+/**
+ * Height, padding, gap, radius and text style per size, with a label. Radius-XS inside the padded medium and small
+ * tracks; xsmall fills an unpadded track, so it matches the track's Radius-S (D19).
+ */
 export const labelled = {
-  medium: 'nl:h-40 nl:py-m nl:px-3xl nl:gap-m nl:rounded-m nl:text-button-m',
-  small: 'nl:h-32 nl:py-xs nl:px-l nl:gap-xs nl:rounded-s nl:text-button-s',
+  medium: 'nl:h-40 nl:py-m nl:px-3xl nl:gap-m nl:rounded-xs nl:text-button-m',
+  small: 'nl:h-32 nl:py-xs nl:px-l nl:gap-xs nl:rounded-xs nl:text-button-s',
   xsmall: 'nl:h-24 nl:py-none nl:px-m nl:gap-xs nl:rounded-s nl:text-button-s',
 } as const;
 
@@ -25,8 +28,8 @@ export const labelled = {
  * token, so its 28 comes from Space-XS around the 20 icon (OD-67).
  */
 export const iconOnly = {
-  medium: 'nl:size-36 nl:p-m nl:rounded-m',
-  small: 'nl:p-xs nl:rounded-s',
+  medium: 'nl:size-36 nl:p-m nl:rounded-xs',
+  small: 'nl:p-xs nl:rounded-xs',
   xsmall: 'nl:size-24 nl:p-xs nl:rounded-s',
 } as const;
 

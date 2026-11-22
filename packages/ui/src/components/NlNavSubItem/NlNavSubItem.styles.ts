@@ -4,11 +4,11 @@
 
 /**
  * The link: a row, items centred, fills the nav. Padding Space-M block, Space-XL end, Space-6XL start (the text lines
- * up under the section's text). Radius-M. Standard focus ring, keyboard only (OD-30b). Colours ease with Duration
+ * up under the section's text). Radius-S (D19). Standard focus ring, keyboard only (OD-30b). Colours ease with Duration
  * fast; none under reduced motion.
  */
 export const root =
-  'nl:relative nl:flex nl:w-full nl:min-w-0 nl:items-center nl:rounded-m nl:py-m nl:ps-6xl nl:pe-xl nl:no-underline nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused nl:focus:not-focus-visible:outline-none nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
+  'nl:relative nl:flex nl:w-full nl:min-w-0 nl:items-center nl:rounded-s nl:py-m nl:ps-6xl nl:pe-xl nl:no-underline nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused nl:focus:not-focus-visible:outline-none nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none';
 
 /**
  * Colours. Default bg-secondary, text-secondary; hover bg-tertiary; pressed bg-neutral (K1: same as hover in Light).
