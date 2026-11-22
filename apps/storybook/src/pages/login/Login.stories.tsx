@@ -85,7 +85,9 @@ function LoginPage() {
             </NlButton>
             {/* NlCheckbox fills its row by spec; the wrapper shrinks it to its content so it sits at the end. */}
             <div>
-              <NlCheckbox name="remember">Remember me</NlCheckbox>
+              <NlCheckbox name="remember" size="small">
+                Remember me
+              </NlCheckbox>
             </div>
           </div>
         </div>
