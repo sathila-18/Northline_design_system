@@ -686,6 +686,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 | # | Page | Area | Status |
 |---|---|---|---|
+| P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link, `NlCheckbox`, `NlButton`; form 4 of the 12 grid columns, centred | Login | 🟨 |
 
 ---
 
