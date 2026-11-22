@@ -48,6 +48,13 @@ describe('NlTextBlock', () => {
     expect(container.querySelectorAll('p')).toHaveLength(1);
   });
 
+  it('body-m type: a Body M description and no heading (OD-238)', () => {
+    const { container } = render(<NlTextBlock type="body-m" description="Remember me" />);
+    expect(rootOf(container)).toHaveAttribute('data-type', 'body-m');
+    expect(screen.getByText('Remember me')).toHaveClass('nl:text-body-m', 'nl:text-secondary');
+    expect(container.querySelectorAll('p')).toHaveLength(1);
+  });
+
   it('renders label, heading and description in that DOM order', () => {
     const { container } = render(
       <NlTextBlock label={<span>Label</span>} heading="Heading" description="Description" />,

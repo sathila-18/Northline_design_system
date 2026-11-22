@@ -88,3 +88,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlSideNav | 2026-11-21 00:37 | 2026-11-21 01:10 | Size-240 token added (OD-134, audit addendum); OD-146, OD-147, OD-231 to OD-233 decided; NlNavItem tree prop; collapse button without aria-expanded (designer's choice); full test:a11y passed. Approved by the designer |
 | NlAppShell | 2026-11-21 01:21 | 2026-11-21 01:38 | OD-24, OD-25, OD-26 (outline inside), OD-235, OD-236 decided; panel without fill so the header gap shows the page background; skip link reveal on its own span; full test:a11y passed. Approved by the designer |
 | Page: Login | 2026-11-22 17:53 | | Storybook only (Pages/Login). Built from existing components; form 4 grid columns wide |
+| NlCheckbox size | 2026-11-22 21:16 | | `size` small (Body M, text centred on the control) for the login page; NlTextBlock `body-m` type. OD-237, OD-238 |

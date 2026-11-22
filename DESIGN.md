@@ -1858,7 +1858,7 @@ NlTextBlock (vertical stack)
 |---|---|---|
 | Type | display-large, display-medium, display-small, headline-large, headline-medium, headline-small | `type`, default `headline-small`, also `data-type` |
 | Extra type for list rows | label (see "Mapping notes") | `type="label"` (OD-14) |
-| Body text | body (OD-41) | `type="body"`: description only, in `Body L` |
+| Body text | body (OD-41), body-m (OD-238) | `type="body"`: description only, in `Body L`. `type="body-m"`: description only, in `Body M` (small checkbox text) |
 | Alignment | left, center, right | `align: 'start' \| 'center' \| 'end'`, default `start`, also `data-align` |
 | Show label | on or off | `label?: ReactNode` (slot, D15). Usually `<NlLabel>` |
 | Show heading | on or off | `heading?: ReactNode` (text) |
@@ -1919,13 +1919,13 @@ None. Not interactive. A parent that is disabled (a disabled list row, for examp
 
 | Spec option | Code |
 |---|---|
-| Type | `type`: `display-large`, `display-medium`, `display-small`, `headline-large`, `headline-medium`, `headline-small` (default), `label`, `body`; also `data-type` |
+| Type | `type`: `display-large`, `display-medium`, `display-small`, `headline-large`, `headline-medium`, `headline-small` (default), `label`, `label-body`, `body`, `body-m`; also `data-type` |
 | Alignment | `align?: 'start' \| 'center' \| 'end'`, default `start`, also `data-align` |
 | Label | `label?: ReactNode` (slot) |
-| Heading | `heading?: ReactNode`. Not accepted with `type="body"` |
+| Heading | `heading?: ReactNode`. Not accepted with `type="body"` or `"body-m"` |
 | Description | `description?: ReactNode`, a `<p>` |
 | Tone | `tone?: 'default' \| 'inverse'`, also `data-tone` |
-| Heading element | `headingAs?: 'h1' … 'h6' \| 'p' \| 'span'`, default `p`. Not accepted with `type="body"` |
+| Heading element | `headingAs?: 'h1' … 'h6' \| 'p' \| 'span'`, default `p`. Not accepted with `type="body"` or `"body-m"` |
 | Disabled | `disabled?: boolean`; overrides the tone |
 
 #### API
@@ -1947,8 +1947,8 @@ A root `<div>` stack: label slot, then a content stack with the heading and the 
 | Part | Tokens |
 |---|---|
 | Heading | `Display Large-H1` … `Headline Small-H6`, `Label M` (label type) |
-| Description | `Body L` (display-large, display-medium, body), `Body M` (display-small to headline-small), `Body S` (label) |
-| Gaps | `Space-M` (H1 to H4), `Space-XS` (H5, H6), `Space-none` (label, body; and label slot → content) |
+| Description | `Body L` (display-large, display-medium, body), `Body M` (display-small to headline-small, label-body, body-m), `Body S` (label) |
+| Gaps | `Space-M` (H1 to H4), `Space-XS` (H5, H6), `Space-none` (label, label-body, body, body-m; and label slot → content) |
 | Colour | Heading `text-primary`, description `text-secondary`; inverse `text-inverse`; disabled `text-disabled` |
 
 #### Build decisions
@@ -1957,6 +1957,7 @@ A root `<div>` stack: label slot, then a content stack with the heading and the 
 |---|---|
 | Body type | Option (b) of OD-41: `type="body"` says what it means. The type takes no `heading` or `headingAs`, so no heading style is invented (designer's choice, 18 Nov 2026) |
 | OD-120 | `type="label-body"` (added 20 Nov 2026): Label M heading, Body M description, gap `Space-none`. Used by `NlListItemBase appearance="nav"` (`NlSideNavUser`) |
+| OD-238 | `type="body-m"` (added 22 Nov 2026): a `Body M` description with no heading, gap `Space-none`. Used by `NlCheckbox size="small"` (OD-237) |
 | Disabled text contrast | `text-disabled` is under 4.5:1 by design and exempt as part of an inactive control (WCAG 1.4.3). Accepted as known issue K3; the Disabled story's sample is marked for the contrast check (designer's choice, 18 Nov 2026) |
 | Label slot story | `NlLabel` (#30) isn't built yet, so the stories pass plain text in the slot |
 
@@ -5154,14 +5155,17 @@ NlCheckbox (horizontal, top-aligned)
 | Type | unselected, selected, indeterminate | `checked` / `defaultChecked`, `indeterminate?` (passed to the control) |
 | Disabled | on or off | `disabled` |
 | Text | text | `children` |
+| Size | medium (default) or small | `size?: 'medium' \| 'small'`. Small is not in the reference; added for the login page (OD-237) |
 | Show text | on (default) or off | `hideLabel?: boolean`. Off hides the text visually but keeps it as the checkbox's name |
 | Change | callback | `onChange` |
 | Form | name, value | `name`, `value` (native) |
 
 #### Sizes and layout
 
-- Horizontal, gap `Space-L`, items aligned to the top, padding `Space-none`.
-- Text: `NlTextBlock` with only a description, in `Body L` (see "Mapping notes" for which type gives it).
+- Horizontal, gap `Space-L`, padding `Space-none`.
+- Medium: text in `Body L` (24 line, the same as the control's 24 hit area), items aligned to the top.
+- Small: text in `Body M` (21 line), items centred, so the text sits on the box's centre line (OD-237). Wrapped text centres as a block.
+- Text: `NlTextBlock` with only a description (see "Mapping notes" for which type gives it).
 - Width fills its container. The text wraps.
 
 #### Colours
@@ -5200,6 +5204,7 @@ Enabled, hover, pressed, focus and disabled for each type. Hover and pressed are
 | Type | `checked` / `defaultChecked`, `indeterminate`, passed to `NlCheckboxControl` |
 | Disabled | `disabled`: passed to the control and to `NlTextBlock disabled` (`text-disabled`); the row's cursor is default |
 | Text | `children`, as `NlTextBlock type="body"`'s description (`Body L`, `text-secondary`) |
+| Size | `size` lookup: medium `nl:items-start` + `NlTextBlock type="body"`; small `nl:items-center` + `NlTextBlock type="body-m"` (`Body M`). `data-size` on the row |
 | Show text | `hideLabel?: boolean`: the text is `nl:sr-only` and stays the name |
 | Change, Form | `onChange`, `name`, `value`, `ref` and native input attributes go to the control's input; `className` (placement only) to the row |
 
@@ -5210,6 +5215,7 @@ import { NlCheckbox } from '@northline/ui';
 
 <NlCheckbox name="welcome" defaultChecked>Send a welcome email</NlCheckbox>
 <NlCheckbox hideLabel checked={selected} onChange={(e) => setSelected(e.target.checked)}>Select member 0042</NlCheckbox>
+<NlCheckbox size="small" name="remember">Remember me</NlCheckbox>
 ```
 
 `'use client'` (through `NlCheckboxControl`).
@@ -5224,6 +5230,7 @@ Gap `Space-L`, padding `Space-none`; text and control tokens from `NlTextBlock` 
 |---|---|
 | Label contents | The row is a `<label>` holding `NlTextBlock` (a `<div>` and `<p>`). Not strictly valid HTML (a label takes phrasing content), but clicking, naming and accessibility work in every browser and axe passes (designer's choice, 19 Nov 2026) |
 | Disabled contrast | `text-disabled`: known issue K3; story samples are marked |
+| Small size | Added 22 Nov 2026 for the login page (OD-237): `Body M`, centred on the control. `NlRadio` and `NlSwitch` get a small size only when a page needs it |
 
 ---
 

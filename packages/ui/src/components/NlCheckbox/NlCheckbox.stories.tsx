@@ -10,6 +10,7 @@ const meta = {
   component: NlCheckbox,
   args: {
     children: 'Send a welcome email',
+    size: 'medium',
     defaultChecked: false,
     indeterminate: false,
     disabled: false,
@@ -17,6 +18,7 @@ const meta = {
   },
   argTypes: {
     children: { control: 'text' },
+    size: { control: 'inline-radio', options: ['medium', 'small'] },
     defaultChecked: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -42,6 +44,19 @@ export const Types: Story = {
       <NlCheckbox>Send a welcome email</NlCheckbox>
       <NlCheckbox defaultChecked>Add to Tier 2</NlCheckbox>
       <NlCheckbox indeterminate>Select all members</NlCheckbox>
+    </div>
+  ),
+};
+
+/** Sizes: medium (Body L, top-aligned) and small (Body M, centred on the box, OD-237). */
+export const Sizes: Story = {
+  render: () => (
+    <div className="nl:flex nl:w-full nl:max-w-320 nl:flex-col nl:gap-m">
+      <NlCheckbox>Medium: send a welcome email</NlCheckbox>
+      <NlCheckbox size="small">Small: remember me</NlCheckbox>
+      <NlCheckbox size="small" defaultChecked>
+        Small: add to Tier 2
+      </NlCheckbox>
     </div>
   ),
 };
