@@ -2,6 +2,7 @@
 // are built, so every release proves they render in the App Router.
 import { brands, semanticTokens, themes } from '@northline/tokens';
 import * as ui from '@northline/ui';
+import { NlChartTooltip } from '@northline/ui/charts';
 
 const samples = ['bg-action-primary', 'bg-brand', 'bg-success', 'bg-warning', 'bg-error'] as const;
 
@@ -26,6 +27,14 @@ export default function Page() {
           />
         ))}
       </div>
+      {/* @northline/ui/charts, the separate charts entry point, rendered on the server. */}
+      <NlChartTooltip
+        heading="Mar 2026"
+        items={[
+          { name: 'Members', value: '1,204', series: 1 },
+          { name: 'New members', value: '96', series: 2 },
+        ]}
+      />
     </main>
   );
 }

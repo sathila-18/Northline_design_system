@@ -17,6 +17,10 @@ const config: StorybookConfig = {
       resolve: {
         alias: [
           {
+            find: /^@northline\/ui\/charts$/,
+            replacement: fileURLToPath(new URL('../../../packages/ui/src/charts/index.ts', import.meta.url)),
+          },
+          {
             find: /^@northline\/ui$/,
             replacement: fileURLToPath(new URL('../../../packages/ui/src/index.ts', import.meta.url)),
           },

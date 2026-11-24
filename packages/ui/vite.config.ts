@@ -8,7 +8,12 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: fileURLToPath(new URL('src/index.ts', import.meta.url)),
+      // Two entry points: the library, and @northline/ui/charts (DESIGN.md §9 "Charts"), so apps that don't use
+      // charts never load them.
+      entry: {
+        index: fileURLToPath(new URL('src/index.ts', import.meta.url)),
+        'charts/index': fileURLToPath(new URL('src/charts/index.ts', import.meta.url)),
+      },
       formats: ['es'],
     },
     minify: false,

@@ -229,6 +229,15 @@
   animation: nl-bulk-bar-fade var(--nl-duration-base) var(--nl-ease-standard);
 }
 
+/*
+ * nl:animate-chart-tooltip-in: NlChartTooltip appearing (DESIGN.md §9, NlChartTooltip). Only NlChartTooltip uses it.
+ * A fade over --nl-duration-base with --nl-ease-standard (the bulk action bar's fade keyframes); always paired with
+ * nl:motion-reduce:animate-none (rule 6). Approved by the designer with the chart specs, 24 Nov 2026 (rule 9).
+ */
+@utility animate-chart-tooltip-in {
+  animation: nl-bulk-bar-fade var(--nl-duration-base) var(--nl-ease-standard);
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {
