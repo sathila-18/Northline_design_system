@@ -775,7 +775,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 |---|---|---|---|---|---|
 | C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | ✅ |
 | C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | ✅ |
-| C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ⬜ |
+| C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ✅ |
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ⬜ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
@@ -9185,7 +9185,7 @@ Hidden; shown for the hovered or keyboard-focused item. Fades in over `--nl-dura
 
 ### NlChartLegend
 
-**Level** Atom L0 · **Base** none · **Depends on** – · **Public** (in `@northline/ui/charts`)
+**Level** Atom L1 (`NlChartMarker` and text) · **Base** none · **Depends on** `NlChartMarker` · **Public** (in `@northline/ui/charts`)
 
 **Open items**: none. OD-257 decided (no click to hide a series in v1).
 
@@ -9200,14 +9200,15 @@ NlChartLegend (list)
 
 | Option | Values | Prop |
 |---|---|---|
-| Items | data | `items: { label, color, marker, value? }[]` |
+| Items | data | `items: { label, series (1 to 7), value? }[]` |
+| Kind | line, block | `kind`, default `line`, also `data-kind` (line charts: a line with the shape; bars and slices: a square) |
 | Position | below (default), end | `position`, also `data-position` (end: a column beside a donut) |
 | Interactive | off in v1 (OD-257) | – |
 
 #### Sizes and layout
 
 - Below: a wrapping row, items `Space-XL` apart, rows `Space-S` apart, `Space-L` under the plot. End: a column, items `Space-M` apart.
-- Item: marker (`Size-12`: line charts the series' shape with a short line, bars and slices a square with `Radius-XS`) · label (`Body S`, cut with an ellipsis at `Size-240`) · value (donut: value and share, "312 · 26%", `Data S`).
+- Item, `Space-S` apart (designer, 24 Nov 2026): marker (line charts: a `Size-16` line, 2px (`Size-2`) thick and rounded, with the series' `Size-8` `NlChartMarker` on top; bars and slices: a `Size-12` square `NlChartMarker`) · label (`Body S`, cut with an ellipsis at `Size-240`) · value (donut: value and share, "312 · 26%", `Data S`).
 
 #### Colours
 
@@ -9219,7 +9220,7 @@ NlChartLegend (list)
 
 #### Behaviour and accessibility
 
-- A `<ul>` named "Legend"; each item reads its label (and value). Markers are decorative.
+- A `<ul>` named "Legend" (`aria-label`); each item reads its label (and value). Markers are decorative (`aria-hidden`). The chart places it `Space-L` under the plot or beside it. Presentational, no `'use client'`.
 
 ### NlChartFrame
 
@@ -9552,3 +9553,4 @@ Known issues
 | 24 Nov 2026 | Member details on P2: a row click or View opens the member details `NlSideSheet` (Detail / Value `NlTable`, Suspend and Edit); Suspend from a row, the side sheet or the bulk action bar asks in an `NlDialog`, then a success snackbar at the top end. The planned Member detail page is removed (pages renumbered P3 to P9). `NlButtonDock` secondary and tertiary can be destructive (OD-244); `NlSnackbarProvider` `placement="top-end"` (OD-245). `test:a11y` waits for an open dialog's fade-in. Approved by the designer |
 | 24 Nov 2026 | Charts, plan and tokens (D9 closed): chart specs for the shared rules, `NlChartTooltip`, `NlChartLegend`, `NlChartFrame`, `NlLineChart`, `NlBarChart` and `NlDonutChart` (§9, §8.5 C1 to C6, OD-246 to OD-260 decided); primitive scales orange, cyan, violet, magenta; `Chart` aliases and 17 chart semantic tokens (486 → 559, audit addendum); `Data S`; icons `bar_chart`, `table`; Foundations Chart colours page. Approved by the designer |
 | 24 Nov 2026 | `@northline/ui/charts` entry point (a second library entry and the `./charts` export). NlChartMarker (C0, internal): series shapes circle, square, triangle, diamond, then hollow; `Size-8` or `Size-12`; chart token colours only. NlChartTooltip (C1, public): heading, a row per series (marker, name, value in `Data S`), a total row with extra space instead of a divider; markers keep the series colours on the inverse tooltip background (designer's choice). Approved by the designer |
+| 24 Nov 2026 | NlChartLegend (C2, public, in `@northline/ui/charts`): line charts a `Size-16`, 2px line with the series' `NlChartMarker`; bars and slices a `Size-12` square; label `Body S` in `chart-axis-text` (cut at `Size-240`), donut value and share in `Data S`; a wrapping row below or a column at the end, parts `Space-S` apart; not interactive in v1. Approved by the designer |
