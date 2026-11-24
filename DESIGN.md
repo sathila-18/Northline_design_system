@@ -773,8 +773,9 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
-| C1 | Chart tooltip | `NlChartTooltip` | – | [§9](#nlcharttooltip) | ⬜ |
-| C2 | Chart legend | `NlChartLegend` | – | [§9](#nlchartlegend) | ⬜ |
+| C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | 🟨 |
+| C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | 🟨 |
+| C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ⬜ |
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ⬜ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
@@ -9118,9 +9119,24 @@ _Drafted by Claude Code and decided by the designer, 24 Nov 2026 (OD-246 to OD-2
 - **Responsive.** The chart fills its container's width and keeps its height (`height`: `Size-240` or `Size-320`, default `Size-320`).
 - **Highlight.** The hovered or focused mark: line points get a `chart-highlight` ring (2px, with a 2px gap in the background colour); bars and slices get the same ring; a time or category gets a `chart-cursor` band behind it (bars) or a 1px `chart-axis` line (lines).
 
+### NlChartMarker
+
+**Level** Atom L0 · **Base** none · **Depends on** – · **Internal** (used by `NlChartTooltip`, `NlChartLegend` and line points; designer, 24 Nov 2026)
+
+A series marker: one SVG shape in the series' chart colour, so series differ by shape as well as colour (OD-256).
+
+| Option | Values | Prop |
+|---|---|---|
+| Series | 1 to 7 | `series` (picks the colour, and the shape unless `shape` is given), also `data-series` |
+| Shape | the series' own: circle, square, triangle, diamond, then the same hollow for series 5 to 7; or forced | `shape?: 'circle' \| 'square' \| 'triangle' \| 'diamond'` (bars and slices: `square`, always filled), also `data-shape` |
+| Size | `Size-8` (tooltip, line points), `Size-12` (legend) | `size`, default `'8'` |
+
+- Filled: `fill-chart-series-n`. Hollow: no fill, a 1.5 outline in `stroke-chart-series-n`, inside the box. Square corners round slightly (artwork, a 12 × 12 viewBox).
+- Always `aria-hidden` and never focusable; the name next to it carries the meaning. Presentational, no `'use client'`.
+
 ### NlChartTooltip
 
-**Level** Atom L0 (swatches and text only) · **Base** none · **Depends on** – · **Public** (in `@northline/ui/charts`)
+**Level** Atom L1 (`NlChartMarker` and text) · **Base** none · **Depends on** `NlChartMarker` · **Public** (in `@northline/ui/charts`)
 
 **Open items**: none. OD-250 and OD-253 decided.
 
@@ -9132,7 +9148,7 @@ The box that shows the values at the hovered or focused point.
 NlChartTooltip
 ├── heading: the category or date
 ├── row × series: marker · series name · value
-└── total row (stacked bars only)
+└── total row (stacked bars only), set apart by `Space-XS` more space (no divider, designer, 24 Nov 2026)
 ```
 
 #### Variants and options
@@ -9140,14 +9156,14 @@ NlChartTooltip
 | Option | Values | Prop |
 |---|---|---|
 | Heading | text | `heading` |
-| Rows | data | `items: { name, value (formatted), color (a chart token name), marker }[]` |
-| Total | optional | `total?: string` |
+| Rows | data | `items: { name, value (formatted), series (1 to 7), shape? }[]` |
+| Total | optional | `total?: string`, `totalLabel?` (default "Total") |
 
 #### Sizes and layout
 
 - Padding `Space-M` top and bottom, `Space-L` sides; rows `Space-XS` apart; `Radius-S`; at most `Size-240` wide, names cut with an ellipsis, values never cut.
-- Row: marker (`Size-8`, the series' shape) · name (`Body S`) · value (end-aligned, `Data S`).
-- Heading `Label S`. Total row after a 1px divider in the tooltip's text colour at low opacity (`Data S`).
+- Row: `NlChartMarker` (`Size-8`) · name (`Body S`, `Space-S` after the marker) · value (end-aligned, `Data S`, at least `Space-XL` from the name).
+- Heading `Label S`. Total row: "Total" (or `totalLabel`) and the value (`Data S`), `Space-XS` more space above it, no divider (designer, 24 Nov 2026).
 - Placed by Recharts next to the point, kept inside the chart area; `--nl-z-tooltip`; `--nl-shadow-menu`.
 
 #### Colours
