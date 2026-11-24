@@ -776,7 +776,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 | C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | ✅ |
 | C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | ✅ |
 | C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ✅ |
-| C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ⬜ |
+| C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | 🟨 |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
 | C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ⬜ |
@@ -9234,11 +9234,11 @@ The chart area: a title, the "View as table" switch, and the loading, empty and 
 
 ```
 NlChartFrame (section, named by the title)
-├── header: NlTextBlock (title, description) · NlSegmentedButton (Chart | Table)
+├── header: NlTextBlock headline-small (title, description) · NlSegmentedButton (Chart | Table)
 └── body (chart height): chart slot | table slot | state
-    ├── loading: NlSkeleton rect, the chart's height
-    ├── empty: NlEmptyState small "No data for this period"
-    └── error: NlEmptyState small (error icon) "This chart couldn't load" + NlButton "Try again"
+    ├── loading: five NlSkeleton rect bars spread down the chart's height (designer, 24 Nov 2026)
+    ├── empty: NlEmptyState small, `bar_chart` icon, "No data for this period", "Try a different date range."
+    └── error: NlEmptyState small, `error` icon, "This chart couldn't load", "Something went wrong while loading the data." + NlButton primary small "Try again" (`refresh`)
 ```
 
 #### Variants and options
@@ -9256,7 +9256,7 @@ NlChartFrame (section, named by the title)
 
 #### Sizes and layout
 
-- Header: title start, switch end, `Space-L` under it. Switch: `NlSegmentedButton size="xsmall"`, "Chart" (`bar_chart`) and "Table" (`table`), icons added to `nlIcons` (OD-259).
+- Header: title (`NlTextBlock type="headline-small"`, designer, 24 Nov 2026) start, switch end, `Space-L` under it. While loading, empty or in error the switch is hidden but keeps its space (`invisible`, `aria-hidden`, `inert`), so the header doesn't change height (designer, 24 Nov 2026). Switch: `NlSegmentedButton size="xsmall"`, "Chart" (`bar_chart`) and "Table" (`table`), icons added to `nlIcons` (OD-259).
 - Body keeps the chart's height in every state, so the dashboard doesn't jump; the table view scrolls inside that height.
 - Card (default, OD-258; plain has no fill, border or padding): `bg-primary`, 1px `border-subtle`, `Radius-M`, padding `Space-3XL`.
 
@@ -9266,7 +9266,7 @@ Ready (chart or table), loading (`aria-busy`), empty, error. Empty and error use
 
 #### Behaviour and accessibility
 
-- A `<section>` named by the title. The switch is named "View as" and keeps the choice per frame.
+- A `<section>` named by the title (`aria-label`), `aria-busy` while loading. The switch is named "View as" and keeps the choice per frame (`view` / `defaultView`, `onViewChange`). `'use client'` (view state).
 - Switching to the table moves no focus; the table's caption repeats the chart title.
 
 ### NlLineChart
