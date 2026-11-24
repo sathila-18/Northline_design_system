@@ -177,3 +177,15 @@ describe('NlSnackbarProvider', () => {
     spy.mockRestore();
   });
 });
+
+describe('NlSnackbarProvider placement (OD-245)', () => {
+  it('bottom centre by default; top end on request', () => {
+    const { container, unmount } = render(<NlSnackbarProvider />);
+    expect(container.querySelector('[data-slot="snackbar-region"]')).toHaveAttribute('data-placement', 'bottom-center');
+    unmount();
+    const top = render(<NlSnackbarProvider placement="top-end" />);
+    const region = top.container.querySelector('[data-slot="snackbar-region"]');
+    expect(region).toHaveAttribute('data-placement', 'top-end');
+    expect(region).toHaveClass('nl:top-3xl', 'nl:end-3xl');
+  });
+});

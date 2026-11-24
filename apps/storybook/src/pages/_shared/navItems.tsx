@@ -4,15 +4,7 @@ import type { NlSideNavItem } from '@northline/ui';
 
 /** Every page the side nav knows, by its href. Pages that aren't built yet open their Coming soon story. */
 export type PageHref =
-  | '#dashboard'
-  | '#members'
-  | '#member-detail'
-  | '#rewards'
-  | '#track-voucher'
-  | '#tiers'
-  | '#events'
-  | '#messages'
-  | '#help';
+  '#dashboard' | '#members' | '#rewards' | '#track-voucher' | '#tiers' | '#events' | '#messages' | '#help';
 
 const comingSoon = 'Pages/Coming soon';
 
@@ -20,7 +12,6 @@ const comingSoon = 'Pages/Coming soon';
 export const pageStories: Record<PageHref, readonly [title: string, story: string]> = {
   '#dashboard': [comingSoon, 'Dashboard'],
   '#members': ['Pages/Members/Member list', 'Default'],
-  '#member-detail': [comingSoon, 'Member detail'],
   '#rewards': [comingSoon, 'All rewards'],
   '#track-voucher': [comingSoon, 'Track voucher'],
   '#tiers': [comingSoon, 'Tiers'],

@@ -4,7 +4,7 @@
 // Contrast is checked in a second pass that leaves out anything inside [data-a11y-state="hover"] or
 // [data-a11y-state="pressed"]: stories that show a forced hover or pressed state mark it that way, because
 // contrast isn't checked on hover and pressed states (designer's decision, 17 Nov 2026, D17).
-/* global document, window -- used inside page.evaluate, which runs in the browser */
+/* global document, window, requestAnimationFrame -- used inside page.evaluate, which runs in the browser */
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
@@ -67,6 +67,19 @@ for (const story of stories) {
       await page.goto(`${base}/iframe.html?id=${story.id}&viewMode=story&globals=brand:${brand};theme:${theme}`);
       await page.waitForFunction(() => (document.querySelector('#storybook-root')?.childElementCount ?? 0) > 0);
       await page.evaluate(() => document.fonts.ready);
+      // A story that opens with a dialog or side sheet showing: let its fade-in finish, so contrast is measured on
+      // the settled colours, not mid-fade. Only then, and capped at 1 s, so other stories don't wait.
+      await page.evaluate(async () => {
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const open = document.querySelector('dialog[open]');
+        if (!open) return;
+        await Promise.race([
+          Promise.all(
+            open.getAnimations({ subtree: true }).map((animation) => animation.finished.catch(() => undefined)),
+          ),
+          new Promise((resolve) => setTimeout(resolve, 1000)),
+        ]);
+      });
       await page.addScriptTag({ content: axeSource });
       const found = await page.evaluate(
         async ({ tags, excluded }) => {

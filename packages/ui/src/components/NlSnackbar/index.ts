@@ -9,5 +9,6 @@ export {
   NlSnackbarProvider,
   useNlSnackbar,
   type NlSnackbarOptions,
+  type NlSnackbarPlacement,
   type NlSnackbarProviderProps,
 } from './NlSnackbarProvider';

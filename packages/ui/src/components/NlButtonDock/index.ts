@@ -1,1 +1,6 @@
-export { NlButtonDock, type NlButtonDockButtonProps, type NlButtonDockProps } from './NlButtonDock';
+export {
+  NlButtonDock,
+  type NlButtonDockButtonProps,
+  type NlButtonDockProps,
+  type NlButtonDockToneButtonProps,
+} from './NlButtonDock';
