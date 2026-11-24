@@ -2,7 +2,7 @@
 // are built, so every release proves they render in the App Router.
 import { brands, semanticTokens, themes } from '@northline/tokens';
 import * as ui from '@northline/ui';
-import { NlChartFrame, NlChartLegend, NlChartTooltip } from '@northline/ui/charts';
+import { NlChartFrame, NlChartLegend, NlChartTooltip, NlLineChart } from '@northline/ui/charts';
 
 const samples = ['bg-action-primary', 'bg-brand', 'bg-success', 'bg-warning', 'bg-error'] as const;
 
@@ -36,6 +36,21 @@ export default function Page() {
         ]}
       />
       <NlChartFrame title="Members by tier" status="empty" height="240" />
+      {/* A real Recharts chart: a client component inside a server page. */}
+      <NlLineChart
+        title="Member growth"
+        height="240"
+        xKey="month"
+        series={[
+          { key: 'members', label: 'Members' },
+          { key: 'newMembers', label: 'New members' },
+        ]}
+        data={[
+          { month: '2026-01', members: 820, newMembers: 64 },
+          { month: '2026-02', members: 871, newMembers: 58 },
+          { month: '2026-03', members: 930, newMembers: 72 },
+        ]}
+      />
       <NlChartLegend
         items={[
           { label: 'Members', series: 1 },

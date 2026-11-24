@@ -12,6 +12,13 @@ export interface NlChartMarkerProps {
   shape?: NlChartMarkerShape;
   /** Size-8 (tooltip, line points) or Size-12 (legend). */
   size?: '8' | '12';
+  /**
+   * Inside a chart's SVG: the top-left corner and the size in px, so the marker sits on a point (line charts). A nested
+   * SVG ignores the CSS size class, so the chart passes the Size-8 token's value here.
+   */
+  x?: number;
+  y?: number;
+  box?: number;
   /** Placement only. */
   className?: string;
 }
@@ -47,13 +54,17 @@ const geometry = {
  * NlChartTooltip and NlChartLegend, so series differ by shape as well as colour. Decorative: always aria-hidden.
  * Presentational, so no 'use client'.
  */
-export function NlChartMarker({ series, shape, size = '8', className }: NlChartMarkerProps) {
+export function NlChartMarker({ series, shape, size = '8', x, y, box, className }: NlChartMarkerProps) {
   const own = seriesShape(series);
   const drawn = shape ?? own.shape;
   const isHollow = shape === undefined ? own.hollow : false;
   return (
     <svg
       viewBox="0 0 12 12"
+      x={x}
+      y={y}
+      width={box}
+      height={box}
       aria-hidden="true"
       focusable="false"
       className={[styles.size[size], isHollow ? styles.hollow[series] : styles.filled[series], className]

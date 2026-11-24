@@ -97,3 +97,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlChartTooltip | 2026-11-24 19:52 | 2026-11-24 21:06 | With the internal NlChartMarker and the @northline/ui/charts entry point. Approved by the designer |
 | NlChartLegend | 2026-11-24 21:09 | 2026-11-24 21:26 | Line marker Size-16 2px with the shape; gaps Space-S. Approved by the designer |
 | NlChartFrame | 2026-11-24 21:30 | 2026-11-24 21:53 | Title headline-small; empty and error with icon, heading and a line; switch hidden unless ready. Approved by the designer |
+| NlLineChart | 2026-11-24 21:55 | 2026-11-24 22:41 | Installs Recharts 3.10.1 (optional peer); frame table view made keyboard-scrollable. Approved by the designer |

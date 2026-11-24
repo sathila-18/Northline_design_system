@@ -29,8 +29,12 @@ export const body = {
   '320': 'nl:relative nl:h-320 nl:w-full nl:min-w-0',
 } as const;
 
-/** The table view scrolls inside the chart's height. */
-export const table = 'nl:h-full nl:overflow-auto';
+/**
+ * The table view scrolls inside the chart's height. It is a tab stop with the standard focus ring, so the keyboard can
+ * scroll it (WCAG 2.1.1; found by the a11y check with the line chart's 15-month table).
+ */
+export const table =
+  'nl:h-full nl:overflow-auto nl:rounded-xs nl:focus-visible:outline-2 nl:focus-visible:-outline-offset-1 nl:focus-visible:outline-focused nl:focus:not-focus-visible:outline-none';
 
 /** Empty and error: centred in the body. */
 export const state = 'nl:flex nl:h-full nl:items-center nl:justify-center';

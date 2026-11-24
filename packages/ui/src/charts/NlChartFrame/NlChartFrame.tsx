@@ -112,7 +112,12 @@ export function NlChartFrame({
       </div>
     );
   } else if (current === 'table' && table !== undefined) {
-    body = <div className={styles.table}>{table}</div>;
+    body = (
+      // A named, focusable scrolling region, so the table can be scrolled with the keyboard.
+      <div role="region" aria-label={`${title}, table`} tabIndex={0} className={styles.table}>
+        {table}
+      </div>
+    );
   } else {
     body = children;
   }
