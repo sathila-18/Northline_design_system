@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { formatMonthTick } from './format';
-import { pickTicks, valueTicks } from './ticks';
+import { pickTicks, truncateText, valueTicks } from './ticks';
 
 const months = Array.from(
   { length: 15 },
@@ -40,5 +40,14 @@ describe('valueTicks', () => {
     expect(valueTicks(806400)).toEqual([0, 250000, 500000, 750000, 1000000]);
     expect(valueTicks(3)).toEqual([0, 1, 2, 3, 4]);
     expect(valueTicks(0)).toEqual([0, 1, 2, 3, 4]);
+  });
+});
+
+describe('truncateText', () => {
+  it('leaves short text, cuts long text with an ellipsis to fit', () => {
+    expect(truncateText('Reward X', 120, measure)).toBe('Reward X');
+    const cut = truncateText('Track day voucher for every tier', 120, measure);
+    expect(cut.endsWith('…')).toBe(true);
+    expect(measure(cut)).toBeLessThanOrEqual(120);
   });
 });

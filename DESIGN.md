@@ -778,7 +778,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 | C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ✅ |
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ✅ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nllinechart) | ✅ |
-| C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
+| C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nlbarchart) | ✅ |
 | C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ⬜ |
 
 Shared rules for all charts: [§9, Charts: shared rules](#charts-shared-rules). Specs decided by the designer, 24 Nov 2026 (OD-246 to OD-260).
@@ -9343,13 +9343,16 @@ NlBarChart
 | Orientation | vertical, horizontal | `orientation`, default `vertical`, also `data-orientation` |
 | Layout | single, grouped, stacked | `layout` (single when one series), also `data-layout` |
 | Series | grouped up to 3, stacked up to 5 (OD-260) | `series: { key, label }[]` |
-| Value labels | off, on | `showValues?` (on: the value at the end of each bar, single layout only) |
+| Value labels | off, on | `showValues?` (on: the value at the end of each bar, single layout only; `Data S` in `chart-axis-text`, `Space-XS` past the end: above vertical bars, after horizontal ones; designer, 24 Nov 2026) |
+| Order | data order | Bars are drawn in the order given; the page sorts (top rewards largest first) (designer, 24 Nov 2026) |
 | Data, formatting, name, height | as `NlLineChart` | `data`, `xKey`, `formatValue?`, `formatX?`, `title`, `description?`, `height` |
 
 #### Sizes and layout
 
 - Bar corners `Radius-XS` at the free end only (stacked: the outermost segment); bars in a group `Space-XXS` apart; groups take 60% of their slot (OD-260).
-- Horizontal: category labels in a `Size-120` column, cut with an ellipsis; vertical: as the shared rules.
+- Horizontal: category labels in a `Size-120` column (+ `Space-M` + `Space-XS`), cut with an ellipsis; vertical: months as the line chart (ticks picked by the chart, aligned to January), names cut with an ellipsis to their slot.
+- Value axis: five round ticks from 0 as the line chart, covering the largest bar (stacked: the largest total).
+- The 60% group width is Recharts' `barCategoryGap` of 20% on each side.
 - Grid lines across the value axis only.
 
 #### Colours
@@ -9362,7 +9365,7 @@ Default; hovered or focused category (cursor band, highlight ring on the hovered
 
 #### Behaviour and accessibility
 
-Left and Right (horizontal: Up and Down) move by category; each step announces the category and every series' value.
+Left and Right (horizontal: Up and Down) move by category, Home and End to the ends, Escape hides the tooltip (the shared chart keyboard); each step announces the category and every series' value (stacked: and the total).
 
 ### NlDonutChart
 
@@ -9560,3 +9563,4 @@ Known issues
 | 24 Nov 2026 | NlChartLegend (C2, public, in `@northline/ui/charts`): line charts a `Size-16`, 2px line with the series' `NlChartMarker`; bars and slices a `Size-12` square; label `Body S` in `chart-axis-text` (cut at `Size-240`), donut value and share in `Data S`; a wrapping row below or a column at the end, parts `Space-S` apart; not interactive in v1. Approved by the designer |
 | 24 Nov 2026 | NlChartFrame (C3, public, in `@northline/ui/charts`): a section named by the title (`NlTextBlock` headline-small), a "View as" switch (Chart \| Table) when a table is given, hidden but keeping its space unless ready; a body at the chart's height: the chart or table slot (D15), five skeleton bars while loading, `NlEmptyState` for empty and error (Try again); card (default) or plain. Approved by the designer |
 | 24 Nov 2026 | NlLineChart (C4, public, in `@northline/ui/charts`) with Recharts 3.10.1 (optional peer dependency, external; the main entry never loads it): 2px lines with `NlChartMarker` points, horizontal `chart-grid`, `Data S` axis labels, five round value ticks from 0, month ticks picked and measured by the chart (aligned to January, first and last shown), `NlChartTooltip`, `NlChartLegend`; one tab stop (`role="group"`, "chart") with Left, Right, Home, End and Escape, each step announced; motion tokens, none under reduced motion. `NlChartMarker` gains `x`, `y`, `box`. `NlChartFrame`'s table view is a focusable, named region so the keyboard can scroll it. The Next.js check renders a real chart. Approved by the designer |
+| 24 Nov 2026 | NlBarChart (C5, public, in `@northline/ui/charts`): vertical or horizontal; single, grouped (up to 3) or stacked (up to 5); `Radius-XS` at the free end, groups 60% of their slot, round value ticks, `Data S` labels (months as the line chart, names cut, horizontal `Size-120` column), value labels for a single series, cursor band, highlight ring, tooltip total when stacked, legend for two or more series; keyboard from the shared `useChartKeyboard` hook. Approved by the designer |

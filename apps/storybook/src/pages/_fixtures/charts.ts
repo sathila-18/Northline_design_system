@@ -54,3 +54,41 @@ export const memberGrowth: MemberGrowth[] = (() => {
     };
   });
 })();
+
+export interface PointsByMonth {
+  month: string;
+  earned: number;
+  redeemed: number;
+  expired: number;
+  bonus: number;
+  adjusted: number;
+  [key: string]: string | number;
+}
+
+/** Points earned, redeemed and the rest, by month: twelve months of 2026. */
+export const pointsByMonth: PointsByMonth[] = months.slice(0, 12).map((month) => ({
+  month,
+  earned: 9000 + Math.floor(random() * 6000),
+  redeemed: 5000 + Math.floor(random() * 4500),
+  expired: 600 + Math.floor(random() * 900),
+  bonus: 800 + Math.floor(random() * 1200),
+  adjusted: 100 + Math.floor(random() * 400),
+}));
+
+export interface RewardCount {
+  reward: string;
+  redeemed: number;
+  [key: string]: string | number;
+}
+
+/** Top rewards by times redeemed, largest first (the page sorts). Invented reward names. */
+export const topRewards: RewardCount[] = [
+  'Track day voucher',
+  'Reward X',
+  'Event pass',
+  'Tier 2 welcome bonus',
+  'Coffee voucher',
+  'Weekend parking pass for members in every tier',
+]
+  .map((reward) => ({ reward, redeemed: 40 + Math.floor(random() * 420) }))
+  .sort((a, b) => b.redeemed - a.redeemed);
