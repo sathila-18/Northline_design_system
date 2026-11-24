@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { action } from 'storybook/actions';
 import {
   NlButton,
-  NlButtonDock,
   NlInputChip,
   NlTable,
   type NlBadgeTone,
@@ -61,14 +60,13 @@ const openMember = (member: Member) => {
 /**
  * Member list page (DESIGN.md §8.6, P2). The shared layout and NlTable: a fixed-width search and Add member in the
  * toolbar (active filters as removable chips with Clear filters between them), Tier, Status and Join date filters in
- * the header cells, sorting, row actions and pagination. A row click opens the member. A bulk action bar
- * (NlButtonDock) shows while rows are selected.
+ * the header cells, sorting, row actions and pagination. A row click opens the member. While rows are selected, the
+ * table's NlBulkActionBar floats at the bottom with Export, Change status and Suspend.
  */
 export function MemberList({ members, status: initialStatus = 'ready', initial }: MemberListProps) {
   const [status, setStatus] = useState(initialStatus);
   const list = useMemberList(members, initial);
   const { state } = list;
-  const selectedCount = state.selectedIds.length;
 
   const columns: NlTableColumn<Member>[] = [
     { key: 'name', header: 'Member', rowHeader: true },
@@ -239,6 +237,30 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
             sort={state.sort}
             onSortChange={list.setSort}
             onRowClick={openMember}
+            bulkActions={(ids) => [
+              {
+                label: 'Export',
+                icon: 'download',
+                onSelect: () => {
+                  action('export')(ids);
+                },
+              },
+              {
+                label: 'Change status',
+                icon: 'swap_horiz',
+                onSelect: () => {
+                  action('change status')(ids);
+                },
+              },
+              {
+                label: 'Suspend',
+                icon: 'block',
+                tone: 'destructive',
+                onSelect: () => {
+                  action('suspend')(ids);
+                },
+              },
+            ]}
             rowActions={(member) => [
               {
                 label: 'View',
@@ -307,28 +329,6 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
             empty={empty}
           />
         </div>
-
-        {showRows && selectedCount > 0 && (
-          // NlButtonDock is look only; the page pins it to the bottom of the scrolling content.
-          <div className="nl:sticky nl:bottom-none nl:z-sticky">
-            <NlButtonDock
-              sticky
-              accessory={`${String(selectedCount)} selected`}
-              secondary={{
-                children: 'Export',
-                onClick: () => {
-                  action('export')(state.selectedIds);
-                },
-              }}
-              tertiary={{
-                children: 'Change status',
-                onClick: () => {
-                  action('change status')(state.selectedIds);
-                },
-              }}
-            />
-          </div>
-        )}
       </div>
     </PageLayout>
   );

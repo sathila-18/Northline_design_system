@@ -698,6 +698,7 @@ _The designer adds rows here before each build._
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ✅ |
 | 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | [§9](#nlnavitem) | ✅ |
 | 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ✅ |
+| 79 | Bulk action bar | `NlBulkActionBar` | `NlButton`, `NlMenu`, `NlListItem` | [§9](#nlbulkactionbar) | 🟨 |
 
 ### 8.4 Organisms
 
@@ -710,7 +711,7 @@ _The designer adds rows here before each build._
 | 74 | Table column filter | `NlTableColumnFilter` | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | [§9](#nltablecolumnfilter) | ✅ |
 | 75 | Side sheet | `NlSideSheet` | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | [§9](#nlsidesheet) | ✅ |
 | 76 | Page header | `NlPageHeader` | `NlTextBlock`, `NlButton`, `NlNotificationButton` | [§9](#nlpageheader) | ✅ |
-| 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` | [§9](#nltable) | ✅ |
+| 77 | Table | `NlTable` | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton`, `NlBulkActionBar` | [§9](#nltable) | ✅ |
 | 78 | Side nav | `NlSideNav` | `NlNavItem`, `NlSideNavUser`, `NlButton` | [§9](#nlsidenav) | ✅ |
 
 Every row in §8.1 to §8.4 was checked against the composition rule (§7.1) on 17 Nov 2026: L0 contains no component, L1 only L0 atoms and icons, molecules only atoms, organisms only molecules and atoms. Mapped components take their base's level (§7.2) and slot content doesn't count (D15). Rows are in build order: a component comes after everything it depends on. `NlTable`'s toolbar, header row, rows and footer are internal parts, not rows (D15).
@@ -740,7 +741,7 @@ These apply to every page.
 | # | Page | Area | Status |
 |---|---|---|---|
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
-| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells; sort on points and dates; row click and View open the member (details side sheet to come); row actions; pagination; `NlButtonDock` bulk bar while rows are selected | Members | 🟨 |
+| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member (details side sheet to come); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21) | Members | 🟨 |
 | P3 | Member detail | Members | ⬜ |
 | P4 | Dashboard | Dashboard | ⬜ |
 | P5 | All rewards | Rewards | ⬜ |
@@ -8833,7 +8834,7 @@ import { NlTable } from '@northline/ui';
 />
 ```
 
-Props: `caption`, `variant?`, `columns`, `rows`, `getRowId`, `getRowLabel?`, `selectable?`, `selectedIds?`, `onSelectionChange?`, `rowActions?`, `toolbar?`, `pagination?`, `sort?`, `onSortChange?`, `loading?`, `empty?`, `onRowClick?`, `className?`. `column.filter` takes `type: 'date-range'` (OD-241). Generic over the row type. `'use client'` (state, refs).
+Props: `caption`, `variant?`, `columns`, `rows`, `getRowId`, `getRowLabel?`, `selectable?`, `selectedIds?`, `onSelectionChange?`, `rowActions?`, `toolbar?`, `pagination?`, `sort?`, `onSortChange?`, `loading?`, `empty?`, `onRowClick?`, `bulkActions?`, `className?`. `column.filter` takes `type: 'date-range'` (OD-241). `bulkActions(selectedIds)` returns `NlBulkAction`s: while rows are selected, an `NlBulkActionBar` sits after the footer, sticky `Space-3XL` above the bottom of the scrolling panel (`--nl-z-sticky`), centred; its Clear selection empties the selection and focuses select all (D21). Generic over the row type. `'use client'` (state, refs).
 
 #### Tokens used
 
@@ -8958,6 +8959,90 @@ Props: `items`, `currentHref?`, `variant?`, `logo?`, `user?`, `minimized?`, `def
 
 Checked in Chrome: axe clean in every brand and theme, at rest, with the user menu open and (minimized) with a section's pages menu open; 272 wide at 1440 and 80 at 1100 (breakpoint).
 
+### NlBulkActionBar
+
+**Level** Molecule (contains `NlButton`, L1; `NlMenu`, L0; menu rows `NlListItem` are slot content, D15) · **Base** none · **Depends on** `NlButton`, `NlMenu`, `NlListItem` · **Public** (also placed by `NlTable` through `bulkActions`)
+
+Specified by the designer, 24 Nov 2026 (D21). A floating pill for acting on the selected items at once.
+
+#### Anatomy
+
+```
+NlBulkActionBar (region "Bulk actions", horizontal)
+├── Clear selection: NlButton tertiary, inverse, icon only (close)
+├── count: "{n} selected"
+├── actions: NlButton × up to 7, each with a leading icon (normal first, destructive last)
+└── More actions: NlButton tertiary, inverse, icon only (more_vert) → NlMenu (action) of NlListItem, with icons
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Count | number | `count` (the selected items on the page; no "select all matching") |
+| Clear | callback | `onClear` |
+| Actions | list | `actions: { label, icon, onSelect, tone?: 'normal' \| 'destructive', disabled? }[]` |
+| Name | text | `aria-label`, default "Bulk actions" |
+
+#### Sizes and layout
+
+- The pill: `Size-48` high, `Radius-Full`, padding `Space-XS` (`Space-M` at the end, so a solid last button stays inside the rounded end), parts `Space-M` apart, actions `Space-XS` apart. Hugs its content, never wider than its container.
+- Buttons are `size="small"` with a leading icon.
+- Up to 7 actions show, fewer when they don't fit the container (measured, and again on resize); the rest go into the More actions menu. Destructive actions always show, after the others, and never go into the menu.
+- Placement is the container's: `NlTable` puts it after its footer, sticky `Space-3XL` above the bottom of the scrolling panel, centred. It floats over the rows and never moves the page; at rest it sits below the footer.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Pill | `bg-direct`, `--nl-shadow-menu` |
+| Count | `text-inverse`, `Label M` |
+| Clear, normal actions, More | `NlButton variant="tertiary" contentTone="inverse"` |
+| Destructive actions | `NlButton tone="destructive" variant="primary"`: solid `bg-action-destructive`, white text (6.22:1). A tertiary destructive button is under 3.1:1 on `bg-direct` in both themes, so it isn't used |
+
+#### States
+
+Shown while `count > 0` (the container decides). Appears with a slide up by `Space-XL` and a fade over `--nl-duration-base`, standard ease; fade only under reduced motion. Disabled actions as `NlButton`.
+
+#### Behaviour and accessibility
+
+- A `role="region"` named "Bulk actions". It never takes focus by itself; it comes after the table in the tab order.
+- The count isn't announced by the bar: `NlTable` already announces "{n} selected".
+- Clear selection: "Clear selection". In `NlTable` it empties the selection and focus moves to the select-all checkbox.
+- More actions: `aria-haspopup="menu"`, `aria-expanded`, opens `NlMenu kind="action"` above the button (`top-start`); choosing a row closes it and runs the action.
+- The measuring row (every button at its natural width) is `aria-hidden`, `inert` and invisible.
+
+#### Spec → code
+
+| Spec option | Code |
+|---|---|
+| Pill | `<div role="region">`: `nl:h-48 nl:rounded-full nl:bg-direct nl:py-xs nl:ps-xs nl:pe-m nl:gap-m nl:shadow-menu`, `nl:animate-bulk-bar-in` / `nl:motion-reduce:animate-bulk-bar-fade` (named utilities in `tailwind.css`) |
+| Count | `<p>` `nl:text-label-m nl:text-inverse`, one line |
+| Actions | Normal: `NlButton variant="tertiary" contentTone="inverse" size="small" icon="leading"`; destructive: `tone="destructive" variant="primary"` |
+| Fitting | `MAX_VISIBLE = 7` minus the destructive ones; a layout effect and `ResizeObserver` on the container fit as many as the width allows; first render shows the maximum |
+| More | `NlButton` `more_vert` + `NlMenu kind="action" placement="top-start"` of `NlListItem role="menuitem" icon size="small" density="compact"` |
+
+#### API
+
+```tsx
+import { NlBulkActionBar } from '@northline/ui';
+
+<NlBulkActionBar
+  count={3}
+  onClear={clear}
+  actions={[
+    { label: 'Export', icon: 'download', onSelect: exportRows },
+    { label: 'Suspend', icon: 'block', tone: 'destructive', onSelect: suspend },
+  ]}
+/>
+```
+
+Props: `count`, `onClear`, `actions`, `aria-label?`, `className?`, native `div` attributes. `'use client'` (state, refs, measuring).
+
+#### Tokens used
+
+`Size-48`; `Radius-Full`; `Space-XS`, `Space-M`, `Space-XL` (slide), `Space-3XL` (placement in `NlTable`); `bg-direct`, `text-inverse`; `--nl-shadow-menu`, `--nl-z-sticky`; `--nl-duration-base`, `--nl-ease-standard`; the parts' own (`NlButton`, `NlMenu`, `NlListItem`).
+
 ---
 
 ## 10. Decisions and known issues
@@ -8984,6 +9069,7 @@ Checked in Chrome: axe clean in every brand and theme, at rest, with the user me
 | D18 | 22 Nov 2026 | Required fields on pages. Pressing a form's main button with required fields left empty puts each empty field in `error`, with an error helper text (with its leading icon, as `NlHelperText` draws it in error) saying what to enter. Focus moves to the first empty field. A field's error clears once it has a value. Native browser bubbles are off (`noValidate`); fields keep `required` |
 | D19 | 22 Nov 2026 | Smaller corners (designer's choice). Buttons: large and medium `Radius-S` (8), small and xsmall `Radius-XS` (4). Input fields (`NlInputBase`) and text area (`NlTextAreaBase`) `Radius-XS`. Chips (`NlChipBase`) `Radius-XS`. Side nav rows (`NlNavItem`, `NlNavSubItem`, and the `NlSideNavUser` row through `NlListItemBase` nav) `Radius-S`. `NlStatCard` `Radius-S`. `NlSegmentedButton` track `Radius-S` at every size; segments inside the padded medium and small tracks `Radius-XS`, xsmall segments `Radius-S`. The side nav tree line keeps its `Radius-S` curve |
 | D20 | 24 Nov 2026 | Member tier colours (designer's choice). `NlBadge` gets four tier tones, `bronze`, `silver`, `gold`, `platinum`: identity, not status. Each is a light 135° gradient (`bg-tier-*_start` step 50 → `bg-tier-*_end` step 200) with a step 300 inside border and step 800 text and icon. The same in Light and Dark, and in every brand (alias group `Colors.Tier`). New primitive scales `bronze` and `platinum`; silver uses `grey`, gold uses `yellow`. The gradients are named utilities in `tailwind.css` (`nl:tier-gradient-*`). Text is 6.79:1 or more on every gradient; the borders are decorative (as `border-warning`, D17) |
+| D21 | 24 Nov 2026 | Bulk actions (designer's choice): `NlBulkActionBar`, a floating `bg-direct` pill (not a full-width bar). Counts only what's selected on the page (no "select all matching"). Up to 7 actions show, as many as fit, then a More actions menu. Every action has a leading icon. Destructive actions use the destructive tone as a solid button (white text on `bg-action-destructive`), always show and come last. `NlTable` places it through `bulkActions`. Icons `block`, `download`, `swap_horiz` added |
 
 Known issues
 

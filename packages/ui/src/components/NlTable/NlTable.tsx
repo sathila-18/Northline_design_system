@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState, type ElementType, type MouseEvent, type ReactNode } from 'react';
 import type { NlBadgeTone } from '../NlBadge';
+import { NlBulkActionBar, type NlBulkAction } from '../NlBulkActionBar';
 import { NlButton, type NlButtonProps } from '../NlButton';
 import type { NlCalendarRange } from '../NlCalendar';
 import { NlEmptyState, type NlEmptyStateProps } from '../NlEmptyState';
@@ -147,6 +148,11 @@ export interface NlTableProps<T> {
    * buttons don't count. Mouse only: the row-actions button stays the keyboard way to act on a row (OD-230).
    */
   onRowClick?: (row: T) => void;
+  /**
+   * Actions for the selected rows (D21). While rows are selected, an NlBulkActionBar floats at the bottom of the
+   * visible table with the count, Clear selection and these actions.
+   */
+  bulkActions?: (selectedIds: string[]) => NlBulkAction[];
   /** Placement only. */
   className?: string;
 }
@@ -182,9 +188,11 @@ export function NlTable<T>({
   loading = false,
   empty,
   onRowClick,
+  bulkActions,
   className,
 }: NlTableProps<T>) {
   const id = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
   const actionsMenuId = `${id}-actions`;
   const sizesMenuId = `${id}-sizes`;
 
@@ -237,6 +245,7 @@ export function NlTable<T>({
 
   const showEmpty = !loading && rows.length === 0;
   const showFooter = pagination !== undefined && pagination !== false && !loading && !showEmpty;
+  const showBulkBar = bulkActions !== undefined && selectable && selectedCount > 0 && !loading;
   const columnCount = columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
   const skeletonRows = Array.from(
     { length: pagination ? pagination.pageSize : 5 },
@@ -289,7 +298,7 @@ export function NlTable<T>({
   })();
 
   return (
-    <div className={[styles.root, className].filter(Boolean).join(' ')} data-variant={variant}>
+    <div ref={rootRef} className={[styles.root, className].filter(Boolean).join(' ')} data-variant={variant}>
       {toolbarContent}
       <div className={styles.frame[variant]}>
         <table className={styles.table} aria-busy={loading || undefined}>
@@ -542,6 +551,19 @@ export function NlTable<T>({
             onApply={openFilterColumn.filter.onApply}
           />
         ))}
+      {showBulkBar && (
+        <div className={styles.bulkBar}>
+          <NlBulkActionBar
+            count={selectedCount}
+            actions={bulkActions(selectedIds)}
+            onClear={() => {
+              onSelectionChange?.([]);
+              // Focus goes to the select-all checkbox, so it isn't lost with the bar.
+              rootRef.current?.querySelector<HTMLInputElement>('thead input[type="checkbox"]')?.focus();
+            }}
+          />
+        </div>
+      )}
       <span role="status" className={styles.announcement}>
         {message}
       </span>

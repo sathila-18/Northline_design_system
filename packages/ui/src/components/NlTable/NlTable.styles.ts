@@ -85,5 +85,11 @@ export const footerStart = 'nl:flex nl:min-w-0 nl:items-center nl:gap-l';
 /** The summary: "3 selected · Showing 1–10 of 120", Body S, text-tertiary. */
 export const summary = 'nl:m-none nl:min-w-0 nl:truncate nl:text-body-s nl:text-tertiary';
 
+/**
+ * The bulk action bar's place (D21): sticky Space-3XL above the bottom of the scrolling panel, above the rows
+ * (--nl-z-sticky), the pill centred. After the footer, so at rest it never covers the pagination.
+ */
+export const bulkBar = 'nl:sticky nl:bottom-3xl nl:z-sticky nl:flex nl:justify-center';
+
 /** Result and selection announcements: read politely, never shown. */
 export const announcement = 'nl:sr-only';

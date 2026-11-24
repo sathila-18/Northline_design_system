@@ -216,6 +216,19 @@
   background-image: linear-gradient(135deg, var(--nl-bg-tier-platinum-start), var(--nl-bg-tier-platinum-end));
 }
 
+/*
+ * nl:animate-bulk-bar-in, nl:animate-bulk-bar-fade: NlBulkActionBar appearing (DESIGN.md §9, NlBulkActionBar, D21).
+ * Only NlBulkActionBar uses them. In: slides up by Space-XL and fades in over --nl-duration-base with
+ * --nl-ease-standard. Fade: opacity only, for reduced motion (rule 6). Approved by the designer, 24 Nov 2026 (rule 9).
+ */
+@utility animate-bulk-bar-in {
+  animation: nl-bulk-bar-in var(--nl-duration-base) var(--nl-ease-standard);
+}
+
+@utility animate-bulk-bar-fade {
+  animation: nl-bulk-bar-fade var(--nl-duration-base) var(--nl-ease-standard);
+}
+
 @keyframes nl-skeleton-pulse {
   0%,
   100% {
@@ -230,5 +243,18 @@
 @keyframes nl-spinner-turn {
   to {
     transform: rotate(1turn);
+  }
+}
+
+@keyframes nl-bulk-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--nl-space-xl));
+  }
+}
+
+@keyframes nl-bulk-bar-fade {
+  from {
+    opacity: 0;
   }
 }

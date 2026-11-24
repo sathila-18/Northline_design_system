@@ -332,4 +332,38 @@ describe('NlTable', () => {
     expect(within(start).getByRole('button', { name: /Rows per page/ })).toBeInTheDocument();
     expect(start.parentElement).toHaveClass('nl:justify-between');
   });
+
+  it('bulkActions: a bulk action bar while rows are selected; Clear selection empties it and focuses select all', async () => {
+    const onExport = vi.fn();
+    function Bulk() {
+      const [ids, setIds] = useState<string[]>(['a', 'b']);
+      return base({
+        selectable: true,
+        selectedIds: ids,
+        onSelectionChange: setIds,
+        bulkActions: (selected) => [
+          {
+            label: 'Export',
+            icon: 'download',
+            onSelect: () => {
+              onExport(selected);
+            },
+          },
+        ],
+      });
+    }
+    render(<Bulk />);
+    const bar = screen.getByRole('region', { name: 'Bulk actions' });
+    expect(within(bar).getByText('2 selected')).toBeInTheDocument();
+    await userEvent.click(within(bar).getByRole('button', { name: 'Export' }));
+    expect(onExport).toHaveBeenCalledWith(['a', 'b']);
+    await userEvent.click(within(bar).getByRole('button', { name: 'Clear selection' }));
+    expect(screen.queryByRole('region', { name: 'Bulk actions' })).toBeNull();
+    expect(screen.getByRole('checkbox', { name: 'Select all rows' })).toHaveFocus();
+  });
+
+  it('no bulk action bar without a selection', () => {
+    render(base({ selectable: true, selectedIds: [], bulkActions: () => [] }));
+    expect(screen.queryByRole('region', { name: 'Bulk actions' })).toBeNull();
+  });
 });
