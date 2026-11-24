@@ -779,7 +779,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ✅ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nllinechart) | ✅ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nlbarchart) | ✅ |
-| C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ⬜ |
+| C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ✅ |
 
 Shared rules for all charts: [§9, Charts: shared rules](#charts-shared-rules). Specs decided by the designer, 24 Nov 2026 (OD-246 to OD-260).
 
@@ -9379,7 +9379,7 @@ Parts of a whole, up to 5 slices (members by tier).
 
 ```
 NlDonutChart
-├── ring: slice × up to 5 (2px gaps in the background colour)
+├── ring: slice × up to 5, true gaps between slices (about 2px at the middle of the ring, as Recharts' padding angle; whatever is behind shows through; designer, 24 Nov 2026)
 ├── centre: total (Data L) and its label (Body S)
 ├── NlChartTooltip
 └── NlChartLegend (end or below, with value and share)
@@ -9393,12 +9393,13 @@ NlDonutChart
 | Colours | series order, never the tier tones (OD-248) | – |
 | Order | by value (largest first) or data order | `sortBy: 'value' \| 'data'`, default `value` (designer, 24 Nov 2026); members by tier uses `data`, so tiers stay Bronze, Silver, Gold, Platinum |
 | Centre | total and label | `totalLabel` (default "Total"); the total is the sum, through `formatValue` |
-| Legend | end (default when wide enough), below | `legendPosition` |
+| Legend | end, below | `legendPosition`; default: end from `Size-560` wide, below when narrower (designer, 24 Nov 2026), also `data-legend` |
 | Name, formatting, height | as the others | `title`, `description?`, `formatValue?`, `height` |
 
 #### Sizes and layout
 
-- The ring fills the height; ring width 25% of the radius; slices start at 12 o'clock and go clockwise, in `sortBy` order.
+- The ring fills the height (outer radius 90%, room for the pulled-out slice); ring width 25% of the radius; slices start at 12 o'clock and go clockwise, in `sortBy` order. Beside the legend the ring is a square as tall as the chart, `Space-3XL` from the legend; below, the legend is `Space-L` under it.
+- The centre total and its label are read through the chart's description ("Total: 120"), as the centre is decorative text.
 - Shares are whole percentages that add to 100 (largest remainder), shown in the legend and tooltip.
 
 #### Colours
@@ -9564,3 +9565,4 @@ Known issues
 | 24 Nov 2026 | NlChartFrame (C3, public, in `@northline/ui/charts`): a section named by the title (`NlTextBlock` headline-small), a "View as" switch (Chart \| Table) when a table is given, hidden but keeping its space unless ready; a body at the chart's height: the chart or table slot (D15), five skeleton bars while loading, `NlEmptyState` for empty and error (Try again); card (default) or plain. Approved by the designer |
 | 24 Nov 2026 | NlLineChart (C4, public, in `@northline/ui/charts`) with Recharts 3.10.1 (optional peer dependency, external; the main entry never loads it): 2px lines with `NlChartMarker` points, horizontal `chart-grid`, `Data S` axis labels, five round value ticks from 0, month ticks picked and measured by the chart (aligned to January, first and last shown), `NlChartTooltip`, `NlChartLegend`; one tab stop (`role="group"`, "chart") with Left, Right, Home, End and Escape, each step announced; motion tokens, none under reduced motion. `NlChartMarker` gains `x`, `y`, `box`. `NlChartFrame`'s table view is a focusable, named region so the keyboard can scroll it. The Next.js check renders a real chart. Approved by the designer |
 | 24 Nov 2026 | NlBarChart (C5, public, in `@northline/ui/charts`): vertical or horizontal; single, grouped (up to 3) or stacked (up to 5); `Radius-XS` at the free end, groups 60% of their slot, round value ticks, `Data S` labels (months as the line chart, names cut, horizontal `Size-120` column), value labels for a single series, cursor band, highlight ring, tooltip total when stacked, legend for two or more series; keyboard from the shared `useChartKeyboard` hook. Approved by the designer |
+| 24 Nov 2026 | NlDonutChart (C6, public, in `@northline/ui/charts`): up to 5 slices (above 5: the largest 4 and "Other", last), `sortBy` value or data; a ring a quarter of its radius wide from 12 o'clock, true gaps between slices; the total in `Data L` in the centre; legend with values and shares adding up to 100, beside the ring from `Size-560` wide or below; the active slice moves out with a highlight ring; keyboard from the shared hook. Chart components C0 to C6 complete. Approved by the designer |

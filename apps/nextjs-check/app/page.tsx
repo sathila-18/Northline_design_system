@@ -2,7 +2,14 @@
 // are built, so every release proves they render in the App Router.
 import { brands, semanticTokens, themes } from '@northline/tokens';
 import * as ui from '@northline/ui';
-import { NlBarChart, NlChartFrame, NlChartLegend, NlChartTooltip, NlLineChart } from '@northline/ui/charts';
+import {
+  NlBarChart,
+  NlChartFrame,
+  NlChartLegend,
+  NlChartTooltip,
+  NlDonutChart,
+  NlLineChart,
+} from '@northline/ui/charts';
 
 const samples = ['bg-action-primary', 'bg-brand', 'bg-success', 'bg-warning', 'bg-error'] as const;
 
@@ -36,6 +43,17 @@ export default function Page() {
         ]}
       />
       <NlChartFrame title="Members by tier" status="empty" height="240" />
+      <NlDonutChart
+        title="Members by tier"
+        height="240"
+        sortBy="data"
+        data={[
+          { key: 'bronze', label: 'Bronze', value: 52 },
+          { key: 'silver', label: 'Silver', value: 32 },
+          { key: 'gold', label: 'Gold', value: 25 },
+          { key: 'platinum', label: 'Platinum', value: 11 },
+        ]}
+      />
       <NlBarChart
         title="Points earned and redeemed"
         height="240"

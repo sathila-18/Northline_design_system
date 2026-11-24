@@ -3,6 +3,7 @@
 export * from './NlBarChart';
 export * from './NlChartFrame';
 export * from './NlChartLegend';
+export * from './NlDonutChart';
 export * from './NlLineChart';
 export * from './NlChartTooltip';
 export type { NlChartMarkerShape, NlChartSeries } from './NlChartMarker';
