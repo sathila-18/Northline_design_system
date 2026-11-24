@@ -775,7 +775,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 |---|---|---|---|---|---|
 | C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | ✅ |
 | C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | ✅ |
-| C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ⬜ |
+| C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | 🟨 |
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ⬜ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
@@ -9185,7 +9185,7 @@ Hidden; shown for the hovered or keyboard-focused item. Fades in over `--nl-dura
 
 ### NlChartLegend
 
-**Level** Atom L0 · **Base** none · **Depends on** – · **Public** (in `@northline/ui/charts`)
+**Level** Atom L1 (`NlChartMarker` and text) · **Base** none · **Depends on** `NlChartMarker` · **Public** (in `@northline/ui/charts`)
 
 **Open items**: none. OD-257 decided (no click to hide a series in v1).
 
@@ -9200,14 +9200,15 @@ NlChartLegend (list)
 
 | Option | Values | Prop |
 |---|---|---|
-| Items | data | `items: { label, color, marker, value? }[]` |
+| Items | data | `items: { label, series (1 to 7), value? }[]` |
+| Kind | line, block | `kind`, default `line`, also `data-kind` (line charts: a line with the shape; bars and slices: a square) |
 | Position | below (default), end | `position`, also `data-position` (end: a column beside a donut) |
 | Interactive | off in v1 (OD-257) | – |
 
 #### Sizes and layout
 
 - Below: a wrapping row, items `Space-XL` apart, rows `Space-S` apart, `Space-L` under the plot. End: a column, items `Space-M` apart.
-- Item: marker (`Size-12`: line charts the series' shape with a short line, bars and slices a square with `Radius-XS`) · label (`Body S`, cut with an ellipsis at `Size-240`) · value (donut: value and share, "312 · 26%", `Data S`).
+- Item, `Space-S` apart (designer, 24 Nov 2026): marker (line charts: a `Size-16` line, 2px (`Size-2`) thick and rounded, with the series' `Size-8` `NlChartMarker` on top; bars and slices: a `Size-12` square `NlChartMarker`) · label (`Body S`, cut with an ellipsis at `Size-240`) · value (donut: value and share, "312 · 26%", `Data S`).
 
 #### Colours
 
@@ -9219,7 +9220,7 @@ NlChartLegend (list)
 
 #### Behaviour and accessibility
 
-- A `<ul>` named "Legend"; each item reads its label (and value). Markers are decorative.
+- A `<ul>` named "Legend" (`aria-label`); each item reads its label (and value). Markers are decorative (`aria-hidden`). The chart places it `Space-L` under the plot or beside it. Presentational, no `'use client'`.
 
 ### NlChartFrame
 
