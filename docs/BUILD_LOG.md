@@ -102,3 +102,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlDonutChart | 2026-11-24 23:21 | 2026-11-24 23:42 | True gaps between slices; legend at the end from Size-560 wide. Approved by the designer |
 | Page: Dashboard | 2026-11-25 00:20 | | Storybook only (Pages/Dashboard). Relaxed page checks (build-storybook and scrub); members fixture 2,480 |
 | Chart axis and table summary fixes | 2026-11-25 00:33 | 2026-11-25 00:49 | Month ticks with a December start; last label clipped; NlTable summary commas. Approved by the designer |
+| Month axis without the year | 2026-11-25 00:56 | 2026-11-25 01:16 | Designer: x axis shows month names only; tooltip and table keep "Mar 2026". Approved by the designer |

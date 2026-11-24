@@ -124,8 +124,8 @@ export function NlBarChart<T extends Record<string, unknown>>({
   // Category labels: months as "Mar" (the year on the first tick, each January and a new year); names cut to fit.
   const width = plotWidth || 640;
   const monthLabel = monthTickLabel(categories);
-  const labelFor = (index: number, previous: number | null) =>
-    formatX ? formatX(categories[index]) : isMonths ? monthLabel(index, previous) : String(categories[index]);
+  const labelFor = (index: number) =>
+    formatX ? formatX(categories[index]) : isMonths ? monthLabel(index) : String(categories[index]);
   const categoryTicks = (() => {
     if (horizontal || !isMonths) return categories.map((_, index) => index);
     const plot = Math.max(0, width - valueLabelWidth - margin - slack);

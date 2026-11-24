@@ -92,7 +92,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** Two series over 15 months: markers on every point, a legend, "Jan 2027" where the year changes. Tab in, then use the arrow keys, Home and End. */
+/** Two series over 15 months: markers on every point, a legend, month names on the axis (the tooltip has the year). Tab in, then use the arrow keys, Home and End. */
 export const Default: Story = {};
 
 /** One series: no legend; the title names it. */
