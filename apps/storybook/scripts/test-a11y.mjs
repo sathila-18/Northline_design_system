@@ -64,8 +64,31 @@ const violations = [];
 for (const story of stories) {
   for (const brand of BRANDS) {
     for (const theme of THEMES) {
-      await page.goto(`${base}/iframe.html?id=${story.id}&viewMode=story&globals=brand:${brand};theme:${theme}`);
-      await page.waitForFunction(() => (document.querySelector('#storybook-root')?.childElementCount ?? 0) > 0);
+      // Load the story; when the machine is busy a load can stall, so try once more before reporting it by name.
+      const url = `${base}/iframe.html?id=${story.id}&viewMode=story&globals=brand:${brand};theme:${theme}`;
+      let loaded = false;
+      for (let attempt = 0; attempt < 2 && !loaded; attempt += 1) {
+        try {
+          await page.goto(url);
+          await page.waitForFunction(() => (document.querySelector('#storybook-root')?.childElementCount ?? 0) > 0);
+          loaded = true;
+        } catch {
+          console.warn(`Retrying ${story.id} [${brand} ${theme}]: it didn't render in time`);
+        }
+      }
+      if (!loaded) {
+        violations.push({
+          story: story.id,
+          brand,
+          theme,
+          rule: 'not-rendered',
+          impact: 'not checked',
+          count: 0,
+          help: "the story didn't render in time, twice",
+          targets: [],
+        });
+        continue;
+      }
       await page.evaluate(() => document.fonts.ready);
       // A story that opens with a dialog or side sheet showing: let its fade-in finish, so contrast is measured on
       // the settled colours, not mid-fade. Only then, and capped at 1 s, so other stories don't wait.

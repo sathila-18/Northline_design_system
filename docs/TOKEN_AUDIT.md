@@ -392,3 +392,36 @@ Contrast. The text is checked against both ends of its gradient (the lower one c
 
 Every text pairing passes AA (4.5:1) in every brand and theme; the values don't change with brand or theme. axe can't measure text on a gradient (it reports it as "needs review"), so these figures are the check.
 
+## Addendum, 24 Nov 2026: chart colours (D9) and `Data S`
+
+Asked for by the designer (charts stage, steps 1 and 3; OD-247, OD-250). Added:
+
+- Primitives `orange`, `cyan`, `violet` and `magenta`, steps 50 to 900 (40 tokens). Each scale is built around the two steps the chart tokens use (orange 600/400, cyan 700/400, violet 500/200, magenta 600/500); the other steps are interpolated in OKLab.
+- Alias group `Alias Colors.Colors.Chart`: `Orange`, `Cyan`, `Violet`, `Magenta`, `Grey` (grey) and `Yellow` (yellow), two steps each, the same value in all three brands (12 tokens).
+- Semantic group `Chart` (17 tokens): `chart-series-1` (Light `Primary-light-fill`, Dark `Primary-dark-action`, so it follows the brand), `chart-series-2` to `-7`, `chart-grid`, `chart-axis`, `chart-axis-text`, `chart-tooltip-bg`, `chart-tooltip-text`, `chart-cursor`, `chart-highlight`, `chart-good`, `chart-warning`, `chart-critical`.
+- Text style `Data S` (4 tokens): the brand's font family, weight 500, 12 px, line height 18 px; tabular figures in the token build.
+
+| Check | Result |
+|---|---|
+| JSON parses; tokens | Yes; 559 (was 486) |
+| `$type`, `$value`, `$description`, `$extensions.mode` on every token (§3.9 rule 1) | Pass |
+| Descriptions say where to use them; none copied (rules 2, 3) | Pass |
+| Layers: semantic → alias → primitive; nothing skips a layer (rule 6) | Pass (series 1 → `Primary light` / `Primary dark` aliases) |
+| Every mode has a value (rule 8) | Pass: 3 brands in `Chart`, Light and Dark in the semantic tokens |
+| Duplicate hex in one scale (rule 9) | 0 in each new scale |
+| Token build | `--nl-chart-*` variables; `bg-`, `text-`, `border-`, `fill-`, `stroke-chart-*` utilities; `nl:text-data-s` with tabular figures |
+| Token tests | Counts updated to 559 tokens and 26 text styles; pass |
+
+Contrast on `bg-primary` (series and marks need 3:1, WCAG 1.4.11). Series 1 per brand (Northline / Garnet / Voltic):
+
+| | Series 1 | 2 orange | 3 cyan | 4 violet | 5 magenta | 6 grey | 7 yellow |
+|---|---|---|---|---|---|---|---|
+| Light | 7.85 / 7.98 / 5.84 | 4.48 | 5.36 | 4.71 | 6.32 | 8.39 | 3.01 |
+| Dark | 5.76 / 6.30 / 5.73 | 7.65 | 8.60 | 10.36 | 4.18 | 9.60 | 14.68 |
+
+Other chart tokens: axis line 4.87 Light / 6.36 Dark; axis text 8.39 / 9.60; highlight ring 19.12 / 19.12; good 4.92 / 9.26; warning 5.00 / 12.83; critical 6.22 / 7.56; tooltip text on the tooltip background 19.12 / 16.36. Gridlines (1.38 / 1.42) and the cursor band (1.17 / 1.16) are decorative.
+
+Distance from the brand primaries (ΔE2000, normal vision; the closest fixed colour to each): Light Northline violet 16.8, Garnet cyan 26.4, Voltic magenta 13.7; Dark Northline violet 18.2, Garnet cyan 20.0, Voltic magenta 15.1.
+
+Colour blindness (Machado 2009 simulation, full severity), the closest pair among series 1 and the six fixed colours: protanopia 7.3 to 10.5, deuteranopia 6.4 (Light) and 6.8 (Dark), tritanopia 6.2 to 15.0, in every brand and theme. No pair collapses; the specs also require legends, line markers and labels, so colour is never the only cue.
+

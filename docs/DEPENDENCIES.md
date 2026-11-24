@@ -574,3 +574,22 @@ Decide these before building the components listed under "Affects".
 - OD-231 · `NlNavItem tree` prop (default `true`) for the default style · **Decided** 21 Nov 2026: approved
 - OD-232 · Uncontrolled, follows `Breakpoint-1280` via `matchMedia` · **Decided** 21 Nov 2026: approved
 - OD-233 · Collapse button without `aria-expanded` (its name says what it does) · **Decided** 21 Nov 2026: approved
+
+### Charts (specs decided 24 Nov 2026)
+
+- OD-246 · States and "View as table" in `NlChartFrame` (organism), the chart and the `NlTable` as slots (D15) · **Decided** 24 Nov 2026: agreed
+- OD-247 · Light yellow at 3.01:1 · **Decided** 24 Nov 2026: keep it, last in the series order (series 7)
+- OD-248 · Members by tier donut colours · **Decided** 24 Nov 2026: series colours, not the tier tones
+- OD-249 · Recharts version · **Decided** 24 Nov 2026: 3.10.1
+- OD-250 · Small tabular numbers · **Decided** 24 Nov 2026: add `Data S` (12/18, weight 500, tabular figures)
+- OD-251 · Tick counts · **Decided** 24 Nov 2026: agreed (value axis 5 round ticks from 0; time and category as many as fit, `Space-XL` apart, first and last shown)
+- OD-252 · Month labels · **Decided** 24 Nov 2026: changed: axis short month names ("Mar"), the year on the first tick and each January ("Jan 2027"); tooltip and table "Mar 2026"; full dates DD/MM/YYYY
+- OD-253 · Keyboard · **Decided** 24 Nov 2026: agreed (Recharts' layer plus our own for the donut, Home, End and Escape)
+- OD-254 · Plot role · **Decided** 24 Nov 2026: changed: `role="group"`, `aria-roledescription="chart"`, named by the title; the table view is the full screen reader route
+- OD-255 · Easing · **Decided** 24 Nov 2026: the nearest named easing (`ease-out`), noted in the spec
+- OD-256 · Line markers · **Decided** 24 Nov 2026: always shown in v1
+- OD-257 · Legend click to hide · **Decided** 24 Nov 2026: not in v1
+- OD-258 · Frame look · **Decided** 24 Nov 2026: card by default, plain option
+- OD-259 · Switch icons · **Decided** 24 Nov 2026: add `bar_chart` and `table` to `nlIcons`
+- OD-260 · Bar limits and sizes · **Decided** 24 Nov 2026: agreed
+- Donut order (no OD) · **Decided** 24 Nov 2026: `sortBy` "value" (default) or "data"; above 5 slices the largest 4 plus "Other"; the tier donut uses data order

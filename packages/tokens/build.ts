@@ -22,7 +22,7 @@ const REFERENCE = /^\{([^{}]+)\}$/;
 const DURATIONS = ['fast', 'base', 'slow'];
 const SHADOWS = ['resting', 'panel', 'menu', 'sticky', 'sticky-end'];
 const LAYERS = ['base', 'sticky', 'overlay', 'modal', 'menu', 'tooltip', 'snackbar'];
-const TABULAR_STYLES = new Set(['data-l', 'data-m']); // DESIGN.md §3.4
+const TABULAR_STYLES = new Set(['data-l', 'data-m', 'data-s']); // DESIGN.md §3.4
 
 type Json = Record<string, unknown>;
 type ModeMap = Record<string, unknown>;
@@ -272,7 +272,7 @@ export type SemanticTokenName = ${union(entries.map((e) => e.name))};
 export type TextStyleName = ${union(textStyles)};
 export interface SemanticToken {
   name: SemanticTokenName;
-  group: 'Background' | 'Text' | 'Border' | 'Foreground' | 'Alpha';
+  group: 'Background' | 'Text' | 'Border' | 'Foreground' | 'Alpha' | 'Chart';
   cssVar: \`--nl-\${string}\`;
   tailwind: string[];
   description: string;

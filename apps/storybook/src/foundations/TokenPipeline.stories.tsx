@@ -26,7 +26,7 @@ export default meta;
 
 type BrandName = 'Northline' | 'Garnet' | 'Voltic';
 const pathOf = new Map(tokenList.map((t) => [t.cssVar as string, t.path]));
-const groups = ['Background', 'Text', 'Border', 'Foreground', 'Alpha'] as const;
+const groups = ['Background', 'Text', 'Border', 'Foreground', 'Alpha', 'Chart'] as const;
 
 /** Follows a semantic token through its aliases to the primitive, for one brand and theme. */
 function chainOf(token: SemanticToken, brand: BrandName, theme: 'Light' | 'Dark') {
@@ -75,6 +75,13 @@ function Result({ token }: { token: SemanticToken }) {
         <div className="nl:relative nl:h-96 nl:w-320 nl:overflow-hidden nl:rounded-s nl:border nl:border-default">
           <p className="nl:p-l nl:text-body-m nl:text-primary">Content underneath the tint. Member 0042, Tier 2.</p>
           <div className={`nl:absolute nl:inset-y-none nl:right-none nl:w-1/2 ${first}`} />
+        </div>
+      );
+    case 'Chart':
+      // A bar in the chart colour (its bg- utility); Recharts reads the same CSS variable (D9).
+      return (
+        <div className="nl:flex nl:h-96 nl:w-120 nl:items-end nl:rounded-s nl:border nl:border-default nl:p-l">
+          <div className={`nl:h-48 nl:w-24 nl:rounded-xs ${first}`} />
         </div>
       );
     default:

@@ -821,6 +821,334 @@
           }
         }
       },
+      "orange": {
+        "orange-50": {
+          "$type": "color",
+          "$value": "#FFF4EC",
+          "$description": "Orange, step 50, #FFF4EC. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-100": {
+          "$type": "color",
+          "$value": "#FFE5D6",
+          "$description": "Orange, step 100, #FFE5D6. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-200": {
+          "$type": "color",
+          "$value": "#FEC7A9",
+          "$description": "Orange, step 200, #FEC7A9. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-300": {
+          "$type": "color",
+          "$value": "#F9A87C",
+          "$description": "Orange, step 300, #F9A87C. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-400": {
+          "$type": "color",
+          "$value": "#F2884A",
+          "$description": "Orange, step 400, #F2884A. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-500": {
+          "$type": "color",
+          "$value": "#DB6F30",
+          "$description": "Orange, step 500, #DB6F30. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-600": {
+          "$type": "color",
+          "$value": "#C4560F",
+          "$description": "Orange, step 600, #C4560F. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-700": {
+          "$type": "color",
+          "$value": "#963C00",
+          "$description": "Orange, step 700, #963C00. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-800": {
+          "$type": "color",
+          "$value": "#6A2400",
+          "$description": "Orange, step 800, #6A2400. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "orange-900": {
+          "$type": "color",
+          "$value": "#410E00",
+          "$description": "Orange, step 900, #410E00. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "cyan": {
+        "cyan-50": {
+          "$type": "color",
+          "$value": "#EDF9FD",
+          "$description": "Cyan, step 50, #EDF9FD. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-100": {
+          "$type": "color",
+          "$value": "#D7F1F8",
+          "$description": "Cyan, step 100, #D7F1F8. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-200": {
+          "$type": "color",
+          "$value": "#AAE0ED",
+          "$description": "Cyan, step 200, #AAE0ED. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-300": {
+          "$type": "color",
+          "$value": "#79CFE3",
+          "$description": "Cyan, step 300, #79CFE3. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-400": {
+          "$type": "color",
+          "$value": "#38BDD8",
+          "$description": "Cyan, step 400, #38BDD8. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-500": {
+          "$type": "color",
+          "$value": "#2BA4BF",
+          "$description": "Cyan, step 500, #2BA4BF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-600": {
+          "$type": "color",
+          "$value": "#1D8CA7",
+          "$description": "Cyan, step 600, #1D8CA7. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-700": {
+          "$type": "color",
+          "$value": "#0E7490",
+          "$description": "Cyan, step 700, #0E7490. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-800": {
+          "$type": "color",
+          "$value": "#004C60",
+          "$description": "Cyan, step 800, #004C60. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "cyan-900": {
+          "$type": "color",
+          "$value": "#002733",
+          "$description": "Cyan, step 900, #002733. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "violet": {
+        "violet-50": {
+          "$type": "color",
+          "$value": "#F7F5FE",
+          "$description": "Violet, step 50, #F7F5FE. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-100": {
+          "$type": "color",
+          "$value": "#E5E0FF",
+          "$description": "Violet, step 100, #E5E0FF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-200": {
+          "$type": "color",
+          "$value": "#C4B5FD",
+          "$description": "Violet, step 200, #C4B5FD. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-300": {
+          "$type": "color",
+          "$value": "#B694F2",
+          "$description": "Violet, step 300, #B694F2. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-400": {
+          "$type": "color",
+          "$value": "#A872E7",
+          "$description": "Violet, step 400, #A872E7. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-500": {
+          "$type": "color",
+          "$value": "#9A4DDB",
+          "$description": "Violet, step 500, #9A4DDB. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-600": {
+          "$type": "color",
+          "$value": "#7E3BB5",
+          "$description": "Violet, step 600, #7E3BB5. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-700": {
+          "$type": "color",
+          "$value": "#622990",
+          "$description": "Violet, step 700, #622990. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-800": {
+          "$type": "color",
+          "$value": "#48186D",
+          "$description": "Violet, step 800, #48186D. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "violet-900": {
+          "$type": "color",
+          "$value": "#30074C",
+          "$description": "Violet, step 900, #30074C. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
+      "magenta": {
+        "magenta-50": {
+          "$type": "color",
+          "$value": "#FFF1FF",
+          "$description": "Magenta, step 50, #FFF1FF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-100": {
+          "$type": "color",
+          "$value": "#F9DFFC",
+          "$description": "Magenta, step 100, #F9DFFC. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-200": {
+          "$type": "color",
+          "$value": "#EAB9F0",
+          "$description": "Magenta, step 200, #EAB9F0. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-300": {
+          "$type": "color",
+          "$value": "#DA94E4",
+          "$description": "Magenta, step 300, #DA94E4. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-400": {
+          "$type": "color",
+          "$value": "#CA6CD7",
+          "$description": "Magenta, step 400, #CA6CD7. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-500": {
+          "$type": "color",
+          "$value": "#B83FC9",
+          "$description": "Magenta, step 500, #B83FC9. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-600": {
+          "$type": "color",
+          "$value": "#A21CAF",
+          "$description": "Magenta, step 600, #A21CAF. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-700": {
+          "$type": "color",
+          "$value": "#7E0E89",
+          "$description": "Magenta, step 700, #7E0E89. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-800": {
+          "$type": "color",
+          "$value": "#5C0164",
+          "$description": "Magenta, step 800, #5C0164. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        },
+        "magenta-900": {
+          "$type": "color",
+          "$value": "#3C0042",
+          "$description": "Magenta, step 900, #3C0042. Raw palette colour; aliases point at it, components never do.",
+          "$extensions": {
+            "mode": {}
+          }
+        }
+      },
       "base": {
         "white": {
           "$type": "color",
@@ -2742,6 +3070,56 @@
         }
       }
     },
+    "Data S": {
+      "Font family": {
+        "$type": "fontFamily",
+        "$value": "{Primitives.Typography.Font style.Inter}",
+        "$description": "Typeface for the Data S text style: Inter (Northline), IBM Plex Sans (Garnet), Space Grotesk (Voltic).",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font style.Inter}",
+            "Garnet": "{Primitives.Typography.Font style.IBM Plex Sans}",
+            "Voltic": "{Primitives.Typography.Font style.Space Grotesk}"
+          }
+        }
+      },
+      "Font weight": {
+        "$type": "fontWeight",
+        "$value": "{Primitives.Typography.Font Weight.Font Weight-500}",
+        "$description": "Weight of the Data S text style: 500 in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Garnet": "{Primitives.Typography.Font Weight.Font Weight-500}",
+            "Voltic": "{Primitives.Typography.Font Weight.Font Weight-500}"
+          }
+        }
+      },
+      "Font size": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Font Size.Font Size-12}",
+        "$description": "Size of the Data S text style: 12 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Garnet": "{Primitives.Typography.Font Size.Font Size-12}",
+            "Voltic": "{Primitives.Typography.Font Size.Font Size-12}"
+          }
+        }
+      },
+      "Line height": {
+        "$type": "dimension",
+        "$value": "{Primitives.Typography.Line Height.Line Height-18}",
+        "$description": "Line height of the Data S text style: 18 px in every brand.",
+        "$extensions": {
+          "mode": {
+            "Northline": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Garnet": "{Primitives.Typography.Line Height.Line Height-18}",
+            "Voltic": "{Primitives.Typography.Line Height.Line Height-18}"
+          }
+        }
+      }
+    },
     "Icon": {
       "Font weight": {
         "$type": "fontWeight",
@@ -3888,6 +4266,164 @@
                 "Northline": "{Primitives.Colors.platinum.platinum-800}",
                 "Garnet": "{Primitives.Colors.platinum.platinum-800}",
                 "Voltic": "{Primitives.Colors.platinum.platinum-800}"
+              }
+            }
+          }
+        }
+      },
+      "Chart": {
+        "Orange": {
+          "Orange-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.orange.orange-600}",
+            "$description": "Orange chart scale, step 600 (orange 600 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.orange.orange-600}",
+                "Garnet": "{Primitives.Colors.orange.orange-600}",
+                "Voltic": "{Primitives.Colors.orange.orange-600}"
+              }
+            }
+          },
+          "Orange-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.orange.orange-400}",
+            "$description": "Orange chart scale, step 400 (orange 400 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.orange.orange-400}",
+                "Garnet": "{Primitives.Colors.orange.orange-400}",
+                "Voltic": "{Primitives.Colors.orange.orange-400}"
+              }
+            }
+          }
+        },
+        "Cyan": {
+          "Cyan-700": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.cyan.cyan-700}",
+            "$description": "Cyan chart scale, step 700 (cyan 700 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.cyan.cyan-700}",
+                "Garnet": "{Primitives.Colors.cyan.cyan-700}",
+                "Voltic": "{Primitives.Colors.cyan.cyan-700}"
+              }
+            }
+          },
+          "Cyan-400": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.cyan.cyan-400}",
+            "$description": "Cyan chart scale, step 400 (cyan 400 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.cyan.cyan-400}",
+                "Garnet": "{Primitives.Colors.cyan.cyan-400}",
+                "Voltic": "{Primitives.Colors.cyan.cyan-400}"
+              }
+            }
+          }
+        },
+        "Violet": {
+          "Violet-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.violet.violet-500}",
+            "$description": "Violet chart scale, step 500 (violet 500 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.violet.violet-500}",
+                "Garnet": "{Primitives.Colors.violet.violet-500}",
+                "Voltic": "{Primitives.Colors.violet.violet-500}"
+              }
+            }
+          },
+          "Violet-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.violet.violet-200}",
+            "$description": "Violet chart scale, step 200 (violet 200 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.violet.violet-200}",
+                "Garnet": "{Primitives.Colors.violet.violet-200}",
+                "Voltic": "{Primitives.Colors.violet.violet-200}"
+              }
+            }
+          }
+        },
+        "Magenta": {
+          "Magenta-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.magenta.magenta-600}",
+            "$description": "Magenta chart scale, step 600 (magenta 600 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.magenta.magenta-600}",
+                "Garnet": "{Primitives.Colors.magenta.magenta-600}",
+                "Voltic": "{Primitives.Colors.magenta.magenta-600}"
+              }
+            }
+          },
+          "Magenta-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.magenta.magenta-500}",
+            "$description": "Magenta chart scale, step 500 (magenta 500 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.magenta.magenta-500}",
+                "Garnet": "{Primitives.Colors.magenta.magenta-500}",
+                "Voltic": "{Primitives.Colors.magenta.magenta-500}"
+              }
+            }
+          }
+        },
+        "Yellow": {
+          "Yellow-600": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-600}",
+            "$description": "Yellow chart scale, step 600 (yellow 600 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-600}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-600}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-600}"
+              }
+            }
+          },
+          "Yellow-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.yellow.yellow-200}",
+            "$description": "Yellow chart scale, step 200 (yellow 200 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.yellow.yellow-200}",
+                "Garnet": "{Primitives.Colors.yellow.yellow-200}",
+                "Voltic": "{Primitives.Colors.yellow.yellow-200}"
+              }
+            }
+          }
+        },
+        "Grey": {
+          "Grey-500": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-500}",
+            "$description": "Grey chart scale, step 500 (grey 500 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-500}",
+                "Garnet": "{Primitives.Colors.grey.grey-500}",
+                "Voltic": "{Primitives.Colors.grey.grey-500}"
+              }
+            }
+          },
+          "Grey-200": {
+            "$type": "color",
+            "$value": "{Primitives.Colors.grey.grey-200}",
+            "$description": "Grey chart scale, step 200 (grey 200 in every brand). For chart series only. Use only to build semantic tokens, never in components.",
+            "$extensions": {
+              "mode": {
+                "Northline": "{Primitives.Colors.grey.grey-200}",
+                "Garnet": "{Primitives.Colors.grey.grey-200}",
+                "Voltic": "{Primitives.Colors.grey.grey-200}"
               }
             }
           }
@@ -5100,6 +5636,195 @@
           "com.northline.alpha": {
             "Light": 0.16,
             "Dark": 0.16
+          }
+        }
+      }
+    },
+    "Chart": {
+      "chart-series-1": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+        "$description": "Chart series 1, the brand primary: follows the brand. Light: Primary-light-fill; Dark: Primary-dark-action.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Primary light.Primary-light-fill}",
+            "Dark": "{Alias Colors.Colors.Brand.Primary dark.Primary-dark-action}"
+          }
+        }
+      },
+      "chart-series-2": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Chart.Orange.Orange-600}",
+        "$description": "Chart series 2, orange, the same in every brand. Light: Orange-600; Dark: Orange-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Chart.Orange.Orange-600}",
+            "Dark": "{Alias Colors.Colors.Chart.Orange.Orange-400}"
+          }
+        }
+      },
+      "chart-series-3": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Chart.Cyan.Cyan-700}",
+        "$description": "Chart series 3, cyan, the same in every brand. Light: Cyan-700; Dark: Cyan-400.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Chart.Cyan.Cyan-700}",
+            "Dark": "{Alias Colors.Colors.Chart.Cyan.Cyan-400}"
+          }
+        }
+      },
+      "chart-series-4": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Chart.Violet.Violet-500}",
+        "$description": "Chart series 4, violet, the same in every brand. Light: Violet-500; Dark: Violet-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Chart.Violet.Violet-500}",
+            "Dark": "{Alias Colors.Colors.Chart.Violet.Violet-200}"
+          }
+        }
+      },
+      "chart-series-5": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Chart.Magenta.Magenta-600}",
+        "$description": "Chart series 5, magenta, the same in every brand. Light: Magenta-600; Dark: Magenta-500.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Chart.Magenta.Magenta-600}",
+            "Dark": "{Alias Colors.Colors.Chart.Magenta.Magenta-500}"
+          }
+        }
+      },
+      "chart-series-6": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Chart.Grey.Grey-500}",
+        "$description": "Chart series 6, grey, the same in every brand. Light: Grey-500; Dark: Grey-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Chart.Grey.Grey-500}",
+            "Dark": "{Alias Colors.Colors.Chart.Grey.Grey-200}"
+          }
+        }
+      },
+      "chart-series-7": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Chart.Yellow.Yellow-600}",
+        "$description": "Chart series 7, yellow, the same in every brand; last because Light is just over 3:1 (OD-247). Light: Yellow-600; Dark: Yellow-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Chart.Yellow.Yellow-600}",
+            "Dark": "{Alias Colors.Colors.Chart.Yellow.Yellow-200}"
+          }
+        }
+      },
+      "chart-grid": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+        "$description": "Chart gridlines (decorative). Light: Neutral-100; Dark: Neutral-700.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-100}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-700}"
+          }
+        }
+      },
+      "chart-axis": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+        "$description": "Chart axis lines and the line chart cursor. Light: Neutral-400; Dark: Neutral-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-400}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-300}"
+          }
+        }
+      },
+      "chart-axis-text": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}",
+        "$description": "Chart axis labels and legend labels. Light: Neutral-500; Dark: Neutral-200.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-500}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-200}"
+          }
+        }
+      },
+      "chart-tooltip-bg": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Chart tooltip background. Light: Neutral-900; Dark: Neutral-50.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}"
+          }
+        }
+      },
+      "chart-tooltip-text": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Base.White}",
+        "$description": "Chart tooltip text. Light: White; Dark: Neutral-900.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Base.White}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}"
+          }
+        }
+      },
+      "chart-cursor": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}",
+        "$description": "Band behind the hovered category in bar charts (decorative). Light: Neutral-50; Dark: Neutral-800.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-50}",
+            "Dark": "{Alias Colors.Colors.Brand.Neutral.Neutral-800}"
+          }
+        }
+      },
+      "chart-highlight": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+        "$description": "Ring around the hovered or focused chart mark. Light: Neutral-900; Dark: White.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Neutral.Neutral-900}",
+            "Dark": "{Alias Colors.Colors.Brand.Base.White}"
+          }
+        }
+      },
+      "chart-good": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Success.Success-600}",
+        "$description": "Chart status colour for a good value. Light: Success-600; Dark: Success-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Success.Success-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Success.Success-300}"
+          }
+        }
+      },
+      "chart-warning": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Warning.Warning-700}",
+        "$description": "Chart status colour for a warning value. Light: Warning-700; Dark: Warning-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Warning.Warning-700}",
+            "Dark": "{Alias Colors.Colors.Brand.Warning.Warning-300}"
+          }
+        }
+      },
+      "chart-critical": {
+        "$type": "color",
+        "$value": "{Alias Colors.Colors.Brand.Error.Error-600}",
+        "$description": "Chart status colour for a critical value. Light: Error-600; Dark: Error-300.",
+        "$extensions": {
+          "mode": {
+            "Light": "{Alias Colors.Colors.Brand.Error.Error-600}",
+            "Dark": "{Alias Colors.Colors.Brand.Error.Error-300}"
           }
         }
       }

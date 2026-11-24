@@ -84,6 +84,15 @@ export function tailwindKeys(semantic: string): { key: string; utility: string }
       ];
     case 'alpha':
       return [{ key: `--background-color-alpha-${rest}`, utility: `bg-alpha-${rest}` }];
+    case 'chart':
+      // Chart colours (D9): Recharts reads the CSS variables; the utilities are for legend and tooltip markers.
+      return [
+        { key: `--background-color-chart-${rest}`, utility: `bg-chart-${rest}` },
+        { key: `--text-color-chart-${rest}`, utility: `text-chart-${rest}` },
+        { key: `--border-color-chart-${rest}`, utility: `border-chart-${rest}` },
+        { key: `--fill-chart-${rest}`, utility: `fill-chart-${rest}` },
+        { key: `--stroke-chart-${rest}`, utility: `stroke-chart-${rest}` },
+      ];
     default:
       throw new Error(`Unknown semantic group: ${semantic}`);
   }

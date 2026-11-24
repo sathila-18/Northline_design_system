@@ -16,7 +16,7 @@ function TypographyPage(context: BrandTheme) {
     <Page
       title="Typography"
       context={context}
-      intro="25 text styles. Only the font family changes with the brand: Inter (Northline), IBM Plex Sans (Garnet) and Space Grotesk (Voltic). Data L and Data M use tabular figures, so numbers line up."
+      intro="26 text styles. Only the font family changes with the brand: Inter (Northline), IBM Plex Sans (Garnet) and Space Grotesk (Voltic). Data L, Data M and Data S use tabular figures, so numbers line up."
     >
       <Section title="Text styles" description="Each style is one font shorthand. Components use the Tailwind class.">
         <TokenTable headings={['Sample', 'Style', 'Tailwind', 'Value']}>

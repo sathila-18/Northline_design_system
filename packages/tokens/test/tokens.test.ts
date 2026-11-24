@@ -76,13 +76,13 @@ describe('tokens.css', () => {
   it('declares a CSS variable for every token in the JSON', () => {
     const missing = [...tokens.keys()].filter((path) => !css.includes(`--${cssName(path.split('.'))}:`));
     expect(missing).toEqual([]);
-    expect(tokens.size).toBe(486);
+    expect(tokens.size).toBe(559);
   });
 
   it('declares a font shorthand for every text style', () => {
     const missing = textStyles.filter((style) => !css.includes(`--nl-font-${textStyleName(style)}:`));
     expect(missing).toEqual([]);
-    expect(textStyles).toHaveLength(25);
+    expect(textStyles).toHaveLength(26);
   });
 
   it('gives the icon weight (300) to every brand, with no font shorthand or text utility', () => {
