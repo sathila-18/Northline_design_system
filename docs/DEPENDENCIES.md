@@ -105,7 +105,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #14, #15 to #38, 
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | `NlSideNav` | – | ✅ batch 7 | ✅ |
 | 69 | `NlSideNavUser` | yes | `NlListItemBase`, `NlAvatar` | `NlSideNav` | – | ✅ batch 7 | ✅ |
-| 79 | `NlBulkActionBar` | yes | `NlButton`, `NlMenu`, `NlListItem` | `NlTable` | – | ✅ designer, 24 Nov 2026 (D21) | 🟨 |
+| 79 | `NlBulkActionBar` | yes | `NlButton`, `NlMenu`, `NlListItem` | `NlTable` | – | ✅ designer, 24 Nov 2026 (D21) | ✅ |
 
 ### Organisms
 

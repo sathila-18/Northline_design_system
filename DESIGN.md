@@ -698,7 +698,7 @@ _The designer adds rows here before each build._
 | 67 | Table cell | `NlTableCell` | `NlCheckboxControl`, `NlBadge`, `NlButton` | [§9](#nltablecell) | ✅ |
 | 68 | Nav item | `NlNavItem` | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | [§9](#nlnavitem) | ✅ |
 | 69 | Side nav user | `NlSideNavUser` | `NlListItemBase`, `NlAvatar` | [§9](#nlsidenavuser) | ✅ |
-| 79 | Bulk action bar | `NlBulkActionBar` | `NlButton`, `NlMenu`, `NlListItem` | [§9](#nlbulkactionbar) | 🟨 |
+| 79 | Bulk action bar | `NlBulkActionBar` | `NlButton`, `NlMenu`, `NlListItem` | [§9](#nlbulkactionbar) | ✅ |
 
 ### 8.4 Organisms
 
@@ -741,7 +741,7 @@ These apply to every page.
 | # | Page | Area | Status |
 |---|---|---|---|
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
-| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member (details side sheet to come); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21) | Members | 🟨 |
+| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member (details side sheet to come); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21) | Members | ✅ |
 | P3 | Member detail | Members | ⬜ |
 | P4 | Dashboard | Dashboard | ⬜ |
 | P5 | All rewards | Rewards | ⬜ |
@@ -9181,3 +9181,8 @@ Known issues
 | 22 Nov 2026 | NlCheckbox `size`: medium (default, `Body L`, top-aligned) and small (`Body M`, text centred on the control), OD-237. NlTextBlock `body-m` type (`Body M` description, no heading), OD-238. Approved by the designer |
 | 22 Nov 2026 | Page P1, Login (`Pages/Login`, §8.6): the first Storybook page. Wordmark, h1 heading, username and password fields, small forgot password link, small remember me checkbox and a full-width Log in button; the form spans 4 of the 12 grid columns, centred. D18 added: empty required fields go to error with an error helper text when the form's main button is pressed. Approved by the designer |
 | 22 Nov 2026 | D19, smaller corners: buttons large and medium `Radius-S`, small and xsmall `Radius-XS`; input fields, text area and chips `Radius-XS`; side nav rows (with the `NlSideNavUser` row) and `NlStatCard` `Radius-S`; `NlSegmentedButton` track `Radius-S`, segments `Radius-XS` inside the padded sizes. Side nav tree line connected from the section icon through every page (OD-239). Approved by the designer |
+| 24 Nov 2026 | Page rules (§8.6, CLAUDE.md "Pages"): pages in `apps/storybook/src/pages/<area>/`, library components and tokens only, `NlAppShell` through `_shared/PageLayout`, Default / Loading / Empty / Error (+ Filtered) stories, 1440 checked at 1024, every brand and theme, seeded fixtures; nav links between page stories with `@storybook/addon-links`; Coming soon stories for unbuilt pages; rows P3 to P10. Icons `dashboard`, `event`, `help`, `mail`, `redeem` added. Approved by the designer |
+| 24 Nov 2026 | Table changes for the member list: `NlTableHeaderCell` titles on one line (OD-240); `NlTableColumnFilter` `type="date-range"` with `NlCalendar` (OD-241); `NlTable` footer with the summary and rows per page at the start (OD-242) and `onRowClick` (OD-243, replaces OD-230). Approved by the designer |
+| 24 Nov 2026 | D20, member tier tones on `NlBadge` (`bronze`, `silver`, `gold`, `platinum`): light 135° gradients with tier borders and text, the same in every brand and theme; primitives `bronze` and `platinum`, alias group `Tier`, 20 tier semantic tokens (430 → 486, audit addendum); `nl:tier-gradient-*` utilities. Approved by the designer |
+| 24 Nov 2026 | NlBulkActionBar (#79, public, D21): a floating `bg-direct` bar with `Radius-M` corners, Clear selection, "{n} selected", up to 7 actions with leading icons (as many as fit, the rest in More actions), destructive actions solid red and last; `NlTable` `bulkActions`. Icons `block`, `download`, `swap_horiz` added. Approved by the designer |
+| 24 Nov 2026 | Page P2, Member list (`Pages/Members/Member list`, §8.6): fixed-width search, filter chips and Add member in the toolbar; Tier, Status and Join date filters in the header cells; tier tones; sorting, row actions, row click (details side sheet to come), pagination; the bulk action bar. Default, Filtered, Bulk selected, No results, Empty, Loading and Error stories. Approved by the designer |
