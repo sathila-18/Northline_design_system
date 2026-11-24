@@ -575,23 +575,21 @@ Decide these before building the components listed under "Affects".
 - OD-232 · Uncontrolled, follows `Breakpoint-1280` via `matchMedia` · **Decided** 21 Nov 2026: approved
 - OD-233 · Collapse button without `aria-expanded` (its name says what it does) · **Decided** 21 Nov 2026: approved
 
-### Charts (draft specs, 24 Nov 2026)
+### Charts (specs decided 24 Nov 2026)
 
-Open, for the designer. Nothing is decided.
-
-- OD-246 · Where the states and "View as table" live: `NlChartFrame` (organism) holds them and takes the chart and the `NlTable` as slots (D15), so charts stay molecules; or each chart takes a `table` prop (then an organism inside an organism, against §7.1) · **Open** (proposed: the frame)
-- OD-247 · Light series 5 (yellow 600) is 3.01:1 on `bg-primary`: keep it or use yellow 700 (5.00:1, darker, nearer orange) · **Open** (proposed: keep)
-- OD-248 · Members by tier donut: series order, or the tier colours (D20, gradients) · **Open** (proposed: series order)
-- OD-249 · Recharts version: 3.10.1 (four months old) or 3.11.0 (one week) · **Open** (proposed: 3.10.1)
-- OD-250 · Small numbers: `Data M` (24) and `Data L` (32) are too big for axes, tooltips and legends. Add a `Data S` text style (12/18, weight 500, tabular figures) for them · **Open** (proposed: add `Data S`)
-- OD-251 · Tick counts: value axis 5 round ticks from 0; time and category axes as many as fit with `Space-XL` between labels, first and last always shown · **Open**
-- OD-252 · Month labels on a time axis: "MM/YYYY" (follows DD/MM/YYYY) or a short month name ("Mar 2026", needs a names list as `NlCalendar` has) · **Open** (proposed: "MM/YYYY")
-- OD-253 · Keyboard: Recharts' accessibility layer (Left and Right, line and bar) plus our own handling for the donut and Home, End and Escape; roles and the live region · **Open**
-- OD-254 · Plot role: `role="img"` with the title (simple, but hides the keyboard) or `role="application"` with instructions in the description · **Open** (proposed: application)
-- OD-255 · Easing: Recharts takes named easings only; use "ease-out" as the nearest to `--nl-ease-standard`, or pass a custom function · **Open**
-- OD-256 · Line markers: always shown (proposed, so series differ without colour) or only on hover; marker shapes circle, square, triangle, diamond, then hollow · **Open**
-- OD-257 · Legend click to hide a series: not in v1 (proposed) or a toggle per item · **Open**
-- OD-258 · Frame look: a card (`bg-primary`, 1px `border-subtle`, `Radius-M`, `Space-3XL` padding) or plain, the page draws the card · **Open** (proposed: `variant` with both, card default)
-- OD-259 · Switch icons: "Chart" and "Table" with icons needs `bar_chart` and `table` in `nlIcons`; or text only · **Open**
-- OD-260 · Bar limits and sizes: grouped up to 3 series, stacked up to 5; a group takes 60% of its slot; bars in a group `Space-XXS` apart · **Open**
-
+- OD-246 · States and "View as table" in `NlChartFrame` (organism), the chart and the `NlTable` as slots (D15) · **Decided** 24 Nov 2026: agreed
+- OD-247 · Light yellow at 3.01:1 · **Decided** 24 Nov 2026: keep it, last in the series order (series 7)
+- OD-248 · Members by tier donut colours · **Decided** 24 Nov 2026: series colours, not the tier tones
+- OD-249 · Recharts version · **Decided** 24 Nov 2026: 3.10.1
+- OD-250 · Small tabular numbers · **Decided** 24 Nov 2026: add `Data S` (12/18, weight 500, tabular figures)
+- OD-251 · Tick counts · **Decided** 24 Nov 2026: agreed (value axis 5 round ticks from 0; time and category as many as fit, `Space-XL` apart, first and last shown)
+- OD-252 · Month labels · **Decided** 24 Nov 2026: changed: axis short month names ("Mar"), the year on the first tick and each January ("Jan 2027"); tooltip and table "Mar 2026"; full dates DD/MM/YYYY
+- OD-253 · Keyboard · **Decided** 24 Nov 2026: agreed (Recharts' layer plus our own for the donut, Home, End and Escape)
+- OD-254 · Plot role · **Decided** 24 Nov 2026: changed: `role="group"`, `aria-roledescription="chart"`, named by the title; the table view is the full screen reader route
+- OD-255 · Easing · **Decided** 24 Nov 2026: the nearest named easing (`ease-out`), noted in the spec
+- OD-256 · Line markers · **Decided** 24 Nov 2026: always shown in v1
+- OD-257 · Legend click to hide · **Decided** 24 Nov 2026: not in v1
+- OD-258 · Frame look · **Decided** 24 Nov 2026: card by default, plain option
+- OD-259 · Switch icons · **Decided** 24 Nov 2026: add `bar_chart` and `table` to `nlIcons`
+- OD-260 · Bar limits and sizes · **Decided** 24 Nov 2026: agreed
+- Donut order (no OD) · **Decided** 24 Nov 2026: `sortBy` "value" (default) or "data"; above 5 slices the largest 4 plus "Other"; the tier donut uses data order
