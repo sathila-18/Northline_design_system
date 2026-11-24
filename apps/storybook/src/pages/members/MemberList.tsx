@@ -13,6 +13,7 @@ import {
 import {
   formatDate,
   formatPoints,
+  LAST_DATE,
   memberStatuses,
   memberTiers,
   statusLabel,
@@ -144,8 +145,8 @@ function MemberListPage({
         onApply: (value) => {
           list.setJoinedRange(value.start ?? '', value.end ?? '');
         },
-        minDate: '2026-01-01',
-        maxDate: '2026-12-31',
+        minDate: '2023-01-01',
+        maxDate: LAST_DATE,
       },
     },
     {
@@ -256,7 +257,7 @@ function MemberListPage({
   }
 
   const showRows = status === 'ready';
-  const count = list.total === 1 ? '1 member' : `${String(list.total)} members`;
+  const count = list.total === 1 ? '1 member' : `${formatPoints(list.total)} members`;
 
   return (
     <PageLayout active="#members" title="Members" subtitle={showRows ? count : undefined}>

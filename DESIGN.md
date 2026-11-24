@@ -787,22 +787,23 @@ Shared rules for all charts: [§9, Charts: shared rules](#charts-shared-rules). 
 
 #### Page rules
 
-These apply to every page.
+Pages are a showcase only; nobody builds on them (designer, 25 Nov 2026). These apply to every page.
 
 1. **Where.** Pages live in `apps/storybook/src/pages/<area>/`, never in `packages/ui`. Shared page parts are in `pages/_shared/`, fixture data in `pages/_fixtures/`.
-2. **Library only.** Pages are built only from `@northline/ui` components and tokens. No new styles, no hard-coded values and no new components inside a page folder. Layout-only utilities with tokens (`nl:flex`, `nl:grid`, `nl:grid-cols-*`, `nl:gap-*`, `nl:sticky`) are allowed to place components. If a page needs something the library doesn't have, stop and ask the designer. Never work around it.
+2. **Library only.** Pages are built only from `@northline/ui` components and tokens. No new styles, no hard-coded values and no new components inside a page folder. Layout-only utilities with tokens (`nl:flex`, `nl:grid`, `nl:grid-cols-*`, `nl:gap-*`, `nl:sticky`) are allowed to place components. Don't change a library component for a page. If a page needs something the library doesn't have, use the closest thing that exists and list it as "Held for later" in the summary.
 3. **Frame.** Every page except Login sits in `NlAppShell` with the shared side nav and page header (`_shared/PageLayout`), which takes the active nav item.
 4. **Stories.** Every page has Default, Loading, Empty and Error stories. Table pages also get Filtered. Pages that aren't built yet open the shared `Pages/Coming soon` stories (one per planned page, so the nav state is right).
-5. **Width.** Designed at 1440 wide and checked at 1024. No mobile layout.
+5. **Width.** Designed at 1440 wide. No mobile layout, and no 1024 check for pages.
 6. **Brands and themes.** Every page is reviewed in all three brands, Light and Dark.
-7. **Data.** Fixtures only, generated from a fixed seed so every build shows the same data. Invented names, emails on `example.com`. Dates in 2026, shown as DD/MM/YYYY (the `NlDateField` format). Run `pnpm scrub` on fixtures before pushing.
+7. **Data.** Fixtures only, generated from a fixed seed so every build shows the same data. Invented names, emails on `example.com`. Dates up to 23 Nov 2026 (members can have joined in earlier years), shown as DD/MM/YYYY (the `NlDateField` format). Run `pnpm scrub` on fixtures before pushing.
 8. **Links.** Side nav items and page links open other page stories through `linkTo` (`@storybook/addon-links`), mapped in `_shared/navItems.tsx`. Login's Log in opens the member list, so the prototype starts from login.
+9. **Checks and flow (designer, 25 Nov 2026).** For page work, run only `pnpm build-storybook` and `pnpm scrub`: no new tests, no a11y run, no Next.js check, no 1024 check. Don't stop for a plan: build with what the library has and stop once, at the end, with a summary. Library rules don't change: if a library component is changed, the full checks in CLAUDE.md still apply to it.
 
 | # | Page | Area | Status |
 |---|---|---|---|
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
 | P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member details `NlSideSheet` (a Detail / Value `NlTable`, Suspend destructive and Edit in the footer; replaces the planned Member detail page); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21); Suspend from a row, the side sheet or the bar asks in an `NlDialog` (destructive), then a success `NlSnackbar` at the top end (OD-245) | Members | ✅ |
-| P3 | Dashboard | Dashboard | ⬜ |
+| P3 | Dashboard (`Pages/Dashboard`): a period switch (`NlSegmentedButton`), four `NlStatCard`s (active members, points issued, points redeemed, redemption rate), member growth (`NlLineChart`), points earned vs redeemed (`NlBarChart` grouped), top rewards (`NlBarChart` horizontal, top 5), members by tier (`NlDonutChart`, data order), each in an `NlChartFrame` with its table view; recent activity (`NlTable`, 5 latest) with View all to the Member list. Member numbers come from the member fixtures (2,480 members) | Dashboard | 🟨 |
 | P4 | All rewards | Rewards | ⬜ |
 | P5 | Track voucher | Rewards | ⬜ |
 | P6 | Tiers | Rewards | ⬜ |

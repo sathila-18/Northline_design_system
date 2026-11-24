@@ -36,7 +36,6 @@ function ComingSoon({ title, active }: { title: string; active?: PageHref }) {
 
 type Story = StoryObj;
 
-export const Dashboard: Story = { render: () => <ComingSoon title="Dashboard" active="#dashboard" /> };
 export const AllRewards: Story = {
   name: 'All rewards',
   render: () => <ComingSoon title="All rewards" active="#rewards" />,

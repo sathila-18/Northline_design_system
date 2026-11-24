@@ -79,11 +79,12 @@ Instructions for Claude Code in this repo. Read them fully at the start of every
 
 ### Pages (DESIGN.md §8.6, page rules)
 - Pages live in `apps/storybook/src/pages/<area>/`, never in `packages/ui`.
-- Built only from `@northline/ui` components and tokens. No new styles, hard-coded values or components in a page folder; layout-only utilities with tokens are fine. If the library lacks something, stop and ask. Never work around it.
+- Built only from `@northline/ui` components and tokens. No new styles, hard-coded values or components in a page folder; layout-only utilities with tokens are fine. Don't change a library component for a page: use the closest thing that exists and list the gap as "Held for later" in the summary.
 - Every page sits in `NlAppShell` through `_shared/PageLayout` (Login excepted).
 - Stories: Default, Loading, Empty, Error; table pages also Filtered.
-- Designed at 1440, checked at 1024. No mobile layout. Reviewed in all three brands, Light and Dark.
+- Designed at 1440. No mobile layout, no 1024 check. Reviewed in all three brands, Light and Dark.
 - Data from `_fixtures/` only (fixed seed, invented names, `example.com`). Run `pnpm scrub` before pushing.
+- Checks for page work: only `pnpm build-storybook` and `pnpm scrub`. No new tests, no a11y run, no Next.js check. Don't stop for a plan; build, then stop once at the end with a summary. If a library component changes, the full checks above still apply to it.
 
 ### Names and text
 - Components use the `Nl` prefix in PascalCase (`NlButton`, `NlTextField`).
