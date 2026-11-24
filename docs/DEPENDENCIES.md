@@ -583,7 +583,7 @@ Decide these before building the components listed under "Affects".
 - OD-249 · Recharts version · **Decided** 24 Nov 2026: 3.10.1
 - OD-250 · Small tabular numbers · **Decided** 24 Nov 2026: add `Data S` (12/18, weight 500, tabular figures)
 - OD-251 · Tick counts · **Decided** 24 Nov 2026: agreed (value axis 5 round ticks from 0; time and category as many as fit, `Space-XL` apart, first and last shown)
-- OD-252 · Month labels · **Decided** 24 Nov 2026: changed: axis short month names ("Mar"), the year on the first tick and each January ("Jan 2027"); tooltip and table "Mar 2026"; full dates DD/MM/YYYY
+- OD-252 · Month labels · **Decided** 24 Nov 2026: changed: axis short month names ("Mar"), the year on the first tick and each January ("Jan 2027"); tooltip and table "Mar 2026"; full dates DD/MM/YYYY. **Changed** 25 Nov 2026 (designer): no year on the axis at all, month names only
 - OD-253 · Keyboard · **Decided** 24 Nov 2026: agreed (Recharts' layer plus our own for the donut, Home, End and Escape)
 - OD-254 · Plot role · **Decided** 24 Nov 2026: changed: `role="group"`, `aria-roledescription="chart"`, named by the title; the table view is the full screen reader route
 - OD-255 · Easing · **Decided** 24 Nov 2026: the nearest named easing (`ease-out`), noted in the spec
