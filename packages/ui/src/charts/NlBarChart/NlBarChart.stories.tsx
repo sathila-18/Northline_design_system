@@ -144,3 +144,20 @@ export const Empty: Story = { render: () => <InFrame status="empty" /> };
 
 /** Error, in the frame. */
 export const Error: Story = { render: () => <InFrame status="error" /> };
+
+/** Twelve months from December, at half width (as on the dashboard): the crowded January gives way and the months
+ * between the ends stay. */
+const decemberStart = pointsByMonth.map((row, index) => ({
+  ...row,
+  month: index === 0 ? '2025-12' : `2026-${String(index).padStart(2, '0')}`,
+}));
+
+export const DecemberStart: Story = {
+  name: 'December start',
+  args: { data: decemberStart },
+  render: (args) => (
+    <div className="nl:max-w-560">
+      <NlBarChart {...args} />
+    </div>
+  ),
+};
