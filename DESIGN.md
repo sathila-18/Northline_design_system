@@ -777,7 +777,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 | C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | ✅ |
 | C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ✅ |
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ✅ |
-| C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
+| C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nllinechart) | 🟨 |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
 | C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ⬜ |
 
@@ -9130,6 +9130,7 @@ A series marker: one SVG shape in the series' chart colour, so series differ by 
 | Series | 1 to 7 | `series` (picks the colour, and the shape unless `shape` is given), also `data-series` |
 | Shape | the series' own: circle, square, triangle, diamond, then the same hollow for series 5 to 7; or forced | `shape?: 'circle' \| 'square' \| 'triangle' \| 'diamond'` (bars and slices: `square`, always filled), also `data-shape` |
 | Size | `Size-8` (tooltip, line points), `Size-12` (legend) | `size`, default `'8'` |
+| In a chart's SVG | position and size in px | `x`, `y`, `box` (a nested SVG ignores the CSS size class, so the chart passes the `Size-8` value; line chart points) |
 
 - Filled: `fill-chart-series-n`. Hollow: no fill, a 1.5 outline in `stroke-chart-series-n`, inside the box. Square corners round slightly (artwork, a 12 × 12 viewBox).
 - Always `aria-hidden` and never focusable; the name next to it carries the meaning. Presentational, no `'use client'`.
@@ -9257,7 +9258,7 @@ NlChartFrame (section, named by the title)
 #### Sizes and layout
 
 - Header: title (`NlTextBlock type="headline-small"`, designer, 24 Nov 2026) start, switch end, `Space-L` under it. While loading, empty or in error the switch is hidden but keeps its space (`invisible`, `aria-hidden`, `inert`), so the header doesn't change height (designer, 24 Nov 2026). Switch: `NlSegmentedButton size="xsmall"`, "Chart" (`bar_chart`) and "Table" (`table`), icons added to `nlIcons` (OD-259).
-- Body keeps the chart's height in every state, so the dashboard doesn't jump; the table view scrolls inside that height.
+- Body keeps the chart's height in every state, so the dashboard doesn't jump; the table view scrolls inside that height, as a named region ("{title}, table") that is a tab stop with the standard focus ring, so the keyboard can scroll it (found by the a11y check, 24 Nov 2026).
 - Card (default, OD-258; plain has no fill, border or padding): `bg-primary`, 1px `border-subtle`, `Radius-M`, padding `Space-3XL`.
 
 #### States
@@ -9300,8 +9301,11 @@ NlLineChart
 
 #### Sizes and layout
 
-- Lines 2px, markers `Size-8`; grid horizontal only, 1px `chart-grid`; value axis without a line, time axis with a 1px `chart-axis` line; ticks as the shared rules.
-- Plot margins: `Space-M` top and end, axis labels outside the plot.
+- Lines 2px, markers `Size-8` (`NlChartMarker` at each point); grid horizontal only, 1px `chart-grid`; value axis without a line, time axis with a 1px `chart-axis` line; no tick marks.
+- Value axis: five ticks from 0 on a round step (1, 2, 2.5 or 5 × a power of ten) covering the largest value; as wide as its widest label (`Data S`, measured) + `Space-M` + `Space-XS`.
+- Time axis: the chart picks the ticks so each label is measured with its final text: a step of 1, 2, 3, 4, 6 or 12 months aligned to January (so every January is a tick and carries its year), plus the first and last points, the smallest step that keeps `Space-XL` between labels. If a new year's January isn't a tick, the year goes on that year's first tick.
+- Plot margins: top `Space-M` + `Space-XS`, end at least half the last label + `Space-XS` (the last label is centred on the last point); axis labels outside the plot.
+- Keyboard handled by the chart itself, not Recharts' accessibility layer (which only has Left, Right and Enter): Left, Right, Home, End, Escape; the tooltip follows through Recharts' `defaultIndex`.
 
 #### Colours
 

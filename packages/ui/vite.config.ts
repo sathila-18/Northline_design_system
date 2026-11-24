@@ -21,7 +21,14 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       // Runtime dependencies stay imports, so the consumer's install provides them (one copy, deduplicated).
-      external: [/^react($|\/)/, /^react-dom($|\/)/, /^@northline\/tokens($|\/)/, /^@floating-ui\//],
+      external: [
+        /^react($|\/)/,
+        /^react-dom($|\/)/,
+        /^react-is($|\/)/,
+        /^recharts($|\/)/,
+        /^@northline\/tokens($|\/)/,
+        /^@floating-ui\//,
+      ],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

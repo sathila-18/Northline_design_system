@@ -31,6 +31,8 @@ describe('NlChartFrame', () => {
     expect(screen.getByText('The table')).toBeInTheDocument();
     expect(screen.queryByText('The chart')).toBeNull();
     expect(onViewChange).toHaveBeenCalledWith('table');
+    // The table view scrolls, so it is a named tab stop.
+    expect(screen.getByRole('region', { name: 'Members by tier, table' })).toHaveAttribute('tabindex', '0');
   });
 
   it('no table, no switch', () => {
