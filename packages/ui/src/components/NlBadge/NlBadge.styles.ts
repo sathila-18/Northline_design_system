@@ -20,4 +20,22 @@ export const tone = {
   },
   neutral: { badge: 'nl:bg-neutral nl:text-secondary', icon: 'nl:text-fg-secondary' },
   disabled: { badge: 'nl:bg-disabled nl:text-disabled-on-bg', icon: 'nl:text-fg-disabled-on-bg' },
+  // Tier tones (D20): identity, not status. A light 135° gradient (nl:tier-gradient-*), the tier's inside border and
+  // text; the same in Light and Dark, and in every brand.
+  bronze: {
+    badge: 'nl:tier-gradient-bronze nl:inset-ring nl:inset-ring-tier-bronze nl:text-tier-bronze',
+    icon: 'nl:text-fg-tier-bronze',
+  },
+  silver: {
+    badge: 'nl:tier-gradient-silver nl:inset-ring nl:inset-ring-tier-silver nl:text-tier-silver',
+    icon: 'nl:text-fg-tier-silver',
+  },
+  gold: {
+    badge: 'nl:tier-gradient-gold nl:inset-ring nl:inset-ring-tier-gold nl:text-tier-gold',
+    icon: 'nl:text-fg-tier-gold',
+  },
+  platinum: {
+    badge: 'nl:tier-gradient-platinum nl:inset-ring nl:inset-ring-tier-platinum nl:text-tier-platinum',
+    icon: 'nl:text-fg-tier-platinum',
+  },
 } as const;

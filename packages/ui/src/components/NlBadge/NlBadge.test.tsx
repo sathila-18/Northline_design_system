@@ -40,6 +40,26 @@ describe('NlBadge', () => {
     ],
     ['neutral', ['nl:bg-neutral', 'nl:text-secondary'], 'nl:text-fg-secondary'],
     ['disabled', ['nl:bg-disabled', 'nl:text-disabled-on-bg'], 'nl:text-fg-disabled-on-bg'],
+    [
+      'bronze',
+      ['nl:tier-gradient-bronze', 'nl:inset-ring', 'nl:inset-ring-tier-bronze', 'nl:text-tier-bronze'],
+      'nl:text-fg-tier-bronze',
+    ],
+    [
+      'silver',
+      ['nl:tier-gradient-silver', 'nl:inset-ring', 'nl:inset-ring-tier-silver', 'nl:text-tier-silver'],
+      'nl:text-fg-tier-silver',
+    ],
+    [
+      'gold',
+      ['nl:tier-gradient-gold', 'nl:inset-ring', 'nl:inset-ring-tier-gold', 'nl:text-tier-gold'],
+      'nl:text-fg-tier-gold',
+    ],
+    [
+      'platinum',
+      ['nl:tier-gradient-platinum', 'nl:inset-ring', 'nl:inset-ring-tier-platinum', 'nl:text-tier-platinum'],
+      'nl:text-fg-tier-platinum',
+    ],
   ] as const)('tone %s uses %s with icons %s', (tone, badge, icon) => {
     const { container } = render(
       <NlBadge tone={tone} leadingIcon="check" trailingIcon="close">

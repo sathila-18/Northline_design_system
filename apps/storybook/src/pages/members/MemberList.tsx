@@ -39,6 +39,13 @@ const statusTone: Record<MemberStatus, NlBadgeTone> = {
   suspended: 'error',
 };
 
+const tierTone: Record<MemberTier, NlBadgeTone> = {
+  Bronze: 'bronze',
+  Silver: 'silver',
+  Gold: 'gold',
+  Platinum: 'platinum',
+};
+
 const tierOptions = memberTiers.map((tier) => ({ value: tier, label: tier }));
 const statusOptions = memberStatuses.map((status) => ({ value: status, label: statusLabel[status] }));
 
@@ -71,8 +78,8 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
       key: 'tier',
       header: 'Tier',
       width: '120',
-      // One neutral tone for every tier, so a tier never reads as a status (held for later).
-      cell: (member) => ({ type: 'badge', badge: { tone: 'neutral', label: member.tier } }),
+      // Tier tones (D20): a light gradient per tier, identity rather than status.
+      cell: (member) => ({ type: 'badge', badge: { tone: tierTone[member.tier], label: member.tier } }),
       filter: {
         options: tierOptions,
         value: state.tiers,

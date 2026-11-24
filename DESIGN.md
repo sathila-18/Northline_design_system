@@ -108,6 +108,21 @@ _Collection `Primitives`, group `Colors`. Named by colour, never by role._
 | 800 | #0A365B | #054108 | #5B4806 | #5C140B |
 | 900 | #051B2E | #032104 | #2D2403 | #2E0A05 |
 
+| Step | bronze | platinum |
+|---|---|---|
+| 50 | #FBF0E8 | #F0F2F7 |
+| 100 | #F5DCC8 | #DFE3EE |
+| 200 | #E9B994 | #C0C7DB |
+| 300 | #D9945F | #9FA9C6 |
+| 400 | #C27538 | #7F8BB0 |
+| 500 | #A55A22 | #636F94 |
+| 600 | #84461A | #4F5976 |
+| 700 | #633413 | #3B4359 |
+| 800 | #42230D | #282C3B |
+| 900 | #211106 | #14161E |
+
+`bronze` and `platinum` are for member tier badges only (D20).
+
 | Primitive | Hex |
 |---|---|
 | white | #FFFFFF |
@@ -130,6 +145,15 @@ _Collection `Alias Colors`, group `Colors.Brand`, modes `Northline`, `Garnet`, `
 | `Warning-50 … -900` | yellow | yellow | yellow |
 | `Error-50 … -900` | red | red | red |
 | `White`, `Black` | white, black | white, black | white, black |
+
+**Tier scales** (D20). Group `Colors.Tier`, the same value in every brand, so a tier looks the same in Northline, Garnet and Voltic. Only the steps the tier tokens use.
+
+| Alias | Every brand |
+|---|---|
+| `Bronze-50`, `-200`, `-300`, `-800` | bronze 50, 200, 300, 800 |
+| `Silver-50`, `-200`, `-300`, `-800` | grey 50, 200, 300, 800 |
+| `Gold-50`, `-200`, `-300`, `-800` | yellow 50, 200, 300, 800 |
+| `Platinum-50`, `-200`, `-300`, `-800` | platinum 50, 200, 300, 800 |
 
 **Primary light.** Brand colours the Light theme uses for actions and fills.
 
@@ -196,6 +220,10 @@ _Collection `Color collection`, modes `Light` and `Dark`. **Components use only 
 | `bg-warning_secondary` | Warning-100 | Warning-900 | Tinted warning background |
 | `bg-error` | Error-600 | Error-600 | Solid error background, white text |
 | `bg-error_secondary` | Error-100 | Error-900 | Tinted error background |
+| `bg-tier-bronze_start`, `bg-tier-bronze_end` | Bronze-50, Bronze-200 | same | Bronze tier badge gradient, start (top left) and end (bottom right) (D20) |
+| `bg-tier-silver_start`, `bg-tier-silver_end` | Silver-50, Silver-200 | same | Silver tier badge gradient, start (top left) and end (bottom right) (D20) |
+| `bg-tier-gold_start`, `bg-tier-gold_end` | Gold-50, Gold-200 | same | Gold tier badge gradient, start (top left) and end (bottom right) (D20) |
+| `bg-tier-platinum_start`, `bg-tier-platinum_end` | Platinum-50, Platinum-200 | same | Platinum tier badge gradient, start (top left) and end (bottom right) (D20) |
 
 #### Text
 
@@ -218,6 +246,10 @@ _Collection `Color collection`, modes `Light` and `Dark`. **Components use only 
 | `text-success` | Success-700 | Success-200 | Success text |
 | `text-warning` | Warning-800 | Warning-200 | Warning text |
 | `text-error` | Error-700 | Error-200 | Error text |
+| `text-tier-bronze` | Bronze-800 | same | Bronze tier badge text |
+| `text-tier-silver` | Silver-800 | same | Silver tier badge text |
+| `text-tier-gold` | Gold-800 | same | Gold tier badge text |
+| `text-tier-platinum` | Platinum-800 | same | Platinum tier badge text |
 
 #### Border
 
@@ -237,6 +269,10 @@ _Collection `Color collection`, modes `Light` and `Dark`. **Components use only 
 | `border-success` | Success-500 | Success-400 | Success border |
 | `border-warning` | Warning-500 | Warning-400 | Warning border |
 | `border-error` | Error-500 | Error-400 | Error border |
+| `border-tier-bronze` | Bronze-300 | same | Bronze tier badge inside border (decorative) |
+| `border-tier-silver` | Silver-300 | same | Silver tier badge inside border (decorative) |
+| `border-tier-gold` | Gold-300 | same | Gold tier badge inside border (decorative) |
+| `border-tier-platinum` | Platinum-300 | same | Platinum tier badge inside border (decorative) |
 
 `border-warning` is decorative only. It reaches about 1.9:1 on `bg-primary` in Light, so it may outline something only when text or an icon next to it carries the meaning (for example the warning `NlBadge`). It must never be a control's only outline (D17).
 
@@ -261,6 +297,10 @@ _Collection `Color collection`, modes `Light` and `Dark`. **Components use only 
 | `fg-success` | Success-600 | Success-300 | Success icons |
 | `fg-warning` | Warning-700 | Warning-300 | Warning icons |
 | `fg-error` | Error-600 | Error-300 | Error icons |
+| `fg-tier-bronze` | Bronze-800 | same | Bronze tier badge icons |
+| `fg-tier-silver` | Silver-800 | same | Silver tier badge icons |
+| `fg-tier-gold` | Gold-800 | same | Gold tier badge icons |
+| `fg-tier-platinum` | Platinum-800 | same | Platinum tier badge icons |
 
 #### Alpha
 
@@ -3176,7 +3216,7 @@ As `NlBadgeBase`: label, with optional leading and trailing icons.
 
 | Option | Values | Prop |
 |---|---|---|
-| Tone | primary, secondary, success, error, info, warning, neutral, disabled | `tone`, default `neutral`, also `data-tone` |
+| Tone | primary, secondary, success, error, info, warning, neutral, disabled; tier tones bronze, silver, gold, platinum (D20) | `tone`, default `neutral`, also `data-tone` |
 | Size | small, large | `size`, default `small`. See "Mapping notes" |
 | Label | text | `children` |
 | Icons | optional | `leadingIcon?`, `trailingIcon?`. See "Mapping notes" |
@@ -3197,6 +3237,10 @@ As `NlBadgeBase`.
 | warning | `bg-warning_secondary` | `border-warning` | `text-warning` | `fg-warning` |
 | neutral | `bg-neutral` | none | `text-secondary` | `fg-secondary` |
 | disabled | `bg-disabled` | none | `text-disabled-on_bg` | `fg-disabled-on_bg` |
+| bronze | 135° gradient `bg-tier-bronze_start` → `bg-tier-bronze_end` (`nl:tier-gradient-bronze`) | `border-tier-bronze` | `text-tier-bronze` | `fg-tier-bronze` |
+| silver | 135° gradient `bg-tier-silver_start` → `bg-tier-silver_end` (`nl:tier-gradient-silver`) | `border-tier-silver` | `text-tier-silver` | `fg-tier-silver` |
+| gold | 135° gradient `bg-tier-gold_start` → `bg-tier-gold_end` (`nl:tier-gradient-gold`) | `border-tier-gold` | `text-tier-gold` | `fg-tier-gold` |
+| platinum | 135° gradient `bg-tier-platinum_start` → `bg-tier-platinum_end` (`nl:tier-gradient-platinum`) | `border-tier-platinum` | `text-tier-platinum` | `fg-tier-platinum` |
 
 #### States
 
@@ -3247,6 +3291,10 @@ Renders `NlBadgeBase` (a `<span>`). `className` and other native attributes go t
 | success, error, info, warning | `bg-{tone}_secondary`, inset ring `border-{tone}`, `text-{tone}` | `fg-{tone}` |
 | neutral | `bg-neutral`, `text-secondary` | `fg-secondary` |
 | disabled | `bg-disabled`, `text-disabled-on_bg` | `fg-disabled-on_bg` |
+| bronze | `nl:tier-gradient-bronze` (`bg-tier-bronze_start`, `bg-tier-bronze_end`), `border-tier-bronze`, `text-tier-bronze` | `fg-tier-bronze` |
+| silver | `nl:tier-gradient-silver` (`bg-tier-silver_start`, `bg-tier-silver_end`), `border-tier-silver`, `text-tier-silver` | `fg-tier-silver` |
+| gold | `nl:tier-gradient-gold` (`bg-tier-gold_start`, `bg-tier-gold_end`), `border-tier-gold`, `text-tier-gold` | `fg-tier-gold` |
+| platinum | `nl:tier-gradient-platinum` (`bg-tier-platinum_start`, `bg-tier-platinum_end`), `border-tier-platinum`, `text-tier-platinum` | `fg-tier-platinum` |
 
 Shape, sizes and spacing from `NlBadgeBase`.
 
@@ -8935,6 +8983,7 @@ Checked in Chrome: axe clean in every brand and theme, at rest, with the user me
 | D17 | 17 Nov 2026 | Token file (S0). Colours stay hex strings, as TokensBrücke exports them. Alpha tokens are an alias reference plus the opacity in `$extensions["com.northline.alpha"]`, applied by the token build. White and black primitives sit at `Primitives.Colors.base.white` and `.black`. Decimal line heights use an underscore in their names (`Line Height-62_4`). Two contrast results are accepted: `text-action` on `bg-active-hover` in Voltic (a chip hover state only), and `border-warning` as a decorative outline beside text, never a control's only outline. Hover and pressed states aren't flagged in contrast audits |
 | D18 | 22 Nov 2026 | Required fields on pages. Pressing a form's main button with required fields left empty puts each empty field in `error`, with an error helper text (with its leading icon, as `NlHelperText` draws it in error) saying what to enter. Focus moves to the first empty field. A field's error clears once it has a value. Native browser bubbles are off (`noValidate`); fields keep `required` |
 | D19 | 22 Nov 2026 | Smaller corners (designer's choice). Buttons: large and medium `Radius-S` (8), small and xsmall `Radius-XS` (4). Input fields (`NlInputBase`) and text area (`NlTextAreaBase`) `Radius-XS`. Chips (`NlChipBase`) `Radius-XS`. Side nav rows (`NlNavItem`, `NlNavSubItem`, and the `NlSideNavUser` row through `NlListItemBase` nav) `Radius-S`. `NlStatCard` `Radius-S`. `NlSegmentedButton` track `Radius-S` at every size; segments inside the padded medium and small tracks `Radius-XS`, xsmall segments `Radius-S`. The side nav tree line keeps its `Radius-S` curve |
+| D20 | 24 Nov 2026 | Member tier colours (designer's choice). `NlBadge` gets four tier tones, `bronze`, `silver`, `gold`, `platinum`: identity, not status. Each is a light 135° gradient (`bg-tier-*_start` step 50 → `bg-tier-*_end` step 200) with a step 300 inside border and step 800 text and icon. The same in Light and Dark, and in every brand (alias group `Colors.Tier`). New primitive scales `bronze` and `platinum`; silver uses `grey`, gold uses `yellow`. The gradients are named utilities in `tailwind.css` (`nl:tier-gradient-*`). Text is 6.79:1 or more on every gradient; the borders are decorative (as `border-warning`, D17) |
 
 Known issues
 

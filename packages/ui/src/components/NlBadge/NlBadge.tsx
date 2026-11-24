@@ -10,7 +10,7 @@ export interface NlBadgeProps extends Omit<NlBadgeBaseProps, 'appearance'> {
 }
 
 /**
- * A status tag, such as "Active", "Pending" or "Tier 2", in one of eight tones (DESIGN.md §9, NlBadge).
+ * A status tag, such as "Active", "Pending" or "Tier 2", in one of eight status tones, or one of four member tier tones (DESIGN.md §9, NlBadge, D20).
  * Mapped on NlBadgeBase: passes the tone's fixed colours, size, label and optional icons (none by default).
  * Not interactive. Presentational, so no 'use client'.
  */
