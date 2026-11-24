@@ -779,7 +779,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ✅ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nllinechart) | ✅ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend`, `NlChartMarker` | [§9](#nlbarchart) | ✅ |
-| C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ⬜ |
+| C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | 🟨 |
 
 Shared rules for all charts: [§9, Charts: shared rules](#charts-shared-rules). Specs decided by the designer, 24 Nov 2026 (OD-246 to OD-260).
 
@@ -9379,7 +9379,7 @@ Parts of a whole, up to 5 slices (members by tier).
 
 ```
 NlDonutChart
-├── ring: slice × up to 5 (2px gaps in the background colour)
+├── ring: slice × up to 5, true gaps between slices (about 2px at the middle of the ring, as Recharts' padding angle; whatever is behind shows through; designer, 24 Nov 2026)
 ├── centre: total (Data L) and its label (Body S)
 ├── NlChartTooltip
 └── NlChartLegend (end or below, with value and share)
@@ -9393,12 +9393,13 @@ NlDonutChart
 | Colours | series order, never the tier tones (OD-248) | – |
 | Order | by value (largest first) or data order | `sortBy: 'value' \| 'data'`, default `value` (designer, 24 Nov 2026); members by tier uses `data`, so tiers stay Bronze, Silver, Gold, Platinum |
 | Centre | total and label | `totalLabel` (default "Total"); the total is the sum, through `formatValue` |
-| Legend | end (default when wide enough), below | `legendPosition` |
+| Legend | end, below | `legendPosition`; default: end from `Size-560` wide, below when narrower (designer, 24 Nov 2026), also `data-legend` |
 | Name, formatting, height | as the others | `title`, `description?`, `formatValue?`, `height` |
 
 #### Sizes and layout
 
-- The ring fills the height; ring width 25% of the radius; slices start at 12 o'clock and go clockwise, in `sortBy` order.
+- The ring fills the height (outer radius 90%, room for the pulled-out slice); ring width 25% of the radius; slices start at 12 o'clock and go clockwise, in `sortBy` order. Beside the legend the ring is a square as tall as the chart, `Space-3XL` from the legend; below, the legend is `Space-L` under it.
+- The centre total and its label are read through the chart's description ("Total: 120"), as the centre is decorative text.
 - Shares are whole percentages that add to 100 (largest remainder), shown in the legend and tooltip.
 
 #### Colours

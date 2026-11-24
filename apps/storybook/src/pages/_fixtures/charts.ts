@@ -4,6 +4,8 @@
  * "Jan 2027", "Mar 2026").
  */
 
+import { members, memberTiers } from './members';
+
 /** mulberry32: a small seeded generator. */
 function mulberry32(seed: number) {
   let a = seed;
@@ -92,3 +94,22 @@ export const topRewards: RewardCount[] = [
 ]
   .map((reward) => ({ reward, redeemed: 40 + Math.floor(random() * 420) }))
   .sort((a, b) => b.redeemed - a.redeemed);
+
+/** Members by tier, counted from the member fixtures, in tier order (the tier donut keeps data order). */
+export const membersByTier = memberTiers.map((tier) => ({
+  key: tier.toLowerCase(),
+  label: tier,
+  value: members.filter((member) => member.tier === tier).length,
+}));
+
+/** Rewards redeemed by kind: eight kinds, so the donut shows the largest 4 and "Other". Invented names. */
+export const rewardsByKind = [
+  'Track day voucher',
+  'Reward X',
+  'Event pass',
+  'Coffee voucher',
+  'Parking pass',
+  'Tier 2 bonus',
+  'Gift card',
+  'Merch pack',
+].map((label, index) => ({ key: `kind-${String(index)}`, label, value: 20 + Math.floor(random() * 300) }));
