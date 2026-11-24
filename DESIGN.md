@@ -722,6 +722,14 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
+| C1 | Chart tooltip | `NlChartTooltip` | – | [§9](#nlcharttooltip) (draft) | ⬜ |
+| C2 | Chart legend | `NlChartLegend` | – | [§9](#nlchartlegend) (draft) | ⬜ |
+| C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) (draft) | ⬜ |
+| C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) (draft) | ⬜ |
+| C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) (draft) | ⬜ |
+| C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) (draft) | ⬜ |
+
+Shared rules for all charts: [§9, Charts: shared rules](#charts-shared-rules). Specs are drafts for the designer to edit (24 Nov 2026).
 
 ### 8.6 Pages (Storybook only)
 
@@ -9041,6 +9049,294 @@ Props: `count`, `onClear`, `actions`, `aria-label?`, `className?`, native `div` 
 #### Tokens used
 
 `Size-48`; `Radius-M`; `Space-XS`, `Space-M`, `Space-XL` (slide), `Space-3XL` (placement in `NlTable`); `bg-direct`, `text-inverse`; `--nl-shadow-menu`, `--nl-z-sticky`; `--nl-duration-base`, `--nl-ease-standard`; the parts' own (`NlButton`, `NlMenu`, `NlListItem`).
+
+### Charts: shared rules
+
+_Draft, 24 Nov 2026. Written by Claude Code for the designer to edit (no reference library for charts). Nothing here is built. Applies to `NlChartTooltip`, `NlChartLegend`, `NlChartFrame`, `NlLineChart`, `NlBarChart` and `NlDonutChart`._
+
+- **Entry point.** `@northline/ui/charts`; `recharts` (pinned, OD-249) and `react-is` are optional peer dependencies. Every chart file is `'use client'`.
+- **Colours.** Only the `chart-*` tokens (§3.3, D9). Series take `chart-series-1` (the brand) to `chart-series-7` in order. Recharts gets `var(--nl-chart-…)` strings only; a test fails any other colour.
+- **Numbers.** Formatted by the page or by the chart's `formatValue(value) => string` (default: whole numbers with a comma every three digits, "12,480"; no locale formatting during render, §7.4). Dates use the `DD/MM/YYYY` format (`dateFormat.ts`); months on a time axis "MM/YYYY" (OD-252). Large single numbers (the donut total) use `Data L` or `Data M` with tabular figures. Axis, tooltip and legend numbers need a small tabular style (OD-250); until decided, `Label S` / `Label M` without tabular figures.
+- **Axis labels.** One line, never rotated. Category labels longer than their slot are cut with an ellipsis; the full text is in the tooltip and the table view. Horizontal bars: category labels in a `Size-120` column, cut with an ellipsis. Value axis: 5 ticks on round numbers, starting at 0. Time and category axes: as many ticks as fit with at least `Space-XL` between labels, first and last always shown (OD-251).
+- **Never colour alone.** Every chart has a legend (except a single series, where the title names it), and lines carry markers in a different shape per series (circle, square, triangle, diamond, then repeating with a hollow fill, OD-256). The tooltip and table view name every value.
+- **Accessible name.** `title` is required; the chart's region is named by it, and an optional `description` adds a one-line summary (`aria-describedby`).
+- **Keyboard.** The plot is one tab stop. Left and Right (donut: also Up and Down) move between points, categories or slices; the tooltip shows for the focused item and its text is announced politely; Home and End go to the first and last; Escape hides the tooltip. Recharts' accessibility layer where it covers this (OD-253).
+- **View as table.** Every chart can show the same data as an `NlTable` (through `NlChartFrame`, OD-246): one row per category or date, one column per series, values formatted as in the chart.
+- **Motion.** Lines draw in, bars grow and slices sweep over `--nl-duration-slow` with the easing closest to `--nl-ease-standard` that Recharts accepts (OD-255). Off under `prefers-reduced-motion`.
+- **States.** Through `NlChartFrame`: loading (a skeleton the size of the chart), empty ("No data for this period") and error (with Try again).
+- **Responsive.** The chart fills its container's width and keeps its height (`height`: `Size-240` or `Size-320`, default `Size-320`).
+- **Highlight.** The hovered or focused mark: line points get a `chart-highlight` ring (2px, with a 2px gap in the background colour); bars and slices get the same ring; a time or category gets a `chart-cursor` band behind it (bars) or a 1px `chart-axis` line (lines).
+
+### NlChartTooltip
+
+**Level** Atom L0 (swatches and text only) · **Base** none · **Depends on** – · **Public** (in `@northline/ui/charts`)
+
+**Open items** (tracked in [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)): OD-250, OD-253.
+
+The box that shows the values at the hovered or focused point.
+
+#### Anatomy
+
+```
+NlChartTooltip
+├── heading: the category or date
+├── row × series: marker · series name · value
+└── total row (stacked bars only)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Heading | text | `heading` |
+| Rows | data | `items: { name, value (formatted), color (a chart token name), marker }[]` |
+| Total | optional | `total?: string` |
+
+#### Sizes and layout
+
+- Padding `Space-M` top and bottom, `Space-L` sides; rows `Space-XS` apart; `Radius-S`; at most `Size-240` wide, names cut with an ellipsis, values never cut.
+- Row: marker (`Size-8`, the series' shape) · name (`Body S`) · value (end-aligned, OD-250 style).
+- Heading `Label S`. Total row after a 1px divider in the tooltip's text colour at low opacity (OD-250 style, bold).
+- Placed by Recharts next to the point, kept inside the chart area; `--nl-z-tooltip`; `--nl-shadow-menu`.
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Box | `chart-tooltip-bg` |
+| Heading, names, values | `chart-tooltip-text` |
+| Markers | the series' `chart-series-n` |
+
+#### States
+
+Hidden; shown for the hovered or keyboard-focused item. Fades in over `--nl-duration-base`; none under reduced motion.
+
+#### Behaviour and accessibility
+
+- Never focusable and never the only place a value lives (the table view has every value).
+- Its text is also put in the chart's polite live region when the item changes by keyboard, so it is announced ("03/2026: Members 1,204, New members 96").
+
+### NlChartLegend
+
+**Level** Atom L0 · **Base** none · **Depends on** – · **Public** (in `@northline/ui/charts`)
+
+**Open items**: OD-257.
+
+#### Anatomy
+
+```
+NlChartLegend (list)
+└── item × series: marker · label · value (optional, donut)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Items | data | `items: { label, color, marker, value? }[]` |
+| Position | below (default), end | `position`, also `data-position` (end: a column beside a donut) |
+| Interactive | off (proposed, OD-257) | – |
+
+#### Sizes and layout
+
+- Below: a wrapping row, items `Space-XL` apart, rows `Space-S` apart, `Space-L` under the plot. End: a column, items `Space-M` apart.
+- Item: marker (`Size-12`: line charts the series' shape with a short line, bars and slices a square with `Radius-XS`) · label (`Body S`, cut with an ellipsis at `Size-240`) · value (donut: value and share, "312 · 26%", OD-250 style).
+
+#### Colours
+
+| Part | Token |
+|---|---|
+| Markers | `chart-series-n` |
+| Labels | `chart-axis-text` |
+| Values | `text-primary` |
+
+#### Behaviour and accessibility
+
+- A `<ul>` named "Legend"; each item reads its label (and value). Markers are decorative.
+
+### NlChartFrame
+
+**Level** Organism (contains `NlEmptyState`, molecule; `NlSkeleton`, `NlButton`, `NlSegmentedButton`, `NlTextBlock`) · **Base** none · **Depends on** `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` · **Public** (in `@northline/ui/charts`)
+
+**Open items**: OD-246, OD-258, OD-259.
+
+The chart area: a title, the "View as table" switch, and the loading, empty and error states. The chart and its table are slots (D15), proposed in OD-246.
+
+#### Anatomy
+
+```
+NlChartFrame (section, named by the title)
+├── header: NlTextBlock (title, description) · NlSegmentedButton (Chart | Table)
+└── body (chart height): chart slot | table slot | state
+    ├── loading: NlSkeleton rect, the chart's height
+    ├── empty: NlEmptyState small "No data for this period"
+    └── error: NlEmptyState small (error icon) "This chart couldn't load" + NlButton "Try again"
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Title, description | text | `title`, `description?`, `headingAs` (default `h2`) |
+| State | ready, loading, empty, error | `status`, default `ready`, also `data-status` |
+| Retry | callback | `onRetry` (error state) |
+| Height | `Size-240`, `Size-320` | `height`, default `'320'` |
+| Chart | slot | `children` (an `NlLineChart`, `NlBarChart` or `NlDonutChart`) |
+| Table | slot | `table` (an `NlTable` of the same data); without it, no switch |
+| View | chart, table | `view` / `defaultView`, `onViewChange` |
+| Look | plain, card | `variant` (OD-258) |
+
+#### Sizes and layout
+
+- Header: title start, switch end, `Space-L` under it. Switch: `NlSegmentedButton size="xsmall"`, "Chart" and "Table" (icons OD-259).
+- Body keeps the chart's height in every state, so the dashboard doesn't jump; the table view scrolls inside that height.
+- Card (OD-258): `bg-primary`, 1px `border-subtle`, `Radius-M`, padding `Space-3XL`.
+
+#### States
+
+Ready (chart or table), loading (`aria-busy`), empty, error. Empty and error use `NlEmptyState size="small"` with `live` so the change is announced.
+
+#### Behaviour and accessibility
+
+- A `<section>` named by the title. The switch is named "View as" and keeps the choice per frame.
+- Switching to the table moves no focus; the table's caption repeats the chart title.
+
+### NlLineChart
+
+**Level** Molecule (Recharts, `NlChartTooltip`, `NlChartLegend`) · **Base** none · **Depends on** `NlChartTooltip`, `NlChartLegend` · **Public** (in `@northline/ui/charts`)
+
+**Open items**: OD-250 to OD-256.
+
+One or more series over time (member growth).
+
+#### Anatomy
+
+```
+NlLineChart
+├── plot: grid · value axis (start) · time axis (bottom) · line × series (with markers) · cursor line
+├── NlChartTooltip
+└── NlChartLegend (two or more series)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Data | rows | `data: Record<string, number \| string>[]`, `xKey` (an ISO date or category) |
+| Series | 1 to 7 | `series: { key, label }[]`; colours follow the order |
+| Markers | always (proposed), hover only | `markers`, default `true` (OD-256) |
+| Curve | straight (proposed), smooth | `curve`, default `linear` |
+| Formatting | functions | `formatValue?`, `formatX?` |
+| Name | text | `title` (required), `description?` |
+| Height | `Size-240`, `Size-320` | `height` |
+
+#### Sizes and layout
+
+- Lines 2px, markers `Size-8`; grid horizontal only, 1px `chart-grid`; value axis without a line, time axis with a 1px `chart-axis` line; ticks as the shared rules.
+- Plot margins: `Space-M` top and end, axis labels outside the plot.
+
+#### Colours
+
+Series `chart-series-1…7`; grid `chart-grid`; axis line `chart-axis`; axis text `chart-axis-text`; cursor line `chart-axis`; highlight `chart-highlight`.
+
+#### States
+
+Default; hovered or focused point (cursor line, highlight rings on every series' point at that time, tooltip). Loading, empty and error come from `NlChartFrame`.
+
+#### Behaviour and accessibility
+
+As the shared rules: Left and Right move by time step; each step announces the date and every series' value.
+
+### NlBarChart
+
+**Level** Molecule · **Base** none · **Depends on** `NlChartTooltip`, `NlChartLegend` · **Public** (in `@northline/ui/charts`)
+
+**Open items**: OD-250 to OD-256, OD-260.
+
+Vertical or horizontal bars, single, grouped or stacked (points earned vs redeemed by month; top rewards).
+
+#### Anatomy
+
+```
+NlBarChart
+├── plot: grid · value axis · category axis · bars (by category; grouped side by side or stacked) · cursor band
+├── NlChartTooltip
+└── NlChartLegend (two or more series)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Orientation | vertical, horizontal | `orientation`, default `vertical`, also `data-orientation` |
+| Layout | single, grouped, stacked | `layout` (single when one series), also `data-layout` |
+| Series | grouped up to 3, stacked up to 5 (proposed, OD-260) | `series: { key, label }[]` |
+| Value labels | off, on | `showValues?` (on: the value at the end of each bar, single layout only) |
+| Data, formatting, name, height | as `NlLineChart` | `data`, `xKey`, `formatValue?`, `formatX?`, `title`, `description?`, `height` |
+
+#### Sizes and layout
+
+- Bar corners `Radius-XS` at the free end only (stacked: the outermost segment); bars in a group `Space-XXS` apart; groups take 60% of their slot (OD-260).
+- Horizontal: category labels in a `Size-120` column, cut with an ellipsis; vertical: as the shared rules.
+- Grid lines across the value axis only.
+
+#### Colours
+
+As `NlLineChart`; the cursor is a `chart-cursor` band behind the hovered group.
+
+#### States
+
+Default; hovered or focused category (cursor band, highlight ring on the hovered bar, tooltip; stacked: tooltip has a total). Frame states as above.
+
+#### Behaviour and accessibility
+
+Left and Right (horizontal: Up and Down) move by category; each step announces the category and every series' value.
+
+### NlDonutChart
+
+**Level** Molecule · **Base** none · **Depends on** `NlChartTooltip`, `NlChartLegend` · **Public** (in `@northline/ui/charts`)
+
+**Open items**: OD-248, OD-250, OD-253, OD-255.
+
+Parts of a whole, up to 5 slices (members by tier).
+
+#### Anatomy
+
+```
+NlDonutChart
+├── ring: slice × up to 5 (2px gaps in the background colour)
+├── centre: total (Data L) and its label (Body S)
+├── NlChartTooltip
+└── NlChartLegend (end or below, with value and share)
+```
+
+#### Variants and options
+
+| Option | Values | Prop |
+|---|---|---|
+| Slices | 1 to 5 | `data: { key, label, value }[]` |
+| Colours | series order (proposed) or tier tones | OD-248 |
+| Centre | total and label | `totalLabel` (default "Total"); the total is the sum, through `formatValue` |
+| Legend | end (default when wide enough), below | `legendPosition` |
+| Name, formatting, height | as the others | `title`, `description?`, `formatValue?`, `height` |
+
+#### Sizes and layout
+
+- The ring fills the height; ring width 25% of the radius; slices start at 12 o'clock and go clockwise, largest first (proposed; or data order).
+- Shares are whole percentages that add to 100 (largest remainder), shown in the legend and tooltip.
+
+#### Colours
+
+Slices `chart-series-1…5` (or OD-248); gaps the background; centre total `text-primary`, label `chart-axis-text`; highlight ring `chart-highlight`.
+
+#### States
+
+Default; hovered or focused slice (pulled out by `Space-XS` and ringed, tooltip with value and share). Frame states as above.
+
+#### Behaviour and accessibility
+
+Left and Right (and Up and Down) move between slices; each announces "Gold: 312 members, 26%". With more than 5 slices the chart shows the largest 4 and groups the rest as "Other" (proposed).
+
 
 ---
 
