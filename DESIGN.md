@@ -776,7 +776,7 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 | C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | ✅ |
 | C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | ✅ |
 | C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ✅ |
-| C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | 🟨 |
+| C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ✅ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
 | C5 | Bar chart | `NlBarChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nlbarchart) | ⬜ |
 | C6 | Donut chart | `NlDonutChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nldonutchart) | ⬜ |
@@ -9554,3 +9554,4 @@ Known issues
 | 24 Nov 2026 | Charts, plan and tokens (D9 closed): chart specs for the shared rules, `NlChartTooltip`, `NlChartLegend`, `NlChartFrame`, `NlLineChart`, `NlBarChart` and `NlDonutChart` (§9, §8.5 C1 to C6, OD-246 to OD-260 decided); primitive scales orange, cyan, violet, magenta; `Chart` aliases and 17 chart semantic tokens (486 → 559, audit addendum); `Data S`; icons `bar_chart`, `table`; Foundations Chart colours page. Approved by the designer |
 | 24 Nov 2026 | `@northline/ui/charts` entry point (a second library entry and the `./charts` export). NlChartMarker (C0, internal): series shapes circle, square, triangle, diamond, then hollow; `Size-8` or `Size-12`; chart token colours only. NlChartTooltip (C1, public): heading, a row per series (marker, name, value in `Data S`), a total row with extra space instead of a divider; markers keep the series colours on the inverse tooltip background (designer's choice). Approved by the designer |
 | 24 Nov 2026 | NlChartLegend (C2, public, in `@northline/ui/charts`): line charts a `Size-16`, 2px line with the series' `NlChartMarker`; bars and slices a `Size-12` square; label `Body S` in `chart-axis-text` (cut at `Size-240`), donut value and share in `Data S`; a wrapping row below or a column at the end, parts `Space-S` apart; not interactive in v1. Approved by the designer |
+| 24 Nov 2026 | NlChartFrame (C3, public, in `@northline/ui/charts`): a section named by the title (`NlTextBlock` headline-small), a "View as" switch (Chart \| Table) when a table is given, hidden but keeping its space unless ready; a body at the chart's height: the chart or table slot (D15), five skeleton bars while loading, `NlEmptyState` for empty and error (Try again); card (default) or plain. Approved by the designer |
