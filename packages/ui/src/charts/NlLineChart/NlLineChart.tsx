@@ -1,11 +1,12 @@
 'use client';
 
-import { useId, useState, type KeyboardEvent, type ReactElement } from 'react';
+import { useId, type ReactElement } from 'react';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { NlChartLegend } from '../NlChartLegend';
 import { NlChartMarker, type NlChartSeries } from '../NlChartMarker';
 import { NlChartTooltip } from '../NlChartTooltip';
 import { formatMonthLong, formatMonthTick, formatNumber, parseMonth } from '../shared/format';
+import { useChartKeyboard } from '../shared/keyboard';
 import { useElementWidth, useTextMeasure } from '../shared/measure';
 import { pickTicks, valueTicks } from '../shared/ticks';
 import { chartColour, seriesColour, useReducedMotion, useTokenNumber } from '../shared/tokens';
@@ -74,11 +75,6 @@ export function NlLineChart<T extends Record<string, unknown>>({
   const measure = useTextMeasure('--nl-font-data-s', 7);
   const [plotRef, plotWidth] = useElementWidth();
 
-  // Keyboard: the focused point (null: none), whether Escape hid the tooltip, and the announcement.
-  const [index, setIndex] = useState<number | null>(null);
-  const [hidden, setHidden] = useState(false);
-  const [message, setMessage] = useState('');
-
   const xDataKey: string = xKey;
   const isMonths = data.length > 0 && parseMonth(data[0]?.[xKey]) !== null;
   // Five round value ticks from 0; the axis is as wide as its widest label.
@@ -120,33 +116,13 @@ export function NlLineChart<T extends Record<string, unknown>>({
       .map((s) => `${s.label} ${formatValue(Number(row[s.key] ?? 0))}`)
       .join(', ')}`;
 
-  const moveTo = (next: number) => {
-    const row = data[next];
-    if (!row) return;
-    setIndex(next);
-    setHidden(false);
-    setMessage(describe(row));
-  };
-
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (data.length === 0) return;
-    if (event.key === 'Escape') {
-      setHidden(true);
-      return;
-    }
-    const last = data.length - 1;
-    const current = index ?? -1;
-    const targets: Record<string, number> = {
-      ArrowRight: Math.min(last, current + 1),
-      ArrowLeft: Math.max(0, current - 1),
-      Home: 0,
-      End: last,
-    };
-    const next = targets[event.key];
-    if (next === undefined) return;
-    event.preventDefault();
-    moveTo(next);
-  };
+  const keyboard = useChartKeyboard({
+    count: data.length,
+    describe: (point) => {
+      const row = data[point];
+      return row ? describe(row) : '';
+    },
+  });
 
   const dot = (n: NlChartSeries) =>
     function Dot(props: { cx?: number; cy?: number; index?: number }): ReactElement {
@@ -200,10 +176,8 @@ export function NlLineChart<T extends Record<string, unknown>>({
         aria-label={title}
         aria-describedby={description ? `${id}-description` : undefined}
         tabIndex={0}
-        onKeyDown={onKeyDown}
-        onBlur={() => {
-          setIndex(null);
-        }}
+        onKeyDown={keyboard.onKeyDown}
+        onBlur={keyboard.onBlur}
         className={[styles.root[height], className].filter(Boolean).join(' ')}
         data-chart="line"
       >
@@ -241,8 +215,8 @@ export function NlLineChart<T extends Record<string, unknown>>({
               <Tooltip
                 content={tooltipContent}
                 cursor={{ stroke: chartColour.axis, strokeWidth: 1 }}
-                defaultIndex={index ?? undefined}
-                active={hidden ? false : index !== null ? true : undefined}
+                defaultIndex={keyboard.index ?? undefined}
+                active={keyboard.tooltipActive}
                 isAnimationActive={!reduced}
                 animationDuration={tooltipDuration}
                 wrapperStyle={{ zIndex: 'var(--nl-z-tooltip)' }}
@@ -281,7 +255,7 @@ export function NlLineChart<T extends Record<string, unknown>>({
         </span>
       )}
       <span role="status" className={styles.live}>
-        {message}
+        {keyboard.message}
       </span>
     </>
   );

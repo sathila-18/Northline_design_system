@@ -61,3 +61,12 @@ export function valueTicks(largest: number): number[] {
   const whole = Math.max(1, Math.ceil(step));
   return [0, 1, 2, 3, 4].map((i) => i * whole);
 }
+
+/** Cuts `text` with an ellipsis so it measures at most `max` px (axis labels, shared rules). The full text is in the
+ * tooltip and the table view. */
+export function truncateText(text: string, max: number, measure: (text: string) => number): string {
+  if (measure(text) <= max) return text;
+  let end = text.length;
+  while (end > 1 && measure(`${text.slice(0, end).trimEnd()}…`) > max) end -= 1;
+  return `${text.slice(0, end).trimEnd()}…`;
+}
