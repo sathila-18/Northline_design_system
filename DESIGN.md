@@ -700,7 +700,7 @@ These apply to every page.
 | # | Page | Area | Status |
 |---|---|---|---|
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
-| P2 | Member list (`Pages/Members/Member list`): filter row (`NlMultiSelect` Tier and Status, `NlDateField` Joined from and to), `NlInputChip` active filters with Clear filters, `NlTable` (search, Add member, sort on points and dates, row actions, pagination), `NlButtonDock` bulk bar while rows are selected | Members | 🟨 |
+| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells; sort on points and dates; row click and View open the member (details side sheet to come); row actions; pagination; `NlButtonDock` bulk bar while rows are selected | Members | 🟨 |
 | P3 | Member detail | Members | ⬜ |
 | P4 | Dashboard | Dashboard | ⬜ |
 | P5 | All rewards | Rewards | ⬜ |
@@ -7644,7 +7644,7 @@ Sort none, unsorted, ascending, descending; filter available, open, applied; ico
 | Spec option | Code |
 |---|---|
 | Cell | `<th scope="col">`, `aria-sort` when `sortable`; `Size-40` high, `Space-3XL` inline (`narrow`: `Space-XL`), `Space-none` block; `appearance` `plain` (no fill) or `grey` (`bg-tertiary`) |
-| Title | `children: string` → `NlLabel size="medium"` (`text-tertiary`); `hideTitle` wraps it in `sr-only` |
+| Title | `children: string` → `NlLabel size="medium"` (`text-tertiary`); `hideTitle` wraps it in `sr-only`; always on one line (`whitespace-nowrap` on the cell's row, OD-240), so a narrow table scrolls sideways instead of wrapping titles |
 | Sort | `sortable`, `sort`, `onSortChange(next)`; native button (title + 20 icon, gap `Space-XS`, at least `Size-24` high), `unfold_more` `fg-secondary` / `arrow_upward`, `arrow_downward` `fg-action`; icon hover `fg-hovered`, pressed `fg-pressed` through the named group `sort` |
 | Filter | `filter`, `onFilterClick`, `filterRef` (anchor for the column filter); native 24 button, `keyboard_arrow_down` / `_up` when open; `fg-secondary` or `fg-action`, hover and pressed as sort |
 | Select all | `selectAll: { checked, indeterminate, onChange }` → `NlCheckboxControl` "Select all rows" |
@@ -8413,7 +8413,8 @@ From the parts. Opening always starts from the applied values with an empty sear
 | Spec option | Code |
 |---|---|
 | Panel | `NlMenu kind="filter"` (non-modal dialog) "Filter {column}"; `open`, `onOpenChange`, `anchorRef` (the header cell's `filterRef`), `id` from the caller; focus back to the anchor on close |
-| Type | `multiple` (default `true`): `value: string[]`, `onApply(string[])`; `multiple={false}`: `value: string` (`''` = "All"), `onApply(string)` |
+| Type | `multiple` (default `true`): `value: string[]`, `onApply(string[])`; `multiple={false}`: `value: string` (`''` = "All"), `onApply(string)`; `type="date-range"`: `value: { start, end }` (ISO or `null`), `onApply(range)`, optional `minDate`, `maxDate` (OD-241) |
+| Date range | `NlCalendar mode="range"` (two months) as the menu content, sized to its content; focus starts on the calendar's focusable day; a draft from the applied range on each open; footer Reset (clears the draft) and Apply (applies and closes), as the checkbox footer |
 | Search | `NlSearchField size="small"` "Search {column}" in the header when `options.length > 8`, or as `searchable` says; "All" hidden while searching; "No results" as a small static `NlListItem` in a polite `role="status"` |
 | Checkbox rows | `NlCheckboxListItem size="small"`, divider on every row but the last (whose plain padding gives `Space-XL` at the bottom); a draft from the applied values on each open |
 | Footer | Checkbox only: `NlButton variant="tertiary" size="small"` Reset (clears the draft), `variant="primary" size="small"` Apply (applies in option order and closes) |
@@ -8694,7 +8695,7 @@ NlTable (vertical)
 - Header row: `NlTableHeaderCell appearance="grey"`; the select column is narrow and `Size-56` wide; the row-actions column is narrow, `Size-64` wide, empty header.
 - Body rows: `NlTableCell`s, height `Size-40`; 1px bottom border (§4.2) on every row except the last.
 - Bordered: 1px border around the header and rows (not the toolbar or footer), `Radius-S`, clipped.
-- Footer: horizontal, space between: summary text ("Showing 1–10 of 120") on the left; `NlRowsPerPage` and `NlPagination` on the right, `Space-L` apart. Footer height `Size-32`.
+- Footer: horizontal, space between: summary text ("Showing 1–10 of 120") and `NlRowsPerPage` together on the left, `NlPagination` on the right, `Space-L` apart (OD-242). Footer height `Size-32`.
 - Width fills its container. Columns can be fixed, flexible or have a minimum width; wide tables scroll sideways with the row-actions column fixed (`--nl-shadow-sticky-end`, `--nl-z-sticky`).
 
 #### Colours
@@ -8739,7 +8740,7 @@ Default, loading (skeleton rows, no footer), empty (`NlEmptyState` replaces the 
 | Selected count | "In the toolbar or footer" | Leads the footer summary: "3 selected · Showing 1–10 of 120"; announced | Approved (OD-225) |
 | Caption | "Visually hidden by default" | Always visually hidden (no visible caption style in the spec) | Approved (OD-226) |
 | Row fill at rest | None | `bg-primary`, so the sticky row-actions cell (which takes the row's fill) covers cells scrolled under it; looks the same on the `bg-primary` panel | Approved (OD-227) |
-| Row click | "If used" | Left out; every row keeps its actions button | Approved (OD-230) |
+| Row click | "If used" | `onRowClick(row)` (OD-243, replaces OD-230): a mouse click on a row (not on its checkbox, links or buttons) calls it; the row gets a pointer. Every row keeps its actions button, the keyboard way to act on a row | Approved (OD-243) |
 | Header contrast | – | The grey header's titles are 4.46:1 in Dark: known issue K8; the stories are marked | Known issue K8 |
 
 #### Spec → code
@@ -8754,7 +8755,8 @@ Default, loading (skeleton rows, no footer), empty (`NlEmptyState` replaces the 
 | Selection | `selectable`, `selectedIds` (kept across pages), `onSelectionChange`; select-all for the page, indeterminate when some |
 | Sort | `sort` / `onSortChange`: `{ key, direction }` or `null` |
 | Filters | `column.filter` → the header's filter button and an `NlTableColumnFilter` |
-| Footer | `pagination` or `false`: summary (Body S `text-tertiary`), `NlRowsPerPage` + `NlMenu kind="select"` of `NlListItem` options, `NlPagination`, `Space-L` apart, `Size-32` high |
+| Footer | `pagination` or `false`: space between, `Size-32` high: summary (Body S `text-tertiary`) and `NlRowsPerPage` (+ `NlMenu kind="select"` of `NlListItem` options) at the start, `NlPagination` at the end, `Space-L` apart (OD-242) |
+| Row click | `onRowClick?(row)`: `cursor-pointer` on rows; clicks inside `a`, `button`, `input` or `label` are left to them (OD-243) |
 | Loading | `loading`: skeleton rows (`pageSize`, or 5), no footer |
 | Empty | `empty` (default heading "No results"): `NlEmptyState` across every column; no footer |
 | Announcements | Hidden polite status: "Showing {n} results" when the total changes, "{n} selected" when the selection changes |
@@ -8783,7 +8785,7 @@ import { NlTable } from '@northline/ui';
 />
 ```
 
-Props: `caption`, `variant?`, `columns`, `rows`, `getRowId`, `getRowLabel?`, `selectable?`, `selectedIds?`, `onSelectionChange?`, `rowActions?`, `toolbar?`, `pagination?`, `sort?`, `onSortChange?`, `loading?`, `empty?`, `className?`. Generic over the row type. `'use client'` (state, refs).
+Props: `caption`, `variant?`, `columns`, `rows`, `getRowId`, `getRowLabel?`, `selectable?`, `selectedIds?`, `onSelectionChange?`, `rowActions?`, `toolbar?`, `pagination?`, `sort?`, `onSortChange?`, `loading?`, `empty?`, `onRowClick?`, `className?`. `column.filter` takes `type: 'date-range'` (OD-241). Generic over the row type. `'use client'` (state, refs).
 
 #### Tokens used
 

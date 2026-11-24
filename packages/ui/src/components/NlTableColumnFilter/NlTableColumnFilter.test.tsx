@@ -2,6 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useRef, useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
+import type { NlCalendarRange } from '../NlCalendar';
 import { NlTableColumnFilter, type NlTableColumnFilterOption } from './NlTableColumnFilter';
 
 const tiers: NlTableColumnFilterOption[] = [
@@ -187,5 +188,62 @@ describe('NlTableColumnFilter', () => {
     render(<Harness searchable />);
     await openIt();
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
+  });
+
+  describe('date range (OD-241)', () => {
+    function DateHarness({ onApply }: { onApply: (value: NlCalendarRange) => void }) {
+      const [open, setOpen] = useState(false);
+      const [value, setValue] = useState<NlCalendarRange>({ start: '2026-03-02', end: null });
+      const ref = useRef<HTMLButtonElement>(null);
+      return (
+        <>
+          <button
+            ref={ref}
+            type="button"
+            onClick={() => {
+              setOpen(!open);
+            }}
+          >
+            Filter Join date
+          </button>
+          <NlTableColumnFilter
+            type="date-range"
+            open={open}
+            onOpenChange={setOpen}
+            anchorRef={ref}
+            column="Join date"
+            value={value}
+            onApply={(next) => {
+              setValue(next);
+              onApply(next);
+            }}
+          />
+        </>
+      );
+    }
+
+    it('shows a range calendar with Reset and Apply; Apply sends the start and end, closes and returns focus', async () => {
+      const onApply = vi.fn();
+      render(<DateHarness onApply={onApply} />);
+      await userEvent.click(screen.getByRole('button', { name: 'Filter Join date' }));
+      await settle();
+      expect(screen.getByRole('dialog', { name: 'Filter Join date' })).toBeInTheDocument();
+      expect(screen.getAllByRole('grid')).toHaveLength(2);
+      // Opens on the applied start; a second day sets the end.
+      await userEvent.click(screen.getByRole('button', { name: /^Tuesday 10 March/ }));
+      await userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+      expect(onApply).toHaveBeenCalledWith({ start: '2026-03-02', end: '2026-03-10' });
+      expect(screen.getByRole('button', { name: 'Filter Join date' })).toHaveFocus();
+    });
+
+    it('Reset clears the draft; Apply then clears the filter', async () => {
+      const onApply = vi.fn();
+      render(<DateHarness onApply={onApply} />);
+      await userEvent.click(screen.getByRole('button', { name: 'Filter Join date' }));
+      await settle();
+      await userEvent.click(screen.getByRole('button', { name: 'Reset' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+      expect(onApply).toHaveBeenCalledWith({ start: null, end: null });
+    });
   });
 });

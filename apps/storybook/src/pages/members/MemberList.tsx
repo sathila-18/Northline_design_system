@@ -3,9 +3,7 @@ import { action } from 'storybook/actions';
 import {
   NlButton,
   NlButtonDock,
-  NlDateField,
   NlInputChip,
-  NlMultiSelect,
   NlTable,
   type NlBadgeTone,
   type NlEmptyStateProps,
@@ -22,7 +20,6 @@ import {
   type MemberTier,
 } from '../_fixtures/members';
 import { PageLayout } from '../_shared/PageLayout';
-import { goTo, StoryLink } from '../_shared/navItems';
 import { pageSizes, useMemberList, type MemberListState } from './useMemberList';
 
 /** Ready shows the data; loading and error stand in for a request that hasn't finished or failed. */
@@ -45,66 +42,20 @@ const statusTone: Record<MemberStatus, NlBadgeTone> = {
 const tierOptions = memberTiers.map((tier) => ({ value: tier, label: tier }));
 const statusOptions = memberStatuses.map((status) => ({ value: status, label: statusLabel[status] }));
 
-const columns: NlTableColumn<Member>[] = [
-  {
-    key: 'name',
-    header: 'Member',
-    rowHeader: true,
-    cell: (member) => ({
-      type: 'link',
-      // A real link to the member's page (Coming soon for now).
-      link: { label: member.name, href: '#member-detail', as: StoryLink },
-    }),
-  },
-  { key: 'email', header: 'Email' },
-  { key: 'id', header: 'Member ID', width: '120' },
-  // One neutral tone for every tier, so a tier never reads as a status (held for later).
-  {
-    key: 'tier',
-    header: 'Tier',
-    width: '96',
-    cell: (member) => ({ type: 'badge', badge: { tone: 'neutral', label: member.tier } }),
-  },
-  {
-    key: 'points',
-    header: 'Points balance',
-    width: '120',
-    sortable: true,
-    cell: (member) => ({ children: formatPoints(member.points) }),
-  },
-  {
-    key: 'joined',
-    header: 'Join date',
-    width: '120',
-    sortable: true,
-    cell: (member) => ({ children: formatDate(member.joined) }),
-  },
-  {
-    key: 'lastActivity',
-    header: 'Last activity',
-    width: '120',
-    sortable: true,
-    cell: (member) => ({ children: formatDate(member.lastActivity) }),
-  },
-  {
-    key: 'status',
-    header: 'Status',
-    width: '120',
-    cell: (member) => ({
-      type: 'badge',
-      badge: { tone: statusTone[member.status], label: statusLabel[member.status] },
-    }),
-  },
-];
-
 const addMember = () => {
   action('add member')();
 };
 
+/** Opening a member's details. The details side sheet comes later; for now it logs to the Actions panel. */
+const openMember = (member: Member) => {
+  action('open member details')(member.id);
+};
+
 /**
- * Member list page (DESIGN.md §8.6, P2). The shared layout, a filter row (Tier, Status, Joined from, Joined to),
- * the active filters as removable chips with Clear filters, and NlTable with search, Add member, sorting, row
- * actions and pagination. A bulk action bar (NlButtonDock) shows while rows are selected.
+ * Member list page (DESIGN.md §8.6, P2). The shared layout and NlTable: a fixed-width search and Add member in the
+ * toolbar (active filters as removable chips with Clear filters between them), Tier, Status and Join date filters in
+ * the header cells, sorting, row actions and pagination. A row click opens the member. A bulk action bar
+ * (NlButtonDock) shows while rows are selected.
  */
 export function MemberList({ members, status: initialStatus = 'ready', initial }: MemberListProps) {
   const [status, setStatus] = useState(initialStatus);
@@ -112,7 +63,80 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
   const { state } = list;
   const selectedCount = state.selectedIds.length;
 
+  const columns: NlTableColumn<Member>[] = [
+    { key: 'name', header: 'Member', rowHeader: true },
+    { key: 'email', header: 'Email' },
+    { key: 'id', header: 'Member ID', width: '120' },
+    {
+      key: 'tier',
+      header: 'Tier',
+      width: '120',
+      // One neutral tone for every tier, so a tier never reads as a status (held for later).
+      cell: (member) => ({ type: 'badge', badge: { tone: 'neutral', label: member.tier } }),
+      filter: {
+        options: tierOptions,
+        value: state.tiers,
+        onApply: (value: string[]) => {
+          list.setFilter('tiers', value as MemberTier[]);
+        },
+      },
+    },
+    {
+      key: 'points',
+      header: 'Points balance',
+      width: '120',
+      sortable: true,
+      cell: (member) => ({ children: formatPoints(member.points) }),
+    },
+    {
+      key: 'joined',
+      header: 'Join date',
+      width: '120',
+      sortable: true,
+      cell: (member) => ({ children: formatDate(member.joined) }),
+      filter: {
+        type: 'date-range',
+        value: { start: state.joinedFrom || null, end: state.joinedTo || null },
+        onApply: (value) => {
+          list.setJoinedRange(value.start ?? '', value.end ?? '');
+        },
+        minDate: '2026-01-01',
+        maxDate: '2026-12-31',
+      },
+    },
+    {
+      key: 'lastActivity',
+      header: 'Last activity',
+      width: '120',
+      sortable: true,
+      cell: (member) => ({ children: formatDate(member.lastActivity) }),
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      width: '120',
+      cell: (member) => ({
+        type: 'badge',
+        badge: { tone: statusTone[member.status], label: statusLabel[member.status] },
+      }),
+      filter: {
+        options: statusOptions,
+        value: state.statuses,
+        onApply: (value: string[]) => {
+          list.setFilter('statuses', value as MemberStatus[]);
+        },
+      },
+    },
+  ];
+
   const removeValue = <T,>(values: T[], value: T) => values.filter((item) => item !== value);
+  const joinedLabel = (() => {
+    if (state.joinedFrom && state.joinedTo)
+      return `Joined: ${formatDate(state.joinedFrom)} to ${formatDate(state.joinedTo)}`;
+    if (state.joinedFrom) return `Joined from: ${formatDate(state.joinedFrom)}`;
+    if (state.joinedTo) return `Joined to: ${formatDate(state.joinedTo)}`;
+    return '';
+  })();
 
   const chips = [
     ...state.tiers.map((tier) => ({
@@ -129,24 +153,13 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
         list.setFilter('statuses', removeValue(state.statuses, value));
       },
     })),
-    ...(state.joinedFrom
+    ...(joinedLabel
       ? [
           {
-            key: 'from',
-            label: `Joined from: ${formatDate(state.joinedFrom)}`,
+            key: 'joined',
+            label: joinedLabel,
             onRemove: () => {
-              list.setFilter('joinedFrom', '');
-            },
-          },
-        ]
-      : []),
-    ...(state.joinedTo
-      ? [
-          {
-            key: 'to',
-            label: `Joined to: ${formatDate(state.joinedTo)}`,
-            onRemove: () => {
-              list.setFilter('joinedTo', '');
+              list.setJoinedRange('', '');
             },
           },
         ]
@@ -204,62 +217,6 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
   return (
     <PageLayout active="#members" title="Members" subtitle={showRows ? count : undefined}>
       <div className="nl:flex nl:flex-col nl:gap-xl">
-        {/* Four fields don't fit in NlTable's toolbar beside the search, so the filters get their own row
-            (held for later). */}
-        <div className="nl:grid nl:grid-cols-4 nl:gap-3xl">
-          <NlMultiSelect
-            label="Tier"
-            options={tierOptions}
-            value={state.tiers}
-            onValueChange={(value) => {
-              list.setFilter('tiers', value as MemberTier[]);
-            }}
-          />
-          <NlMultiSelect
-            label="Status"
-            options={statusOptions}
-            value={state.statuses}
-            onValueChange={(value) => {
-              list.setFilter('statuses', value as MemberStatus[]);
-            }}
-          />
-          <NlDateField
-            label="Joined from"
-            value={state.joinedFrom}
-            maxDate={state.joinedTo || undefined}
-            onValueChange={(value) => {
-              list.setFilter('joinedFrom', value);
-            }}
-          />
-          <NlDateField
-            label="Joined to"
-            value={state.joinedTo}
-            minDate={state.joinedFrom || undefined}
-            onValueChange={(value) => {
-              list.setFilter('joinedTo', value);
-            }}
-          />
-        </div>
-
-        {(chips.length > 0 || list.hasFilters) && (
-          <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
-            {chips.map((chip) => (
-              <NlInputChip
-                key={chip.key}
-                size="small"
-                removable
-                removeLabel={`Remove ${chip.label}`}
-                onRemove={chip.onRemove}
-              >
-                {chip.label}
-              </NlInputChip>
-            ))}
-            <NlButton variant="link" size="small" onClick={list.clearFilters}>
-              Clear filters
-            </NlButton>
-          </div>
-        )}
-
         {/* The grey header's titles are 4.46:1 in Dark: known issue K8 (accepted with NlTableHeaderCell #66). */}
         <div data-a11y-known-issue="K8">
           <NlTable
@@ -274,12 +231,12 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
             onSelectionChange={list.setSelectedIds}
             sort={state.sort}
             onSortChange={list.setSort}
+            onRowClick={openMember}
             rowActions={(member) => [
               {
                 label: 'View',
                 onSelect: () => {
-                  action('view')(member.id);
-                  goTo('#member-detail');
+                  openMember(member);
                 },
               },
               {
@@ -299,7 +256,9 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
             toolbar={{
               search: {
                 label: 'Search members',
-                placeholder: 'Search by name, email or member ID',
+                placeholder: 'Search members',
+                // Fixed width: the search doesn't stretch across the toolbar.
+                className: 'nl:max-w-320',
                 value: state.query,
                 onChange: (event) => {
                   list.setFilter('query', event.target.value);
@@ -308,6 +267,25 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
                   list.setFilter('query', '');
                 },
               },
+              filters:
+                chips.length > 0 || list.hasFilters ? (
+                  <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
+                    {chips.map((chip) => (
+                      <NlInputChip
+                        key={chip.key}
+                        size="small"
+                        removable
+                        removeLabel={`Remove ${chip.label}`}
+                        onRemove={chip.onRemove}
+                      >
+                        {chip.label}
+                      </NlInputChip>
+                    ))}
+                    <NlButton variant="link" size="small" onClick={list.clearFilters}>
+                      Clear filters
+                    </NlButton>
+                  </div>
+                ) : undefined,
               action: { children: 'Add member', icon: 'leading', iconName: 'add', onClick: addMember },
             }}
             pagination={{

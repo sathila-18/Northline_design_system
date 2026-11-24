@@ -100,6 +100,10 @@ export function useMemberList(source: Member[], initial: Partial<MemberListState
     clearFilters: () => {
       setState((prev) => ({ ...prev, query: '', tiers: [], statuses: [], joinedFrom: '', joinedTo: '', page: 1 }));
     },
+    /** The join date filter's start and end (ISO, '' for none), applied together. */
+    setJoinedRange: (joinedFrom: string, joinedTo: string) => {
+      setState((prev) => ({ ...prev, joinedFrom, joinedTo, page: 1 }));
+    },
     setSort: (sort: NlTableSort | null) => {
       setState((prev) => ({ ...prev, sort: sort ?? defaultSort }));
     },

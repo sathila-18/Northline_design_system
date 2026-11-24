@@ -558,7 +558,11 @@ Decide these before building the components listed under "Affects".
 - OD-227 · Rows `bg-primary` at rest (not none), so the sticky actions cell covers scrolled cells · **Decided** 21 Nov 2026: approved
 - OD-228 · Loading skeleton bars `Size-80` wide · **Decided** 21 Nov 2026: Size-80
 - OD-229 · `Space-4XL` above and below the empty state · **Decided** 21 Nov 2026: Space-4XL
-- OD-230 · No row click; every row keeps its actions button · **Decided** 21 Nov 2026: approved
+- OD-230 · No row click; every row keeps its actions button · **Decided** 21 Nov 2026: approved. Replaced by OD-243 (24 Nov 2026)
+- OD-240 · `NlTableHeaderCell` titles stay on one line; the table scrolls sideways instead · **Decided** 24 Nov 2026: designer asked (member list page)
+- OD-241 · `NlTableColumnFilter` `type="date-range"`: `NlCalendar` range in the filter menu with Reset and Apply; `column.filter` passes it through · **Decided** 24 Nov 2026: designer asked (member list page)
+- OD-242 · Footer: summary and rows per page together at the start, pagination at the end · **Decided** 24 Nov 2026: designer asked (member list page)
+- OD-243 · `onRowClick(row)`: a mouse click on a row opens it (not on its checkbox, links or buttons); rows keep the actions button for keyboard use · **Decided** 24 Nov 2026: designer asked (member list page)
 
 **NlSideNav**
 - OD-134: see section 1 (column width)
