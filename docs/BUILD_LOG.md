@@ -99,4 +99,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlChartFrame | 2026-11-24 21:30 | 2026-11-24 21:53 | Title headline-small; empty and error with icon, heading and a line; switch hidden unless ready. Approved by the designer |
 | NlLineChart | 2026-11-24 21:55 | 2026-11-24 22:41 | Installs Recharts 3.10.1 (optional peer); frame table view made keyboard-scrollable. Approved by the designer |
 | NlBarChart | 2026-11-24 22:51 | 2026-11-24 23:11 | Value labels Data S axis-text Space-XS past the end; data order. Approved by the designer |
-| NlDonutChart | 2026-11-24 23:21 | | True gaps between slices; legend at the end from Size-560 wide |
+| NlDonutChart | 2026-11-24 23:21 | 2026-11-24 23:42 | True gaps between slices; legend at the end from Size-560 wide. Approved by the designer |
