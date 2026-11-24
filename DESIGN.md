@@ -684,9 +684,31 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 ### 8.6 Pages (Storybook only)
 
+#### Page rules
+
+These apply to every page.
+
+1. **Where.** Pages live in `apps/storybook/src/pages/<area>/`, never in `packages/ui`. Shared page parts are in `pages/_shared/`, fixture data in `pages/_fixtures/`.
+2. **Library only.** Pages are built only from `@northline/ui` components and tokens. No new styles, no hard-coded values and no new components inside a page folder. Layout-only utilities with tokens (`nl:flex`, `nl:grid`, `nl:grid-cols-*`, `nl:gap-*`, `nl:sticky`) are allowed to place components. If a page needs something the library doesn't have, stop and ask the designer. Never work around it.
+3. **Frame.** Every page except Login sits in `NlAppShell` with the shared side nav and page header (`_shared/PageLayout`), which takes the active nav item.
+4. **Stories.** Every page has Default, Loading, Empty and Error stories. Table pages also get Filtered. Pages that aren't built yet open the shared `Pages/Coming soon` stories (one per planned page, so the nav state is right).
+5. **Width.** Designed at 1440 wide and checked at 1024. No mobile layout.
+6. **Brands and themes.** Every page is reviewed in all three brands, Light and Dark.
+7. **Data.** Fixtures only, generated from a fixed seed so every build shows the same data. Invented names, emails on `example.com`. Dates in 2026, shown as DD/MM/YYYY (the `NlDateField` format). Run `pnpm scrub` on fixtures before pushing.
+8. **Links.** Side nav items and page links open other page stories through `linkTo` (`@storybook/addon-links`), mapped in `_shared/navItems.tsx`. Login's Log in opens the member list, so the prototype starts from login.
+
 | # | Page | Area | Status |
 |---|---|---|---|
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
+| P2 | Member list (`Pages/Members/Member list`): filter row (`NlMultiSelect` Tier and Status, `NlDateField` Joined from and to), `NlInputChip` active filters with Clear filters, `NlTable` (search, Add member, sort on points and dates, row actions, pagination), `NlButtonDock` bulk bar while rows are selected | Members | 🟨 |
+| P3 | Member detail | Members | ⬜ |
+| P4 | Dashboard | Dashboard | ⬜ |
+| P5 | All rewards | Rewards | ⬜ |
+| P6 | Track voucher | Rewards | ⬜ |
+| P7 | Tiers | Rewards | ⬜ |
+| P8 | Events | Events | ⬜ |
+| P9 | Messages | Messages | ⬜ |
+| P10 | Help | Help | ⬜ |
 
 ---
 

@@ -1,0 +1,56 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { NlButton, NlEmptyState } from '@northline/ui';
+import { PageLayout } from './PageLayout';
+import { goTo, type PageHref } from './navItems';
+
+/**
+ * Coming soon (DESIGN.md §8.6). Where side nav links and page links go until their page is built: the shared
+ * layout with the right nav item current, and an NlEmptyState. One story per planned page, so the nav state is
+ * right. A placeholder, not a page, so it has no Loading, Empty or Error stories.
+ */
+const meta: Meta = { title: 'Pages/Coming soon', parameters: { layout: 'fullscreen' } };
+export default meta;
+
+function ComingSoon({ title, active }: { title: string; active?: PageHref }) {
+  return (
+    <PageLayout title={title} active={active}>
+      <NlEmptyState
+        icon="info"
+        heading="Coming soon"
+        description="This page isn't built yet."
+        action={
+          <NlButton
+            variant="primary"
+            size="small"
+            onClick={() => {
+              goTo('#members');
+            }}
+          >
+            Go to members
+          </NlButton>
+        }
+      />
+    </PageLayout>
+  );
+}
+
+type Story = StoryObj;
+
+export const Dashboard: Story = { render: () => <ComingSoon title="Dashboard" active="#dashboard" /> };
+/** Opened from a member's name in the member list. */
+export const MemberDetail: Story = {
+  name: 'Member detail',
+  render: () => <ComingSoon title="Member detail" active="#members" />,
+};
+export const AllRewards: Story = {
+  name: 'All rewards',
+  render: () => <ComingSoon title="All rewards" active="#rewards" />,
+};
+export const TrackVoucher: Story = {
+  name: 'Track voucher',
+  render: () => <ComingSoon title="Track voucher" active="#track-voucher" />,
+};
+export const Tiers: Story = { render: () => <ComingSoon title="Tiers" active="#tiers" /> };
+export const Events: Story = { render: () => <ComingSoon title="Events" active="#events" /> };
+export const Messages: Story = { render: () => <ComingSoon title="Messages" active="#messages" /> };
+export const Help: Story = { render: () => <ComingSoon title="Help" active="#help" /> };
