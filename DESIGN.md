@@ -773,8 +773,8 @@ Charts use Recharts, styled only through tokens. Planned at the dashboard stage.
 
 | # | Component | Code name | Depends on | Spec | Status |
 |---|---|---|---|---|---|
-| C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | 🟨 |
-| C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | 🟨 |
+| C0 | Chart marker (internal) | `NlChartMarker` | – | [§9](#nlchartmarker) | ✅ |
+| C1 | Chart tooltip | `NlChartTooltip` | `NlChartMarker` | [§9](#nlcharttooltip) | ✅ |
 | C2 | Chart legend | `NlChartLegend` | `NlChartMarker` | [§9](#nlchartlegend) | ⬜ |
 | C3 | Chart frame | `NlChartFrame` | `NlTextBlock`, `NlSegmentedButton`, `NlSkeleton`, `NlEmptyState`, `NlButton` | [§9](#nlchartframe) | ⬜ |
 | C4 | Line chart | `NlLineChart` | `NlChartTooltip`, `NlChartLegend` | [§9](#nllinechart) | ⬜ |
@@ -9551,3 +9551,4 @@ Known issues
 | 24 Nov 2026 | Page P2, Member list (`Pages/Members/Member list`, §8.6): fixed-width search, filter chips and Add member in the toolbar; Tier, Status and Join date filters in the header cells; tier tones; sorting, row actions, row click (details side sheet to come), pagination; the bulk action bar. Default, Filtered, Bulk selected, No results, Empty, Loading and Error stories. Approved by the designer |
 | 24 Nov 2026 | Member details on P2: a row click or View opens the member details `NlSideSheet` (Detail / Value `NlTable`, Suspend and Edit); Suspend from a row, the side sheet or the bulk action bar asks in an `NlDialog`, then a success snackbar at the top end. The planned Member detail page is removed (pages renumbered P3 to P9). `NlButtonDock` secondary and tertiary can be destructive (OD-244); `NlSnackbarProvider` `placement="top-end"` (OD-245). `test:a11y` waits for an open dialog's fade-in. Approved by the designer |
 | 24 Nov 2026 | Charts, plan and tokens (D9 closed): chart specs for the shared rules, `NlChartTooltip`, `NlChartLegend`, `NlChartFrame`, `NlLineChart`, `NlBarChart` and `NlDonutChart` (§9, §8.5 C1 to C6, OD-246 to OD-260 decided); primitive scales orange, cyan, violet, magenta; `Chart` aliases and 17 chart semantic tokens (486 → 559, audit addendum); `Data S`; icons `bar_chart`, `table`; Foundations Chart colours page. Approved by the designer |
+| 24 Nov 2026 | `@northline/ui/charts` entry point (a second library entry and the `./charts` export). NlChartMarker (C0, internal): series shapes circle, square, triangle, diamond, then hollow; `Size-8` or `Size-12`; chart token colours only. NlChartTooltip (C1, public): heading, a row per series (marker, name, value in `Data S`), a total row with extra space instead of a divider; markers keep the series colours on the inverse tooltip background (designer's choice). Approved by the designer |

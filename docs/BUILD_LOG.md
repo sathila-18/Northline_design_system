@@ -94,4 +94,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlBulkActionBar | 2026-11-24 15:45 | 2026-11-24 16:15 | Floating pill for bulk actions (D21); NlTable `bulkActions`; icons block, download, swap_horiz; Radius-M corners. Approved by the designer |
 | Page: Member details | 2026-11-24 16:23 | 2026-11-24 17:37 | Member list (P2): details side sheet, suspend dialog, success snackbar; replaces the planned Member detail page (P3 removed). NlButtonDock destructive tone (OD-244), NlSnackbarProvider top end (OD-245). Approved by the designer |
 | Charts: plan and tokens | 2026-11-24 17:55 | 2026-11-24 19:49 | D9 chart colours, plan for @northline/ui/charts (steps 1 to 3). Approved by the designer |
-| NlChartTooltip | 2026-11-24 19:52 | | With the internal NlChartMarker and the @northline/ui/charts entry point |
+| NlChartTooltip | 2026-11-24 19:52 | 2026-11-24 21:06 | With the internal NlChartMarker and the @northline/ui/charts entry point. Approved by the designer |
