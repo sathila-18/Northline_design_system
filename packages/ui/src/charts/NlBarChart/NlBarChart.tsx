@@ -16,10 +16,10 @@ import {
 import { NlChartLegend } from '../NlChartLegend';
 import type { NlChartSeries } from '../NlChartMarker';
 import { NlChartTooltip } from '../NlChartTooltip';
-import { formatMonthLong, formatMonthTick, formatNumber, parseMonth } from '../shared/format';
+import { formatMonthLong, formatNumber, parseMonth } from '../shared/format';
 import { useChartKeyboard } from '../shared/keyboard';
 import { useElementWidth, useTextMeasure } from '../shared/measure';
-import { pickTicks, truncateText, valueTicks } from '../shared/ticks';
+import { monthTickLabel, pickTicks, tickLabelMap, truncateText, valueTicks } from '../shared/ticks';
 import { chartColour, seriesColour, useReducedMotion, useTokenNumber } from '../shared/tokens';
 import * as styles from './NlBarChart.styles';
 
@@ -121,32 +121,25 @@ export function NlBarChart<T extends Record<string, unknown>>({
   const valueLabelWidth = Math.ceil(Math.max(...vTicks.map((tick) => measure(formatValue(tick)))));
   const barLabelWidth = values ? Math.ceil(Math.max(0, ...data.map((row) => measure(formatValue(totalOf(row)))))) : 0;
 
-  // Category labels: months as "Mar" (the year on the first tick and each January); names cut to fit.
+  // Category labels: months as "Mar" (the year on the first tick, each January and a new year); names cut to fit.
   const width = plotWidth || 640;
+  const monthLabel = monthTickLabel(categories);
+  const labelFor = (index: number, previous: number | null) =>
+    formatX ? formatX(categories[index]) : isMonths ? monthLabel(index, previous) : String(categories[index]);
   const categoryTicks = (() => {
     if (horizontal || !isMonths) return categories.map((_, index) => index);
     const plot = Math.max(0, width - valueLabelWidth - margin - slack);
-    return pickTicks(
-      categories,
-      plot,
-      tickGap,
-      (index, isFirst) => formatMonthTick(categories[index], isFirst ? 0 : 1),
-      measure,
-    );
+    return pickTicks(categories, plot, tickGap, labelFor, measure, 'band');
   })();
   const slot = horizontal
     ? labelColumn
     : Math.max(0, (width - valueLabelWidth - margin - slack) / Math.max(1, categories.length) - tickGap);
-  const tickLabels = new Map<unknown, string>();
-  let previousYear: number | null = null;
-  categoryTicks.forEach((index, i) => {
-    const value = categories[index];
-    const month = parseMonth(value);
-    const newYear = month !== null && previousYear !== null && month.year !== previousYear;
-    previousYear = month?.year ?? previousYear;
-    const text = formatX ? formatX(value) : month ? formatMonthTick(value, i === 0 || newYear ? 0 : 1) : String(value);
-    tickLabels.set(value, isMonths && !formatX ? text : truncateText(text, slot, measure));
-  });
+  const tickLabels = new Map<unknown, string>(
+    [...tickLabelMap(categories, categoryTicks, labelFor)].map(([value, text]) => [
+      value,
+      isMonths && !formatX ? text : truncateText(text, slot, measure),
+    ]),
+  );
 
   const describe = (row: T) =>
     `${longLabel(row[xKey])}: ${series.map((s) => `${s.label} ${formatValue(numberOf(row, s.key))}`).join(', ')}${
