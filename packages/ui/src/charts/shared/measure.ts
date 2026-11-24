@@ -2,8 +2,8 @@
 
 import { useCallback, useRef, useState } from 'react';
 
-/** A 2D canvas context, or null where there is none (jsdom). */
-function canvasContext(): CanvasRenderingContext2D | null {
+/** A 2D canvas context, or null where there is none (jsdom). The type is inferred (no long type name in the source). */
+function canvasContext() {
   try {
     return document.createElement('canvas').getContext('2d');
   } catch {
@@ -16,7 +16,7 @@ function canvasContext(): CanvasRenderingContext2D | null {
  * Before the browser can measure, it estimates from the character count, so server output stays the same.
  */
 export function useTextMeasure(fontToken: string, fallbackCharWidth: number): (text: string) => number {
-  const context = useRef<CanvasRenderingContext2D | null | undefined>(undefined);
+  const context = useRef<ReturnType<typeof canvasContext> | undefined>(undefined);
   return useCallback(
     (text: string) => {
       if (typeof document === 'undefined') return text.length * fallbackCharWidth;
