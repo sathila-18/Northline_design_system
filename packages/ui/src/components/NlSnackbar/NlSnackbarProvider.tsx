@@ -51,20 +51,25 @@ interface Current {
   phase: Phase;
 }
 
+/** Where snackbars show: bottom centre (default) or top end (OD-245). */
+export type NlSnackbarPlacement = 'bottom-center' | 'top-end';
+
 export interface NlSnackbarProviderProps {
   children?: ReactNode;
+  /** Where snackbars show. Default bottom centre; top end sits clear of bars at the bottom (OD-245). */
+  placement?: NlSnackbarPlacement;
   /** Placement of the region only. */
   className?: string;
 }
 
 /**
- * The snackbar host (DESIGN.md §9, NlSnackbar, OD-166). Renders the page, then a region at the bottom centre that
+ * The snackbar host (DESIGN.md §9, NlSnackbar, OD-166). Renders the page, then a region at the bottom centre (or top end, OD-245) that
  * holds one snackbar at a time inside a live region that exists from page load: role status for neutral and success,
  * alert for warning and error. A new snackbar replaces the old. Without an action it goes after
  * --nl-duration-snackbar (OD-92), restarting after hover or focus leaves; with one it stays. It never takes focus;
  * F6 moves focus into it (OD-110). 'use client' for state, effects and context.
  */
-export function NlSnackbarProvider({ children, className }: NlSnackbarProviderProps) {
+export function NlSnackbarProvider({ children, placement = 'bottom-center', className }: NlSnackbarProviderProps) {
   const [current, setCurrent] = useState<Current | null>(null);
   const currentRef = useRef<Current | null>(null);
   useEffect(() => {
@@ -169,7 +174,9 @@ export function NlSnackbarProvider({ children, className }: NlSnackbarProviderPr
   const snackbar = current && (
     <div
       ref={frameRef}
-      className={[styles.frame, current.phase === 'shown' ? styles.motion.shown : styles.motion.hidden].join(' ')}
+      className={[styles.frame, current.phase === 'shown' ? styles.motion.shown : styles.motion.hidden[placement]].join(
+        ' ',
+      )}
       data-state={current.phase}
       onMouseEnter={pause}
       onMouseLeave={resume}
@@ -203,7 +210,11 @@ export function NlSnackbarProvider({ children, className }: NlSnackbarProviderPr
   return (
     <NlSnackbarContext value={context}>
       {children}
-      <div className={[styles.region, className].filter(Boolean).join(' ')} data-slot="snackbar-region">
+      <div
+        className={[styles.region[placement], className].filter(Boolean).join(' ')}
+        data-slot="snackbar-region"
+        data-placement={placement}
+      >
         <div role="status" className={styles.live}>
           {polite && snackbar}
         </div>

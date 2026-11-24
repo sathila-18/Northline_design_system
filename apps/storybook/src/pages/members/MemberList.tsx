@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { action } from 'storybook/actions';
 import {
   NlButton,
+  NlDialog,
   NlInputChip,
+  NlSnackbarProvider,
   NlTable,
-  type NlBadgeTone,
+  useNlSnackbar,
   type NlEmptyStateProps,
   type NlTableColumn,
 } from '@northline/ui';
@@ -19,6 +21,7 @@ import {
   type MemberTier,
 } from '../_fixtures/members';
 import { PageLayout } from '../_shared/PageLayout';
+import { MemberDetailsSheet, statusTone, tierTone } from './MemberDetailsSheet';
 import { pageSizes, useMemberList, type MemberListState } from './useMemberList';
 
 /** Ready shows the data; loading and error stand in for a request that hasn't finished or failed. */
@@ -30,20 +33,11 @@ export interface MemberListProps {
   status?: MemberListStatus;
   /** Starting search, filters, sort, page or selection. */
   initial?: Partial<MemberListState>;
+  /** A member whose details side sheet is open at the start (story only). */
+  initialDetails?: string;
+  /** Members whose suspend dialog is open at the start (story only). */
+  initialSuspend?: string[];
 }
-
-const statusTone: Record<MemberStatus, NlBadgeTone> = {
-  active: 'success',
-  inactive: 'neutral',
-  suspended: 'error',
-};
-
-const tierTone: Record<MemberTier, NlBadgeTone> = {
-  Bronze: 'bronze',
-  Silver: 'silver',
-  Gold: 'gold',
-  Platinum: 'platinum',
-};
 
 const tierOptions = memberTiers.map((tier) => ({ value: tier, label: tier }));
 const statusOptions = memberStatuses.map((status) => ({ value: status, label: statusLabel[status] }));
@@ -52,21 +46,66 @@ const addMember = () => {
   action('add member')();
 };
 
-/** Opening a member's details. The details side sheet comes later; for now it logs to the Actions panel. */
-const openMember = (member: Member) => {
-  action('open member details')(member.id);
-};
-
 /**
  * Member list page (DESIGN.md §8.6, P2). The shared layout and NlTable: a fixed-width search and Add member in the
  * toolbar (active filters as removable chips with Clear filters between them), Tier, Status and Join date filters in
- * the header cells, sorting, row actions and pagination. A row click opens the member. While rows are selected, the
- * table's NlBulkActionBar floats at the bottom with Export, Change status and Suspend.
+ * the header cells, sorting, row actions and pagination. A row click or View opens the member's details side sheet.
+ * While rows are selected, the table's NlBulkActionBar floats at the bottom with Export, Change status and Suspend.
+ * Suspend (row, side sheet or bulk) asks in an NlDialog, then shows a success snackbar at the top end.
  */
-export function MemberList({ members, status: initialStatus = 'ready', initial }: MemberListProps) {
+export function MemberList(props: MemberListProps) {
+  // Snackbars at the top end, clear of the bulk action bar at the bottom (OD-245).
+  return (
+    <NlSnackbarProvider placement="top-end">
+      <MemberListPage {...props} />
+    </NlSnackbarProvider>
+  );
+}
+
+function MemberListPage({
+  members,
+  status: initialStatus = 'ready',
+  initial,
+  initialDetails,
+  initialSuspend,
+}: MemberListProps) {
   const [status, setStatus] = useState(initialStatus);
-  const list = useMemberList(members, initial);
+  const snackbar = useNlSnackbar();
+  // Members suspended in this story session.
+  const [suspendedIds, setSuspendedIds] = useState<string[]>([]);
+  const data = useMemo(
+    () =>
+      members.map((member) =>
+        suspendedIds.includes(member.id) ? { ...member, status: 'suspended' as const } : member,
+      ),
+    [members, suspendedIds],
+  );
+  const list = useMemberList(data, initial);
   const { state } = list;
+  const [detailsId, setDetailsId] = useState<string | null>(initialDetails ?? null);
+  const [suspendIds, setSuspendIds] = useState<string[] | null>(initialSuspend ?? null);
+  const details = data.find((member) => member.id === detailsId) ?? null;
+  const toSuspend = data.filter((member) => suspendIds?.includes(member.id));
+
+  const openMember = (member: Member) => {
+    setDetailsId(member.id);
+  };
+  const editMember = (member: Member) => {
+    action('edit')(member.id);
+  };
+  const confirmSuspend = () => {
+    const ids = toSuspend.map((member) => member.id);
+    setSuspendedIds((prev) => [...new Set([...prev, ...ids])]);
+    list.setSelectedIds(state.selectedIds.filter((id) => !ids.includes(id)));
+    setSuspendIds(null);
+    setDetailsId(null);
+    action('suspend')(ids);
+    const one = toSuspend.length === 1 ? toSuspend[0] : undefined;
+    snackbar.show({
+      tone: 'success',
+      message: one ? `${one.name} suspended` : `${String(ids.length)} members suspended`,
+    });
+  };
 
   const columns: NlTableColumn<Member>[] = [
     { key: 'name', header: 'Member', rowHeader: true },
@@ -257,7 +296,9 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
                 icon: 'block',
                 tone: 'destructive',
                 onSelect: () => {
-                  action('suspend')(ids);
+                  // Only members who aren't suspended yet.
+                  const active = ids.filter((id) => !suspendedIds.includes(id));
+                  if (active.length > 0) setSuspendIds(active);
                 },
               },
             ]}
@@ -271,13 +312,13 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
               {
                 label: 'Edit',
                 onSelect: () => {
-                  action('edit')(member.id);
+                  editMember(member);
                 },
               },
               {
                 label: 'Suspend',
                 onSelect: () => {
-                  action('suspend')(member.id);
+                  setSuspendIds([member.id]);
                 },
                 disabled: member.status === 'suspended',
               },
@@ -330,6 +371,35 @@ export function MemberList({ members, status: initialStatus = 'ready', initial }
           />
         </div>
       </div>
+      <MemberDetailsSheet
+        member={details}
+        onClose={() => {
+          setDetailsId(null);
+        }}
+        onEdit={editMember}
+        onSuspend={(member) => {
+          setSuspendIds([member.id]);
+        }}
+      />
+      <NlDialog
+        open={toSuspend.length > 0}
+        onOpenChange={(open) => {
+          if (!open) setSuspendIds(null);
+        }}
+        title={toSuspend.length === 1 ? 'Suspend member' : `Suspend ${String(toSuspend.length)} members`}
+        size="small"
+        primaryAction={{ children: 'Suspend', tone: 'destructive', onClick: confirmSuspend }}
+        secondaryAction={{
+          children: 'Cancel',
+          onClick: () => {
+            setSuspendIds(null);
+          },
+        }}
+      >
+        {toSuspend.length === 1
+          ? `Are you sure you want to suspend “${toSuspend[0]?.name ?? ''}”? They can't earn or use points until they're active again.`
+          : `Are you sure you want to suspend these ${String(toSuspend.length)} members? They can't earn or use points until they're active again.`}
+      </NlDialog>
     </PageLayout>
   );
 }

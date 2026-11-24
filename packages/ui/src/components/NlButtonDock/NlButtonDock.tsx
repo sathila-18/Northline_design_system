@@ -9,19 +9,37 @@ type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K>
 /** A dock button: NlButton props without the ones the dock fixes (variant, size, tone, content tone). */
 export type NlButtonDockButtonProps = DistributiveOmit<NlButtonBaseProps, 'variant' | 'size' | 'appearance' | 'flush'>;
 
+/** A dock button that can also be destructive (secondary and tertiary, OD-244). */
+export type NlButtonDockToneButtonProps = NlButtonDockButtonProps & { tone?: 'normal' | 'destructive' };
+
 export interface NlButtonDockProps extends Omit<ComponentPropsWithRef<'div'>, 'className' | 'children'> {
   /** The primary button, last at the end. Pass `type: 'submit'` inside a form. */
   primary?: NlButtonDockButtonProps;
-  /** The secondary button, before the primary. */
-  secondary?: NlButtonDockButtonProps;
-  /** The tertiary button, at the start. */
-  tertiary?: NlButtonDockButtonProps;
+  /** The secondary button, before the primary. `tone="destructive"` for a destructive action (OD-244). */
+  secondary?: NlButtonDockToneButtonProps;
+  /** The tertiary button, at the start. `tone="destructive"` for a destructive action (OD-244). */
+  tertiary?: NlButtonDockToneButtonProps;
   /** A note above the buttons. A string becomes an NlTextBlock description (Body M, text-secondary). */
   accessory?: ReactNode;
   /** Sticky look (--nl-shadow-sticky). The container pins it and pads the content above. */
   sticky?: boolean;
   /** Placement only. */
   className?: string;
+}
+
+/** A small secondary or tertiary dock button, normal or destructive (OD-244). */
+function DockButton({
+  tone = 'normal',
+  variant,
+  ...button
+}: NlButtonDockToneButtonProps & { variant: 'secondary' | 'tertiary' }) {
+  return tone === 'destructive' ? (
+    <NlButton {...button} tone="destructive" variant={variant} size="small" />
+  ) : variant === 'tertiary' ? (
+    <NlButton {...button} variant="tertiary" size="small" />
+  ) : (
+    <NlButton {...button} variant="secondary" size="small" />
+  );
 }
 
 /**
@@ -55,10 +73,10 @@ export function NlButtonDock({
         ))}
       {hasButtons && (
         <div className={styles.row}>
-          {tertiary && <NlButton {...tertiary} variant="tertiary" size="small" />}
+          {tertiary && <DockButton {...tertiary} variant="tertiary" />}
           {(secondary ?? primary) && (
             <div className={styles.end}>
-              {secondary && <NlButton {...secondary} variant="secondary" size="small" />}
+              {secondary && <DockButton {...secondary} variant="secondary" />}
               {primary && <NlButton {...primary} variant="primary" size="small" />}
             </div>
           )}

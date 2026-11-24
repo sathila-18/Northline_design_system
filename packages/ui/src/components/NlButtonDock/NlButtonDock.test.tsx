@@ -64,4 +64,19 @@ describe('NlButtonDock', () => {
     const { container } = render(<NlButtonDock />);
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('secondary and tertiary can be destructive (OD-244)', () => {
+    render(
+      <NlButtonDock
+        tertiary={{ children: 'Remove all', tone: 'destructive' }}
+        secondary={{ children: 'Suspend', tone: 'destructive', icon: 'leading', iconName: 'block' }}
+        primary={{ children: 'Edit' }}
+      />,
+    );
+    const suspend = screen.getByRole('button', { name: 'Suspend' });
+    expect(suspend).toHaveAttribute('data-tone', 'destructive');
+    expect(suspend).toHaveAttribute('data-variant', 'secondary');
+    expect(screen.getByRole('button', { name: 'Remove all' })).toHaveAttribute('data-variant', 'tertiary');
+    expect(screen.getByRole('button', { name: 'Edit' })).not.toHaveAttribute('data-tone', 'destructive');
+  });
 });

@@ -79,3 +79,13 @@ export const Narrow: Story = {
     </div>
   ),
 };
+
+/** A destructive secondary button (OD-244), with a leading icon, as in a details side sheet. */
+export const Destructive: Story = {
+  args: {
+    accessory: undefined,
+    tertiary: undefined,
+    secondary: { children: 'Suspend', tone: 'destructive', icon: 'leading', iconName: 'block' },
+    primary: { children: 'Edit' },
+  },
+};

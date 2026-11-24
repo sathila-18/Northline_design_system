@@ -426,11 +426,13 @@ Decide these before building the components listed under "Affects".
 - OD-166 · How pages show snackbars · **Decided** 20 Nov 2026: `NlSnackbarProvider` + `useNlSnackbar()`
 - OD-167 · Single or stacked · **Decided** 20 Nov 2026: explicit `layout`, default single
 - OD-168 · Close on by default · **Decided** 20 Nov 2026: `showClose`, default on
+- OD-245 · Top end placement: `NlSnackbarProvider placement="top-end"`, `Space-3XL` from the top and end, comes down into place; clear of bars at the bottom · **Decided** 24 Nov 2026: designer asked (member list, from a reference)
 
 **NlButtonDock**
 - OD-169 · Destructive primary · **Decided** 20 Nov 2026: left out
 - OD-170 · Narrow containers · **Decided** 20 Nov 2026: the end group wraps, stays at the end
 - OD-171 · Nothing to show · **Decided** 20 Nov 2026: renders nothing
+- OD-244 · Destructive secondary and tertiary buttons (`tone: 'destructive'`); the primary stays normal · **Decided** 24 Nov 2026: designer asked (member details side sheet)
 
 **NlEmptyState**
 - OD-112 · `icon` (container built in) or `iconSlot` for anything else · **Decided** 20 Nov 2026: approved

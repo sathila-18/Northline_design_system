@@ -149,3 +149,13 @@ export const Live: Story = {
     </NlSnackbarProvider>
   ),
 };
+
+/** Top end (OD-245): the region sits Space-3XL from the top and end, and the snackbar comes down into place. */
+export const TopEnd: Story = {
+  name: 'Top end',
+  render: () => (
+    <NlSnackbarProvider placement="top-end">
+      <Triggers />
+    </NlSnackbarProvider>
+  ),
+};

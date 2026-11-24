@@ -43,3 +43,15 @@ export const Loading: Story = { args: { status: 'loading' } };
 
 /** The members couldn't load. Try again shows the list. */
 export const Error: Story = { args: { status: 'error' } };
+
+/** A row click or View opens the member's details side sheet: their details, Suspend and Edit. */
+export const DetailsOpen: Story = { name: 'Details open', args: { initialDetails: firstThree[0] } };
+
+/** Suspend asks first (from a row, the side sheet or the bulk action bar). Suspend shows a success snackbar. */
+export const SuspendDialog: Story = { name: 'Suspend dialog', args: { initialSuspend: [firstThree[0] ?? ''] } };
+
+/** Suspending three selected members from the bulk action bar. */
+export const BulkSuspendDialog: Story = {
+  name: 'Bulk suspend dialog',
+  args: { initial: { selectedIds: firstThree }, initialSuspend: firstThree },
+};

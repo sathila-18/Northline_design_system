@@ -741,15 +741,14 @@ These apply to every page.
 | # | Page | Area | Status |
 |---|---|---|---|
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
-| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member (details side sheet to come); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21) | Members | ✅ |
-| P3 | Member detail | Members | ⬜ |
-| P4 | Dashboard | Dashboard | ⬜ |
-| P5 | All rewards | Rewards | ⬜ |
-| P6 | Track voucher | Rewards | ⬜ |
-| P7 | Tiers | Rewards | ⬜ |
-| P8 | Events | Events | ⬜ |
-| P9 | Messages | Messages | ⬜ |
-| P10 | Help | Help | ⬜ |
+| P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member details `NlSideSheet` (a Detail / Value `NlTable`, Suspend destructive and Edit in the footer; replaces the planned Member detail page); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21); Suspend from a row, the side sheet or the bar asks in an `NlDialog` (destructive), then a success `NlSnackbar` at the top end (OD-245) | Members | 🟨 |
+| P3 | Dashboard | Dashboard | ⬜ |
+| P4 | All rewards | Rewards | ⬜ |
+| P5 | Track voucher | Rewards | ⬜ |
+| P6 | Tiers | Rewards | ⬜ |
+| P7 | Events | Events | ⬜ |
+| P8 | Messages | Messages | ⬜ |
+| P9 | Help | Help | ⬜ |
 
 ---
 
@@ -6976,7 +6975,7 @@ Hidden, entering, shown, leaving. The buttons have their own states.
 | Single line | `Size-48` tall, `w-fit` up to `Size-560`, `Radius-M`, gap `Space-M`; `Space-XL` start; end `Space-XS` with buttons, `Space-XL` without; message one line with an ellipsis |
 | Stacked | Column, gap `Space-M`; top row `Space-XL` top and sides, icon on the message's first line; button row at the end, `Space-XS` end and bottom; message wraps |
 | Buttons | Action `NlButton` tertiary small; close tertiary medium icon-only `close` "Dismiss"; content tone `inverse` (neutral) or `primary` |
-| Host | `NlSnackbarProvider` renders the page then a fixed region at the bottom centre (`Space-3XL` up, `--nl-z-snackbar`), with a `role="status"` and a `role="alert"` region present from load |
+| Host | `NlSnackbarProvider` renders the page then a fixed region at the bottom centre (`Space-3XL` up, `--nl-z-snackbar`), with a `role="status"` and a `role="alert"` region present from load. `placement="top-end"` (OD-245): `Space-3XL` from the top and end, the snackbar comes down from `Space-M` above; `data-placement` on the region |
 | Show | `useNlSnackbar().show({ message, tone, layout, showIcon, action, showClose, onClose })`; `hide()` |
 | Timing | Without an action: `--nl-duration-snackbar`, read in the browser; restarts after hover or focus leaves. With an action: stays; the action runs then closes it |
 | Motion | Fade and slide up `Space-M`, `--nl-duration-base`, standard ease; reduced motion: no slide (durations are zero) |
@@ -7035,8 +7034,8 @@ NlButtonDock (vertical)
 |---|---|---|
 | Sticky | off, on | `sticky?: boolean` (look only; the container pins it) |
 | Primary | optional | `primary?: NlButtonProps` |
-| Secondary | optional | `secondary?: NlButtonProps` |
-| Tertiary | optional | `tertiary?: NlButtonProps` |
+| Secondary | optional | `secondary?: NlButtonProps`, `tone?: 'normal' \| 'destructive'` (OD-244) |
+| Tertiary | optional | `tertiary?: NlButtonProps`, `tone?: 'normal' \| 'destructive'` (OD-244) |
 | Accessory | optional | `accessory?: ReactNode` |
 
 #### Sizes and layout
@@ -7080,7 +7079,7 @@ Sticky or not. The buttons have their own states.
 
 | Spec option | Code |
 |---|---|
-| Buttons | `primary?`, `secondary?`, `tertiary?`: `NlButton` props without `variant`, `size`, `tone`, `contentTone` (`NlButtonDockButtonProps`); the dock sets the variant and `size="small"` |
+| Buttons | `primary?`, `secondary?`, `tertiary?`: `NlButton` props without `variant`, `size`, `tone`, `contentTone` (`NlButtonDockButtonProps`); the dock sets the variant and `size="small"`. Secondary and tertiary also take `tone: 'destructive'` (`NlButtonDockToneButtonProps`, OD-244), for example Suspend in a details side sheet; the primary stays normal (OD-169) |
 | Accessory | `accessory?`: a string → `NlTextBlock type="headline-small"` description (Body M, `text-secondary`); any other node as is |
 | Sticky | `sticky?` → `shadow-sticky` (else `shadow-none`), `data-sticky` |
 | Layout | Column, gap `Space-3XL`; button row `justify-between`, wraps, gap `Space-XL`; end group `ms-auto`, wraps, `justify-end` |
