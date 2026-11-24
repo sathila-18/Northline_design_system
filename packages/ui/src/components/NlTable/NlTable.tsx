@@ -161,7 +161,10 @@ export interface NlTableProps<T> {
 const toText = (raw: unknown): string =>
   typeof raw === 'string' ? raw : typeof raw === 'number' || typeof raw === 'boolean' ? String(raw) : '';
 
-const plural = (count: number, one: string, many: string) => `${String(count)} ${count === 1 ? one : many}`;
+/** Whole numbers with a comma every three digits ("2,480"), without locale formatting (§7.4). */
+const count = (value: number) => String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+const plural = (value: number, one: string, many: string) => `${count(value)} ${value === 1 ? one : many}`;
 
 /**
  * A data table (DESIGN.md §9, NlTable): an optional toolbar (NlSearchField, a filter slot, a primary NlButton), a real
@@ -223,7 +226,7 @@ export function NlTable<T>({
   if (total !== seen.total || selectedCount !== seen.selectedCount) {
     setMessage(
       selectedCount !== seen.selectedCount
-        ? `${String(selectedCount)} selected`
+        ? `${count(selectedCount)} selected`
         : `Showing ${plural(total, 'result', 'results')}`,
     );
     setSeen({ total, selectedCount });
@@ -293,8 +296,8 @@ export function NlTable<T>({
     if (!pagination) return '';
     const from = total === 0 ? 0 : (pagination.page - 1) * pagination.pageSize + 1;
     const to = Math.min(pagination.page * pagination.pageSize, total);
-    const showing = `Showing ${String(from)}–${String(to)} of ${String(total)}`;
-    return selectedCount > 0 ? `${String(selectedCount)} selected · ${showing}` : showing;
+    const showing = `Showing ${count(from)}–${count(to)} of ${count(total)}`;
+    return selectedCount > 0 ? `${count(selectedCount)} selected · ${showing}` : showing;
   })();
 
   return (

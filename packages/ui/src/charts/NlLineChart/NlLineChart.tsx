@@ -5,10 +5,10 @@ import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YA
 import { NlChartLegend } from '../NlChartLegend';
 import { NlChartMarker, type NlChartSeries } from '../NlChartMarker';
 import { NlChartTooltip } from '../NlChartTooltip';
-import { formatMonthLong, formatMonthTick, formatNumber, parseMonth } from '../shared/format';
+import { formatMonthLong, formatNumber, parseMonth } from '../shared/format';
 import { useChartKeyboard } from '../shared/keyboard';
 import { useElementWidth, useTextMeasure } from '../shared/measure';
-import { pickTicks, valueTicks } from '../shared/ticks';
+import { monthTickLabel, pickTicks, tickLabelMap, valueTicks } from '../shared/ticks';
 import { chartColour, seriesColour, useReducedMotion, useTokenNumber } from '../shared/tokens';
 import * as styles from './NlLineChart.styles';
 
@@ -82,15 +82,14 @@ export function NlLineChart<T extends Record<string, unknown>>({
   const yTicks = valueTicks(largest);
   const yWidth = Math.ceil(Math.max(...yTicks.map((tick) => measure(formatValue(tick))))) + margin + slack;
 
-  // Time-axis ticks, picked here so each label is measured with its final text (OD-251, OD-252).
+  // Time-axis ticks, picked here so each label is measured with the text it is drawn with (OD-251, OD-252).
   const xValues = data.map((row) => row[xKey]);
-  const labelFor = (index: number, isFirst: boolean) => {
-    const value = xValues[index];
-    if (formatX) return formatX(value);
-    return isMonths ? formatMonthTick(value, isFirst ? 0 : 1) : String(value);
-  };
-  // The last label is centred on the last point at the plot's end, so the end margin holds half of it.
-  const lastLabel = xValues.length > 0 ? labelFor(xValues.length - 1, xValues.length === 1) : '';
+  const monthLabel = monthTickLabel(xValues);
+  const labelFor = (index: number, previous: number | null) =>
+    formatX ? formatX(xValues[index]) : isMonths ? monthLabel(index, previous) : String(xValues[index]);
+  // The last label is centred on the last point at the plot's end, so the end margin holds half of it, at its
+  // longest (with the year).
+  const lastLabel = xValues.length > 0 ? labelFor(xValues.length - 1, null) : '';
   const endMargin = Math.max(margin, Math.ceil(measure(lastLabel) / 2) + slack);
   const tickIndices = pickTicks(
     xValues,
@@ -99,16 +98,7 @@ export function NlLineChart<T extends Record<string, unknown>>({
     labelFor,
     measure,
   );
-  const tickLabels = new Map<unknown, string>();
-  let previousYear: number | null = null;
-  tickIndices.forEach((index, i) => {
-    const value = xValues[index];
-    const month = parseMonth(value);
-    // The year on the first tick, every January, and a new year whose January isn't a tick.
-    const newYear = month !== null && previousYear !== null && month.year !== previousYear;
-    previousYear = month?.year ?? previousYear;
-    tickLabels.set(value, newYear && !formatX ? formatMonthTick(value, 0) : labelFor(index, i === 0));
-  });
+  const tickLabels = tickLabelMap(xValues, tickIndices, labelFor);
   const tickFormatter = (value: unknown) => tickLabels.get(value) ?? '';
 
   const describe = (row: T) =>

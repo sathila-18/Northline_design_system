@@ -8863,7 +8863,7 @@ Default, loading (skeleton rows, no footer), empty (`NlEmptyState` replaces the 
 | Selection | `selectable`, `selectedIds` (kept across pages), `onSelectionChange`; select-all for the page, indeterminate when some |
 | Sort | `sort` / `onSortChange`: `{ key, direction }` or `null` |
 | Filters | `column.filter` → the header's filter button and an `NlTableColumnFilter` |
-| Footer | `pagination` or `false`: space between, `Size-32` high: summary (Body S `text-tertiary`) and `NlRowsPerPage` (+ `NlMenu kind="select"` of `NlListItem` options) at the start, `NlPagination` at the end, `Space-L` apart (OD-242) |
+| Footer | `pagination` or `false`: space between, `Size-32` high: summary (Body S `text-tertiary`; numbers with a comma every three digits, "Showing 1,011–1,020 of 2,480", fixed 25 Nov 2026) and `NlRowsPerPage` (+ `NlMenu kind="select"` of `NlListItem` options) at the start, `NlPagination` at the end, `Space-L` apart (OD-242) |
 | Row click | `onRowClick?(row)`: `cursor-pointer` on rows; clicks inside `a`, `button`, `input` or `label` are left to them (OD-243) |
 | Loading | `loading`: skeleton rows (`pageSize`, or 5), no footer |
 | Empty | `empty` (default heading "No results"): `NlEmptyState` across every column; no footer |
@@ -9303,7 +9303,7 @@ NlLineChart
 
 - Lines 2px, markers `Size-8` (`NlChartMarker` at each point); grid horizontal only, 1px `chart-grid`; value axis without a line, time axis with a 1px `chart-axis` line; no tick marks.
 - Value axis: five ticks from 0 on a round step (1, 2, 2.5 or 5 × a power of ten) covering the largest value; as wide as its widest label (`Data S`, measured) + `Space-M` + `Space-XS`.
-- Time axis: the chart picks the ticks so each label is measured with its final text: a step of 1, 2, 3, 4, 6 or 12 months aligned to January (so every January is a tick and carries its year), plus the first and last points, the smallest step that keeps `Space-XL` between labels. If a new year's January isn't a tick, the year goes on that year's first tick.
+- Time axis: the chart picks the ticks so each label is measured with the text it is drawn with: a step of 1, 2, 3, 4, 6 or 12 months aligned to January, plus the first and last points, the smallest step that keeps `Space-XL` between labels. A tick that crowds the first or the last one is left out instead (a December start puts "Dec 2025" next to "Jan 2026"; fixed 25 Nov 2026). The year goes on the first tick, each January, and the first drawn tick of a new year whose January is left out ("Mar 2026"). The end margin holds half the last label at its longest (with the year).
 - Plot margins: top `Space-M` + `Space-XS`, end at least half the last label + `Space-XS` (the last label is centred on the last point); axis labels outside the plot.
 - Keyboard handled by the chart itself, not Recharts' accessibility layer (which only has Left, Right and Enter): Left, Right, Home, End, Escape; the tooltip follows through Recharts' `defaultIndex`.
 

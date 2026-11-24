@@ -366,4 +366,21 @@ describe('NlTable', () => {
     render(base({ selectable: true, selectedIds: [], bulkActions: () => [] }));
     expect(screen.queryByRole('region', { name: 'Bulk actions' })).toBeNull();
   });
+
+  it('summary numbers have commas: "Showing 1,011–1,020 of 2,480"', () => {
+    render(
+      base({
+        pagination: {
+          page: 102,
+          pageCount: 248,
+          pageSize: 10,
+          pageSizes: [10],
+          total: 2480,
+          onPageChange: () => undefined,
+          onPageSizeChange: () => undefined,
+        },
+      }),
+    );
+    expect(screen.getByText('Showing 1,011–1,020 of 2,480')).toBeInTheDocument();
+  });
 });
