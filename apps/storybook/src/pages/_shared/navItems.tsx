@@ -10,7 +10,7 @@ const comingSoon = 'Pages/Coming soon';
 
 /** Storybook title and story name for each page. Change a row here when its page is built. */
 export const pageStories: Record<PageHref, readonly [title: string, story: string]> = {
-  '#dashboard': [comingSoon, 'Dashboard'],
+  '#dashboard': ['Pages/Dashboard', 'Default'],
   '#members': ['Pages/Members/Member list', 'Default'],
   '#rewards': [comingSoon, 'All rewards'],
   '#track-voucher': [comingSoon, 'Track voucher'],

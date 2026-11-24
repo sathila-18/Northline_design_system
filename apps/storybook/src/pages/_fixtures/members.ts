@@ -2,9 +2,9 @@
  * Member fixtures for the Storybook pages (DESIGN.md §8.6, page rules). Invented people only: names are drawn from
  * generic first and last names, emails are on example.com, and IDs follow NL-000123.
  *
- * Built once at import from a fixed seed (mulberry32), so every build shows the same 120 members. Dates are in
- * 2026, kept as ISO strings for sorting and filtering, with a display copy in the DD/MM/YYYY format NlDateField
- * uses. No Date objects or locale formatting, so server and client output match.
+ * Built once at import from a fixed seed (mulberry32), so every build shows the same 2,480 members. Join and activity
+ * dates run from 1 Jan 2023 to 23 Nov 2026 (fixed UTC date arithmetic, no locale formatting), kept as ISO strings for
+ * sorting and filtering and shown in the DD/MM/YYYY format NlDateField uses.
  */
 
 export type MemberTier = 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
@@ -35,7 +35,7 @@ export const statusLabel: Record<MemberStatus, string> = {
 };
 
 const SEED = 20260101;
-const COUNT = 120;
+const COUNT = 2480;
 
 /** mulberry32: a small seeded generator, so the fixtures never change between builds. */
 function mulberry32(seed: number) {
@@ -74,6 +74,31 @@ const firstNames = [
   'Wren',
   'Yara',
   'Zed',
+  'Arlo',
+  'Bea',
+  'Cass',
+  'Dora',
+  'Emil',
+  'Fen',
+  'Gus',
+  'Hedda',
+  'Ivo',
+  'Juno',
+  'Kit',
+  'Lenna',
+  'Mott',
+  'Nell',
+  'Odo',
+  'Peri',
+  'Rook',
+  'Saffi',
+  'Tam',
+  'Ulla',
+  'Vesna',
+  'Wim',
+  'Xan',
+  'Yves',
+  'Zola',
 ];
 const lastNames = [
   'Ashdown',
@@ -96,23 +121,59 @@ const lastNames = [
   'Rowntree',
   'Stanmore',
   'Thistle',
+  'Alderby',
+  'Brackwell',
+  'Coldharbour',
+  'Dewhurst',
+  'Edgecombe',
+  'Fallowfield',
+  'Greystoke',
+  'Hartwell',
+  'Inglebank',
+  'Juniper',
+  'Kestrel',
+  'Lowmoor',
+  'Marchbank',
+  'Nettlefold',
+  'Ormsby',
+  'Pellow',
+  'Quenby',
+  'Redfern',
+  'Saltmarsh',
+  'Tenby',
+  'Underhill',
+  'Vantage',
+  'Westerby',
+  'Yarrow',
+  'Brimble',
+  'Copperfield',
+  'Driftwood',
+  'Elderwood',
+  'Foxley',
+  'Glenrose',
+  'Hawthorne',
+  'Ivywood',
+  'Kingsmere',
+  'Linfield',
+  'Moorcroft',
+  'Nightingale',
+  'Oxley',
+  'Pinewood',
+  'Rushmere',
+  'Sandyford',
 ];
-
-const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-/** Day 1 to 327 of 2026 (1 January to 23 November). */
-const LAST_DAY = 327;
 
 const pad = (value: number, length: number) => String(value).padStart(length, '0');
 
-/** Day of the year (1-based) → ISO date in 2026. */
+/** The programme's first day and the fixtures' "today": 1 January 2023 to 23 November 2026. */
+const FIRST_DAY = Date.UTC(2023, 0, 1);
+const DAY = 86_400_000;
+export const LAST_DATE = '2026-11-23';
+const DAYS = Math.round((Date.UTC(2026, 10, 23) - FIRST_DAY) / DAY);
+
+/** Days after 1 January 2023 → ISO date. Fixed UTC arithmetic, so the same on every machine and build. */
 function isoFromDay(day: number) {
-  let month = 0;
-  let rest = day;
-  for (let days = monthDays[month] ?? 31; rest > days; days = monthDays[month] ?? 31) {
-    rest -= days;
-    month += 1;
-  }
-  return `2026-${pad(month + 1, 2)}-${pad(rest, 2)}`;
+  return new Date(FIRST_DAY + day * DAY).toISOString().slice(0, 10);
 }
 
 /** ISO YYYY-MM-DD → DD/MM/YYYY, the display format NlDateField uses by default. */
@@ -171,8 +232,9 @@ function build(): Member[] {
       ['Platinum', 10],
     ] as const);
     const [low, high] = pointsRange[tier];
-    const joinedDay = 1 + Math.floor(random() * (LAST_DAY - 10));
-    const activityDay = joinedDay + Math.floor(random() * (LAST_DAY - joinedDay + 1));
+    // More members join as the programme grows (a square-root curve); activity leans towards recent days.
+    const joinedDay = Math.floor(DAYS * Math.sqrt(random()));
+    const activityDay = joinedDay + Math.floor((DAYS - joinedDay) * (1 - random() ** 3));
 
     members.push({
       id: `NL-${pad(100 + index * 7, 6)}`,
@@ -192,5 +254,5 @@ function build(): Member[] {
   return members;
 }
 
-/** The 120 fixture members, in the same order on every build. */
+/** The 2,480 fixture members, in the same order on every build. */
 export const members: Member[] = build();
