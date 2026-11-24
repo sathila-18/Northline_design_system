@@ -85,11 +85,10 @@ export function NlLineChart<T extends Record<string, unknown>>({
   // Time-axis ticks, picked here so each label is measured with the text it is drawn with (OD-251, OD-252).
   const xValues = data.map((row) => row[xKey]);
   const monthLabel = monthTickLabel(xValues);
-  const labelFor = (index: number, previous: number | null) =>
-    formatX ? formatX(xValues[index]) : isMonths ? monthLabel(index, previous) : String(xValues[index]);
-  // The last label is centred on the last point at the plot's end, so the end margin holds half of it, at its
-  // longest (with the year).
-  const lastLabel = xValues.length > 0 ? labelFor(xValues.length - 1, null) : '';
+  const labelFor = (index: number) =>
+    formatX ? formatX(xValues[index]) : isMonths ? monthLabel(index) : String(xValues[index]);
+  // The last label is centred on the last point at the plot's end, so the end margin holds half of it.
+  const lastLabel = xValues.length > 0 ? labelFor(xValues.length - 1) : '';
   const endMargin = Math.max(margin, Math.ceil(measure(lastLabel) / 2) + slack);
   const tickIndices = pickTicks(
     xValues,

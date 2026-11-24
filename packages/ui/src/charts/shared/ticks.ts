@@ -17,18 +17,11 @@ function positionOf(index: number, count: number, width: number, layout: 'point'
 }
 
 /**
- * A tick's text given the tick drawn before it (null for the first): months as "Mar", with the year on the first tick,
- * on each January, and on the first tick of a new year whose January isn't drawn (OD-252). Other values as text.
+ * A tick's text: months as the short month name, "Mar", with no year on the axis (OD-252, changed by the designer 25
+ * Nov 2026; the tooltip and table show "Mar 2026"). Other values as text.
  */
 export function monthTickLabel(values: readonly unknown[]) {
-  return (index: number, previous: number | null): string => {
-    const value = values[index];
-    const month = parseMonth(value);
-    if (!month) return String(value);
-    const before = previous === null ? null : parseMonth(values[previous]);
-    const withYear = previous === null || month.month === 1 || (before !== null && before.year !== month.year);
-    return formatMonthTick(value, withYear ? 0 : 1);
-  };
+  return (index: number): string => formatMonthTick(values[index]);
 }
 
 /**

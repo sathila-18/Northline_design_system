@@ -19,12 +19,11 @@ export function parseMonth(value: unknown): { year: number; month: number } | nu
   return month >= 1 && month <= 12 ? { year: Number(match[1]), month } : null;
 }
 
-/** Axis label (OD-252): "Mar", with the year on the first tick and every January ("Jan 2027"). */
-export function formatMonthTick(value: unknown, index: number): string {
+/** Axis label: the short month name only, "Mar" (OD-252, changed by the designer 25 Nov 2026: no year on the axis). */
+export function formatMonthTick(value: unknown): string {
   const parsed = parseMonth(value);
   if (!parsed) return String(value);
-  const name = monthNames[parsed.month - 1] ?? '';
-  return index === 0 || parsed.month === 1 ? `${name} ${String(parsed.year)}` : name;
+  return monthNames[parsed.month - 1] ?? '';
 }
 
 /** Tooltip and table (OD-252): "Mar 2026". */

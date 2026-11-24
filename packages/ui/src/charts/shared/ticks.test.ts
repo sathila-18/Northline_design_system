@@ -14,7 +14,7 @@ describe('pickTicks', () => {
   });
 
   it('narrower: a step aligned to January, so every January is a tick, plus the first and last', () => {
-    const ticks = pickTicks(months, 640, 16, label, measure);
+    const ticks = pickTicks(months, 400, 16, label, measure);
     expect(ticks[0]).toBe(0);
     expect(ticks.at(-1)).toBe(14);
     expect(ticks).toContain(12); // Jan 2027
@@ -45,10 +45,8 @@ describe('pickTicks with a December start (Dec 2025 to Nov 2026)', () => {
     }
   });
 
-  it('labels follow the drawn ticks: the first new-year tick carries the year when January is left out', () => {
-    const labels = [...tickLabelMap(year, [0, 2, 5, 11], yearLabel).values()];
-    expect(labels).toEqual(['Dec 2025', 'Feb 2026', 'May', 'Nov']);
-    expect([...tickLabelMap(year, [0, 1, 11], yearLabel).values()]).toEqual(['Dec 2025', 'Jan 2026', 'Nov']);
+  it('labels are month names only, with no year (OD-252, 25 Nov 2026)', () => {
+    expect([...tickLabelMap(year, [0, 1, 5, 11], yearLabel).values()]).toEqual(['Dec', 'Jan', 'May', 'Nov']);
   });
 });
 

@@ -1,7 +1,7 @@
 /**
  * Chart fixtures for the chart stories and the dashboard (DESIGN.md §8.5, page rules). Fake, generic numbers built from
- * a fixed seed, so every build shows the same charts. Months are ISO "YYYY-MM"; the charts format them ("Mar",
- * "Jan 2027", "Mar 2026").
+ * a fixed seed, so every build shows the same charts. Months are ISO "YYYY-MM"; the charts format them ("Mar" on the axis,
+ * "Mar 2026" in tooltips and tables).
  */
 
 import { members, memberTiers } from './members';

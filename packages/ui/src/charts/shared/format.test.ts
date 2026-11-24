@@ -9,16 +9,15 @@ describe('chart formatting', () => {
     expect(formatNumber(0)).toBe('0');
   });
 
-  it('months: "Mar" on the axis, the year on the first tick and every January (OD-252)', () => {
-    expect(formatMonthTick('2026-03', 0)).toBe('Mar 2026');
-    expect(formatMonthTick('2026-04', 1)).toBe('Apr');
-    expect(formatMonthTick('2027-01', 9)).toBe('Jan 2027');
+  it('months: "Mar" on the axis, with no year (OD-252, 25 Nov 2026); "Mar 2026" in tooltips and tables', () => {
+    expect(formatMonthTick('2026-03')).toBe('Mar');
+    expect(formatMonthTick('2027-01')).toBe('Jan');
     expect(formatMonthLong('2026-03-15')).toBe('Mar 2026');
   });
 
   it('anything else passes through', () => {
     expect(parseMonth('Track day voucher')).toBeNull();
     expect(parseMonth('2026-13')).toBeNull();
-    expect(formatMonthTick('Reward X', 0)).toBe('Reward X');
+    expect(formatMonthTick('Reward X')).toBe('Reward X');
   });
 });
