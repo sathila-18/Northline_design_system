@@ -117,4 +117,17 @@ describe('NlTableHeaderCell', () => {
     expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeInTheDocument();
     expect(screen.getByText('Actions').parentElement).toHaveClass('nl:sr-only');
   });
+
+  it('keeps the title on one line (OD-240)', () => {
+    render(
+      <table>
+        <thead>
+          <tr>
+            <NlTableHeaderCell sortable>Points balance</NlTableHeaderCell>
+          </tr>
+        </thead>
+      </table>,
+    );
+    expect(screen.getByRole('button', { name: /Points balance/ }).parentElement).toHaveClass('nl:whitespace-nowrap');
+  });
 });

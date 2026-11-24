@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
 import { NlTableHeaderCell } from '../NlTableHeaderCell';
+import type { NlCalendarRange } from '../NlCalendar';
 import { NlTableColumnFilter, type NlTableColumnFilterOption } from './NlTableColumnFilter';
 
 const tiers: NlTableColumnFilterOption[] = [
@@ -121,4 +122,56 @@ export const WithSearch: Story = {
 export const RadioWithSearch: Story = {
   args: Checkbox.args,
   render: () => <Demo column="Member" options={members} multiple={false} initial="member-0003" />,
+};
+
+function DateRangeDemo() {
+  const [open, setOpen] = useState(false);
+  const [range, setRange] = useState<NlCalendarRange>({ start: '2026-03-02', end: '2026-03-13' });
+  const filterRef = useRef<HTMLButtonElement>(null);
+  const applied = range.start !== null || range.end !== null;
+  return (
+    <div className="nl:w-full nl:max-w-320 nl:pb-12xl">
+      <p className="nl:mb-xl nl:text-body-m nl:text-secondary">
+        Applied: {applied ? `${range.start ?? '…'} to ${range.end ?? '…'}` : 'none'}
+      </p>
+      <table className="nl:w-full nl:border-collapse">
+        <thead>
+          <tr>
+            <NlTableHeaderCell
+              filter={open ? 'open' : applied ? 'applied' : 'available'}
+              filterRef={filterRef}
+              onFilterClick={() => {
+                setOpen(!open);
+              }}
+            >
+              Join date
+            </NlTableHeaderCell>
+          </tr>
+        </thead>
+      </table>
+      <NlTableColumnFilter
+        type="date-range"
+        open={open}
+        onOpenChange={setOpen}
+        anchorRef={filterRef}
+        column="Join date"
+        value={range}
+        onApply={setRange}
+      />
+    </div>
+  );
+}
+
+/** Date range (OD-241): NlCalendar in range mode, two months; Reset clears, Apply applies the start and end. */
+export const DateRange: Story = {
+  args: {
+    open: false,
+    onOpenChange: () => undefined,
+    anchorRef: { current: null },
+    column: '',
+    options: [],
+    value: [],
+    onApply: () => undefined,
+  },
+  render: () => <DateRangeDemo />,
 };

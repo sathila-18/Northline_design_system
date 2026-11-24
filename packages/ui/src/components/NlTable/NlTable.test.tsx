@@ -283,4 +283,87 @@ describe('NlTable', () => {
     expect(container.querySelector('tbody td')).toHaveClass('nl:py-4xl');
     expect(screen.queryByText(/Showing/)).toBeNull();
   });
+
+  it('onRowClick: a click on a row calls it; the checkbox and actions button keep their own click (OD-243)', async () => {
+    const onRowClick = vi.fn();
+    const onSelectionChange = vi.fn();
+    render(
+      base({
+        onRowClick,
+        selectable: true,
+        selectedIds: [],
+        onSelectionChange,
+        rowActions: () => [{ label: 'Edit', onSelect: () => undefined }],
+      }),
+    );
+    const row = screen.getByRole('rowheader', { name: 'Member 0002' }).closest('tr');
+    expect(row).toHaveClass('nl:cursor-pointer');
+    await userEvent.click(screen.getByRole('cell', { name: '200' }));
+    expect(onRowClick).toHaveBeenCalledWith(rows[1]);
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Select Member 0002' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Actions for Member 0002' }));
+    expect(onRowClick).toHaveBeenCalledTimes(1);
+    expect(onSelectionChange).toHaveBeenCalledWith(['b']);
+  });
+
+  it('rows without onRowClick have no pointer', () => {
+    render(base());
+    expect(screen.getByRole('rowheader', { name: 'Member 0001' }).closest('tr')).not.toHaveClass('nl:cursor-pointer');
+  });
+
+  it('footer: summary and rows per page together at the start, pagination at the end (OD-242)', () => {
+    render(
+      base({
+        pagination: {
+          page: 1,
+          pageCount: 2,
+          pageSize: 10,
+          pageSizes: [10, 25],
+          total: 12,
+          onPageChange: () => undefined,
+          onPageSizeChange: () => undefined,
+        },
+      }),
+    );
+    const summary = screen.getByText('Showing 1–10 of 12');
+    const start = summary.parentElement;
+    if (!start) throw new Error('No footer start');
+    expect(start).toHaveClass('nl:flex', 'nl:gap-l');
+    expect(within(start).getByRole('button', { name: /Rows per page/ })).toBeInTheDocument();
+    expect(start.parentElement).toHaveClass('nl:justify-between');
+  });
+
+  it('bulkActions: a bulk action bar while rows are selected; Clear selection empties it and focuses select all', async () => {
+    const onExport = vi.fn();
+    function Bulk() {
+      const [ids, setIds] = useState<string[]>(['a', 'b']);
+      return base({
+        selectable: true,
+        selectedIds: ids,
+        onSelectionChange: setIds,
+        bulkActions: (selected) => [
+          {
+            label: 'Export',
+            icon: 'download',
+            onSelect: () => {
+              onExport(selected);
+            },
+          },
+        ],
+      });
+    }
+    render(<Bulk />);
+    const bar = screen.getByRole('region', { name: 'Bulk actions' });
+    expect(within(bar).getByText('2 selected')).toBeInTheDocument();
+    await userEvent.click(within(bar).getByRole('button', { name: 'Export' }));
+    expect(onExport).toHaveBeenCalledWith(['a', 'b']);
+    await userEvent.click(within(bar).getByRole('button', { name: 'Clear selection' }));
+    expect(screen.queryByRole('region', { name: 'Bulk actions' })).toBeNull();
+    expect(screen.getByRole('checkbox', { name: 'Select all rows' })).toHaveFocus();
+  });
+
+  it('no bulk action bar without a selection', () => {
+    render(base({ selectable: true, selectedIds: [], bulkActions: () => [] }));
+    expect(screen.queryByRole('region', { name: 'Bulk actions' })).toBeNull();
+  });
 });

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import type { NlBadgeTone } from '../NlBadge';
+import type { NlCalendarRange } from '../NlCalendar';
 import { NlTable, type NlTableColumn, type NlTableProps, type NlTableSort } from './NlTable';
 
 interface Member {
@@ -34,12 +35,15 @@ function Demo({
   emptyData = false,
   wide = false,
   minimal = false,
+  clickable = false,
 }: {
   variant?: NlTableProps<Member>['variant'];
   loading?: boolean;
   emptyData?: boolean;
   wide?: boolean;
   minimal?: boolean;
+  /** Rows open on click (onRowClick); the story shows the last row opened. */
+  clickable?: boolean;
 }) {
   const [query, setQuery] = useState('');
   const [tierFilter, setTierFilter] = useState<string[]>([]);
@@ -48,11 +52,16 @@ function Demo({
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [selected, setSelected] = useState<string[]>([]);
+  const [joinedRange, setJoinedRange] = useState<NlCalendarRange>({ start: null, end: null });
+  const [opened, setOpened] = useState('none');
 
   let data = emptyData ? [] : members;
   if (query) data = data.filter((m) => m.name.toLowerCase().includes(query.toLowerCase()));
   if (tierFilter.length) data = data.filter((m) => tierFilter.includes(m.tier));
   if (statusFilter) data = data.filter((m) => m.status === statusFilter);
+  const { start, end } = joinedRange;
+  if (start) data = data.filter((m) => m.joined >= start);
+  if (end) data = data.filter((m) => m.joined <= end);
   if (sort) {
     const dir = sort.direction === 'ascending' ? 1 : -1;
     data = [...data].sort((a, b) => {
@@ -101,7 +110,19 @@ function Demo({
     { key: 'points', header: 'Points', sortable: true, width: '96' },
     ...(wide
       ? ([
-          { key: 'joined', header: 'Joined', width: '120' },
+          {
+            key: 'joined',
+            header: 'Joined',
+            width: '120',
+            filter: {
+              type: 'date-range',
+              value: joinedRange,
+              onApply: (v) => {
+                setJoinedRange(v);
+                setPage(1);
+              },
+            },
+          },
           { key: 'id', header: 'Member id', width: '120' },
           { key: 'email', header: 'Email', minWidth: '320', cell: (m) => ({ children: `${m.id}@example.test` }) },
         ] satisfies NlTableColumn<Member>[])
@@ -117,7 +138,15 @@ function Demo({
   return (
     // The grey header's titles are 4.46:1 in Dark: known issue K8 (accepted with NlTableHeaderCell #66).
     <div className={wide ? 'nl:max-w-720' : undefined} data-a11y-known-issue="K8">
+      {clickable && <p className="nl:mb-xl nl:text-body-m nl:text-secondary">Opened: {opened}</p>}
       <NlTable
+        onRowClick={
+          clickable
+            ? (m) => {
+                setOpened(m.name);
+              }
+            : undefined
+        }
         caption="Members"
         variant={variant}
         columns={columns}
@@ -204,8 +233,14 @@ export const Loading: Story = { args: noArgs, render: () => <Demo loading /> };
 /** No rows: NlEmptyState replaces the rows and footer. */
 export const Empty: Story = { args: noArgs, render: () => <Demo emptyData /> };
 
-/** More columns than fit (Size-720 container): the table scrolls sideways; the row-actions column stays at the end. */
+/**
+ * More columns than fit (Size-720 container): the table scrolls sideways; the row-actions column stays at the end.
+ * Joined has a date range filter (OD-241). Header titles stay on one line (OD-240).
+ */
 export const WideScroll: Story = { args: noArgs, render: () => <Demo wide /> };
+
+/** Clickable rows (onRowClick, OD-243): a click on a row opens it; the checkbox and actions button keep their click. */
+export const ClickableRows: Story = { args: noArgs, render: () => <Demo clickable /> };
 
 /** No toolbar, selection, actions or footer: just the header and rows. */
 export const Minimal: Story = { args: noArgs, render: () => <Demo minimal /> };

@@ -77,6 +77,14 @@ Instructions for Claude Code in this repo. Read them fully at the start of every
 - Pointer targets at least 24 × 24.
 - Contrast is checked in all three brands and both themes.
 
+### Pages (DESIGN.md §8.6, page rules)
+- Pages live in `apps/storybook/src/pages/<area>/`, never in `packages/ui`.
+- Built only from `@northline/ui` components and tokens. No new styles, hard-coded values or components in a page folder; layout-only utilities with tokens are fine. If the library lacks something, stop and ask. Never work around it.
+- Every page sits in `NlAppShell` through `_shared/PageLayout` (Login excepted).
+- Stories: Default, Loading, Empty, Error; table pages also Filtered.
+- Designed at 1440, checked at 1024. No mobile layout. Reviewed in all three brands, Light and Dark.
+- Data from `_fixtures/` only (fixed seed, invented names, `example.com`). Run `pnpm scrub` before pushing.
+
 ### Names and text
 - Components use the `Nl` prefix in PascalCase (`NlButton`, `NlTextField`).
 - All text content is in sentence case.

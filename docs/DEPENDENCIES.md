@@ -105,6 +105,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #14, #15 to #38, 
 | 67 | `NlTableCell` | yes | `NlCheckboxControl`, `NlBadge`, `NlButton` | `NlTable` | – | ✅ batch 7 | ✅ |
 | 68 | `NlNavItem` | yes | `NlNavIcon`, `NlNavSubItem`, `NlIcon`, `NlTooltip`, `NlMenu`, `NlListItem` | `NlSideNav` | – | ✅ batch 7 | ✅ |
 | 69 | `NlSideNavUser` | yes | `NlListItemBase`, `NlAvatar` | `NlSideNav` | – | ✅ batch 7 | ✅ |
+| 79 | `NlBulkActionBar` | yes | `NlButton`, `NlMenu`, `NlListItem` | `NlTable` | – | ✅ designer, 24 Nov 2026 (D21) | ✅ |
 
 ### Organisms
 
@@ -118,7 +119,7 @@ Last updated: 20 Nov 2026 (Build column up to date: #1 to #12, #14, #15 to #38, 
 | 74 | `NlTableColumnFilter` | yes | `NlMenu`, `NlCheckboxListItem`, `NlRadioListItem`, `NlSearchField`, `NlButton` | `NlTable` (opened from the header cell) | – | ✅ batch 8 | ✅ |
 | 75 | `NlSideSheet` | yes | `NlTextBlock`, `NlButton`, `NlDivider`, `NlButtonDock`, `NlOverlay` | – | – | ✅ batch 8 | ✅ |
 | 76 | `NlPageHeader` | yes | `NlTextBlock`, `NlButton`, `NlNotificationButton` | – | – | ✅ batch 8 | ✅ |
-| 77 | `NlTable` | yes | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton` (and `NlTableColumnFilter` for column filters) | – | – | ✅ batch 8 | ✅ |
+| 77 | `NlTable` | yes | `NlTableHeaderCell`, `NlTableCell`, `NlCheckboxControl`, `NlSearchField`, `NlButton`, `NlPagination`, `NlRowsPerPage`, `NlMenu`, `NlListItem`, `NlEmptyState`, `NlSkeleton`, `NlBulkActionBar` (D21) (and `NlTableColumnFilter` for column filters) | – | – | ✅ batch 8 | ✅ |
 | 78 | `NlSideNav` | yes | `NlNavItem`, `NlSideNavUser`, `NlButton` | – | – | ✅ batch 8 | ✅ |
 
 **Note on `NlTable` and `NlTableColumnFilter`.** Both are organisms. The table only opens the filter from a header cell, so the filter is rendered as the menu's content when a filter button is used. Under D15 that counts as slot content, so `NlTable` stays an organism that doesn't contain another organism. If the designer prefers, the filter can be passed in by the page instead.
@@ -558,7 +559,11 @@ Decide these before building the components listed under "Affects".
 - OD-227 · Rows `bg-primary` at rest (not none), so the sticky actions cell covers scrolled cells · **Decided** 21 Nov 2026: approved
 - OD-228 · Loading skeleton bars `Size-80` wide · **Decided** 21 Nov 2026: Size-80
 - OD-229 · `Space-4XL` above and below the empty state · **Decided** 21 Nov 2026: Space-4XL
-- OD-230 · No row click; every row keeps its actions button · **Decided** 21 Nov 2026: approved
+- OD-230 · No row click; every row keeps its actions button · **Decided** 21 Nov 2026: approved. Replaced by OD-243 (24 Nov 2026)
+- OD-240 · `NlTableHeaderCell` titles stay on one line; the table scrolls sideways instead · **Decided** 24 Nov 2026: designer asked (member list page)
+- OD-241 · `NlTableColumnFilter` `type="date-range"`: `NlCalendar` range in the filter menu with Reset and Apply; `column.filter` passes it through · **Decided** 24 Nov 2026: designer asked (member list page)
+- OD-242 · Footer: summary and rows per page together at the start, pagination at the end · **Decided** 24 Nov 2026: designer asked (member list page)
+- OD-243 · `onRowClick(row)`: a mouse click on a row opens it (not on its checkbox, links or buttons); rows keep the actions button for keyboard use · **Decided** 24 Nov 2026: designer asked (member list page)
 
 **NlSideNav**
 - OD-134: see section 1 (column width)

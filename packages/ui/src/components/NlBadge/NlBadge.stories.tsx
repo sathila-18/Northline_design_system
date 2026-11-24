@@ -2,7 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { nlIconNames } from '../../icons';
 import { NlBadge, type NlBadgeTone } from './NlBadge';
 
-const tones = ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral', 'disabled'] as const;
+const statusTones = ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral', 'disabled'] as const;
+const tierTones = ['bronze', 'silver', 'gold', 'platinum'] as const;
+const tones = [...statusTones, ...tierTones];
 const labels: Record<NlBadgeTone, string> = {
   primary: 'Tier 2',
   secondary: 'Draft',
@@ -12,6 +14,10 @@ const labels: Record<NlBadgeTone, string> = {
   warning: 'Pending',
   neutral: 'Member',
   disabled: 'Inactive',
+  bronze: 'Bronze',
+  silver: 'Silver',
+  gold: 'Gold',
+  platinum: 'Platinum',
 };
 
 const meta = {
@@ -55,14 +61,14 @@ export const Disabled: Story = {
   ),
 };
 
-/** All eight tones in both sizes. */
+/** All eight status tones in both sizes. */
 export const AllTones: Story = {
   name: 'All tones',
   render: (args) => (
     <div className="nl:flex nl:flex-col nl:gap-m">
       {(['small', 'large'] as const).map((size) => (
         <div key={size} className="nl:flex nl:flex-wrap nl:items-center nl:gap-m">
-          {tones.map((tone) => (
+          {statusTones.map((tone) => (
             <span key={tone} {...knownIssue(tone)}>
               <NlBadge {...args} size={size} tone={tone}>
                 {labels[tone]}
@@ -75,7 +81,7 @@ export const AllTones: Story = {
   ),
 };
 
-/** Icons switched on: each takes the fg-* colour matching its tone's text. */
+/** Icons switched on, every status and tier tone: each takes the fg-* colour matching its tone's text. */
 export const WithIcons: Story = {
   name: 'With icons',
   args: { leadingIcon: 'check_circle' },
@@ -100,4 +106,25 @@ export const WithIcons: Story = {
 export const LongLabel: Story = {
   name: 'Long label',
   args: { tone: 'info', children: 'Track day voucher, valid for one session' },
+};
+
+/**
+ * Member tier tones (D20): identity, not status. A light 135° gradient with the tier's inside border and text, the
+ * same in Light and Dark and in every brand. Both sizes.
+ */
+export const TierTones: Story = {
+  name: 'Tier tones',
+  render: (args) => (
+    <div className="nl:flex nl:flex-col nl:gap-m">
+      {(['small', 'large'] as const).map((size) => (
+        <div key={size} className="nl:flex nl:flex-wrap nl:items-center nl:gap-m">
+          {tierTones.map((tone) => (
+            <NlBadge key={tone} {...args} size={size} tone={tone}>
+              {labels[tone]}
+            </NlBadge>
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
 };

@@ -2,7 +2,9 @@
 
 import { useId, useRef, useState, type ElementType, type MouseEvent, type ReactNode } from 'react';
 import type { NlBadgeTone } from '../NlBadge';
+import { NlBulkActionBar, type NlBulkAction } from '../NlBulkActionBar';
 import { NlButton, type NlButtonProps } from '../NlButton';
+import type { NlCalendarRange } from '../NlCalendar';
 import { NlEmptyState, type NlEmptyStateProps } from '../NlEmptyState';
 import { NlListItem } from '../NlListItem';
 import { NlMenu } from '../NlMenu';
@@ -36,8 +38,28 @@ export type NlTableCellContent =
 
 /** A column filter, opened from the header cell's filter button (NlTableColumnFilter, OD-145). */
 export type NlTableColumnFilterConfig =
-  | { multiple?: true; options: NlTableColumnFilterOption[]; value: string[]; onApply: (value: string[]) => void }
-  | { multiple: false; options: NlTableColumnFilterOption[]; value: string; onApply: (value: string) => void };
+  | {
+      type?: 'list';
+      multiple?: true;
+      options: NlTableColumnFilterOption[];
+      value: string[];
+      onApply: (value: string[]) => void;
+    }
+  | {
+      type?: 'list';
+      multiple: false;
+      options: NlTableColumnFilterOption[];
+      value: string;
+      onApply: (value: string) => void;
+    }
+  | {
+      /** A date range on NlCalendar (OD-241). */
+      type: 'date-range';
+      value: NlCalendarRange;
+      onApply: (value: NlCalendarRange) => void;
+      minDate?: string;
+      maxDate?: string;
+    };
 
 export interface NlTableColumn<T> {
   /** Unique key; also the row field shown by default. */
@@ -121,6 +143,16 @@ export interface NlTableProps<T> {
   loading?: boolean;
   /** Shown instead of the rows and footer when there are none. Default heading "No results". */
   empty?: NlEmptyStateProps;
+  /**
+   * Called when a row is clicked (OD-243), for example to open its details. Clicks on the row's checkbox, links and
+   * buttons don't count. Mouse only: the row-actions button stays the keyboard way to act on a row (OD-230).
+   */
+  onRowClick?: (row: T) => void;
+  /**
+   * Actions for the selected rows (D21). While rows are selected, an NlBulkActionBar floats at the bottom of the
+   * visible table with the count, Clear selection and these actions.
+   */
+  bulkActions?: (selectedIds: string[]) => NlBulkAction[];
   /** Placement only. */
   className?: string;
 }
@@ -155,9 +187,12 @@ export function NlTable<T>({
   onSortChange,
   loading = false,
   empty,
+  onRowClick,
+  bulkActions,
   className,
 }: NlTableProps<T>) {
   const id = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
   const actionsMenuId = `${id}-actions`;
   const sizesMenuId = `${id}-sizes`;
 
@@ -210,6 +245,7 @@ export function NlTable<T>({
 
   const showEmpty = !loading && rows.length === 0;
   const showFooter = pagination !== undefined && pagination !== false && !loading && !showEmpty;
+  const showBulkBar = bulkActions !== undefined && selectable && selectedCount > 0 && !loading;
   const columnCount = columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
   const skeletonRows = Array.from(
     { length: pagination ? pagination.pageSize : 5 },
@@ -224,7 +260,11 @@ export function NlTable<T>({
   const filterState = (column: NlTableColumn<T>) => {
     if (!column.filter) return undefined;
     if (filterFor === column.key) return 'open' as const;
-    const applied = Array.isArray(column.filter.value) ? column.filter.value.length > 0 : column.filter.value !== '';
+    const { value } = column.filter;
+    let applied: boolean;
+    if (Array.isArray(value)) applied = value.length > 0;
+    else if (typeof value === 'string') applied = value !== '';
+    else applied = value.start !== null || value.end !== null;
     return applied ? ('applied' as const) : ('available' as const);
   };
 
@@ -258,7 +298,7 @@ export function NlTable<T>({
   })();
 
   return (
-    <div className={[styles.root, className].filter(Boolean).join(' ')} data-variant={variant}>
+    <div ref={rootRef} className={[styles.root, className].filter(Boolean).join(' ')} data-variant={variant}>
       {toolbarContent}
       <div className={styles.frame[variant]}>
         <table className={styles.table} aria-busy={loading || undefined}>
@@ -340,7 +380,20 @@ export function NlTable<T>({
                 return (
                   <tr
                     key={rowId}
-                    className={styles.row[selected ? 'selected' : 'default']}
+                    className={
+                      onRowClick
+                        ? `${styles.row[selected ? 'selected' : 'default']} ${styles.rowClickable}`
+                        : styles.row[selected ? 'selected' : 'default']
+                    }
+                    onClick={
+                      onRowClick
+                        ? (event: MouseEvent<HTMLTableRowElement>) => {
+                            // The row's own controls (checkbox, links, buttons) keep their click.
+                            if ((event.target as Element).closest('a, button, input, label')) return;
+                            onRowClick(row);
+                          }
+                        : undefined
+                    }
                     aria-selected={selectable ? selected : undefined}
                     data-selected={selected || undefined}
                   >
@@ -389,8 +442,8 @@ export function NlTable<T>({
       </div>
       {showFooter && (
         <div className={styles.footer}>
-          <p className={styles.summary}>{summaryText}</p>
-          <div className={styles.footerEnd}>
+          <div className={styles.footerStart}>
+            <p className={styles.summary}>{summaryText}</p>
             <NlRowsPerPage
               ref={sizesAnchor}
               value={pagination.pageSize}
@@ -398,12 +451,12 @@ export function NlTable<T>({
               onOpenChange={setSizesOpen}
               aria-controls={sizesMenuId}
             />
-            <NlPagination
-              page={pagination.page}
-              pageCount={pagination.pageCount}
-              onPageChange={pagination.onPageChange}
-            />
           </div>
+          <NlPagination
+            page={pagination.page}
+            pageCount={pagination.pageCount}
+            onPageChange={pagination.onPageChange}
+          />
         </div>
       )}
       {showFooter && (
@@ -458,7 +511,21 @@ export function NlTable<T>({
         </NlMenu>
       )}
       {openFilterColumn?.filter &&
-        (openFilterColumn.filter.multiple === false ? (
+        (openFilterColumn.filter.type === 'date-range' ? (
+          <NlTableColumnFilter
+            type="date-range"
+            open
+            onOpenChange={(next) => {
+              if (!next) setFilterFor(null);
+            }}
+            anchorRef={filterAnchor}
+            column={openFilterColumn.header}
+            value={openFilterColumn.filter.value}
+            onApply={openFilterColumn.filter.onApply}
+            minDate={openFilterColumn.filter.minDate}
+            maxDate={openFilterColumn.filter.maxDate}
+          />
+        ) : openFilterColumn.filter.multiple === false ? (
           <NlTableColumnFilter
             multiple={false}
             open
@@ -484,6 +551,19 @@ export function NlTable<T>({
             onApply={openFilterColumn.filter.onApply}
           />
         ))}
+      {showBulkBar && (
+        <div className={styles.bulkBar}>
+          <NlBulkActionBar
+            count={selectedCount}
+            actions={bulkActions(selectedIds)}
+            onClear={() => {
+              onSelectionChange?.([]);
+              // Focus goes to the select-all checkbox, so it isn't lost with the bar.
+              rootRef.current?.querySelector<HTMLInputElement>('thead input[type="checkbox"]')?.focus();
+            }}
+          />
+        </div>
+      )}
       <span role="status" className={styles.announcement}>
         {message}
       </span>

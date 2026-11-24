@@ -107,6 +107,11 @@ const textSurface: Partial<Record<string, string>> = {
   'text-dark_both': '--nl-bg-warning',
   'text-inverse': '--nl-bg-direct',
   'text-disabled-on_bg': '--nl-bg-disabled',
+  // Tier text sits on its tier's light gradient (D20); shown on the gradient's end, its lower-contrast side.
+  'text-tier-bronze': '--nl-bg-tier-bronze-end',
+  'text-tier-silver': '--nl-bg-tier-silver-end',
+  'text-tier-gold': '--nl-bg-tier-gold-end',
+  'text-tier-platinum': '--nl-bg-tier-platinum-end',
 };
 // Disabled text is exempt from contrast (WCAG 1.4.3), so its samples are marked disabled.
 const disabledText = new Set(['text-disabled', 'text-disabled-on_bg']);

@@ -24,8 +24,8 @@ export const appearance = {
  */
 export const stickyEnd = 'nl:sticky nl:end-none nl:z-sticky nl:shadow-sticky-end';
 
-/** The row inside the cell: horizontal, gap Space-L, items centred. */
-export const row = 'nl:flex nl:items-center nl:gap-l';
+/** The row inside the cell: horizontal, gap Space-L, items centred; the title stays on one line (OD-240). */
+export const row = 'nl:flex nl:items-center nl:gap-l nl:whitespace-nowrap';
 
 /**
  * Plain native buttons (OD-116): no chrome, just text and icon. At least Size-24 high (pointer target). Standard focus

@@ -361,3 +361,34 @@ Asked for by the designer (go-ahead on the NlSideNav plan, option a): one primit
 | References | The token build resolves every reference (no errors); `--nl-size-240`, Tailwind `w-240` / `size-240` generated |
 | Token tests | Count updated to 430 (`packages/tokens/test/tokens.test.ts`); pass |
 | Colour contrast | Not affected (no colour change) |
+
+## Addendum, 24 Nov 2026: member tier colours (D20)
+
+Asked for by the designer (member list page): tier badge tones with a light gradient. Added:
+
+- Primitives `bronze` and `platinum`, steps 50 to 900 (20 tokens, "Bronze, step 50, #FBF0E8 …").
+- Alias group `Alias Colors.Colors.Tier`: `Bronze`, `Silver` (grey), `Gold` (yellow), `Platinum`, steps 50, 200, 300 and 800, the same value in all three brands (16 tokens).
+- Semantic `bg-tier-<tier>_start` (50), `bg-tier-<tier>_end` (200), `text-tier-<tier>` (800), `border-tier-<tier>` (300), `fg-tier-<tier>` (800) for the four tiers, the same in Light and Dark (20 tokens).
+
+| Check | Result |
+|---|---|
+| JSON parses; tokens | Yes; 486 (was 430) |
+| `$type`, `$value`, `$description`, `$extensions.mode` on every token (§3.9 rule 1) | Pass |
+| Descriptions say where to use them; none copied (rules 2, 3) | Pass; every new description is unique |
+| Layers: semantic → alias → primitive; nothing skips a layer (rule 6) | Pass |
+| Every mode has a value (rule 8): 3 brands in `Tier`, Light and Dark in the semantic tokens | Pass |
+| Duplicate hex in one scale (rule 9) | 0 in `bronze`, 0 in `platinum` |
+| Token build | Resolves every reference; `--nl-bg-tier-*`, `--nl-text-tier-*`, `--nl-border-tier-*`, `--nl-fg-tier-*` generated |
+| Token tests | Count updated to 486 (`packages/tokens/test/tokens.test.ts`); pass |
+
+Contrast. The text is checked against both ends of its gradient (the lower one counts); the icon uses the same colour as the text. The borders are decorative: the label carries the tier, as with `border-warning` (D17).
+
+| Tier | Text on start | Text on end | Border on white | Badge end on Dark `bg-primary` |
+|---|---|---|---|---|
+| Bronze | 12.67 | 8.01 | 2.51 | 10.78 |
+| Silver | 14.15 | 8.31 | 3.00 | 9.60 |
+| Gold | 8.31 | 6.79 | 1.49 | 14.68 |
+| Platinum | 12.39 | 8.21 | 2.34 | 11.32 |
+
+Every text pairing passes AA (4.5:1) in every brand and theme; the values don't change with brand or theme. axe can't measure text on a gradient (it reports it as "needs review"), so these figures are the check.
+

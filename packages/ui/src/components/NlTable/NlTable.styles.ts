@@ -64,20 +64,32 @@ export const row = {
     'nl:border-b nl:border-default nl:last:border-b-0 nl:bg-active nl:hover:bg-active-hover nl:transition-colors nl:duration-fast nl:motion-reduce:transition-none',
 } as const;
 
+/** A clickable row (onRowClick, OD-243): the pointer shows the row can be opened. */
+export const rowClickable = 'nl:cursor-pointer';
+
 /** The empty state's cell: spans every column; Space-4XL above and below NlEmptyState (OD-229). */
 export const emptyCell = 'nl:px-none nl:py-4xl';
 
 /** A loading cell's skeleton bar: Size-80 wide (OD-228). */
 export const skeleton = 'nl:w-80';
 
-/** Footer: a row, Size-32 high, summary at the start, rows per page and pagination at the end, Space-L apart. */
-export const footer = 'nl:flex nl:h-32 nl:w-full nl:items-center nl:gap-l';
+/**
+ * Footer: a row, Size-32 high, space between: the summary and rows per page at the start, pagination at the end,
+ * Space-L apart (OD-242).
+ */
+export const footer = 'nl:flex nl:h-32 nl:w-full nl:items-center nl:justify-between nl:gap-l';
+
+/** The footer's start: summary, then rows per page, Space-L apart. */
+export const footerStart = 'nl:flex nl:min-w-0 nl:items-center nl:gap-l';
 
 /** The summary: "3 selected · Showing 1–10 of 120", Body S, text-tertiary. */
-export const summary = 'nl:m-none nl:min-w-0 nl:flex-1 nl:truncate nl:text-body-s nl:text-tertiary';
+export const summary = 'nl:m-none nl:min-w-0 nl:truncate nl:text-body-s nl:text-tertiary';
 
-/** Rows per page and pagination, Space-L apart. */
-export const footerEnd = 'nl:flex nl:shrink-0 nl:items-center nl:gap-l';
+/**
+ * The bulk action bar's place (D21): sticky Space-3XL above the bottom of the scrolling panel, above the rows
+ * (--nl-z-sticky), the pill centred. After the footer, so at rest it never covers the pagination.
+ */
+export const bulkBar = 'nl:sticky nl:bottom-3xl nl:z-sticky nl:flex nl:justify-center';
 
 /** Result and selection announcements: read politely, never shown. */
 export const announcement = 'nl:sr-only';
