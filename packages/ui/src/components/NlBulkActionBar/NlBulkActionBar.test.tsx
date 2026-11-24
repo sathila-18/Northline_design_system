@@ -23,7 +23,7 @@ describe('NlBulkActionBar', () => {
   it('a labelled region: clear selection, the count, actions with leading icons', () => {
     render(<NlBulkActionBar count={3} onClear={() => undefined} actions={actions(2)} />);
     const region = screen.getByRole('region', { name: 'Bulk actions' });
-    expect(region).toHaveClass('nl:bg-direct', 'nl:rounded-full', 'nl:shadow-menu');
+    expect(region).toHaveClass('nl:bg-direct', 'nl:rounded-m', 'nl:shadow-menu');
     expect(within(region).getByText('3 selected')).toHaveClass('nl:text-inverse');
     const action = within(region).getByRole('button', { name: 'Action 1' });
     expect(action).toHaveAttribute('data-icon', 'leading');

@@ -4,11 +4,10 @@
 // Structure: root (the pill: clear button, count, actions, more button) + a hidden measuring row.
 
 /**
- * The pill: bg-direct, Radius-Full, Size-48 high, Space-XS padding (Space-M at the end, so a solid last button stays
- * inside the rounded end), parts Space-M apart, --nl-shadow-menu. Hugs its content, never wider than its container. Slides up and fades in over Duration base; fade only under reduced motion.
+ * The pill: bg-direct, Radius-M (12), Size-48 high, Space-XS padding, parts Space-M apart, --nl-shadow-menu. Hugs its content, never wider than its container. Slides up and fades in over Duration base; fade only under reduced motion.
  */
 export const root =
-  'nl:relative nl:flex nl:h-48 nl:w-fit nl:max-w-full nl:items-center nl:gap-m nl:rounded-full nl:bg-direct nl:py-xs nl:ps-xs nl:pe-m nl:shadow-menu nl:animate-bulk-bar-in nl:motion-reduce:animate-bulk-bar-fade';
+  'nl:relative nl:flex nl:h-48 nl:w-fit nl:max-w-full nl:items-center nl:gap-m nl:rounded-m nl:bg-direct nl:p-xs nl:shadow-menu nl:animate-bulk-bar-in nl:motion-reduce:animate-bulk-bar-fade';
 
 /** "{n} selected": Label M, text-inverse, one line. */
 export const count = 'nl:m-none nl:shrink-0 nl:whitespace-nowrap nl:pe-xs nl:text-label-m nl:text-inverse';

@@ -8986,7 +8986,7 @@ NlBulkActionBar (region "Bulk actions", horizontal)
 
 #### Sizes and layout
 
-- The pill: `Size-48` high, `Radius-Full`, padding `Space-XS` (`Space-M` at the end, so a solid last button stays inside the rounded end), parts `Space-M` apart, actions `Space-XS` apart. Hugs its content, never wider than its container.
+- The pill: `Size-48` high, `Radius-M` (12, designer's choice), padding `Space-XS`, parts `Space-M` apart, actions `Space-XS` apart. Hugs its content, never wider than its container.
 - Buttons are `size="small"` with a leading icon.
 - Up to 7 actions show, fewer when they don't fit the container (measured, and again on resize); the rest go into the More actions menu. Destructive actions always show, after the others, and never go into the menu.
 - Placement is the container's: `NlTable` puts it after its footer, sticky `Space-3XL` above the bottom of the scrolling panel, centred. It floats over the rows and never moves the page; at rest it sits below the footer.
@@ -9016,7 +9016,7 @@ Shown while `count > 0` (the container decides). Appears with a slide up by `Spa
 
 | Spec option | Code |
 |---|---|
-| Pill | `<div role="region">`: `nl:h-48 nl:rounded-full nl:bg-direct nl:py-xs nl:ps-xs nl:pe-m nl:gap-m nl:shadow-menu`, `nl:animate-bulk-bar-in` / `nl:motion-reduce:animate-bulk-bar-fade` (named utilities in `tailwind.css`) |
+| Pill | `<div role="region">`: `nl:h-48 nl:rounded-m nl:bg-direct nl:p-xs nl:gap-m nl:shadow-menu`, `nl:animate-bulk-bar-in` / `nl:motion-reduce:animate-bulk-bar-fade` (named utilities in `tailwind.css`) |
 | Count | `<p>` `nl:text-label-m nl:text-inverse`, one line |
 | Actions | Normal: `NlButton variant="tertiary" contentTone="inverse" size="small" icon="leading"`; destructive: `tone="destructive" variant="primary"` |
 | Fitting | `MAX_VISIBLE = 7` minus the destructive ones; a layout effect and `ResizeObserver` on the container fit as many as the width allows; first render shows the maximum |
@@ -9041,7 +9041,7 @@ Props: `count`, `onClear`, `actions`, `aria-label?`, `className?`, native `div` 
 
 #### Tokens used
 
-`Size-48`; `Radius-Full`; `Space-XS`, `Space-M`, `Space-XL` (slide), `Space-3XL` (placement in `NlTable`); `bg-direct`, `text-inverse`; `--nl-shadow-menu`, `--nl-z-sticky`; `--nl-duration-base`, `--nl-ease-standard`; the parts' own (`NlButton`, `NlMenu`, `NlListItem`).
+`Size-48`; `Radius-M`; `Space-XS`, `Space-M`, `Space-XL` (slide), `Space-3XL` (placement in `NlTable`); `bg-direct`, `text-inverse`; `--nl-shadow-menu`, `--nl-z-sticky`; `--nl-duration-base`, `--nl-ease-standard`; the parts' own (`NlButton`, `NlMenu`, `NlListItem`).
 
 ---
 
@@ -9069,7 +9069,7 @@ Props: `count`, `onClear`, `actions`, `aria-label?`, `className?`, native `div` 
 | D18 | 22 Nov 2026 | Required fields on pages. Pressing a form's main button with required fields left empty puts each empty field in `error`, with an error helper text (with its leading icon, as `NlHelperText` draws it in error) saying what to enter. Focus moves to the first empty field. A field's error clears once it has a value. Native browser bubbles are off (`noValidate`); fields keep `required` |
 | D19 | 22 Nov 2026 | Smaller corners (designer's choice). Buttons: large and medium `Radius-S` (8), small and xsmall `Radius-XS` (4). Input fields (`NlInputBase`) and text area (`NlTextAreaBase`) `Radius-XS`. Chips (`NlChipBase`) `Radius-XS`. Side nav rows (`NlNavItem`, `NlNavSubItem`, and the `NlSideNavUser` row through `NlListItemBase` nav) `Radius-S`. `NlStatCard` `Radius-S`. `NlSegmentedButton` track `Radius-S` at every size; segments inside the padded medium and small tracks `Radius-XS`, xsmall segments `Radius-S`. The side nav tree line keeps its `Radius-S` curve |
 | D20 | 24 Nov 2026 | Member tier colours (designer's choice). `NlBadge` gets four tier tones, `bronze`, `silver`, `gold`, `platinum`: identity, not status. Each is a light 135° gradient (`bg-tier-*_start` step 50 → `bg-tier-*_end` step 200) with a step 300 inside border and step 800 text and icon. The same in Light and Dark, and in every brand (alias group `Colors.Tier`). New primitive scales `bronze` and `platinum`; silver uses `grey`, gold uses `yellow`. The gradients are named utilities in `tailwind.css` (`nl:tier-gradient-*`). Text is 6.79:1 or more on every gradient; the borders are decorative (as `border-warning`, D17) |
-| D21 | 24 Nov 2026 | Bulk actions (designer's choice): `NlBulkActionBar`, a floating `bg-direct` pill (not a full-width bar). Counts only what's selected on the page (no "select all matching"). Up to 7 actions show, as many as fit, then a More actions menu. Every action has a leading icon. Destructive actions use the destructive tone as a solid button (white text on `bg-action-destructive`), always show and come last. `NlTable` places it through `bulkActions`. Icons `block`, `download`, `swap_horiz` added |
+| D21 | 24 Nov 2026 | Bulk actions (designer's choice): `NlBulkActionBar`, a floating `bg-direct` pill (not a full-width bar), `Radius-M` corners (12). Counts only what's selected on the page (no "select all matching"). Up to 7 actions show, as many as fit, then a More actions menu. Every action has a leading icon. Destructive actions use the destructive tone as a solid button (white text on `bg-action-destructive`), always show and come last. `NlTable` places it through `bulkActions`. Icons `block`, `download`, `swap_horiz` added |
 
 Known issues
 
