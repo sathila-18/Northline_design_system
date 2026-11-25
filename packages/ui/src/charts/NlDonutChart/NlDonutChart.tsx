@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, type ReactElement } from 'react';
+import { useId, useState, type ReactElement } from 'react';
 import { Pie, PieChart, ResponsiveContainer, Sector, Tooltip, type PieSectorShapeProps } from 'recharts';
 import { NlChartLegend } from '../NlChartLegend';
 import type { NlChartSeries } from '../NlChartMarker';
@@ -76,7 +76,8 @@ export function toSlices(data: NlDonutChartSlice[], sortBy: 'value' | 'data'): N
  * Parts of a whole, up to 5 slices (DESIGN.md §9, NlDonutChart). A ring a quarter of its radius wide, starting at 12
  * o'clock and going clockwise, with true gaps between slices (about 2px, designer 24 Nov 2026); the total (Data L) and
  * its label in the centre; NlChartLegend with each slice's value and share, beside the ring from Size-560 wide or below
- * it (designer, 24 Nov 2026). The hovered or focused slice moves out by Space-XS with a chart-highlight ring; the
+ * it (designer, 24 Nov 2026). The hovered or focused slice moves out by Space-XS; hover dims the other slices to 40%
+ * and keyboard focus adds a chart-highlight ring (OD-261); the
  * NlChartTooltip shows its value and share. One tab stop (role group, "chart"): the arrow keys, Home, End, Escape;
  * each step announced. Slices sweep in over --nl-duration-slow with "ease-out"; none under reduced motion. 'use client'.
  */
@@ -102,6 +103,8 @@ export function NlDonutChart({
     height === '240' ? 240 : 320,
   );
   const [rootRef, rootWidth] = useElementWidth();
+  // The slice under the pointer, or null. Only hover dims the other slices (OD-261).
+  const [hovered, setHovered] = useState<number | null>(null);
 
   const slices = toSlices(data, sortBy);
   const percent = shares(slices.map((slice) => slice.value));
@@ -123,9 +126,10 @@ export function NlDonutChart({
     nextKeys: ['ArrowRight', 'ArrowDown'],
   });
 
-  // Each slice; the hovered or focused one sits Space-XS further out with a 2px chart-highlight ring round it.
+  // Each slice. The hovered or focused one sits Space-XS further out. While a slice is hovered the others dim; the
+  // 2px chart-highlight ring shows only for the keyboard-focused slice (OD-261).
   const shape = (props: PieSectorShapeProps): ReactElement => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, isActive } = props;
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, isActive, index } = props;
     if (!isActive) {
       return (
         <Sector
@@ -136,9 +140,11 @@ export function NlDonutChart({
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
+          className={hovered !== null && hovered !== index ? styles.slice.dimmed : styles.slice.resting}
         />
       );
     }
+    const focused = keyboard.index === index;
     return (
       <g>
         <Sector
@@ -149,17 +155,20 @@ export function NlDonutChart({
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
+          className={styles.slice.resting}
         />
-        <Sector
-          cx={cx}
-          cy={cy}
-          innerRadius={Math.max(0, innerRadius - 3)}
-          outerRadius={outerRadius + pull + 3}
-          startAngle={startAngle}
-          endAngle={endAngle}
-          strokeWidth={2}
-          className={styles.highlight}
-        />
+        {focused ? (
+          <Sector
+            cx={cx}
+            cy={cy}
+            innerRadius={Math.max(0, innerRadius - 3)}
+            outerRadius={outerRadius + pull + 3}
+            startAngle={startAngle}
+            endAngle={endAngle}
+            strokeWidth={2}
+            className={styles.highlight}
+          />
+        ) : null}
       </g>
     );
   };
@@ -189,6 +198,9 @@ export function NlDonutChart({
         tabIndex={0}
         onKeyDown={keyboard.onKeyDown}
         onBlur={keyboard.onBlur}
+        onMouseLeave={() => {
+          setHovered(null);
+        }}
         className={[styles.root[height], className].filter(Boolean).join(' ')}
         data-chart="donut"
         data-legend={position}
@@ -216,6 +228,12 @@ export function NlDonutChart({
                   paddingAngle={gapAngle}
                   stroke="none"
                   shape={shape}
+                  onMouseEnter={(_, index) => {
+                    setHovered(index);
+                  }}
+                  onMouseLeave={() => {
+                    setHovered(null);
+                  }}
                   isAnimationActive={!reduced}
                   animationDuration={drawDuration}
                   animationEasing="ease-out"

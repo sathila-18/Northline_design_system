@@ -95,6 +95,24 @@ describe('NlDonutChart', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Gold: 25, 21%');
   });
 
+  it('hover dims the other slices and shows no ring; keyboard focus shows the ring (OD-261)', async () => {
+    const { container } = render(<NlDonutChart title="Tiers" data={tiers} sortBy="data" />);
+    await settle();
+    const ring = () => container.querySelector('.nl\\:stroke-chart-highlight');
+    const sector = container.querySelector('.recharts-pie-sector');
+    if (!sector) throw new Error('No slice rendered');
+    fireEvent.mouseEnter(sector);
+    await settle();
+    expect(container.querySelectorAll('.recharts-pie-sector path.nl\\:opacity-40')).toHaveLength(tiers.length - 1);
+    expect(ring()).toBeNull();
+    fireEvent.mouseLeave(screen.getByRole('group'));
+    await settle();
+    expect(container.querySelectorAll('.recharts-pie-sector path.nl\\:opacity-40')).toHaveLength(0);
+    fireEvent.keyDown(screen.getByRole('group'), { key: 'ArrowDown' });
+    await settle();
+    expect(ring()).not.toBeNull();
+  });
+
   it('legend below when asked', async () => {
     render(<NlDonutChart title="Tiers" data={tiers} legendPosition="below" />);
     await settle();

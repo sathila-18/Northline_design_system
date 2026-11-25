@@ -9118,7 +9118,7 @@ _Drafted by Claude Code and decided by the designer, 24 Nov 2026 (OD-246 to OD-2
 - **Motion.** Lines draw in, bars grow and slices sweep over `--nl-duration-slow` with Recharts' named easing `ease-out`, the nearest to `--nl-ease-standard` (Recharts takes named easings only, OD-255). Off under `prefers-reduced-motion`.
 - **States.** Through `NlChartFrame`: loading (a skeleton the size of the chart), empty ("No data for this period") and error (with Try again).
 - **Responsive.** The chart fills its container's width and keeps its height (`height`: `Size-240` or `Size-320`, default `Size-320`).
-- **Highlight.** The hovered or focused mark: line points get a `chart-highlight` ring (2px, with a 2px gap in the background colour); bars and slices get the same ring; a time or category gets a `chart-cursor` band behind it (bars) or a 1px `chart-axis` line (lines).
+- **Highlight.** Hover (designer, 25 Nov 2026, OD-261): no ring. A time or category gets a `chart-cursor` band behind it (bars) or a 1px `chart-axis` line (lines), with the tooltip; on the donut the hovered slice moves out by `Space-XS` and the other slices dim to 40% opacity (no opacity token, a rule 9 exception like the skeleton's 0.6; fade `--nl-duration-fast`, none under reduced motion). Keyboard focus: the focused mark also gets a `chart-highlight` ring (2px, with a 2px gap in the background colour) on line points, bars and slices, as the focus indicator.
 
 ### NlChartMarker
 
@@ -9314,7 +9314,7 @@ Series `chart-series-1…7`; grid `chart-grid`; axis line `chart-axis`; axis tex
 
 #### States
 
-Default; hovered or focused point (cursor line, highlight rings on every series' point at that time, tooltip). Loading, empty and error come from `NlChartFrame`.
+Default; hovered point (cursor line, tooltip); keyboard-focused point (the same, plus highlight rings on every series' point at that time, OD-261). Loading, empty and error come from `NlChartFrame`.
 
 #### Behaviour and accessibility
 
@@ -9362,7 +9362,7 @@ As `NlLineChart`; the cursor is a `chart-cursor` band behind the hovered group.
 
 #### States
 
-Default; hovered or focused category (cursor band, highlight ring on the hovered bar, tooltip; stacked: tooltip has a total). Frame states as above.
+Default; hovered category (cursor band, tooltip; stacked: tooltip has a total); keyboard-focused category (the same, plus a highlight ring on its bars, OD-261). Frame states as above.
 
 #### Behaviour and accessibility
 
@@ -9409,7 +9409,7 @@ Slices `chart-series-1…5` in order (OD-248); gaps the background; centre total
 
 #### States
 
-Default; hovered or focused slice (pulled out by `Space-XS` and ringed, tooltip with value and share). Frame states as above.
+Default; hovered slice (pulled out by `Space-XS`, the other slices at 40% opacity, tooltip with value and share); keyboard-focused slice (pulled out and ringed, tooltip, OD-261). Frame states as above.
 
 #### Behaviour and accessibility
 

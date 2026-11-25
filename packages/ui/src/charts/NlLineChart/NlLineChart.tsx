@@ -128,12 +128,14 @@ export function NlLineChart<T extends Record<string, unknown>>({
     };
 
   const activeDot = (n: NlChartSeries) =>
-    function ActiveDot(props: { cx?: number; cy?: number }): ReactElement {
-      const { cx = 0, cy = 0 } = props;
-      // The ring: 2px of chart-highlight, a 2px gap outside the Size-8 marker.
+    function ActiveDot(props: { cx?: number; cy?: number; index?: number }): ReactElement {
+      const { cx = 0, cy = 0, index } = props;
+      // The ring: 2px of chart-highlight, a 2px gap outside the Size-8 marker, for the keyboard-focused point only.
+      // Hover shows only the chart-axis cursor line and the tooltip (OD-261).
+      const focused = keyboard.index !== null && keyboard.index === index;
       return (
         <g>
-          <circle cx={cx} cy={cy} r={marker / 2 + 3} strokeWidth={2} className={styles.ring} />
+          {focused ? <circle cx={cx} cy={cy} r={marker / 2 + 3} strokeWidth={2} className={styles.ring} /> : null}
           <NlChartMarker series={n} x={cx - marker / 2} y={cy - marker / 2} box={marker} />
         </g>
       );
