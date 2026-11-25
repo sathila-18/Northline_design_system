@@ -33,6 +33,7 @@ export interface NlChartFrameProps extends Omit<ComponentPropsWithRef<'section'>
   view?: NlChartFrameView;
   /** The starting view when uncontrolled. Default chart. */
   defaultView?: NlChartFrameView;
+  /** Called with the new view when the "View as" switch changes. */
   onViewChange?: (view: NlChartFrameView) => void;
   /** Card (default) or plain (the page draws the card). */
   variant?: keyof typeof styles.root;

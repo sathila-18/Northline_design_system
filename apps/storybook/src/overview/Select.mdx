@@ -1,0 +1,59 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSelect } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSelect/NlSelect.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A field that opens a list of options and shows the chosen one, such as "Tier" or "Status".'
+  source="components/NlSelect"
+  spec="nlselect"
+/>
+
+## Overview
+
+Click, or press Enter, Space or Down to open. A letter on the closed field picks an option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+Large is 48 high and small is 40, empty and filled.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## States
+
+The field can be enabled, complete, with helper text, in error, or disabled empty and disabled complete.
+
+<StoryWithCode of={Stories.States} />
+
+## With descriptions
+
+Options can have a description line. Disabled options are skipped by the keyboard.
+
+<StoryWithCode of={Stories.WithDescriptions} />
+
+## Long list
+
+With many options, the menu stops at 320 and scrolls. The chosen option has focus when the menu opens.
+
+<StoryWithCode of={Stories.LongList} />
+
+## Controlled
+
+The page holds the chosen value.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- The field is a combobox with `aria-haspopup="listbox"`, `aria-expanded` and `aria-controls`, named by the label. Its text is the current value.
+- Enter, Space or Down opens. Arrows move. Enter selects and closes. Escape closes without a change. A letter jumps to the next option that starts with it, on the closed field too.
+- It doesn't use a native `select`, so the menu can match the design. A hidden input with `name` submits the value.
+- The selected option has `aria-selected="true"`. Disabled options are skipped.
+
+## Component API
+
+<ArgTypes of={NlSelect} />

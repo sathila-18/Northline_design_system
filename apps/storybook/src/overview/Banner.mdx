@@ -1,0 +1,47 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlBanner } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlBanner/NlBanner.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="An inline message in the page about something the user should know, such as a sync warning or a successful import."
+  source="components/NlBanner"
+  spec="nlbanner"
+/>
+
+## Overview
+
+A banner can have an action and a close button.
+
+<StoryWithCode of={Stories.Default} />
+
+## Tones
+
+Every tone, with a title, description, action and close. Each tone has its own icon.
+
+<StoryWithCode of={Stories.Tones} />
+
+## Content
+
+A banner can leave out the title, the icon, or both. Without a title, the icon sits on the description's first line.
+
+<StoryWithCode of={Stories.Content} />
+
+## Live
+
+A banner added after the page loads uses `live`, so it is announced.
+
+<StoryWithCode of={Stories.Live} />
+
+## Accessibility
+
+- A banner present when the page loads has no role. It is just content in the page.
+- A banner added after load uses `role="status"` for info, success and neutral, or `role="alert"` for error and warning, so it is announced.
+- The close button is named "Dismiss", or "Dismiss" followed by the title. After closing, the caller moves focus to a sensible place.
+- Colour isn't the only signal. The icon and the text carry the meaning.
+
+## Component API
+
+<ArgTypes of={NlBanner} />

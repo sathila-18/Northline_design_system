@@ -1,0 +1,58 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlCheckboxListItem } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlCheckboxListItem/NlCheckboxListItem.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A list row with a checkbox, for picking several items from a list, such as in a multi-select menu or a filter."
+  source="components/NlCheckboxListItem"
+  spec="nlcheckboxlistitem"
+/>
+
+## Overview
+
+Hover the row to see the box follow. Tab to see the focus ring around the row.
+
+<StoryWithCode of={Stories.Default} />
+
+## Group
+
+A group of rows takes a group label. The page provides the wrapper.
+
+<StoryWithCode of={Stories.Group} />
+
+## States
+
+Rows can be unchecked, checked, disabled, or disabled and checked. The checkbox can be leading or trailing.
+
+<StoryWithCode of={Stories.States} />
+
+## Filled
+
+Filled rows look like cards. The list sets the gap between them.
+
+<StoryWithCode of={Stories.Filled} />
+
+## Sizes and density
+
+Rows come in large and small, each in two densities.
+
+<StoryWithCode of={Stories.SizesAndDensity} />
+
+## Body
+
+A body can replace the description. `showBody` turns the body or description off.
+
+<StoryWithCode of={Stories.Body} />
+
+## Accessibility
+
+- The whole row toggles. It is a `label` around a native checkbox.
+- Space toggles. The focus ring goes around the row, not the box.
+- A group of rows takes a group label (`role="group"` with a name), for example "Tiers". The page provides the wrapper.
+
+## Component API
+
+<ArgTypes of={NlCheckboxListItem} />

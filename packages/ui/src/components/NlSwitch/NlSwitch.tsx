@@ -23,7 +23,15 @@ interface NlSwitchBaseProps extends Omit<
 
 /** An accessible name is required: either aria-label, or the id of a visible label. */
 export type NlSwitchProps = NlSwitchBaseProps &
-  ({ 'aria-label': string; 'aria-labelledby'?: never } | { 'aria-label'?: never; 'aria-labelledby': string });
+  (
+    | {
+        /** The switch's accessible name. Use it, or `aria-labelledby`. */
+        'aria-label': string;
+        /** The id of visible text that names the switch. */
+        'aria-labelledby'?: never;
+      }
+    | { 'aria-label'?: never; 'aria-labelledby': string }
+  );
 
 /**
  * The bare on/off switch: a track with a sliding handle (DESIGN.md §9, NlSwitch). No label of its own (D13).

@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlHelperText } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlHelperText/NlHelperText.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A short line under a form field: a hint, or a success, warning or error message, with an optional icon."
+  source="components/NlHelperText"
+  spec="nlhelpertext"
+/>
+
+## Overview
+
+Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Tones
+
+There are five tones. Error and warning each use their own icon.
+
+<StoryWithCode of={Stories.Tones} />
+
+## Without icon
+
+The icon can be turned off.
+
+<StoryWithCode of={Stories.WithoutIcon} />
+
+## Wrapping
+
+A long message wraps. The icon stays centred on the first line.
+
+<StoryWithCode of={Stories.Wrapping} />
+
+## Under a field
+
+The field points at the helper text with `aria-describedby`, so a screen reader reads it after the field's name.
+
+<StoryWithCode of={Stories.UnderAField} />
+
+## Accessibility
+
+- The field references it with `aria-describedby`, so a screen reader reads it after the field's name.
+- With the error tone, the field also sets `aria-invalid="true"`. The field announces a new error through its own live region. This component doesn't.
+- Colour isn't the only signal. The icon shape and the text differ by tone.
+- The icon is decorative.
+
+## Component API
+
+<ArgTypes of={NlHelperText} />

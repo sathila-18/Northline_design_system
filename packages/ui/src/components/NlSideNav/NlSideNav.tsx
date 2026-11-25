@@ -40,6 +40,7 @@ export interface NlSideNavProps extends Omit<ComponentPropsWithRef<'nav'>, 'clas
   minimized?: boolean;
   /** Minimized at first (uncontrolled). Default: from the window, minimized below Breakpoint-1280. */
   defaultMinimized?: boolean;
+  /** Called when the nav is minimized or expanded. */
   onMinimizedChange?: (minimized: boolean) => void;
   /** Placement only. */
   className?: string;

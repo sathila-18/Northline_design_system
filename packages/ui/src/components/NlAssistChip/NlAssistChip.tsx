@@ -21,7 +21,13 @@ interface NlAssistChipCommonProps extends Omit<
 
 /** Without `dropdown`, an action chip: no arrow, no open state. With it, the chip opens something and shows it. */
 type NlAssistChipDropdownProps =
-  | { dropdown?: false; popup?: undefined; open?: undefined; onOpenChange?: undefined }
+  | {
+      /** The chip opens a menu or picker and shows a dropdown arrow. Without it, an action chip. */
+      dropdown?: false;
+      popup?: undefined;
+      open?: undefined;
+      onOpenChange?: undefined;
+    }
   | {
       dropdown: true;
       /** What it opens, for `aria-haspopup`. Default menu. */

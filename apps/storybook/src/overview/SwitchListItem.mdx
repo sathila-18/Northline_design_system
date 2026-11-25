@@ -1,0 +1,58 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSwitchListItem } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSwitchListItem/NlSwitchListItem.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A settings row with a switch at the end, such as "Email updates".'
+  source="components/NlSwitchListItem"
+  spec="nlswitchlistitem"
+/>
+
+## Overview
+
+Click anywhere on the row. Tab to see the focus ring around the row.
+
+<StoryWithCode of={Stories.Default} />
+
+## States
+
+Off and on rows look the same apart from the switch. Disabled rows can be off or on.
+
+<StoryWithCode of={Stories.States} />
+
+## Settings
+
+A controlled list of settings.
+
+<StoryWithCode of={Stories.Settings} />
+
+## Filled
+
+Filled rows look like cards. The list sets the gap between them.
+
+<StoryWithCode of={Stories.Filled} />
+
+## Sizes and density
+
+Rows come in large and small, each in two densities.
+
+<StoryWithCode of={Stories.SizesAndDensity} />
+
+## Body
+
+A body can replace the description. `showBody` turns the body or description off.
+
+<StoryWithCode of={Stories.Body} />
+
+## Accessibility
+
+- The whole row toggles. The row is the switch's label, so there is one control, named by the title and described by the description.
+- Space toggles. The focus ring goes around the row.
+- A screen reader hears, for example, "Email updates, switch, on".
+
+## Component API
+
+<ArgTypes of={NlSwitchListItem} />

@@ -69,8 +69,11 @@ export type NlCalendarProps = NlCalendarCommonProps &
     | {
         /** One date (default). */
         mode?: 'single';
+        /** The chosen date as ISO (controlled). In range mode, a start and an end. */
         value?: string | null;
+        /** The starting value when uncontrolled. */
         defaultValue?: string | null;
+        /** Called with the new value when a date (or, in range mode, the range) is chosen. */
         onValueChange?: (value: string) => void;
       }
     | {

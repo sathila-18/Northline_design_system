@@ -1,0 +1,52 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSideNavUser } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSideNavUser/NlSideNavUser.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The signed-in user at the bottom of the side nav. It opens the account menu."
+  source="components/NlSideNavUser"
+  spec="nlsidenavuser"
+/>
+
+## Overview
+
+Click the row to open the account menu above it. Escape closes it.
+
+<StoryWithCode of={Stories.Default} />
+
+## Minimized
+
+Minimized, it shows the avatar only, with the name in a tooltip. The menu opens to the end, along the bottom.
+
+<StoryWithCode of={Stories.Minimized} />
+
+## Open
+
+The menu open from the start, controlled by the page.
+
+<StoryWithCode of={Stories.Open} />
+
+## No menu
+
+Without a menu, the row is not a button. It has no hover, no side padding and no chevron.
+
+<StoryWithCode of={Stories.NoMenu} />
+
+## Long text
+
+A long name and email each stay on one line, cut with an ellipsis. Hover for the full text.
+
+<StoryWithCode of={Stories.LongText} />
+
+## Accessibility
+
+- It is a `button` with `aria-haspopup="menu"` and `aria-expanded`, named from its text: the name, the email and the menu label.
+- Minimized, the avatar is the button. The name is a visually hidden label and a tooltip.
+- Escape in the menu closes it and returns focus here.
+
+## Component API
+
+<ArgTypes of={NlSideNavUser} />

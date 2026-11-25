@@ -42,6 +42,7 @@ export interface NlNavItemProps extends Omit<ComponentPropsWithRef<'div'>, 'chil
   expanded?: boolean;
   /** Pages shown at first. Default: when one of them is current (OD-190). */
   defaultExpanded?: boolean;
+  /** Called when the section opens or closes. */
   onExpandedChange?: (expanded: boolean) => void;
   /** Link target, for a section without pages. */
   href?: string;

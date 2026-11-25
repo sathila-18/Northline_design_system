@@ -1,0 +1,62 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlCalendar } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlCalendar/NlCalendar.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A month grid for picking one date or a date range. It is used in the date field's menu and on its own."
+  source="components/NlCalendar"
+  spec="nlcalendar"
+/>
+
+## Overview
+
+Click a day, or Tab in and use the arrow keys, Home, End, Page Up and Page Down.
+
+<StoryWithCode of={Stories.Default} />
+
+## Single
+
+Single mode picks one date. Days from other months show as outside. Picking one moves to its month.
+
+<StoryWithCode of={Stories.Single} />
+
+## Range
+
+Range mode picks a start and an end, with two months side by side. While you choose the end, the range previews on hover and focus.
+
+<StoryWithCode of={Stories.Range} />
+
+## Limits
+
+`minDate`, `maxDate` and `isDateDisabled` make dates unavailable. Previous and next stop at the limits.
+
+<StoryWithCode of={Stories.Limits} />
+
+## Week starts Sunday
+
+`weekStartsOn` sets the first day of the week. Monday is the default.
+
+<StoryWithCode of={Stories.WeekStartsSunday} />
+
+## Controlled
+
+The page holds the value and the month.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- The days form a grid labelled with the month and year. The weekday headers use the full day names as their text.
+- The grid is one tab stop. Arrow keys move by a day or a week, into the next or previous month.
+- Home and End go to the start and end of the week. Page Up and Page Down go to the previous and next month. With Shift, they go to the previous and next year.
+- Enter or Space selects. In range mode the first choice sets the start and the second sets the end.
+- The previous and next buttons are named "Previous month" and "Next month".
+- The month and year title is a polite live region, so a change of month is announced.
+- Disabled dates are announced as unavailable. They can't be selected but stay reachable by arrow keys.
+
+## Component API
+
+<ArgTypes of={NlCalendar} />

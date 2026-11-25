@@ -1,0 +1,65 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlCheckbox } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlCheckbox/NlCheckbox.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A checkbox with its text, for single options in forms, such as "Send a welcome email".'
+  source="components/NlCheckbox"
+  spec="nlcheckbox"
+/>
+
+## Overview
+
+Click the text, or Tab to the box and press Space.
+
+<StoryWithCode of={Stories.Default} />
+
+## Types
+
+A checkbox can be unselected, selected or indeterminate.
+
+<StoryWithCode of={Stories.Types} />
+
+## Sizes
+
+Medium uses Body L with the box at the top. Small uses Body M with the text centred on the box.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Disabled
+
+A disabled checkbox uses the control's disabled look and disabled text.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Long text
+
+Long text wraps. The box stays on the first line.
+
+<StoryWithCode of={Stories.LongText} />
+
+## Hidden label
+
+With `hideLabel`, only the box shows. The text stays as its name. A table row uses this.
+
+<StoryWithCode of={Stories.HiddenLabel} />
+
+## Controlled
+
+The page holds the checked state.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- The control is a native checkbox. The whole row is a `label`, so clicking the text toggles it.
+- The text names the checkbox. With `hideLabel`, the text is visually hidden but stays the name.
+- Tab moves to the control. Space toggles it.
+- A screen reader hears the text, "checkbox" and its state.
+
+## Component API
+
+<ArgTypes of={NlCheckbox} />

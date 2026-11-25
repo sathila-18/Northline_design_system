@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlProgressBar } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlProgressBar/NlProgressBar.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A horizontal bar that shows how much of a task is done."
+  source="components/NlProgressBar"
+  spec="nlprogressbar"
+/>
+
+## Overview
+
+Change the value to see the fill animate.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are two sizes. Small is the default.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Values
+
+The fill follows the value from 0 to 100. At 0 no fill is drawn.
+
+<StoryWithCode of={Stories.Values} />
+
+## With visible label
+
+A visible caption can name the bar through `aria-labelledby`, in place of `label`.
+
+<StoryWithCode of={Stories.WithVisibleLabel} />
+
+## Animated
+
+The fill width animates when the value changes.
+
+<StoryWithCode of={Stories.Animated} />
+
+## Accessibility
+
+- It has `role="progressbar"` with a range of 0 to 100, `aria-valuenow` and a name from `label` or `aria-labelledby`.
+- A screen reader hears, for example, "Upload, progress bar, 50%".
+- With reduced motion the width jumps with no animation.
+- The fill needs 3 to 1 against the track in every brand and theme.
+
+## Component API
+
+<ArgTypes of={NlProgressBar} />

@@ -1,0 +1,54 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlInputChip } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlInputChip/NlInputChip.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A chosen value shown as a chip, with a remove button. The multi select uses it."
+  source="components/NlInputChip"
+  spec="nlinputchip"
+/>
+
+## Overview
+
+Tab to the remove button. Enter, Space, Backspace or Delete removes the chip.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are three sizes. The remove button's 24 × 24 target doesn't change the chip's size.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## With leading
+
+A chip can have a leading icon.
+
+<StoryWithCode of={Stories.WithLeading} />
+
+## Disabled
+
+A disabled chip is greyed, with no border, shadow or remove button.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Removable list
+
+A list of chosen values. Removing one moves focus to the next chip's remove button, or the previous one at the end. The caller moves the focus.
+
+<StoryWithCode of={Stories.RemovableList} />
+
+## Accessibility
+
+- The chip itself isn't interactive. It is a `span` with the label and a remove `button`.
+- The remove button is named "Remove" followed by the label, for example "Remove Tier 2". Enter or Space removes.
+- Backspace or Delete on the focused remove button also removes.
+- A disabled chip has no remove button.
+- The remove icon is 16. Its button is at least 24 × 24 without changing the chip's look.
+
+## Component API
+
+<ArgTypes of={NlInputChip} />

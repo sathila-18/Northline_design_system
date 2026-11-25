@@ -1,0 +1,52 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSkeleton } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSkeleton/NlSkeleton.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A grey placeholder shown while content loads, sized to the content it stands in for."
+  source="components/NlSkeleton"
+  spec="nlskeleton"
+/>
+
+## Overview
+
+It pulses from full opacity to 60% and back. With reduced motion it stays at full opacity.
+
+<StoryWithCode of={Stories.Default} />
+
+## Text
+
+A text line. It fills its container.
+
+<StoryWithCode of={Stories.Text} />
+
+## Rect
+
+A block. It fills its container.
+
+<StoryWithCode of={Stories.Rect} />
+
+## Circle
+
+A circle.
+
+<StoryWithCode of={Stories.Circle} />
+
+## Loading row
+
+Skeletons combined into a loading row. The region sets `aria-busy`. A width class in `className` makes a skeleton narrower.
+
+<StoryWithCode of={Stories.LoadingRow} />
+
+## Accessibility
+
+- Every skeleton is hidden from screen readers.
+- The region that is loading sets `aria-busy="true"` while skeletons show. That is the parent's job.
+- The pulse repeats while the skeleton shows. With reduced motion there is no animation.
+
+## Component API
+
+<ArgTypes of={NlSkeleton} />

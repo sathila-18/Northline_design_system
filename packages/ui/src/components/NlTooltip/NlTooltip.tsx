@@ -39,7 +39,14 @@ interface NlTooltipCommonProps {
 
 /** Single line (`content`) or rich (`heading` and an optional `description`). */
 type NlTooltipContentProps =
-  | { content: string; heading?: undefined; description?: undefined }
+  | {
+      /** Single line: the tooltip text. */
+      content: string;
+      /** Rich: the heading. Use it instead of `content`. */
+      heading?: undefined;
+      /** Rich: an optional description under the heading. */
+      description?: undefined;
+    }
   | { content?: undefined; heading: string; description?: string };
 
 export type NlTooltipProps = NlTooltipCommonProps & NlTooltipContentProps;

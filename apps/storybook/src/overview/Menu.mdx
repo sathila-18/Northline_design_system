@@ -1,0 +1,76 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlMenu } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlMenu/NlMenu.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The floating surface for every menu: action menus, select options, filters and navigation."
+  source="components/NlMenu"
+  spec="nlmenu"
+/>
+
+## Overview
+
+The menu draws the panel, an optional sticky header and footer, and the scrolling content between them. What goes inside is passed in. This is an action menu.
+
+<StoryWithCode of={Stories.Action} />
+
+## Select, single
+
+A single select menu is a listbox. It opens on the selected option. Choosing one closes the menu.
+
+<StoryWithCode of={Stories.SelectSingle} />
+
+## Select, multiple
+
+A multiple select menu toggles options and stays open.
+
+<StoryWithCode of={Stories.SelectMultiple} />
+
+## Filter
+
+A filter menu is a non-modal dialog, here with a search field in the header and two buttons in the footer. It stays open until Apply, Reset, Escape or a click outside.
+
+<StoryWithCode of={Stories.Filter} />
+
+## Navigation
+
+A navigation menu holds links. Enter follows the link.
+
+<StoryWithCode of={Stories.Navigation} />
+
+## Groups
+
+Rows can sit in labelled groups with dividers between them.
+
+<StoryWithCode of={Stories.Groups} />
+
+## Long list
+
+With a sticky header and `maxHeight`, the content scrolls and the header stays.
+
+<StoryWithCode of={Stories.LongList} />
+
+## Flips above
+
+Near the bottom of the window, the menu opens above the trigger.
+
+<StoryWithCode of={Stories.FlipsAbove} />
+
+## Accessibility
+
+- An action menu has `role="menu"` with `menuitem` rows. Up and Down move between rows and wrap. Home and End go to the first and last. Enter or Space activates and closes. A letter jumps to the next row that starts with it.
+- A select menu has `role="listbox"` with `option` rows and `aria-selected`. A multiple select adds `aria-multiselectable`. Enter or Space selects. A single select closes on select.
+- A filter menu is a non-modal dialog. Tab moves through the header, rows and footer.
+- A navigation menu has `role="menu"`, and its rows are links. Enter follows the link.
+- Escape closes any menu and returns focus to the trigger. A click outside closes it.
+- On open, focus goes to the selected row (select), the first row (action, navigation) or the first field in the header (filter).
+- The trigger has `aria-haspopup`, `aria-expanded` and `aria-controls`.
+- Dividers between groups are decorative. Labelled groups use `role="group"` with a name.
+- Disabled rows are skipped by the arrow keys and announced as unavailable.
+
+## Component API
+
+<ArgTypes of={NlMenu} />

@@ -1,0 +1,55 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSlider } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSlider/NlSlider.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="Picks one value along a range by dragging a thumb or using the keyboard."
+  source="components/NlSlider"
+  spec="nlslider"
+/>
+
+## Overview
+
+Arrow keys move one step. Page Up and Page Down move 10%. Home and End go to the ends.
+
+<StoryWithCode of={Stories.Default} />
+
+## Values
+
+The fill follows the value. Here it is at 5, 25, 50, 75 and 100.
+
+<StoryWithCode of={Stories.Values} />
+
+## Disabled
+
+A disabled slider has no shadow and can't be focused.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Disabled, ends
+
+Disabled at the minimum and maximum, with the thumb half outside the track at each end.
+
+<StoryWithCode of={Stories.DisabledEnds} />
+
+## Controlled
+
+The page holds the value. The slider shows no value itself, so the page shows it next to the slider.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- It is a native range input, styled. A screen reader hears the name, "slider" and the value, for example "Points, slider, 50".
+- Left or Down takes off one step. Right or Up adds one. Page Down and Page Up move 10% of the range. Home and End go to the minimum and maximum.
+- `aria-valuetext` can add a unit, for example "50 points".
+- A disabled slider uses native `disabled`. It can't be focused and takes no pointer events.
+- Colour changes on hover and press don't animate when reduced motion is on.
+- The fill and thumb need 3 to 1 against the track in every brand and theme.
+
+## Component API
+
+<ArgTypes of={NlSlider} />

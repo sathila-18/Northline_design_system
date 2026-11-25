@@ -21,6 +21,7 @@ export interface NlSideNavUserProps {
   menuLabel?: string;
   /** Menu shown (controlled). */
   open?: boolean;
+  /** Called when the account menu asks to open or close. */
   onOpenChange?: (open: boolean) => void;
   /** Instead of a menu: the row is a plain button. */
   onClick?: () => void;

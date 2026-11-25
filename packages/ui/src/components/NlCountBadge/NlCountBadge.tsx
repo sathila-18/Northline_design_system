@@ -10,6 +10,7 @@ export interface NlCountBadgeProps extends Omit<ComponentPropsWithRef<'span'>, '
   count?: number;
   /** Highest number shown. Above it the badge shows `${max}+`. */
   max?: number;
+  /** Height, padding and text style. */
   size?: NlCountBadgeSize;
   /** Background colour. */
   tone?: NlCountBadgeTone;

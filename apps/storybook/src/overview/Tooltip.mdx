@@ -1,0 +1,55 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTooltip } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTooltip/NlTooltip.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A short dark label that appears next to an element on hover or focus. The rich form adds a heading and a description."
+  source="components/NlTooltip"
+  spec="nltooltip"
+/>
+
+## Overview
+
+Hover the button, after a short delay, or Tab to it. Escape hides the tooltip. You can move the pointer into it.
+
+<StoryWithCode of={Stories.Default} />
+
+## Single line
+
+On an icon-only button, the tooltip repeats the hidden label as a description.
+
+<StoryWithCode of={Stories.SingleLine} />
+
+## Rich
+
+A rich tooltip has a heading and a description, up to 320 wide.
+
+<StoryWithCode of={Stories.Rich} />
+
+## Placements
+
+There are four placements. Start and end follow the text direction.
+
+<StoryWithCode of={Stories.Placements} />
+
+## Near the edge
+
+Near the window's top edge, a top tooltip flips below and keeps its distance from the edge.
+
+<StoryWithCode of={Stories.NearTheEdge} />
+
+## Accessibility
+
+- It appears on hover, after a short delay, and on keyboard focus of the trigger. It disappears on pointer leave, blur or Escape.
+- Hovering the tooltip itself keeps it open.
+- It has `role="tooltip"`, and the trigger gets `aria-describedby`. On an icon-only button the tooltip repeats the hidden label, so it stays a description and the name comes from the button.
+- A rich tooltip describes the trigger with both the heading and the description. It holds no interactive content.
+- It fades in and out. With reduced motion it doesn't fade.
+- Touch has no hover, so the information must also be available another way.
+
+## Component API
+
+<ArgTypes of={NlTooltip} />

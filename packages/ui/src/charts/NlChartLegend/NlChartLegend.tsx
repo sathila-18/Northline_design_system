@@ -15,6 +15,7 @@ export type NlChartLegendKind = 'line' | 'block';
 export type NlChartLegendPosition = 'below' | 'end';
 
 export interface NlChartLegendProps extends Omit<ComponentPropsWithRef<'ul'>, 'className' | 'children'> {
+  /** One entry per series or slice: its label, series colour and, for a donut, its value. */
   items: NlChartLegendItem[];
   /** Line charts: a short line with the series' shape. Bars and donut slices: a square. */
   kind?: NlChartLegendKind;

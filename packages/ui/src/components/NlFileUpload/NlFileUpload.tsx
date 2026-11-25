@@ -47,8 +47,11 @@ export interface NlFileUploadProps extends Omit<
   onFileSelect: (file: File) => void;
   /** A dropped file that doesn't match `accept` (OD-178). */
   onFileReject?: (file: File) => void;
+  /** The cancel button was pressed while uploading. */
   onCancel?: () => void;
+  /** The delete button was pressed after an upload. */
   onDelete?: () => void;
+  /** The retry button was pressed after an error. */
   onRetry?: () => void;
   /** Disabled look (OD-123): no picking or dropping, button disabled. */
   disabled?: boolean;

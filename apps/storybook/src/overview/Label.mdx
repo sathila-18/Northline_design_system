@@ -1,0 +1,52 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlLabel } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlLabel/NlLabel.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A small, low-emphasis label, with an optional dot badge. It sits above headings, in list rows, the calendar header and table headers."
+  source="components/NlLabel"
+  spec="nllabel"
+/>
+
+## Overview
+
+Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+Medium uses Label M. Small uses Label S.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Tones
+
+There are four text colours. Tertiary is the default.
+
+<StoryWithCode of={Stories.Tones} />
+
+## With badge
+
+The dot badge comes in each tone. Its meaning is hidden text, read after the label.
+
+<StoryWithCode of={Stories.WithBadge} />
+
+## As a form label
+
+With `as="label"`, it names an input. Clicking it focuses the input.
+
+<StoryWithCode of={Stories.AsFormLabel} />
+
+## Accessibility
+
+- It is a `span` by default. As a form label (`as="label"`), it names its control.
+- The dot badge has no text of its own. `badgeLabel` gives it hidden text, for example "New", read after the label.
+- Colour isn't the only signal. When the dot means something, the meaning is in `badgeLabel`.
+
+## Component API
+
+<ArgTypes of={NlLabel} />

@@ -1,0 +1,97 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlDonutChart } from '@northline/ui/charts';
+import * as Stories from '../../../../packages/ui/src/charts/NlDonutChart/NlDonutChart.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="Parts of a whole, up to 5 slices, such as members by tier."
+  source="charts/NlDonutChart"
+  spec="nldonutchart"
+/>
+
+## Overview
+
+Members by tier, in data order. The total sits in the centre and the legend beside the ring shows the shares. Tab in, then use the arrow keys.
+
+<StoryWithCode of={Stories.Default} />
+
+## By value
+
+`sortBy="value"`, the default, puts the largest slice first.
+
+<StoryWithCode of={Stories.ByValue} />
+
+## Most slices
+
+With more than 5 slices, the chart shows the largest 4 and groups the rest as "Other", always last.
+
+<StoryWithCode of={Stories.MostSlices} />
+
+## Single slice
+
+One slice is a full ring with no gap.
+
+<StoryWithCode of={Stories.SingleSlice} />
+
+## Long labels
+
+Long labels are cut in the legend and tooltip. The table view has them in full.
+
+<StoryWithCode of={Stories.LongLabels} />
+
+## Narrow
+
+Narrower than 560, the legend goes below the ring.
+
+<StoryWithCode of={Stories.Narrow} />
+
+## Short
+
+The chart can be 240 high. This one also has a custom value format.
+
+<StoryWithCode of={Stories.Short} />
+
+## Framed
+
+The chart in its frame, with the title and the "View as" switch.
+
+<StoryWithCode of={Stories.Framed} />
+
+## View as table
+
+The frame can show the same data as a table.
+
+<StoryWithCode of={Stories.ViewAsTable} />
+
+## Loading
+
+While loading, the frame shows a skeleton the size of the chart.
+
+<StoryWithCode of={Stories.Loading} />
+
+## Empty
+
+With no data, the frame shows "No data for this period".
+
+<StoryWithCode of={Stories.Empty} />
+
+## Error
+
+On error, the frame shows a message and Try again.
+
+<StoryWithCode of={Stories.Error} />
+
+## Accessibility
+
+- `title` is required. The plot is a group with the role description "chart", named by the title.
+- The plot is one tab stop. Left and Right, and Up and Down, move between slices. Home and End go to the first and last. Escape hides the tooltip.
+- Each slice announces its label, value and share, for example "Gold: 312 members, 26%".
+- Colour is never the only signal. The legend, tooltip and table name every value.
+- The table view is the full screen reader route.
+- Slices sweep in when they appear. With reduced motion they don't animate.
+
+## Component API
+
+<ArgTypes of={NlDonutChart} />

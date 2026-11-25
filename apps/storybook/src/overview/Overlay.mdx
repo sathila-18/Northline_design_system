@@ -1,0 +1,41 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlOverlay } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlOverlay/NlOverlay.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The dim layer behind dialogs and side sheets."
+  source="components/NlOverlay"
+  spec="nloverlay"
+/>
+
+## Overview
+
+The overlay over sample page content. Toggle `open` to see it fade in and out.
+
+<StoryWithCode of={Stories.Default} />
+
+## Hidden
+
+When hidden, it stays in the page but draws nothing and takes no clicks.
+
+<StoryWithCode of={Stories.Hidden} />
+
+## Click to close
+
+The parent decides what a click does. Here a click closes the overlay.
+
+<StoryWithCode of={Stories.ClickToClose} />
+
+## Accessibility
+
+- It is always hidden from screen readers. It is never focusable and has no name.
+- The parent owns focus trapping, Escape to close and making the page behind inert. The overlay only draws the dim layer and passes clicks to the parent.
+- It fades in and out. With reduced motion it appears and disappears with no fade.
+- The parent locks page scrolling while the overlay shows.
+
+## Component API
+
+<ArgTypes of={NlOverlay} />

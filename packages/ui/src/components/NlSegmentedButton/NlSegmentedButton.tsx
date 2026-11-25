@@ -18,7 +18,9 @@ type WithIcon = NlSegmentedButtonOption & { icon: NlIconName };
 /** 2 or 3 options (OD-75). Icon-only needs an icon on every option. */
 type NlSegmentedButtonOptionsProps =
   | {
+      /** Segments show only their icon. The label becomes the hidden name and a tooltip. */
       iconOnly?: false;
+      /** The 2 or 3 options. Icon-only needs an icon on each. */
       options:
         | [NlSegmentedButtonOption, NlSegmentedButtonOption]
         | [NlSegmentedButtonOption, NlSegmentedButtonOption, NlSegmentedButtonOption];
@@ -27,7 +29,13 @@ type NlSegmentedButtonOptionsProps =
 
 /** An accessible name is required: aria-label, or the id of a visible label. */
 type NlSegmentedButtonNameProps =
-  { 'aria-label': string; 'aria-labelledby'?: never } | { 'aria-label'?: never; 'aria-labelledby': string };
+  | {
+      /** The group's accessible name. Use it, or `aria-labelledby`. */
+      'aria-label': string;
+      /** The id of a visible label that names the group. */
+      'aria-labelledby'?: never;
+    }
+  | { 'aria-label'?: never; 'aria-labelledby': string };
 
 interface NlSegmentedButtonCommonProps extends Omit<
   ComponentPropsWithRef<'div'>,

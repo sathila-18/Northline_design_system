@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlNavItem } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlNavItem/NlNavItem.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A section in the side nav: an icon and a name that links to a page or opens to show its pages."
+  source="components/NlNavItem"
+  spec="nlnavitem"
+/>
+
+## Overview
+
+Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## States
+
+A link row can be default or the current page. A long name is cut with an ellipsis.
+
+<StoryWithCode of={Stories.States} />
+
+## With pages
+
+A section with pages opens and closes. The section that holds the open page starts open.
+
+<StoryWithCode of={Stories.WithPages} />
+
+## Controlled
+
+The page holds whether the section is open.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Minimized
+
+Minimized, the row shows the icon only and the name in a tooltip. A section's pages open in a menu to the end.
+
+<StoryWithCode of={Stories.Minimized} />
+
+## Accessibility
+
+- Without pages, it is a link with `aria-current="page"` when it is the current page.
+- With pages, it is a `button` with `aria-expanded` and `aria-controls` that shows the pages, which are links. A section holding the current page opens by default.
+- Minimized, the label stays as visually hidden text and shows in a tooltip. A section with pages opens them in a menu.
+- Tab moves through rows and open pages. Enter or Space opens or closes a section.
+
+## Component API
+
+<ArgTypes of={NlNavItem} />

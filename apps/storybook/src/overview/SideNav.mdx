@@ -1,0 +1,54 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSideNav } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSideNav/NlSideNav.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The app's main navigation: a logo and collapse button at the top, the sections, and the signed-in user at the bottom."
+  source="components/NlSideNav"
+  spec="nlsidenav"
+/>
+
+## Overview
+
+The nav follows the window. It is expanded from 1280 wide and minimized below. The collapse button toggles it.
+
+<StoryWithCode of={Stories.Default} />
+
+## Tree
+
+The tree style draws lines from the open section to its pages.
+
+<StoryWithCode of={Stories.Tree} />
+
+## Expanded
+
+Expanded, whatever the window width.
+
+<StoryWithCode of={Stories.Expanded} />
+
+## Minimized
+
+Minimized, it shows icons only. Names show as tooltips, a section's pages open in a menu, and the user is an avatar.
+
+<StoryWithCode of={Stories.Minimized} />
+
+## No user
+
+The user at the bottom is optional.
+
+<StoryWithCode of={Stories.NoUser} />
+
+## Accessibility
+
+- It is a `nav` named "Main" with a list of sections.
+- The collapse button is named "Collapse navigation" or "Expand navigation". It has no `aria-expanded`, because the name says what it does.
+- From 1280 wide the nav is expanded. Below that it is minimized. The user can toggle it until the window crosses 1280 again.
+- Minimized, section names are tooltips and visually hidden labels. Sections with pages open them in a menu. Tree lines show only when expanded.
+- The section holding the current page opens by default.
+
+## Component API
+
+<ArgTypes of={NlSideNav} />

@@ -1,0 +1,41 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlAppShell } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlAppShell/NlAppShell.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The page frame for every admin screen: side nav on the left, and a content panel with the page header and the page content."
+  source="components/NlAppShell"
+  spec="nlappshell"
+/>
+
+## Overview
+
+The side nav, page header and content. Press Tab first to see the skip link.
+
+<StoryWithCode of={Stories.Default} />
+
+## Long content
+
+Only the content scrolls. The header and nav stay in place. Tab to the content to scroll it by keyboard.
+
+<StoryWithCode of={Stories.LongContent} />
+
+## No header
+
+Without a header, the content fills the panel.
+
+<StoryWithCode of={Stories.NoHeader} />
+
+## Accessibility
+
+- The nav slot is wrapped in `nav` only when the nav doesn't render its own. The side nav does. The header slot sits in `header` and the content in `main`.
+- A skip link is the first tab stop. It moves focus to `main`.
+- Only the content scrolls. The scrolling content is focusable by keyboard, so keyboard users can scroll it, and it shows the inside focus ring.
+- The layout doesn't shift when the nav changes width.
+
+## Component API
+
+<ArgTypes of={NlAppShell} />

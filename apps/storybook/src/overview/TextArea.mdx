@@ -1,0 +1,52 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTextArea } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTextArea/NlTextArea.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A multi-line text input, for notes, descriptions and messages."
+  source="components/NlTextArea"
+  spec="nltextarea"
+/>
+
+## Overview
+
+Enter adds a new line.
+
+<StoryWithCode of={Stories.Default} />
+
+## States
+
+The field can be empty or filled, with helper text.
+
+<StoryWithCode of={Stories.States} />
+
+## Character count
+
+With `maxLength`, a count shows under the field. It works with or without helper text, and at the limit.
+
+<StoryWithCode of={Stories.CharacterCount} />
+
+## Error and disabled
+
+The field can show an error or be disabled. With an error, the count keeps its usual colour.
+
+<StoryWithCode of={Stories.ErrorAndDisabled} />
+
+## Controlled
+
+The page holds the value. The count follows it.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- It is a native `textarea` with a real `label`. `aria-describedby` points to the helper text. An error sets `aria-invalid`.
+- Enter adds a new line. It never submits a form.
+- It resizes vertically only.
+
+## Component API
+
+<ArgTypes of={NlTextArea} />

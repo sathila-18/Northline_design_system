@@ -1,0 +1,61 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTextField } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTextField/NlTextField.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A single-line text input, for names, codes, amounts and search terms that need a label."
+  source="components/NlTextField"
+  spec="nltextfield"
+/>
+
+## Overview
+
+Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Input types
+
+Each input type brings its own mobile keyboard and browser checks.
+
+<StoryWithCode of={Stories.InputTypes} />
+
+## With trailing icon
+
+A trailing icon can be any icon from the registry. It is decorative.
+
+<StoryWithCode of={Stories.WithTrailingIcon} />
+
+## Error
+
+An error shows with its helper text.
+
+<StoryWithCode of={Stories.WithError} />
+
+## Sizes
+
+Large is 48 high and small is 40.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Controlled
+
+The page holds the value.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- It is a native `input` with a real `label`, the floating label, so the name never depends on the placeholder.
+- `aria-describedby` points to the helper text. An error sets `aria-invalid="true"`. `required` adds `aria-required` and a marker in the label.
+- A new error is announced through a polite live region in the helper area.
+- The focus ring shows whenever the input has focus.
+- The label floats with a short animation. With reduced motion it jumps.
+- A trailing icon is hidden from screen readers. An icon that does something is a button in the trailing slot.
+
+## Component API
+
+<ArgTypes of={NlTextField} />

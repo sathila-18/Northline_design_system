@@ -119,9 +119,11 @@ export interface NlTableProps<T> {
   caption: string;
   /** default (no outer border) or bordered. */
   variant?: 'default' | 'bordered';
+  /** The columns: key, header, width, sort and filter options, and how each cell renders. */
   columns: NlTableColumn<T>[];
   /** This page's rows. */
   rows: T[];
+  /** A stable id for each row, used for selection and React keys. */
   getRowId: (row: T) => string;
   /** A row's name for its checkbox and actions ("Select {row}"). Default: the row-header column's text, else the first column's (OD-224). */
   getRowLabel?: (row: T) => string;
@@ -129,6 +131,7 @@ export interface NlTableProps<T> {
   selectable?: boolean;
   /** Selected row ids, kept across pages. */
   selectedIds?: string[];
+  /** Called with the new selected ids when a row or select-all changes. */
   onSelectionChange?: (ids: string[]) => void;
   /** A row-actions column: the menu items for a row. */
   rowActions?: (row: T) => NlTableRowAction[];
@@ -138,6 +141,7 @@ export interface NlTableProps<T> {
   pagination?: NlTablePagination | false;
   /** The current sort, or null. */
   sort?: NlTableSort | null;
+  /** Called with the new sort, or null, when a sortable header is clicked. */
   onSortChange?: (sort: NlTableSort | null) => void;
   /** Skeleton rows instead of data; aria-busy; no footer. */
   loading?: boolean;

@@ -1,0 +1,65 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlIcon } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/icons/NlIcon.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="Shows one Material Symbols Rounded glyph from the icon registry, at a fixed size and colour."
+  source="icons"
+  spec="nlicon"
+/>
+
+## Overview
+
+The icon is decorative unless it has a label.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are six sizes. The box and the glyph sizes both come from the size tokens.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Tones
+
+There are seven named tones, plus inherit.
+
+<StoryWithCode of={Stories.Tones} />
+
+## Filled
+
+Icons are outlined by default. The filled form is for active and selected states. Only some glyphs have one.
+
+<StoryWithCode of={Stories.Filled} />
+
+## Labelled
+
+With `label`, the icon has `role="img"` and an accessible name.
+
+<StoryWithCode of={Stories.Labelled} />
+
+## Inherit
+
+The inherit tone takes the parent's colour.
+
+<StoryWithCode of={Stories.Inherit} />
+
+## Registry
+
+Every icon in the registry.
+
+<StoryWithCode of={Stories.Registry} />
+
+## Accessibility
+
+- It is decorative by default and hidden from screen readers.
+- With `label`, it has `role="img"` and `aria-label`. A screen reader hears the label, for example "Warning".
+- It is never focusable. Icon-only controls get their name from the control, not from the icon.
+- The registry only allows names that are in the icon font.
+
+## Component API
+
+<ArgTypes of={NlIcon} />
