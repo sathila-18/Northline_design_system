@@ -32,7 +32,13 @@ interface NlButtonBaseCommonProps extends Omit<ComponentPropsWithRef<'button'>, 
 }
 
 type NlButtonBaseIconProps =
-  | { variant?: NlButtonBaseVariant; icon?: 'none'; iconName?: undefined }
+  | {
+      variant?: NlButtonBaseVariant;
+      /** Where the icon goes: none, leading, trailing or only-icon (label visually hidden). Default `none`. */
+      icon?: 'none';
+      /** The icon from the `nlIcons` registry. Required when `icon` is not `none`. */
+      iconName?: undefined;
+    }
   | { variant?: NlButtonBaseVariant; icon: 'leading' | 'trailing'; iconName: NlIconName }
   | { variant?: Exclude<NlButtonBaseVariant, 'link'>; icon: 'only-icon'; iconName: NlIconName };
 

@@ -43,9 +43,13 @@ const preview: Preview = {
   parameters: {
     backgrounds: { disable: true }, // the background comes from the theme (bg-primary)
     controls: { expanded: true },
+    // Table of contents on the right of every docs page, from its section headings.
+    docs: { toc: { headingSelector: 'h2, h3' } },
     options: {
       storySort: {
         order: [
+          'Getting started',
+          ['Welcome'],
           'Foundations',
           [
             'Token pipeline',
