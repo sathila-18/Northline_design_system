@@ -796,7 +796,7 @@ Pages are a showcase only; nobody builds on them (designer, 25 Nov 2026). These 
 5. **Width.** Designed at 1440 wide. No mobile layout, and no 1024 check for pages.
 6. **Brands and themes.** Every page is reviewed in all three brands, Light and Dark.
 7. **Data.** Fixtures only, generated from a fixed seed so every build shows the same data. Invented names, emails on `example.com`. Dates up to 23 Nov 2026 (members can have joined in earlier years), shown as DD/MM/YYYY (the `NlDateField` format). Run `pnpm scrub` on fixtures before pushing.
-8. **Links.** Side nav items and page links open other page stories through `linkTo` (`@storybook/addon-links`), mapped in `_shared/navItems.tsx`. Login's Log in opens the member list, so the prototype starts from login.
+8. **Links.** Side nav items and page links open other page stories through `linkTo` (`@storybook/addon-links`), mapped in `_shared/navItems.tsx`. Login's Log in opens the dashboard (designer, 25 Nov 2026; before, the member list), so the prototype starts from login.
 9. **Checks and flow (designer, 25 Nov 2026).** For page work, run only `pnpm build-storybook` and `pnpm scrub`: no new tests, no a11y run, no Next.js check, no 1024 check. Don't stop for a plan: build with what the library has and stop once, at the end, with a summary. Library rules don't change: if a library component is changed, the full checks in CLAUDE.md still apply to it.
 
 | # | Page | Area | Status |
