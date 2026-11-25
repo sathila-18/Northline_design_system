@@ -119,6 +119,17 @@ describe('NlSegment', () => {
     expect(root.querySelector('[data-icon]')).toHaveClass('nl:icon-filled');
   });
 
+  it('selected xsmall: bg-secondary, so it differs from the page background (OD-263)', () => {
+    render(
+      <NlSegment selected size="xsmall">
+        Day
+      </NlSegment>,
+    );
+    const root = rootOf(screen.getByRole('radio'));
+    expect(root).toHaveClass('nl:bg-secondary', 'nl:text-primary', 'nl:active:bg-tertiary');
+    expect(root).not.toHaveClass('nl:bg-primary');
+  });
+
   it('unselected: no background, its label colours and an outlined icon', () => {
     render(
       <NlSegment selected={false} icon="calendar_today">

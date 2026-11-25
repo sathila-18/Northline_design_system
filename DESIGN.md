@@ -4630,7 +4630,7 @@ NlSegment (rounded, horizontal)
 
 | Selected | State | Background | Label | Icon |
 |---|---|---|---|---|
-| selected | enabled | `bg-primary` | `text-primary` | `fg-secondary`, filled |
+| selected | enabled | `bg-primary` (xsmall: `bg-secondary`, OD-263) | `text-primary` | `fg-secondary`, filled |
 | selected | hover | `bg-secondary` | `text-primary` | `fg-secondary`, filled |
 | selected | pressed | `bg-tertiary` | `text-primary` | `fg-secondary`, filled |
 | selected | disabled | `bg-disabled` | `text-disabled-on_bg` | `fg-disabled-on_bg` |
@@ -4639,6 +4639,8 @@ NlSegment (rounded, horizontal)
 | unselected | pressed | none | `text-primary` | `fg-secondary` |
 | unselected | disabled | none | `text-disabled` | `fg-disabled` |
 | any | focus | as above, plus the standard focus ring from CLAUDE.md | | |
+
+- Xsmall selected (designer, 25 Nov 2026, OD-263): the xsmall track has no padding, so a `bg-primary` segment met the page background at its top and bottom and looked like a gap in the track. It rests on `bg-secondary` (a very light grey in Light), between the page and the `bg-tertiary` track in both themes; hover stays `bg-secondary`; pressed and disabled as the table.
 
 - Selected icons use the filled glyph (`NlIcon filled`, §6).
 
