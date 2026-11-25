@@ -1,0 +1,49 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSwitch } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSwitch/NlSwitch.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The bare on and off switch: a track with a sliding handle. It has no label of its own."
+  source="components/NlSwitch"
+  spec="nlswitch"
+/>
+
+## Overview
+
+Switch list items use it. It can also stand on its own with a label you provide. Click it, or Tab to it and press Space or Enter.
+
+<StoryWithCode of={Stories.Default} />
+
+## Off and on
+
+Off and on in both sizes, large and small.
+
+<StoryWithCode of={Stories.OffAndOn} />
+
+## Disabled
+
+A disabled switch, off or on, can't be focused.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## With visible label
+
+Visible text next to the switch names it through `aria-labelledby`.
+
+<StoryWithCode of={Stories.WithVisibleLabel} />
+
+## Accessibility
+
+- It is a native `button` with `role="switch"` and `aria-checked`.
+- Tab moves to it. Space or Enter toggles it.
+- A screen reader hears the name, "switch", and "on" or "off", for example "Email updates, switch, on".
+- With reduced motion, the handle doesn't slide and colours don't animate.
+- A disabled switch uses native `disabled` and can't be focused.
+- The off track on the page background, and the white handle on both tracks, need 3 to 1 in every brand and theme.
+
+## Component API
+
+<ArgTypes of={NlSwitch} />

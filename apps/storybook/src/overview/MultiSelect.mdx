@@ -1,0 +1,66 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlMultiSelect } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlMultiSelect/NlMultiSelect.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A field for choosing several options, shown as chips in the field."
+  source="components/NlMultiSelect"
+  spec="nlmultiselect"
+/>
+
+## Overview
+
+Space toggles a row and the menu stays open. Escape or Tab closes it.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+The field comes in large and small, empty and with chips. The chips are xsmall in both sizes.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## States
+
+The field can be enabled, complete, with helper text, in error, or disabled empty and disabled complete. Disabled chips have no remove button.
+
+<StoryWithCode of={Stories.States} />
+
+## Overflow
+
+When there are more chips than fit, the rest become one "+N" chip.
+
+<StoryWithCode of={Stories.Overflow} />
+
+## Searchable
+
+A search field in the menu header filters the rows. Down moves into them. Backspace in an empty search removes the last chip.
+
+<StoryWithCode of={Stories.Searchable} />
+
+## With descriptions
+
+Options can have a description line. Options can also be disabled.
+
+<StoryWithCode of={Stories.WithDescriptions} />
+
+## Controlled
+
+The page holds the chosen values.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- The field is a combobox with `aria-haspopup="listbox"` and `aria-expanded`. The menu is a listbox with `aria-multiselectable="true"`.
+- Space toggles the focused option. The menu stays open while you choose. Escape or Tab closes it.
+- Each chip's remove button comes after the field in the tab order, for example "Remove Tier 2".
+- The "+N" chip is announced as "and N more". Activating it opens the menu.
+- Searching filters the rows. "No results" is announced politely.
+
+## Component API
+
+<ArgTypes of={NlMultiSelect} />

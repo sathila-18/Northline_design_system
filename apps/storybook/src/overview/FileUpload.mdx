@@ -1,0 +1,55 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlFileUpload } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlFileUpload/NlFileUpload.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A drop zone for one file. It also shows the upload's progress, success or error."
+  source="components/NlFileUpload"
+  spec="nlfileupload"
+/>
+
+## Overview
+
+Drag a file over the card to see the drag-over look.
+
+<StoryWithCode of={Stories.Default} />
+
+## Large states
+
+Every state in the large size.
+
+<StoryWithCode of={Stories.LargeStates} />
+
+## Small states
+
+Every state in the small size. While uploading, the progress bar sits below the row.
+
+<StoryWithCode of={Stories.SmallStates} />
+
+## Disabled
+
+A disabled upload takes no picking or dropping, and its button is disabled.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Simulation
+
+A simulated upload. Choose or drop a PNG or JPG. A file of the wrong type shows the error.
+
+<StoryWithCode of={Stories.Simulation} />
+
+## Accessibility
+
+- It uses a native file input, visually hidden. The button and a click on the card open it. The card is also a drop target.
+- The input has a label, "Upload a file", and `aria-describedby` points at the hint with the types and size.
+- While uploading, the progress bar has a name, for example "Uploading reward-image.png".
+- Completion and errors are announced through a polite live region in the component.
+- After delete or cancel, focus returns to the choose button.
+- It takes one file at a time.
+
+## Component API
+
+<ArgTypes of={NlFileUpload} />

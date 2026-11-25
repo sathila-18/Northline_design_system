@@ -1,0 +1,47 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlBulkActionBar } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlBulkActionBar/NlBulkActionBar.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A floating bar for acting on the selected items at once."
+  source="components/NlBulkActionBar"
+  spec="nlbulkactionbar"
+/>
+
+## Overview
+
+The bar shows a clear selection button, the count and the actions. A destructive action is solid red and comes last.
+
+<StoryWithCode of={Stories.Default} />
+
+## Many actions
+
+Up to seven actions show, as many as fit. The rest go into a More actions menu. The destructive action always shows.
+
+<StoryWithCode of={Stories.ManyActions} />
+
+## Narrow
+
+In a narrow container only the actions that fit show. The destructive action always does.
+
+<StoryWithCode of={Stories.Narrow} />
+
+## Disabled action
+
+A single action can be disabled.
+
+<StoryWithCode of={Stories.DisabledAction} />
+
+## Accessibility
+
+- It is a region named "Bulk actions". It never takes focus by itself and comes after the table in the tab order.
+- The bar doesn't announce the count. `NlTable` already announces how many are selected.
+- Clear selection is named "Clear selection". In `NlTable` it empties the selection and focus moves to the select-all checkbox.
+- More actions has `aria-haspopup="menu"` and `aria-expanded`. It opens an action menu above the button. Choosing a row closes the menu and runs the action.
+
+## Component API
+
+<ArgTypes of={NlBulkActionBar} />

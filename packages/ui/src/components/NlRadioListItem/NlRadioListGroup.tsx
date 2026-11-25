@@ -22,7 +22,13 @@ export function useNlRadioListGroup(): NlRadioListGroupContextValue {
 }
 
 type NlRadioListGroupNameProps =
-  { 'aria-label': string; 'aria-labelledby'?: string } | { 'aria-label'?: string; 'aria-labelledby': string };
+  | {
+      /** The group's accessible name. Use it, or `aria-labelledby`. */
+      'aria-label': string;
+      /** The id of a visible label on the page that names the group (OD-162). */
+      'aria-labelledby'?: string;
+    }
+  | { 'aria-label'?: string; 'aria-labelledby': string };
 
 export type NlRadioListGroupProps = Omit<
   ComponentPropsWithRef<'div'>,

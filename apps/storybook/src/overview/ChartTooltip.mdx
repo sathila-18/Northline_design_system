@@ -1,0 +1,51 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlChartTooltip } from '@northline/ui/charts';
+import * as Stories from '../../../../packages/ui/src/charts/NlChartTooltip/NlChartTooltip.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The box that shows the values at the hovered or focused point of a chart."
+  source="charts/NlChartTooltip"
+  spec="nlcharttooltip"
+/>
+
+## Overview
+
+A heading, then a marker, name and value for each series.
+
+<StoryWithCode of={Stories.Default} />
+
+## Single series
+
+A tooltip for one series.
+
+<StoryWithCode of={Stories.SingleSeries} />
+
+## Most series
+
+A chart takes up to 7 series. Markers repeat their shapes hollow from series 5.
+
+<StoryWithCode of={Stories.MostSeries} />
+
+## Long labels
+
+Long names are cut with an ellipsis at 240. Values are never cut.
+
+<StoryWithCode of={Stories.LongLabels} />
+
+## Stacked total
+
+For stacked bars, a total row sits apart with extra space. Bars use square markers.
+
+<StoryWithCode of={Stories.StackedTotal} />
+
+## Accessibility
+
+- It is never focusable, and never the only place a value lives. The table view has every value.
+- When the item changes by keyboard, its text goes into the chart's polite live region, so it is announced.
+
+## Component API
+
+<ArgTypes of={NlChartTooltip} />

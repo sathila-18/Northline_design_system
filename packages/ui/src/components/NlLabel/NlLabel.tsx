@@ -16,7 +16,12 @@ interface NlLabelCommonProps {
 
 /** The dot badge. When shown, its meaning is required: colour is never the only signal. */
 type NlLabelBadgeProps =
-  | { badge?: false; badgeTone?: undefined; badgeLabel?: undefined }
+  | {
+      /** Shows the dot badge after the label. Needs `badgeLabel`. */
+      badge?: false;
+      badgeTone?: undefined;
+      badgeLabel?: undefined;
+    }
   | {
       badge: true;
       /** Dot colour (OD-65). Default error. */
@@ -27,7 +32,10 @@ type NlLabelBadgeProps =
 
 /** A span by default; a form label with `as="label"` (OD-66), which can take `htmlFor`. */
 type NlLabelElementProps =
-  | ({ as?: 'span' } & Omit<ComponentPropsWithRef<'span'>, 'children'>)
+  | ({
+      /** The element: a span (default) or a form label that names its control. */
+      as?: 'span';
+    } & Omit<ComponentPropsWithRef<'span'>, 'children'>)
   | ({ as: 'label' } & Omit<ComponentPropsWithRef<'label'>, 'children'>);
 
 export type NlLabelProps = NlLabelCommonProps & NlLabelBadgeProps & NlLabelElementProps;

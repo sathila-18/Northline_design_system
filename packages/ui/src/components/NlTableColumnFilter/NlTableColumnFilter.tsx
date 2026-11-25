@@ -29,6 +29,7 @@ interface NlTableColumnFilterCommonProps {
 }
 
 interface NlTableColumnFilterListProps {
+  /** A list of values (default) or a date range. */
   type?: 'list';
   /** The column's values. */
   options: NlTableColumnFilterOption[];
@@ -56,7 +57,14 @@ interface NlTableColumnFilterDateRangeProps {
  */
 export type NlTableColumnFilterProps = NlTableColumnFilterCommonProps &
   (
-    | (NlTableColumnFilterListProps & { multiple?: true; value: string[]; onApply: (value: string[]) => void })
+    | (NlTableColumnFilterListProps & {
+        /** Checkboxes (default) or radios (`false`). */
+        multiple?: true;
+        /** The applied values: a list for checkboxes, one value ('' for "All") for radios, a range for dates. */
+        value: string[];
+        /** Called with the new value when the filter applies. */
+        onApply: (value: string[]) => void;
+      })
     | (NlTableColumnFilterListProps & { multiple: false; value: string; onApply: (value: string) => void })
     | NlTableColumnFilterDateRangeProps
   );

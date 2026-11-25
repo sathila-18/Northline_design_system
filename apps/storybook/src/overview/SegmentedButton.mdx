@@ -1,0 +1,58 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSegmentedButton } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSegmentedButton/NlSegmentedButton.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A row of 2 or 3 options where exactly one is selected, for example a view switch or a theme switch."
+  source="components/NlSegmentedButton"
+  spec="nlsegmentedbutton"
+/>
+
+## Overview
+
+Tab in, then use the arrow keys, Home and End to change the selection.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are three sizes. Labelled tracks fill their container and the segments share the width.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Two and three options
+
+A segmented button has two or three options. Each option can have an icon.
+
+<StoryWithCode of={Stories.TwoAndThree} />
+
+## Icon only
+
+With `iconOnly`, the track hugs its segments. Each label becomes the segment's hidden name and shows in a tooltip.
+
+<StoryWithCode of={Stories.IconOnly} />
+
+## Disabled
+
+`disabled` turns off the whole group. Every segment uses its disabled look.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Controlled
+
+The page holds the value. This example is a theme switch.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- It is a radio group with a name. Each segment is a radio.
+- It is one tab stop, on the selected segment. Arrow keys move and select, wrapping at the ends. Home and End go to the first and last.
+- Icon-only segments keep their label as a hidden name and show it in a tooltip.
+
+## Component API
+
+<ArgTypes of={NlSegmentedButton} />

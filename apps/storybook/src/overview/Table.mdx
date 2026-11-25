@@ -1,0 +1,66 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTable } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTable/NlTable.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A data table with an optional toolbar, selectable rows, sorting, filtering and a footer with pagination."
+  source="components/NlTable"
+  spec="nltable"
+/>
+
+## Overview
+
+A toolbar, selectable rows, sorting, filters, row actions and pagination.
+
+<StoryWithCode of={Stories.Default} />
+
+## Bordered
+
+The bordered variant draws a frame round the header and rows.
+
+<StoryWithCode of={Stories.Bordered} />
+
+## Loading
+
+While loading, skeleton rows follow the column layout. There is no footer.
+
+<StoryWithCode of={Stories.Loading} />
+
+## Empty
+
+With no rows, an empty state replaces the rows and footer.
+
+<StoryWithCode of={Stories.Empty} />
+
+## Wide scroll
+
+With more columns than fit, the table scrolls sideways. The row-actions column stays at the end.
+
+<StoryWithCode of={Stories.WideScroll} />
+
+## Clickable rows
+
+With `onRowClick`, a click on a row opens it. The checkbox and actions button keep their own click.
+
+<StoryWithCode of={Stories.ClickableRows} />
+
+## Minimal
+
+A table can have just the header and rows, with no toolbar, selection, actions or footer.
+
+<StoryWithCode of={Stories.Minimal} />
+
+## Accessibility
+
+- It is a real `table` with a `caption`, `thead`, `tbody` and column headers. The first data column can be a row header.
+- Sorting and filtering happen from the header cells. Result changes are announced politely, for example "Showing 12 results".
+- Select-all reflects the current page and is indeterminate when some rows are selected. The selected count is announced and shown.
+- While loading, the table has `aria-busy="true"`.
+- A row click is never the only way to act on a row. The row-actions button is always there.
+
+## Component API
+
+<ArgTypes of={NlTable} />

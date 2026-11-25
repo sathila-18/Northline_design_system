@@ -1,0 +1,40 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlRowsPerPage } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlRowsPerPage/NlRowsPerPage.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='The table footer control that shows and changes how many rows a page holds, for example "Rows per page: 10".'
+  source="components/NlRowsPerPage"
+  spec="nlrowsperpage"
+/>
+
+## Overview
+
+Hover, press and Tab to the trigger to see its states.
+
+<StoryWithCode of={Stories.Default} />
+
+## States
+
+The trigger can be closed, open or disabled. Open uses the pressed look and an up arrow.
+
+<StoryWithCode of={Stories.States} />
+
+## With a menu
+
+The table opens a select menu under the trigger. Click or press Down to open it and choose a number. The menu closes, the value updates and focus returns to the trigger.
+
+<StoryWithCode of={Stories.WithMenu} />
+
+## Accessibility
+
+- It is the trigger only. The table opens the options menu under it.
+- It has `aria-haspopup="listbox"` and `aria-expanded`. Its name includes the current value, for example "Rows per page, 10".
+- Choosing an option closes the menu, updates the value and returns focus to the trigger.
+
+## Component API
+
+<ArgTypes of={NlRowsPerPage} />

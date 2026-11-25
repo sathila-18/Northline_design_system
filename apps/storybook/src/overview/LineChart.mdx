@@ -1,0 +1,85 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlLineChart } from '@northline/ui/charts';
+import * as Stories from '../../../../packages/ui/src/charts/NlLineChart/NlLineChart.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="One or more series over time, such as member growth."
+  source="charts/NlLineChart"
+  spec="nllinechart"
+/>
+
+## Overview
+
+Two series over 15 months, with markers on every point, a legend and month names on the axis. Tab in, then use the arrow keys, Home and End.
+
+<StoryWithCode of={Stories.Default} />
+
+## Single series
+
+A single series has no legend. The title names it.
+
+<StoryWithCode of={Stories.SingleSeries} />
+
+## Most series
+
+A line chart takes up to 7 series, each with its own colour and marker shape.
+
+<StoryWithCode of={Stories.MostSeries} />
+
+## Long labels
+
+Long series names are cut in the legend and tooltip. The table view has them in full.
+
+<StoryWithCode of={Stories.LongLabels} />
+
+## Short
+
+The chart can be 240 high. 320 is the default.
+
+<StoryWithCode of={Stories.Short} />
+
+## Framed
+
+The chart in its frame, with the title and the "View as" switch.
+
+<StoryWithCode of={Stories.Framed} />
+
+## View as table
+
+The frame can show the same data as a table.
+
+<StoryWithCode of={Stories.ViewAsTable} />
+
+## Loading
+
+While loading, the frame shows skeleton bars at the chart's height.
+
+<StoryWithCode of={Stories.Loading} />
+
+## Empty
+
+With no data, the frame shows "No data for this period".
+
+<StoryWithCode of={Stories.Empty} />
+
+## Error
+
+On error, the frame shows a message and Try again.
+
+<StoryWithCode of={Stories.Error} />
+
+## Accessibility
+
+- `title` is required. The plot is a group with the role description "chart", named by the title.
+- The plot is one tab stop. Left and Right move by time step. Home and End go to the first and last. Escape hides the tooltip.
+- Each step announces the date and every series' value.
+- Colour is never the only signal. Each series has its own marker shape, there is a legend for more than one series, and the tooltip and table name every value.
+- The table view is the full screen reader route.
+- Lines draw in when they appear. With reduced motion they don't animate.
+
+## Component API
+
+<ArgTypes of={NlLineChart} />

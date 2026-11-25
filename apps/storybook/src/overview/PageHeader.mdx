@@ -1,0 +1,59 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlPageHeader } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlPageHeader/NlPageHeader.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The bar at the top of the content panel: an optional back button, the page title with an optional line under it, and the notification button."
+  source="components/NlPageHeader"
+  spec="nlpageheader"
+/>
+
+## Overview
+
+The title, a line under it and the notification button.
+
+<StoryWithCode of={Stories.Default} />
+
+## With back
+
+A detail page can have a back link, such as "Back to rewards".
+
+<StoryWithCode of={Stories.WithBack} />
+
+## Title only
+
+The header can show only the title.
+
+<StoryWithCode of={Stories.TitleOnly} />
+
+## Body slot
+
+The body slot takes content in place of the line of text.
+
+<StoryWithCode of={Stories.BodySlot} />
+
+## Long title
+
+A long title in a narrow panel is cut with an ellipsis. Hover it for the full text.
+
+<StoryWithCode of={Stories.LongTitle} />
+
+## New notifications
+
+When the count rises, new notifications are announced politely, for example "4 new notifications".
+
+<StoryWithCode of={Stories.NewNotifications} />
+
+## Accessibility
+
+- It sits in a `header`, which the app shell provides. The title is the page's `h1`.
+- The back button is named "Back", or "Back to" followed by the page. It is a link when `backHref` is set.
+- A cut title keeps its full text available.
+- New notifications are announced politely from here, for example "3 new notifications".
+
+## Component API
+
+<ArgTypes of={NlPageHeader} />

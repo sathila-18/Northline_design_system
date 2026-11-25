@@ -1,0 +1,45 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlDivider } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlDivider/NlDivider.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A horizontal line that separates content. The section form is a thick band between page sections."
+  source="components/NlDivider"
+  spec="nldivider"
+/>
+
+## Overview
+
+The parent sets the spacing around the divider.
+
+<StoryWithCode of={Stories.Default} />
+
+## Divider
+
+A 1px line that fills its container.
+
+<StoryWithCode of={Stories.Divider} />
+
+## Section
+
+A thick band between page sections.
+
+<StoryWithCode of={Stories.Section} />
+
+## Decorative
+
+`decorative` renders a hidden `div` in place of an `hr`, for lines that are only visual. It looks the same.
+
+<StoryWithCode of={Stories.Decorative} />
+
+## Accessibility
+
+- It renders `hr`, which has `role="separator"`. A screen reader may announce "separator".
+- `decorative` renders a hidden `div` instead, for lines that are only visual, such as between list rows or inside menus.
+
+## Component API
+
+<ArgTypes of={NlDivider} />

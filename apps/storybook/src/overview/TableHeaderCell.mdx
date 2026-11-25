@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTableHeaderCell } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTableHeaderCell/NlTableHeaderCell.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A column header: the column name, with optional sort and filter controls, or a "select all" checkbox.'
+  source="components/NlTableHeaderCell"
+  spec="nltableheadercell"
+/>
+
+## Overview
+
+One header cell inside a table row. Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Appearances
+
+Rows can be plain or grey. Titles can be plain or sortable, and can have a filter.
+
+<StoryWithCode of={Stories.Appearances} />
+
+## Sorting
+
+Click a title to sort. It cycles from none to ascending to descending and back to none, one column at a time.
+
+<StoryWithCode of={Stories.Sorting} />
+
+## Filters
+
+A filter can be available, open or applied. Click it to open or close.
+
+<StoryWithCode of={Stories.Filters} />
+
+## Narrow and select all
+
+A narrow select-all column with its title hidden, and a narrow row-actions column.
+
+<StoryWithCode of={Stories.NarrowAndSelectAll} />
+
+## Accessibility
+
+- It is a column header (`th scope="col"`) with `aria-sort` when sortable.
+- The sort button is named by the column. The table announces the new order, for example "Sorted by points, ascending". The cell doesn't.
+- The filter button is named "Filter" followed by the column, with ", applied" when a filter is on. It has `aria-haspopup="dialog"` and `aria-expanded`.
+- The select-all checkbox is named "Select all rows". It is indeterminate when some rows are selected.
+
+## Component API
+
+<ArgTypes of={NlTableHeaderCell} />

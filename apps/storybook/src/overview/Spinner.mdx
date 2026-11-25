@@ -1,0 +1,41 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSpinner } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSpinner/NlSpinner.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A round loading indicator. It can end in a success tick or an error mark."
+  source="components/NlSpinner"
+  spec="nlspinner"
+/>
+
+## Overview
+
+Set a value for a ring that shows progress.
+
+<StoryWithCode of={Stories.Default} />
+
+## Statuses
+
+There are three statuses: loading, success and error. The result's label is announced.
+
+<StoryWithCode of={Stories.Statuses} />
+
+## With a value
+
+With `value`, the arc length shows how much is done and the ring doesn't turn.
+
+<StoryWithCode of={Stories.WithValue} />
+
+## Accessibility
+
+- While loading, it has `role="progressbar"` and a name from `label`. It has `aria-valuenow` only when `value` is set.
+- Success and error use `role="status"`, so the change is announced. The caller passes the text through `label`, for example "Upload complete".
+- The arc turns continuously. With reduced motion it stays still and the label carries the meaning.
+- The arc needs 3 to 1 against the track.
+
+## Component API
+
+<ArgTypes of={NlSpinner} />

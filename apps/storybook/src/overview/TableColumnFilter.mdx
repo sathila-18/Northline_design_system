@@ -1,0 +1,54 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTableColumnFilter } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTableColumnFilter/NlTableColumnFilter.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The menu that opens from a column header's filter button, to filter the table by that column's values."
+  source="components/NlTableColumnFilter"
+  spec="nltablecolumnfilter"
+/>
+
+## Overview
+
+With checkboxes, choices apply with Apply. Reset clears them. Escape or a click outside closes without applying.
+
+<StoryWithCode of={Stories.Checkbox} />
+
+## Radio
+
+With radios, "All" comes first. Choosing a value applies it and closes. Arrow keys apply and keep it open.
+
+<StoryWithCode of={Stories.Radio} />
+
+## With search
+
+With more than 8 values, a search field shows in the header. "All" hides while searching.
+
+<StoryWithCode of={Stories.WithSearch} />
+
+## Radio with search
+
+Radios can have the search field too.
+
+<StoryWithCode of={Stories.RadioWithSearch} />
+
+## Date range
+
+A date range filter shows the calendar in range mode with two months. Reset clears it and Apply applies the start and end.
+
+<StoryWithCode of={Stories.DateRange} />
+
+## Accessibility
+
+- It is a non-modal dialog named "Filter" followed by the column name.
+- With checkboxes, changes apply only with Apply. Reset clears the choice. Escape or a click outside closes without applying.
+- With radios, "All" comes first and clears the filter. Choosing applies and closes. Arrow keys between radios apply and keep it open.
+- While searching, "All" is hidden. "No results" is announced politely.
+- On close, focus returns to the filter button.
+
+## Component API
+
+<ArgTypes of={NlTableColumnFilter} />

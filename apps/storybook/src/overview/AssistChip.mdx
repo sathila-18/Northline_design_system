@@ -1,0 +1,52 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlAssistChip } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlAssistChip/NlAssistChip.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A chip that runs an action or opens a menu or picker, for example a date range or a more filters menu."
+  source="components/NlAssistChip"
+  spec="nlassistchip"
+/>
+
+## Overview
+
+Hover, press and Tab to the chip to see its states.
+
+<StoryWithCode of={Stories.Default} />
+
+## Action
+
+Without `dropdown`, the chip has no arrow. It runs something when clicked.
+
+<StoryWithCode of={Stories.Action} />
+
+## Dropdown
+
+With `dropdown`, the chip opens something. It can be closed, open or disabled. Open uses the selected look and an up arrow.
+
+<StoryWithCode of={Stories.Dropdown} />
+
+## Sizes
+
+There are three sizes, closed and open.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## With a menu
+
+Click the chip or press Down to open the menu. Choosing a range closes the menu and updates the label. Escape closes it and returns focus to the chip.
+
+<StoryWithCode of={Stories.WithMenu} />
+
+## Accessibility
+
+- It is a native `button`. Enter or Space activates it.
+- With `dropdown`, it has `aria-haspopup` matching what it opens, `aria-expanded` and `aria-controls`. Down also opens the menu. Escape in the menu returns focus to the chip.
+- A screen reader hears, for example, "Date range, button, collapsed, has popup".
+
+## Component API
+
+<ArgTypes of={NlAssistChip} />

@@ -1,0 +1,47 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlStatusDot } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlStatusDot/NlStatusDot.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A small round dot that shows presence, such as online. The avatar uses it."
+  source="components/NlStatusDot"
+  spec="nlstatusdot"
+/>
+
+## Overview
+
+The dot is decorative unless it has a label.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are five sizes. A 1px ring sits outside the dot.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Labelled
+
+With `label`, the dot has an accessible name. Show the status in text nearby too.
+
+<StoryWithCode of={Stories.Labelled} />
+
+## On a surface
+
+On a darker surface, the ring that cuts the dot out is visible.
+
+<StoryWithCode of={Stories.OnASurface} />
+
+## Accessibility
+
+- Colour alone never carries meaning. Where presence matters, pair the dot with a text status nearby, such as "Online", or give it a `label`.
+- It is decorative by default and hidden from screen readers.
+- With `label`, it has `role="img"` and that name. A screen reader hears, for example, "Online".
+- The dot needs 3 to 1 against the ring and the avatar, in every brand and theme.
+
+## Component API
+
+<ArgTypes of={NlStatusDot} />

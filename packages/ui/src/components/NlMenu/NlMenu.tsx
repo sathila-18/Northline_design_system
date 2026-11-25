@@ -71,7 +71,15 @@ interface NlMenuBaseProps extends Omit<
 
 /** An accessible name is required: aria-label, or the id of a visible label (usually the trigger). */
 export type NlMenuProps = NlMenuBaseProps &
-  ({ 'aria-label': string; 'aria-labelledby'?: never } | { 'aria-label'?: never; 'aria-labelledby': string });
+  (
+    | {
+        /** The menu's accessible name. Use it, or `aria-labelledby`. */
+        'aria-label': string;
+        /** The id of a visible label that names the menu, usually the trigger. */
+        'aria-labelledby'?: never;
+      }
+    | { 'aria-label'?: never; 'aria-labelledby': string }
+  );
 
 const ROLE: Record<NlMenuKind, 'menu' | 'listbox' | 'dialog'> = {
   action: 'menu',

@@ -26,6 +26,7 @@ export interface NlDateFieldProps extends Pick<
   maxDate?: string;
   /** The text input. */
   ref?: Ref<HTMLInputElement>;
+  /** Called when the text input loses focus. */
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 }
 

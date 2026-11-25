@@ -32,7 +32,15 @@ interface NlSliderBaseProps extends Omit<
 
 /** An accessible name is required: either aria-label, or the id of a visible label. */
 export type NlSliderProps = NlSliderBaseProps &
-  ({ 'aria-label': string; 'aria-labelledby'?: never } | { 'aria-label'?: never; 'aria-labelledby': string });
+  (
+    | {
+        /** The slider's accessible name. Use it, or `aria-labelledby`. */
+        'aria-label': string;
+        /** The id of a visible label that names the slider. */
+        'aria-labelledby'?: never;
+      }
+    | { 'aria-label'?: never; 'aria-labelledby': string }
+  );
 
 const percentOf = (value: number, min: number, max: number) => {
   if (!Number.isFinite(value) || max <= min) return 0;

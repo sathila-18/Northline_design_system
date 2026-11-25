@@ -1,0 +1,55 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSideSheet } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSideSheet/NlSideSheet.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A full-height panel that slides in from the right, for creating or editing something without leaving the page, such as "Edit reward".'
+  source="components/NlSideSheet"
+  spec="nlsidesheet"
+/>
+
+## Overview
+
+Open the sheet. Focus goes to the first field. Escape, Close or the overlay closes it.
+
+<StoryWithCode of={Stories.Default} />
+
+## With back
+
+A back button goes to the previous step inside the sheet. This one also has a divider under the header.
+
+<StoryWithCode of={Stories.WithBack} />
+
+## Long body
+
+A long body scrolls under the header. The dock stays at the bottom with its sticky look.
+
+<StoryWithCode of={Stories.LongBody} />
+
+## Large
+
+The large sheet is 720 wide.
+
+<StoryWithCode of={Stories.Large} />
+
+## Minimal
+
+A sheet can have no footer and no close button. Escape and the overlay still close it.
+
+<StoryWithCode of={Stories.Minimal} />
+
+## Accessibility
+
+- It has `role="dialog"` and `aria-modal="true"`, and the title labels it.
+- On open, focus moves into the sheet, to the first field or the close button. Focus is trapped and returns to the trigger on close.
+- Escape and the close button close it. A click on the overlay closes it unless there are unsaved changes, which the caller confirms.
+- The back button returns to the previous step inside the sheet. It doesn't close it.
+- It slides in from the right. With reduced motion it only fades.
+- The page behind is inert and doesn't scroll.
+
+## Component API
+
+<ArgTypes of={NlSideSheet} />

@@ -1,0 +1,45 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlIconContainer } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlIconContainer/NlIconContainer.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="An icon centred on a round tinted background. Empty states, file upload and list rows use it."
+  source="components/NlIconContainer"
+  spec="nliconcontainer"
+/>
+
+## Overview
+
+The container is decorative unless it has a label.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are three sizes. 40 and 48 hold a 24 icon. 64 holds a 36 icon.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Tones
+
+Every tone at every size.
+
+<StoryWithCode of={Stories.AllTones} />
+
+## Labelled
+
+With `label`, the icon has `role="img"` and an accessible name. Use it when no text nearby gives the meaning.
+
+<StoryWithCode of={Stories.Labelled} />
+
+## Accessibility
+
+- It is decorative by default, because the text next to it carries the meaning. With `label`, the icon has `role="img"` and that name.
+- Icons on their tints need 3 to 1 in every brand and theme.
+
+## Component API
+
+<ArgTypes of={NlIconContainer} />

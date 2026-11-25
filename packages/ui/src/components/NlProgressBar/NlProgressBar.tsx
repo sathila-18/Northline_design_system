@@ -15,7 +15,15 @@ interface NlProgressBarBaseProps extends Omit<
 
 /** An accessible name is required: either a label, or the id of a visible label. */
 export type NlProgressBarProps = NlProgressBarBaseProps &
-  ({ label: string; 'aria-labelledby'?: never } | { label?: never; 'aria-labelledby': string });
+  (
+    | {
+        /** The bar's accessible name, for example "Upload". Use it, or `aria-labelledby`. */
+        label: string;
+        /** The id of a visible caption that names the bar. */
+        'aria-labelledby'?: never;
+      }
+    | { label?: never; 'aria-labelledby': string }
+  );
 
 const clamp = (value: number) => (Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : 0);
 

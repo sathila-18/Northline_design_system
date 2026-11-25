@@ -1,0 +1,77 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTextBlock } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTextBlock/NlTextBlock.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A heading with an optional description under it and an optional label slot above."
+  source="components/NlTextBlock"
+  spec="nltextblock"
+/>
+
+## Overview
+
+It is the text part of list items, dialogs, empty states, snackbars, tooltips and cards.
+
+<StoryWithCode of={Stories.Default} />
+
+## Types
+
+There are six heading types and a list-row label type. Each has its own description style and gap.
+
+<StoryWithCode of={Stories.Types} />
+
+## Body
+
+The body type is a description in Body L with no heading. Checkbox and dialog body text use it.
+
+<StoryWithCode of={Stories.Body} />
+
+## Body M
+
+The Body M type is a description in Body M with no heading. Small checkbox text uses it.
+
+<StoryWithCode of={Stories.BodyM} />
+
+## Alignment
+
+There are three alignments. The label slot follows the alignment.
+
+<StoryWithCode of={Stories.Alignment} />
+
+## With label
+
+The label slot sits above the heading and takes any content.
+
+<StoryWithCode of={Stories.WithLabel} />
+
+## Inverse
+
+The inverse tone sits on a dark surface, as in a rich tooltip.
+
+<StoryWithCode of={Stories.Inverse} />
+
+## Disabled
+
+The disabled tone colours the heading and description as disabled, as in a disabled list row.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Single part
+
+A text block can have a heading only, or a description only.
+
+<StoryWithCode of={Stories.SinglePart} />
+
+## Accessibility
+
+- The look and the heading level are separate. `type` sets the look. `headingAs` sets the element, so a page can keep a correct heading outline.
+- The default element is `p`, because most text blocks are not document headings. Dialogs, side sheets and page headers pass the level they need.
+- The description is a `p`. The label renders before the heading, so a screen reader reads the label, heading, then description.
+- There is no truncation by default. A parent that cuts lines must make the full text available.
+
+## Component API
+
+<ArgTypes of={NlTextBlock} />

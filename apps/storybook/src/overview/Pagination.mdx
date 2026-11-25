@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlPagination } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlPagination/NlPagination.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="Page numbers with previous and next buttons. The table footer uses it."
+  source="components/NlPagination"
+  spec="nlpagination"
+/>
+
+## Overview
+
+Click a page, or use previous and next.
+
+<StoryWithCode of={Stories.Default} />
+
+## Few pages
+
+With few pages, every number shows and there are no gaps.
+
+<StoryWithCode of={Stories.FewPages} />
+
+## Many pages
+
+With many pages, gaps show on both sides of the current page.
+
+<StoryWithCode of={Stories.ManyPages} />
+
+## One page
+
+With one page, previous and next are disabled and one page item shows.
+
+<StoryWithCode of={Stories.OnePage} />
+
+## Sibling count
+
+`siblingCount` sets how many pages show on each side of the current one.
+
+<StoryWithCode of={Stories.SiblingCount} />
+
+## Accessibility
+
+- It is a `nav` named "Pagination" that holds a list.
+- Previous and next are named "Previous page" and "Next page". At the ends they are disabled and can't be focused.
+- The current page has `aria-current="page"`. After a page change, focus moves to the new current page button. If previous or next was used, focus stays there.
+- With one page, previous and next are both disabled and one page item shows.
+
+## Component API
+
+<ArgTypes of={NlPagination} />

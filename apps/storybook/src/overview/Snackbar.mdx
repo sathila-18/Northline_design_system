@@ -1,0 +1,60 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSnackbar } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSnackbar/NlSnackbar.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A short message at the edge of the screen after an action, such as "Reward saved", with an optional action and close.'
+  source="components/NlSnackbar"
+  spec="nlsnackbar"
+/>
+
+## Overview
+
+The snackbar on its own. Pages show it through `NlSnackbarProvider`.
+
+<StoryWithCode of={Stories.Default} />
+
+## Tones
+
+Every tone on a single line, with an action and close. Each tone has its own icon.
+
+<StoryWithCode of={Stories.Tones} />
+
+## Stacked
+
+When stacked, the message wraps on top and the buttons sit on their own row at the end.
+
+<StoryWithCode of={Stories.Stacked} />
+
+## Content
+
+A snackbar can have a message only, a message and close, or no icon.
+
+<StoryWithCode of={Stories.Content} />
+
+## Live
+
+`NlSnackbarProvider` and `useNlSnackbar` show one snackbar at a time. A new one replaces the old. Without an action it closes after 6 seconds. With an action it stays. Press F6 to move focus into it.
+
+<StoryWithCode of={Stories.Live} />
+
+## Top end
+
+The region can sit at the top end. The snackbar comes down into place.
+
+<StoryWithCode of={Stories.TopEnd} />
+
+## Accessibility
+
+- It shows in a live region that exists from page load. Neutral and success use `role="status"`. Warning and error use `role="alert"`.
+- It doesn't take focus. F6, or the next Tab, moves into the snackbar region.
+- A snackbar with an action doesn't close by itself. It stays until closed or acted on. Without an action it closes after its duration, and pauses while hovered or focused.
+- It enters and leaves with a fade and slide. With reduced motion it only fades.
+- One shows at a time. A new one replaces the old.
+
+## Component API
+
+<ArgTypes of={NlSnackbar} />

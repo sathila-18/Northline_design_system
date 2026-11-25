@@ -1,0 +1,47 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlTableCell } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlTableCell/NlTableCell.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="One body cell: text, a badge, a link, a row-actions button or a checkbox."
+  source="components/NlTableCell"
+  spec="nltablecell"
+/>
+
+## Overview
+
+A text cell. Try the controls to see its options.
+
+<StoryWithCode of={Stories.Default} />
+
+## Types
+
+Every type in one row: a row-select checkbox with the row header, text, a badge, a link, a value checkbox and row actions.
+
+<StoryWithCode of={Stories.Types} />
+
+## Truncated
+
+Text longer than its column is cut with an ellipsis. Hover for the full text.
+
+<StoryWithCode of={Stories.Truncated} />
+
+## Sticky actions
+
+In a table that scrolls sideways, the row-actions column stays at the end.
+
+<StoryWithCode of={Stories.StickyActions} />
+
+## Accessibility
+
+- It is a `td`. The first meaningful cell in a row can be a row header (`th scope="row"`), so screen readers name the row.
+- A row-select checkbox is named "Select" followed by the row name. A value checkbox is named by the row and column.
+- The row-actions button is named "Actions for" followed by the row name, with `aria-haspopup="menu"` and `aria-expanded`. Its column stays in place when the table scrolls sideways.
+- Truncated text keeps its full text available.
+
+## Component API
+
+<ArgTypes of={NlTableCell} />

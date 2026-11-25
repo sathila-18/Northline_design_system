@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlSearchField } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlSearchField/NlSearchField.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A search input with a search icon and a clear button. It is used in table toolbars and menu headers."
+  source="components/NlSearchField"
+  spec="nlsearchfield"
+/>
+
+## Overview
+
+Type to see the clear button. Escape clears the text too.
+
+<StoryWithCode of={Stories.Default} />
+
+## States
+
+The field can be empty, showing the placeholder, or complete, with the clear button.
+
+<StoryWithCode of={Stories.States} />
+
+## Sizes
+
+Large is 48 high and small is 40. The clear button is the 32 icon-only button in both.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Disabled
+
+When the field is disabled, the clear button is disabled too.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Controlled
+
+The page holds the value. Enter searches. The page wraps the field in a search landmark.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- It is a search input (role `searchbox`). The field adds no landmark. The page or toolbar wraps it in `search` when it searches the page or a table. A menu header doesn't.
+- Enter calls `onSearch`. When there is text, Escape clears it and calls `onClear`, so a surrounding menu stays open. When empty, Escape passes on.
+- The clear button is named "Clear search". After clearing, focus returns to the input.
+- The results region announces results that change while typing. The field doesn't.
+
+## Component API
+
+<ArgTypes of={NlSearchField} />

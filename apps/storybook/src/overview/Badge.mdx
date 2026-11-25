@@ -1,0 +1,52 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlBadge } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlBadge/NlBadge.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A status tag, such as "Active", "Pending" or "Tier 2", in one of eight tones.'
+  source="components/NlBadge"
+  spec="nlbadge"
+/>
+
+## Overview
+
+There are no icons by default. Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Tones
+
+There are eight status tones, each in both sizes.
+
+<StoryWithCode of={Stories.AllTones} />
+
+## With icons
+
+Each tone's icons take the colour that matches its text.
+
+<StoryWithCode of={Stories.WithIcons} />
+
+## Long label
+
+A long label stays on one line and widens the badge.
+
+<StoryWithCode of={Stories.LongLabel} />
+
+## Tier tones
+
+Tier tones show a member's tier. They are identity, not status. They use a light gradient with the tier's border and text, the same in every brand and theme.
+
+<StoryWithCode of={Stories.TierTones} />
+
+## Accessibility
+
+- It is plain text in a `span`. A screen reader reads the label.
+- Colour isn't the only signal. The label must say the status.
+- Text on each tint needs 4.5 to 1. Borders on the page background need 3 to 1, in every brand and theme.
+
+## Component API
+
+<ArgTypes of={NlBadge} />

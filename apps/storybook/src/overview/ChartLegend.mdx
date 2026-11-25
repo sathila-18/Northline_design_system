@@ -1,0 +1,57 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlChartLegend } from '@northline/ui/charts';
+import * as Stories from '../../../../packages/ui/src/charts/NlChartLegend/NlChartLegend.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The list of series or slices a chart shows, each with its colour marker and label."
+  source="charts/NlChartLegend"
+  spec="nlchartlegend"
+/>
+
+## Overview
+
+A line chart legend: a short line with each series' marker shape.
+
+<StoryWithCode of={Stories.Default} />
+
+## Bars
+
+A bar chart legend uses squares.
+
+<StoryWithCode of={Stories.Bars} />
+
+## Donut values
+
+A donut legend at the end is a column with each slice's value and share.
+
+<StoryWithCode of={Stories.DonutValues} />
+
+## Single series
+
+Charts leave the legend out for a single series. This shows the look.
+
+<StoryWithCode of={Stories.SingleSeries} />
+
+## Most series
+
+A chart takes up to 7 series. The row wraps, and shapes repeat hollow from series 5.
+
+<StoryWithCode of={Stories.MostSeries} />
+
+## Long labels
+
+Long labels are cut with an ellipsis at 240.
+
+<StoryWithCode of={Stories.LongLabels} />
+
+## Accessibility
+
+- It is a `ul` named "Legend". Each item reads its label, and its value for a donut.
+- The markers are decorative.
+
+## Component API
+
+<ArgTypes of={NlChartLegend} />

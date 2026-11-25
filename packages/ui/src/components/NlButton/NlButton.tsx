@@ -17,7 +17,15 @@ export type NlButtonContentTone = keyof typeof styles.contentTone;
  * icon-only, and only link can be flush.
  */
 type NlButtonToneProps =
-  | { tone?: 'normal'; variant?: 'primary' | 'secondary'; contentTone?: undefined; flush?: undefined }
+  | {
+      /** Picks the base: normal, white (primary only) or destructive (no link). Default `normal`. */
+      tone?: 'normal';
+      /** Primary, secondary, tertiary or link. Default `primary`. */
+      variant?: 'primary' | 'secondary';
+      /** Recolours the label and icon. Tertiary and link only. Default `default`. */
+      contentTone?: undefined;
+      flush?: undefined;
+    }
   | { tone?: 'normal'; variant: 'tertiary'; contentTone?: NlButtonContentTone; flush?: undefined }
   | {
       tone?: 'normal';

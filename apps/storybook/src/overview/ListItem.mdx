@@ -1,0 +1,72 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlListItem } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlListItem/NlListItem.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The standard list row: something to open, choose or read, such as a member, a reward or a menu option."
+  source="components/NlListItem"
+  spec="nllistitem"
+/>
+
+## Overview
+
+The chevron makes the row a button. Turn it off for a static row.
+
+<StoryWithCode of={Stories.Default} />
+
+## Accessories
+
+The leading slot can hold nothing, an icon or an avatar. The trailing slot can hold a caption, a chevron or both.
+
+<StoryWithCode of={Stories.Accessories} />
+
+## Elements
+
+A row can be a link, a button or static. Static rows have no hover and no focus.
+
+<StoryWithCode of={Stories.Elements} />
+
+## Filled
+
+Filled rows look like cards and always have a chevron. The list sets the gap.
+
+<StoryWithCode of={Stories.Filled} />
+
+## States
+
+A row can be selected or disabled, as a button, a link or a static row.
+
+<StoryWithCode of={Stories.States} />
+
+## Sizes and density
+
+Rows come in large and small, each in two densities. The last row has no divider.
+
+<StoryWithCode of={Stories.SizesAndDensity} />
+
+## Body
+
+A body can replace the description.
+
+<StoryWithCode of={Stories.Body} />
+
+## Menu rows
+
+Rows inside a select menu act as options, with `aria-selected`.
+
+<StoryWithCode of={Stories.MenuRows} />
+
+## Accessibility
+
+- As a link or button, the whole row is the control. Its name is the row's text: the title, then the description and caption.
+- Inside a menu, it has `role="menuitem"` (action menus) or `role="option"` with `aria-selected` (select menus).
+- Outside menus, the page sets `aria-current` on a selected row. `selected` is only the look.
+- A static row has no hover and no focus. With a chevron, the whole row is clickable.
+- The chevron and the leading icon are decorative.
+
+## Component API
+
+<ArgTypes of={NlListItem} />

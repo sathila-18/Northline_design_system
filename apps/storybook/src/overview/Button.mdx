@@ -1,0 +1,74 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlButton } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlButton/NlButton.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The only public button. It runs an action, or opens a page when rendered as a link."
+  source="components/NlButton"
+  spec="nlbutton"
+/>
+
+## Overview
+
+A primary, medium button with no icon is the default. Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Variants
+
+The normal tone has four variants: primary, secondary, tertiary and link. Each variant has a disabled state.
+
+<StoryWithCode of={Stories.Normal} />
+
+## Destructive
+
+The destructive tone uses the error colours. It has primary, secondary and tertiary variants. It has no link variant.
+
+<StoryWithCode of={Stories.Destructive} />
+
+## White
+
+The white tone has one look, primary only. It sits on a brand-coloured background.
+
+<StoryWithCode of={Stories.White} />
+
+## Sizes
+
+There are four sizes: large, medium, small and xsmall. Medium is the default. Each size can have a label, a leading icon or a single icon.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Content tones
+
+`contentTone` recolours the label and icon of a tertiary button. The snackbar uses inverse. Banners use the matching status tone. The side sheet close button uses secondary.
+
+<StoryWithCode of={Stories.ContentTones} />
+
+## Link content tones
+
+Link buttons take the same content tones, with no background. `flush` removes the side padding, so the label lines up with the text around it. Banners use it.
+
+<StoryWithCode of={Stories.LinkContentTones} />
+
+## As a link
+
+With `as` and `href`, the button renders as a link. A disabled link loses its `href` and gets `aria-disabled="true"`.
+
+<StoryWithCode of={Stories.AsLink} />
+
+## Accessibility
+
+- It is a native `button`. Enter and Space activate it. As a link, Enter activates it.
+- A disabled button uses native `disabled`. It can't be focused and has no hover or press.
+- An icon-only button keeps its label as visually hidden text, so it always has a name. A tooltip with the same text is recommended.
+- A screen reader hears the label and "button", for example "Add reward, button".
+- Keyboard focus shows the standard focus ring.
+- Every size meets the 24 × 24 pointer target.
+- Colour changes don't animate when reduced motion is on.
+
+## Component API
+
+<ArgTypes of={NlButton} />

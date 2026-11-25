@@ -1,0 +1,76 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlChartFrame } from '@northline/ui/charts';
+import * as Stories from '../../../../packages/ui/src/charts/NlChartFrame/NlChartFrame.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='The chart area: a title, the "View as table" switch, and the loading, empty and error states.'
+  source="charts/NlChartFrame"
+  spec="nlchartframe"
+/>
+
+## Overview
+
+A ready card with the heading, the "View as" switch and the chart. The chart and its table are slots.
+
+<StoryWithCode of={Stories.Default} />
+
+## View as table
+
+The table view shows the same data in a table, inside the chart's height.
+
+<StoryWithCode of={Stories.ViewAsTable} />
+
+## Plain
+
+The plain variant has no card. The page draws it.
+
+<StoryWithCode of={Stories.Plain} />
+
+## Short
+
+The frame can be 240 high. 320 is the default.
+
+<StoryWithCode of={Stories.Short} />
+
+## No table
+
+Without a table, there is no switch.
+
+<StoryWithCode of={Stories.NoTable} />
+
+## Loading
+
+While loading, five skeleton bars fill the chart's height. The switch keeps its place, hidden.
+
+<StoryWithCode of={Stories.Loading} />
+
+## Empty
+
+With no data, the frame shows "No data for this period".
+
+<StoryWithCode of={Stories.Empty} />
+
+## Error
+
+On error, the frame shows a message and Try again.
+
+<StoryWithCode of={Stories.Error} />
+
+## Long title
+
+A long title and description wrap. The switch stays at the end.
+
+<StoryWithCode of={Stories.LongTitle} />
+
+## Accessibility
+
+- It is a `section` named by the title, with `aria-busy` while loading.
+- The switch is named "View as" and keeps the choice per frame.
+- Switching to the table moves no focus. The table's caption repeats the chart title.
+
+## Component API
+
+<ArgTypes of={NlChartFrame} />

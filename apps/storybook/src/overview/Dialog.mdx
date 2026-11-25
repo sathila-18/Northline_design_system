@@ -1,0 +1,55 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlDialog } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlDialog/NlDialog.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description='A modal window for a short task or a confirmation, such as "Delete this reward?".'
+  source="components/NlDialog"
+  spec="nldialog"
+/>
+
+## Overview
+
+A short task with a primary and a secondary action. Focus starts on the primary.
+
+<StoryWithCode of={Stories.Default} />
+
+## Destructive
+
+A destructive confirmation uses `role="alertdialog"`. Focus starts on Cancel.
+
+<StoryWithCode of={Stories.Destructive} />
+
+## Form
+
+With a form in the body, focus starts in the first field. This one also has a start action.
+
+<StoryWithCode of={Stories.Form} />
+
+## Required
+
+A required confirmation has no close button and a click on the overlay doesn't close it. Escape still does.
+
+<StoryWithCode of={Stories.Required} />
+
+## Long content
+
+With long content, the panel keeps its distance from the window edges and the body scrolls.
+
+<StoryWithCode of={Stories.LongContent} />
+
+## Accessibility
+
+- It has `role="dialog"` and `aria-modal="true"`. The title labels it and the body text describes it.
+- On open, focus goes to the first focusable element in the body. For a confirmation it goes to the primary action, or to Cancel when the primary is destructive.
+- Focus is trapped inside. On close, focus returns to the element that opened it.
+- Escape and the close button close it. A click on the overlay closes it unless it is a required confirmation (`dismissible={false}`).
+- The page behind is inert and doesn't scroll.
+- It opens with a fade and slight scale. With reduced motion it only fades.
+
+## Component API
+
+<ArgTypes of={NlDialog} />

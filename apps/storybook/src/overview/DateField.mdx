@@ -1,0 +1,60 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlDateField } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlDateField/NlDateField.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A date input that accepts typing and opens a calendar."
+  source="components/NlDateField"
+  spec="nldatefield"
+/>
+
+## Overview
+
+Focus the field to see the pattern. Type digits and the slashes are added, or open the calendar.
+
+<StoryWithCode of={Stories.Default} />
+
+## States
+
+The field can be enabled, complete, with helper text, in error, or disabled empty and disabled complete.
+
+<StoryWithCode of={Stories.States} />
+
+## Limits
+
+`minDate` and `maxDate` disable days outside them in the calendar. Typing one shows an error.
+
+<StoryWithCode of={Stories.Limits} />
+
+## Errors
+
+Dates that are invalid or out of range show their error. Type 31/02/2026 to see "Enter a date as DD/MM/YYYY".
+
+<StoryWithCode of={Stories.Errors} />
+
+## Formats
+
+`format` sets the pattern. DD/MM/YYYY is the default. Month first and ISO order with dashes also work.
+
+<StoryWithCode of={Stories.Formats} />
+
+## Controlled
+
+The page holds the value as an ISO date.
+
+<StoryWithCode of={Stories.Controlled} />
+
+## Accessibility
+
+- It is a text input with a digit mask. Slashes are added automatically.
+- Invalid or out-of-range dates show an error, for example "Enter a date as DD/MM/YYYY" or "Choose a date from" followed by the earliest date.
+- The calendar button is named "Choose date", or "Change date" followed by the current date. It has `aria-haspopup="dialog"` and `aria-expanded`.
+- The calendar menu is a dialog. Choosing a date fills the field, closes the menu and returns focus to the input. Escape closes it.
+- `aria-describedby` includes the format hint, so screen reader users know the pattern.
+
+## Component API
+
+<ArgTypes of={NlDateField} />

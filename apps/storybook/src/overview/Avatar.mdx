@@ -1,0 +1,71 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlAvatar } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlAvatar/NlAvatar.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A round picture of a person or account: a photo, initials or a default icon, with an optional online dot."
+  source="components/NlAvatar"
+  spec="nlavatar"
+/>
+
+## Overview
+
+With no photo or initials, it shows the icon.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+There are seven sizes.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Image
+
+A photo covers the circle. `alt` names it.
+
+<StoryWithCode of={Stories.Image} />
+
+## Initials
+
+Up to two uppercase initials on a tinted background.
+
+<StoryWithCode of={Stories.Initials} />
+
+## Icon
+
+The default person icon on a tinted background.
+
+<StoryWithCode of={Stories.Icon} />
+
+## Online
+
+The online dot shows at every size, on each type.
+
+<StoryWithCode of={Stories.Online} />
+
+## Image fallback
+
+A photo that fails to load falls back to the initials, then to the icon.
+
+<StoryWithCode of={Stories.ImageFallback} />
+
+## With a name
+
+Next to a visible name, the avatar is decorative (`alt=""`). The dot still announces presence.
+
+<StoryWithCode of={Stories.WithName} />
+
+## Accessibility
+
+- A photo uses `img` with `alt`. Give the person's name in `alt` when the avatar is the only place the name appears. Use `alt=""` when the name shows next to it.
+- Initials and the icon are decorative by default. Pass `alt` to name them, which adds `role="img"` and `aria-label`.
+- Initials are at most 2 letters, uppercase. With no name, use the icon instead of empty initials.
+- The online dot uses `onlineLabel`, so a screen reader hears, for example, "Member 0042, online". Where presence matters, show the status in text nearby too.
+
+## Component API
+
+<ArgTypes of={NlAvatar} />

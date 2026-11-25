@@ -1,0 +1,58 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlButtonDock } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlButtonDock/NlButtonDock.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The row of actions at the bottom of a form, dialog or side sheet."
+  source="components/NlButtonDock"
+  spec="nlbuttondock"
+/>
+
+## Overview
+
+An optional note sits above. A tertiary button sits at the start. Secondary and primary buttons sit at the end.
+
+<StoryWithCode of={Stories.Default} />
+
+## Combinations
+
+The usual sets are primary only, secondary and primary, tertiary and primary, and a note with a primary.
+
+<StoryWithCode of={Stories.Combinations} />
+
+## Sticky
+
+The container pins the dock to the bottom of a scrolling panel. The dock then shows the sticky shadow.
+
+<StoryWithCode of={Stories.Sticky} />
+
+## In a form
+
+In a form, the primary button submits the form.
+
+<StoryWithCode of={Stories.InForm} />
+
+## Narrow
+
+In a narrow container the end group wraps and stays at the end.
+
+<StoryWithCode of={Stories.Narrow} />
+
+## Destructive
+
+The secondary button can be destructive, with a leading icon. A details side sheet uses this.
+
+<StoryWithCode of={Stories.Destructive} />
+
+## Accessibility
+
+- The DOM order matches the visual order: tertiary, secondary, primary. Tab follows it.
+- When the dock is sticky, the scrolling content above has bottom padding, so nothing hides behind the dock.
+- In a form, the primary button is the submit button (`type="submit"`).
+
+## Component API
+
+<ArgTypes of={NlButtonDock} />

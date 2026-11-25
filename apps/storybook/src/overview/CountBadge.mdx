@@ -1,0 +1,53 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlCountBadge } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlCountBadge/NlCountBadge.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="A small pill that shows a count from 1 to 99+, or a plain dot when there is no number."
+  source="components/NlCountBadge"
+  spec="nlcountbadge"
+/>
+
+## Overview
+
+It is used on the label and the notification button. A count of 0 renders nothing.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes and digits
+
+Both sizes with no count (a dot), one digit, two digits and over the maximum.
+
+<StoryWithCode of={Stories.SizesAndDigits} />
+
+## Tones
+
+There are three tones, in both sizes.
+
+<StoryWithCode of={Stories.Tones} />
+
+## Over max
+
+Above `max`, the badge shows the maximum followed by +.
+
+<StoryWithCode of={Stories.OverMax} />
+
+## Labelled
+
+With `label`, screen readers hear the label instead of the digits.
+
+<StoryWithCode of={Stories.Labelled} />
+
+## Accessibility
+
+- The visible count is short. Give its meaning through `label`, for example "3 unread notifications". The label is visually hidden text, and the digits are hidden from screen readers.
+- With no label and no count (the dot), the badge is decorative.
+- There is no live region by default. A parent that needs count changes announced adds its own.
+- White text on the warning tone in Light needs 4.5 to 1 in every brand.
+
+## Component API
+
+<ArgTypes of={NlCountBadge} />

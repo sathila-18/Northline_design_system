@@ -1,0 +1,46 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlEmptyState } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlEmptyState/NlEmptyState.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="What a list, table or page shows when there is nothing in it yet, with an optional action."
+  source="components/NlEmptyState"
+  spec="nlemptystate"
+/>
+
+## Overview
+
+An empty state with an action. Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Sizes
+
+Small has a 48 icon and Headline Small. Medium has a 64 icon and Headline Medium.
+
+<StoryWithCode of={Stories.Sizes} />
+
+## Icon options
+
+The icon slot can take a custom icon, or no icon at all.
+
+<StoryWithCode of={Stories.IconOptions} />
+
+## No results
+
+After a search, `live` announces the empty state. It offers a way back.
+
+<StoryWithCode of={Stories.NoResults} />
+
+## Accessibility
+
+- The heading uses `headingAs` to match the page outline, usually `h2` or `h3`.
+- The icon is decorative.
+- When an empty state replaces content after a filter or search, the result region announces it, for example "No results".
+
+## Component API
+
+<ArgTypes of={NlEmptyState} />

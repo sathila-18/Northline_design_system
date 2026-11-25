@@ -38,10 +38,20 @@ interface NlTableCellCommonProps extends Omit<ComponentPropsWithRef<'td'>, 'chil
 }
 
 type NlTableCellTypeProps =
-  | { type?: 'default'; children?: ReactNode }
-  | { type: 'badge'; badge: { tone: NlBadgeTone; label: string }; children?: never }
+  | {
+      /** What the cell holds: text (default), a badge, a link, row actions or a value checkbox. */
+      type?: 'default';
+      children?: ReactNode;
+    }
+  | {
+      type: 'badge';
+      /** Badge type: the badge's tone and label. */
+      badge: { tone: NlBadgeTone; label: string };
+      children?: never;
+    }
   | {
       type: 'link';
+      /** Link type: the label, and an `href` or `as` and `onClick`. */
       link: {
         label: string;
         href?: string;
@@ -52,6 +62,7 @@ type NlTableCellTypeProps =
     }
   | {
       type: 'row-actions';
+      /** Row-actions type: the button's name, its open state and its click. */
       actions: {
         /** "Actions for {row}". */
         label: string;
@@ -62,7 +73,12 @@ type NlTableCellTypeProps =
       };
       children?: never;
     }
-  | { type: 'checkbox'; checkbox: NlTableCellCheckbox; children?: never };
+  | {
+      type: 'checkbox';
+      /** Checkbox type: a value checkbox, named "{row}, {column}". */
+      checkbox: NlTableCellCheckbox;
+      children?: never;
+    };
 
 export type NlTableCellProps = NlTableCellCommonProps & NlTableCellTypeProps;
 export type NlTableCellType = NonNullable<NlTableCellTypeProps['type']>;

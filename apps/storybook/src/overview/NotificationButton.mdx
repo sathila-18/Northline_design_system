@@ -1,0 +1,40 @@
+import { ArgTypes, Meta } from '@storybook/addon-docs/blocks';
+import { NlNotificationButton } from '@northline/ui';
+import * as Stories from '../../../../packages/ui/src/components/NlNotificationButton/NlNotificationButton.stories';
+import { OverviewHeader, StoryWithCode } from './OverviewBlocks';
+
+<Meta of={Stories} name="Overview" />
+
+<OverviewHeader
+  description="The bell button in the page header. It shows a dot or a number when there are unread notifications."
+  source="components/NlNotificationButton"
+  spec="nlnotificationbutton"
+/>
+
+## Overview
+
+Try the controls to see every option.
+
+<StoryWithCode of={Stories.Default} />
+
+## Notifications
+
+The badge can be empty, a dot, a number, two digits or over 99. The circle doesn't clip the badge.
+
+<StoryWithCode of={Stories.Notifications} />
+
+## Disabled
+
+A disabled button shows no badge.
+
+<StoryWithCode of={Stories.Disabled} />
+
+## Accessibility
+
+- It is a native button. Its name includes the count, for example "Notifications, 3 unread", or "Notifications, new" for the dot. The badge itself is hidden from screen readers.
+- When the count changes while the page is open, the page header announces it. This button doesn't.
+- Enter or Space opens what it controls.
+
+## Component API
+
+<ArgTypes of={NlNotificationButton} />
