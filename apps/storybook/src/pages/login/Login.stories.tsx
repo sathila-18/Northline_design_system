@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef, useState, type ChangeEvent, type SyntheticEvent } from 'react';
 import { NlButton, NlCheckbox, NlPasswordField, NlTextBlock, NlTextField } from '@northline/ui';
+import { BrandLogo } from '../_shared/BrandLogo';
 import { goTo } from '../_shared/navItems';
 
 /**
@@ -53,8 +54,8 @@ function LoginPage() {
     <main className="nl:grid nl:min-h-dvh nl:grid-cols-12 nl:items-center nl:gap-x-3xl nl:bg-primary nl:px-3xl nl:py-4xl">
       <form className="nl:col-span-4 nl:col-start-5 nl:flex nl:flex-col nl:gap-4xl" noValidate onSubmit={handleSubmit}>
         <div className="nl:flex nl:flex-col nl:items-center nl:gap-4xl">
-          {/* Story-only wordmark, as in the NlAppShell stories. There is no logo component. */}
-          <span className="nl:text-headline-small-h6 nl:text-primary">Northline</span>
+          {/* Story-only logo for the current brand. There is no library logo component. */}
+          <BrandLogo />
           <NlTextBlock
             type="headline-large"
             headingAs="h1"

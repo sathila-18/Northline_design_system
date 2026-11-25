@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+// Story-only logo, kept in the Storybook app with its artwork.
+import { BrandLogo } from '../../../../../apps/storybook/src/pages/_shared/BrandLogo';
 import { NlListItem } from '../NlListItem';
 import { NlSideNav, type NlSideNavItem } from './NlSideNav';
 
@@ -30,8 +32,8 @@ const user = {
   ),
 };
 
-/** A placeholder logo: the design system's name. */
-const logo = <span className="nl:text-headline-small-h6 nl:text-primary">Northline</span>;
+/** The story-only logo for the current brand (Storybook artwork, not part of the library). */
+const logo = <BrandLogo />;
 
 const meta = {
   title: 'Components/Navigation/Side nav',
