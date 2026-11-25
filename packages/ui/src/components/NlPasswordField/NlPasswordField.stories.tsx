@@ -6,7 +6,8 @@ import { NlPasswordField } from './NlPasswordField';
 const knownIssue = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/Password field',
+  title: 'Components/Forms and inputs/Password field',
+  tags: ['molecule'],
   component: NlPasswordField,
   args: {
     label: 'Password',

@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { NlSwitch } from './NlSwitch';
 
 const meta: Meta<typeof NlSwitch> = {
-  title: 'Components/Atoms L0/Switch',
+  title: 'Components/Forms and inputs/Switch',
+  tags: ['atom-l0'],
   component: NlSwitch,
   args: { 'aria-label': 'Email updates', defaultChecked: false, size: 'large', disabled: false },
   argTypes: {

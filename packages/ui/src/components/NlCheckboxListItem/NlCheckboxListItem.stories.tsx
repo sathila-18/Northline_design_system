@@ -6,7 +6,8 @@ import { NlCheckboxListItem } from './NlCheckboxListItem';
 const k3 = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/Checkbox list item',
+  title: 'Components/Forms and inputs/Checkbox list item',
+  tags: ['molecule'],
   component: NlCheckboxListItem,
   args: {
     title: 'Tier 2',

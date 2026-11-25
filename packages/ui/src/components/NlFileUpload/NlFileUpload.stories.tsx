@@ -11,7 +11,8 @@ const copy: Record<NlFileUploadState, { title: string; description?: string }> =
 };
 
 const meta = {
-  title: 'Components/Molecules/File upload',
+  title: 'Components/Forms and inputs/File upload',
+  tags: ['molecule'],
   component: NlFileUpload,
   args: {
     size: 'large',

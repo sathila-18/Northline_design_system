@@ -36,7 +36,8 @@ function Demo({ trigger, ...props }: Args & { trigger: string }) {
 }
 
 const meta = {
-  title: 'Components/Molecules/Dialog',
+  title: 'Components/Overlays/Dialog',
+  tags: ['molecule'],
   component: NlDialog,
   args: {
     open: false,

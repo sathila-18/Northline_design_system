@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { NlRadio } from './NlRadio';
 
 const meta = {
-  title: 'Components/Atoms L0/Radio',
+  title: 'Components/Forms and inputs/Radio',
+  tags: ['atom-l0'],
   component: NlRadio,
   args: { 'aria-label': 'Tier 2', defaultChecked: false, disabled: false },
   argTypes: {

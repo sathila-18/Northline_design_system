@@ -6,7 +6,8 @@ const tones = ['error', 'warning', 'success'] as const;
 const counts = [undefined, 3, 42, 120] as const;
 
 const meta = {
-  title: 'Components/Atoms L0/Count badge',
+  title: 'Components/Chips and labels/Count badge',
+  tags: ['atom-l0'],
   component: NlCountBadge,
   args: { count: 3, max: 99, size: 'small', tone: 'error' },
   argTypes: {

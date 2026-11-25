@@ -10,7 +10,8 @@ function Frame({ children }: { children: ReactNode }) {
 }
 
 const meta = {
-  title: 'Components/Organisms/Page header',
+  title: 'Components/Layout/Page header',
+  tags: ['organism'],
   component: NlPageHeader,
   args: { title: 'Rewards', children: 'Manage the rewards members can claim' },
   argTypes: {

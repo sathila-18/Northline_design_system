@@ -13,7 +13,8 @@ interface StoryArgs {
 }
 
 const meta = {
-  title: 'Components/Molecules/Segmented button',
+  title: 'Components/Actions/Segmented button',
+  tags: ['molecule'],
   args: { size: 'medium', iconOnly: false, disabled: false },
   argTypes: {
     size: { control: 'inline-radio', options: sizes },

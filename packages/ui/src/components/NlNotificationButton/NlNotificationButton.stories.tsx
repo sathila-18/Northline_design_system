@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NlNotificationButton } from './NlNotificationButton';
 
 const meta = {
-  title: 'Components/Atoms L1/Notification button',
+  title: 'Components/Actions/Notification button',
+  tags: ['atom-l1'],
   component: NlNotificationButton,
   parameters: { layout: 'centered' },
   args: { count: 3, showCount: true, disabled: false, label: 'Notifications' },

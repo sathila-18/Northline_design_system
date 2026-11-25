@@ -56,7 +56,8 @@ function Blocks({ count }: { count: number }) {
 }
 
 const meta = {
-  title: 'Components/Atoms L0/App shell',
+  title: 'Components/Layout/App shell',
+  tags: ['atom-l0'],
   component: NlAppShell,
   parameters: { layout: 'fullscreen' },
   args: { nav, header, skipLink: true, children: <Blocks count={4} /> },

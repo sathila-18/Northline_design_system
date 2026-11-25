@@ -7,7 +7,8 @@ import { NlTextArea } from './NlTextArea';
 const knownIssue = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/Text area',
+  title: 'Components/Forms and inputs/Text area',
+  tags: ['molecule'],
   component: NlTextArea,
   args: {
     label: 'Notes',

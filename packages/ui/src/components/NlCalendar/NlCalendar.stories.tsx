@@ -16,7 +16,8 @@ interface StoryArgs {
 }
 
 const meta = {
-  title: 'Components/Molecules/Calendar',
+  title: 'Components/Forms and inputs/Calendar',
+  tags: ['molecule'],
   args: { mode: 'single', weekStartsOn: 1, today: '2027-03-17' },
   argTypes: {
     mode: { control: 'inline-radio', options: ['single', 'range'] },

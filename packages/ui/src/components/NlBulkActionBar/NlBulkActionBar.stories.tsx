@@ -22,7 +22,8 @@ const many: NlBulkAction[] = [
 ];
 
 const meta = {
-  title: 'Components/Molecules/Bulk action bar',
+  title: 'Components/Actions/Bulk action bar',
+  tags: ['molecule'],
   component: NlBulkActionBar,
   parameters: { layout: 'padded' },
   args: { count: 3, onClear: noop, actions: three },

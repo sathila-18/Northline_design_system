@@ -46,7 +46,8 @@ const toProps = ({ tone, variant, contentTone, icon, iconName, ...rest }: StoryA
 };
 
 const meta = {
-  title: 'Components/Atoms L1/Button',
+  title: 'Components/Actions/Button',
+  tags: ['atom-l1'],
   args: {
     tone: 'normal',
     variant: 'primary',

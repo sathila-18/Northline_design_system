@@ -17,7 +17,8 @@ interface StoryArgs {
 }
 
 const meta = {
-  title: 'Components/Atoms L1/Label',
+  title: 'Components/Forms and inputs/Label',
+  tags: ['atom-l1'],
   args: { size: 'medium', tone: 'tertiary', badge: false, badgeTone: 'error', badgeLabel: 'New', children: 'Tier 2' },
   render: ({ badge, badgeTone, badgeLabel, ...rest }) =>
     badge ? <NlLabel {...rest} badge badgeTone={badgeTone} badgeLabel={badgeLabel} /> : <NlLabel {...rest} />,

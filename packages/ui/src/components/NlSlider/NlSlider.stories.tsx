@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { NlSlider } from './NlSlider';
 
 const meta: Meta<typeof NlSlider> = {
-  title: 'Components/Atoms L0/Slider',
+  title: 'Components/Forms and inputs/Slider',
+  tags: ['atom-l0'],
   component: NlSlider,
   args: { 'aria-label': 'Points', defaultValue: 50, min: 0, max: 100, step: 1, disabled: false },
   argTypes: {

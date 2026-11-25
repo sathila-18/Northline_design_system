@@ -6,7 +6,8 @@ const sizes = [16, 20, 24, 36, 48, 64] as const;
 const tones = ['inherit', 'primary', 'secondary', 'disabled', 'success', 'warning', 'error', 'info'] as const;
 
 const meta = {
-  title: 'Components/Atoms L0/Icon',
+  title: 'Components/Images and icons/Icon',
+  tags: ['atom-l0'],
   component: NlIcon,
   args: { name: 'info', size: 24, tone: 'inherit', filled: false },
   argTypes: {

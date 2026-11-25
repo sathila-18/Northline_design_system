@@ -12,7 +12,8 @@ const headingTypes: NlTextBlockHeadingType[] = [
 ];
 
 const meta: Meta<typeof NlTextBlock> = {
-  title: 'Components/Atoms L0/Text block',
+  title: 'Components/Data display/Text block',
+  tags: ['atom-l0'],
   component: NlTextBlock,
   args: {
     type: 'headline-small',

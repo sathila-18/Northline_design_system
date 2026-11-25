@@ -35,7 +35,8 @@ interface StoryArgs {
 }
 
 const meta = {
-  title: 'Components/Molecules/Table cell',
+  title: 'Components/Data display/Table cell',
+  tags: ['molecule'],
   args: { text: 'Member 0042', narrow: false, rowHeader: false },
   argTypes: {
     text: { control: 'text' },

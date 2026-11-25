@@ -27,7 +27,8 @@ function Frame({ children }: { children: ReactNode }) {
 }
 
 const meta = {
-  title: 'Components/Organisms/Multi select',
+  title: 'Components/Forms and inputs/Multi select',
+  tags: ['organism'],
   component: NlMultiSelect,
   args: {
     label: 'Tiers',

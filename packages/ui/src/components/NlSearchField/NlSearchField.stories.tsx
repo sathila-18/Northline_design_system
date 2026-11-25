@@ -6,7 +6,8 @@ import { NlSearchField } from './NlSearchField';
 const knownIssue = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/Search field',
+  title: 'Components/Forms and inputs/Search field',
+  tags: ['molecule'],
   component: NlSearchField,
   args: {
     label: 'Search',

@@ -29,7 +29,8 @@ function Frame({ minimized = false, children }: { minimized?: boolean; children:
 }
 
 const meta = {
-  title: 'Components/Molecules/Side nav user',
+  title: 'Components/Navigation/Side nav user',
+  tags: ['molecule'],
   component: NlSideNavUser,
   args: {
     name: 'Member 0042',

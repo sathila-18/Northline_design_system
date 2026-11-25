@@ -12,7 +12,8 @@ const tiers = [
 
 /** Rows always sit in NlRadioListGroup, which owns the value. */
 const meta = {
-  title: 'Components/Molecules/Radio list item',
+  title: 'Components/Forms and inputs/Radio list item',
+  tags: ['molecule'],
   component: NlRadioListItem,
   args: {
     value: 'tier-1',

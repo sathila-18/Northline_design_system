@@ -50,7 +50,8 @@ const footer = {
 };
 
 const meta = {
-  title: 'Components/Organisms/Side sheet',
+  title: 'Components/Overlays/Side sheet',
+  tags: ['organism'],
   component: NlSideSheet,
   args: {
     open: false,

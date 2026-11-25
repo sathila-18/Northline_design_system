@@ -84,7 +84,8 @@ function Demo({
 }
 
 const meta = {
-  title: 'Components/Organisms/Table column filter',
+  title: 'Components/Data display/Table column filter',
+  tags: ['organism'],
   component: NlTableColumnFilter,
   parameters: { controls: { disable: true } },
 } satisfies Meta<typeof NlTableColumnFilter>;

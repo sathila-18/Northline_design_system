@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NlSkeleton } from './NlSkeleton';
 
 const meta = {
-  title: 'Components/Atoms L0/Skeleton',
+  title: 'Components/Loading/Skeleton',
+  tags: ['atom-l0'],
   component: NlSkeleton,
   args: { shape: 'text' },
   argTypes: {
