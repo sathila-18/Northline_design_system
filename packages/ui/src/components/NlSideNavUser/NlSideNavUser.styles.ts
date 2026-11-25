@@ -4,8 +4,12 @@
 /** The root: holds the row, the menu and the hidden menu label. Full width of the nav column. */
 export const root = 'nl:flex nl:w-full nl:min-w-0 nl:flex-col';
 
-/** Minimized: as wide as the avatar row. */
-export const rootMinimized = 'nl:inline-flex nl:flex-col';
+/**
+ * Minimized: as wide as the avatar row (the avatar plus Space-L all round, OD-195), centred on the nav column. The
+ * minimized column is narrower than that row, so without centring the row was squeezed to the column and the avatar
+ * sat off centre, to the end (designer, 25 Nov 2026).
+ */
+export const rootMinimized = 'nl:inline-flex nl:flex-col nl:self-center';
 
 /** Name and email: one line each, cut with an ellipsis; the full text is a title only when cut. */
 export const line = 'nl:block nl:truncate';

@@ -94,4 +94,12 @@ describe('NlSideNavUser', () => {
     expect(button.querySelector('[data-slot="text"]')).toHaveClass('nl:sr-only');
     expect(button.querySelector('[data-icon]')).toBeNull();
   });
+
+  it('minimized: the row is centred on the nav column, expanded it fills it', () => {
+    const { container, rerender } = render(<NlSideNavUser {...user} menu={menu} minimized />);
+    expect(container.firstElementChild).toHaveClass('nl:self-center');
+    rerender(<NlSideNavUser {...user} menu={menu} />);
+    expect(container.firstElementChild).toHaveClass('nl:w-full');
+    expect(container.firstElementChild).not.toHaveClass('nl:self-center');
+  });
 });
