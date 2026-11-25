@@ -36,9 +36,10 @@ function ComingSoon({ title, active }: { title: string; active?: PageHref }) {
 
 type Story = StoryObj;
 
-export const AllRewards: Story = {
-  name: 'All rewards',
-  render: () => <ComingSoon title="All rewards" active="#rewards" />,
+/** Where a reward card, row click or View on All rewards goes until the reward details page is built. */
+export const RewardDetails: Story = {
+  name: 'Reward details',
+  render: () => <ComingSoon title="Reward details" active="#rewards" />,
 };
 export const TrackVoucher: Story = {
   name: 'Track voucher',

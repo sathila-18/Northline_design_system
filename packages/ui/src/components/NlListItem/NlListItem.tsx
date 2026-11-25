@@ -6,6 +6,7 @@ import { NlAvatar, type NlAvatarProps } from '../NlAvatar';
 import { NlListCaption } from '../NlListCaption';
 import {
   NlListItemBase,
+  type NlListItemBaseAccessoryAlign,
   type NlListItemBaseAppearance,
   type NlListItemBaseDensity,
   type NlListItemBaseSize,
@@ -37,6 +38,11 @@ export interface NlListItemProps extends Omit<
   caption?: string;
   /** Trailing chevron (chevron_right, 24, decorative). Makes the whole row actionable. Always on for filled. */
   chevron?: boolean;
+  /**
+   * Leading icon or avatar and the trailing accessories: centred on the row (default) or at the top, on the title's
+   * first line (OD-262). Passed to NlListItemBase.
+   */
+  accessoryAlign?: NlListItemBaseAccessoryAlign;
   /** The divider under a plain row. On by default (OD-154). */
   divider?: boolean;
   /** Selected look. In a select menu (role option) also aria-selected; elsewhere the page sets aria-current (OD-152). */
@@ -75,6 +81,7 @@ export function NlListItem({
   avatar,
   caption,
   chevron = false,
+  accessoryAlign = 'center',
   divider = true,
   selected = false,
   disabled = false,
@@ -161,6 +168,7 @@ export function NlListItem({
       selected={selected}
       disabled={disabled}
       actionable={kind !== 'static'}
+      accessoryAlign={accessoryAlign}
       data-kind={kind}
       className={className}
     />

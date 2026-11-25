@@ -89,6 +89,13 @@ describe('NlListItem', () => {
     expect(screen.getByRole('button', { name: 'A Custom' })).toBeInTheDocument();
   });
 
+  it('accessoryAlign: centre by default, title passes through to the base (OD-262)', () => {
+    const { container, rerender } = render(<NlListItem title="A" icon="event" chevron />);
+    expect(container.querySelector('[data-accessory-align="center"]')).not.toBeNull();
+    rerender(<NlListItem title="A" icon="event" chevron accessoryAlign="title" />);
+    expect(container.querySelector('[data-accessory-align="title"]')).not.toBeNull();
+  });
+
   it('divider can be turned off (OD-154)', () => {
     const { container, rerender } = render(<NlListItem title="A" />);
     expect(container.querySelector('[data-type="divider"]')).not.toBeNull();
