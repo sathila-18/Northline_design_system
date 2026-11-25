@@ -66,8 +66,8 @@ const limit = { single: 1, grouped: 3, stacked: 5 } as const;
  * Bars by category (DESIGN.md §9, NlBarChart): vertical or horizontal; one series, grouped (up to 3) or stacked (up
  * to 5). Recharts draws it with chart tokens only: bars with Radius-XS at the free end (stacked: the outer segment),
  * a group taking 60% of its slot with bars Space-XXS apart, gridlines across the value axis, five round value ticks,
- * Data S labels (categories cut with an ellipsis; horizontal in a Size-120 column), a chart-cursor band and a
- * chart-highlight ring on the hovered bar, NlChartTooltip (stacked: a total) and NlChartLegend for two or more series.
+ * Data S labels (categories cut with an ellipsis; horizontal in a Size-120 column), a chart-cursor band on hover and
+ * a chart-highlight ring on the keyboard-focused bar (OD-261), NlChartTooltip (stacked: a total) and NlChartLegend for two or more series.
  * One tab stop (role group, "chart"): Left and Right (horizontal: Up and Down), Home, End, Escape; each step announced.
  * Bars grow over --nl-duration-slow with "ease-out" (OD-255); none under reduced motion. 'use client'.
  */
@@ -162,13 +162,15 @@ export function NlBarChart<T extends Record<string, unknown>>({
     return horizontal ? [0, radius, radius, 0] : [radius, radius, 0, 0];
   };
 
-  // The hovered or focused bar: a 2px chart-highlight ring, 2px outside the bar.
+  // The keyboard-focused bar: a 2px chart-highlight ring, 2px outside the bar. Hover shows only the chart-cursor band
+  // and the tooltip, no ring (OD-261).
   const activeBar = (props: unknown): ReactElement => {
-    const bar = props as RectangleProps;
+    const { index, ...bar } = props as RectangleProps & { index?: number };
     const x = bar.x ?? 0;
     const y = bar.y ?? 0;
     const w = bar.width ?? 0;
     const h = bar.height ?? 0;
+    if (keyboard.index === null || keyboard.index !== index) return <Rectangle {...bar} />;
     return (
       <g>
         <Rectangle {...bar} />

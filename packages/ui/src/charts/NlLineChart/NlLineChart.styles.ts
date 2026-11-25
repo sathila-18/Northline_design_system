@@ -19,7 +19,7 @@ export const plot = 'nl:min-h-0 nl:w-full nl:flex-1';
 /** Axis labels: Data S (tabular figures); the colour is chart-axis-text, passed to Recharts as a variable. */
 export const tick = 'nl:text-data-s';
 
-/** The highlight ring round the hovered or focused point: chart-highlight, no fill. */
+/** The highlight ring round the keyboard-focused point only: chart-highlight, no fill (OD-261). */
 export const ring = 'nl:fill-none nl:stroke-chart-highlight';
 
 /** Keyboard announcements: read politely, never shown. */

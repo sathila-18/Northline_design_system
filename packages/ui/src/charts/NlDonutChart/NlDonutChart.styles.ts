@@ -33,8 +33,18 @@ export const totalLabel = 'nl:m-none nl:text-body-s nl:text-chart-axis-text';
 /** The legend beside the ring takes the rest of the width. */
 export const legend = 'nl:min-w-0';
 
-/** The highlight ring round the hovered or focused slice: chart-highlight, no fill. */
+/** The highlight ring round the keyboard-focused slice only: chart-highlight, no fill (OD-261). */
 export const highlight = 'nl:fill-none nl:stroke-chart-highlight';
+
+/**
+ * A slice. While another slice is hovered it dims to 40% (OD-261). There is no opacity token: 40 is the designer's
+ * approved value, a rule 9 exception like the skeleton's 0.6 (25 Nov 2026). The fade uses Duration fast, none under
+ * reduced motion (rule 6).
+ */
+export const slice = {
+  resting: 'nl:transition-opacity nl:duration-fast nl:motion-reduce:transition-none',
+  dimmed: 'nl:opacity-40 nl:transition-opacity nl:duration-fast nl:motion-reduce:transition-none',
+} as const;
 
 /** Keyboard announcements: read politely, never shown. */
 export const live = 'nl:sr-only';
