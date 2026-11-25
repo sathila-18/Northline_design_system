@@ -41,10 +41,6 @@ export const RewardDetails: Story = {
   name: 'Reward details',
   render: () => <ComingSoon title="Reward details" active="#rewards" />,
 };
-export const TrackVoucher: Story = {
-  name: 'Track voucher',
-  render: () => <ComingSoon title="Track voucher" active="#track-voucher" />,
-};
 export const Tiers: Story = { render: () => <ComingSoon title="Tiers" active="#tiers" /> };
 export const Events: Story = { render: () => <ComingSoon title="Events" active="#events" /> };
 export const Messages: Story = { render: () => <ComingSoon title="Messages" active="#messages" /> };
