@@ -804,7 +804,7 @@ Pages are a showcase only; nobody builds on them (designer, 25 Nov 2026). These 
 | P1 | Login (`Pages/Login`): wordmark, `NlTextBlock` heading, `NlTextField`, `NlPasswordField`, `NlButton` link (small), `NlCheckbox` (small), `NlButton`; form 4 of the 12 grid columns, centred; empty required fields show errors on Log in (D18) | Login | ✅ |
 | P2 | Member list (`Pages/Members/Member list`): `NlTable` with a `Size-320` search, active filters as `NlInputChip`s with Clear filters, and Add member in the toolbar; Tier and Status (list) and Join date (date range) filters in the header cells, tier tones (D20); sort on points and dates; row click and View open the member details `NlSideSheet` (a Detail / Value `NlTable`, Suspend destructive and Edit in the footer; replaces the planned Member detail page); row actions; pagination; `NlBulkActionBar` (Export, Change status, Suspend) while rows are selected (D21); Suspend from a row, the side sheet or the bar asks in an `NlDialog` (destructive), then a success `NlSnackbar` at the top end (OD-245) | Members | ✅ |
 | P3 | Dashboard (`Pages/Dashboard`): a period switch (`NlSegmentedButton`), four `NlStatCard`s (active members, points issued, points redeemed, redemption rate), member growth (`NlLineChart`), points earned vs redeemed (`NlBarChart` grouped), top rewards (`NlBarChart` horizontal, top 5), members by tier (`NlDonutChart`, data order), each in an `NlChartFrame` with its table view; recent activity (`NlTable`, 5 latest) with View all to the Member list. Member numbers come from the member fixtures (2,480 members) | Dashboard | ✅ |
-| P4 | All rewards (`Pages/Rewards/All rewards`): a row above both views with a `Size-320` `NlSearchField` (name or ID), the Grid / Table switch (`NlSegmentedButton`, icon only) and Add reward. Grid (default): Category and Status (multiple) and Sort (points cost, redemptions, valid until; redemptions most first by default) as `NlAssistChip`s that open `NlMenu` select menus, with Clear filters (designer: chips, not fields); filled `NlListItem` cards, 4 per row, icon and chevron at the top (`accessoryAlign="title"`, OD-262), with the category icon, name, category, points cost and a status `NlBadge`, 12 per page with `NlPagination`; a card opens the Reward details Coming soon story. Table: `NlTable` with Category and Status filters and sorting in the header cells (designer: as on the Member list), active filters as `NlInputChip`s with Clear filters in the table toolbar, row actions (View, Edit, Duplicate, Archive) and pagination as on the Member list. Filters, search and sort carry across views. Status tones: live success, scheduled info, expired neutral, draft warning. 36 fixture rewards; the 8 dashboard rewards keep its redemption counts | Rewards | ⬜ |
+| P4 | All rewards (`Pages/Rewards/All rewards`): a row above both views with a `Size-320` `NlSearchField` (name or ID), the Grid / Table switch (`NlSegmentedButton`, icon only) and Add reward. Grid (default): Category and Status (multiple) and Sort (points cost, redemptions, valid until; redemptions most first by default) as `NlAssistChip`s that open `NlMenu` select menus, with Clear filters (designer: chips, not fields); filled `NlListItem` cards, 4 per row, icon and chevron at the top (`accessoryAlign="title"`, OD-262), with the category icon, name, category, points cost and a status `NlBadge`, 12 per page with `NlPagination`; a card opens the Reward details Coming soon story. Table: `NlTable` with Category and Status filters and sorting in the header cells (designer: as on the Member list), active filters as `NlInputChip`s with Clear filters in the table toolbar, row actions (View, Edit, Duplicate, Archive) and pagination as on the Member list. Filters, search and sort carry across views. Status tones: live success, scheduled info, expired neutral, draft warning. 36 fixture rewards; the 8 dashboard rewards keep its redemption counts | Rewards | ✅ |
 | P5 | Track voucher | Rewards | ⬜ |
 | P6 | Tiers | Rewards | ⬜ |
 | P7 | Events | Events | ⬜ |
@@ -4630,7 +4630,7 @@ NlSegment (rounded, horizontal)
 
 | Selected | State | Background | Label | Icon |
 |---|---|---|---|---|
-| selected | enabled | `bg-primary` | `text-primary` | `fg-secondary`, filled |
+| selected | enabled | `bg-primary` (xsmall: `bg-secondary`, OD-263) | `text-primary` | `fg-secondary`, filled |
 | selected | hover | `bg-secondary` | `text-primary` | `fg-secondary`, filled |
 | selected | pressed | `bg-tertiary` | `text-primary` | `fg-secondary`, filled |
 | selected | disabled | `bg-disabled` | `text-disabled-on_bg` | `fg-disabled-on_bg` |
@@ -4639,6 +4639,8 @@ NlSegment (rounded, horizontal)
 | unselected | pressed | none | `text-primary` | `fg-secondary` |
 | unselected | disabled | none | `text-disabled` | `fg-disabled` |
 | any | focus | as above, plus the standard focus ring from CLAUDE.md | | |
+
+- Xsmall selected (designer, 25 Nov 2026, OD-263): the xsmall track has no padding, so a `bg-primary` segment met the page background at its top and bottom and looked like a gap in the track. It rests on `bg-secondary` (a very light grey in Light), between the page and the `bg-tertiary` track in both themes; hover stays `bg-secondary`; pressed and disabled as the table.
 
 - Selected icons use the filled glyph (`NlIcon filled`, §6).
 
@@ -8059,6 +8061,7 @@ Default, hover, pressed, open, focus. A user row with no menu has no hover and n
 | Menu placement | Above (expanded); to the right of the nav, along its bottom (minimized) | New `NlMenu` placements `top-start` and `end-end`. Minimized, the menu sits `Space-XS` from the avatar button, not the nav's edge; `NlSideNav` (#78) can adjust | Approved (OD-193) |
 | Accessible name | "{name}, account menu" | Named from its text plus the menu label as hidden text: "{name} {email} Account menu". An `aria-label` without the visible email fails WCAG 2.5.3 (axe `label-content-name-mismatch`) | Approved (OD-194) |
 | Minimized padding | `Space-L` block only | `Space-L` all round (a 72 × 72 target) | Approved (OD-195) |
+| Minimized placement | Not described | The row keeps its own width (the avatar plus `Space-L` all round) and is centred on the minimized nav column, which is narrower; before, it was squeezed to the column and the avatar sat off centre, to the end (fixed 25 Nov 2026, designer) | Approved |
 | Long name or email | Not described | One line each, ellipsis, `title` when cut (as OD-191) | Approved (OD-196) |
 
 #### Spec → code

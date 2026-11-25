@@ -39,7 +39,8 @@ export function NlSegment({
   onChange,
   ...rest
 }: NlSegmentProps) {
-  const colours = selected ? styles.selected.on : styles.selected.off;
+  // Selected xsmall uses bg-secondary, so it doesn't match the page background (OD-263).
+  const colours = selected ? (size === 'xsmall' ? styles.selected.onXsmall : styles.selected.on) : styles.selected.off;
   const classes = [
     styles.root,
     styles.group,
