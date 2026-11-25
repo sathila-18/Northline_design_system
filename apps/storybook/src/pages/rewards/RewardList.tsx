@@ -7,11 +7,9 @@ import {
   NlEmptyState,
   NlInputChip,
   NlListItem,
-  NlMultiSelect,
   NlPagination,
   NlSearchField,
   NlSegmentedButton,
-  NlSelect,
   NlSkeleton,
   NlTable,
   NlTextBlock,
@@ -31,7 +29,9 @@ import {
   type RewardStatus,
 } from '../_fixtures/rewards';
 import { PageLayout } from '../_shared/PageLayout';
+import { ChipMenu } from './ChipMenu';
 import {
+  defaultSort,
   fromSortValue,
   gridPageSize,
   pageSizes,
@@ -165,6 +165,13 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
       header: 'Category',
       width: '120',
       cell: (reward) => ({ children: categoryLabel[reward.category] }),
+      filter: {
+        options: categoryOptions,
+        value: state.categories,
+        onApply: (value: string[]) => {
+          list.setFilter('categories', value as RewardCategory[]);
+        },
+      },
     },
     {
       key: 'points',
@@ -189,6 +196,13 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
         type: 'badge',
         badge: { tone: statusTone[reward.status], label: rewardStatusLabel[reward.status] },
       }),
+      filter: {
+        options: statusOptions,
+        value: state.statuses,
+        onApply: (value: string[]) => {
+          list.setFilter('statuses', value as RewardStatus[]);
+        },
+      },
     },
     {
       key: 'validUntil',
@@ -201,6 +215,7 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
 
   const count = list.total === 1 ? '1 reward' : `${formatPoints(list.total)} rewards`;
   const sortValue = toSortValue(state.sort);
+  const defaultSortValue = toSortValue(defaultSort);
   const showEmpty = status === 'error' || (ready && list.total === 0);
 
   return (
@@ -240,11 +255,11 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
               </NlButton>
             </div>
           </div>
-          {/* Row 2: filters and sort. */}
-          <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-l">
-            <div className="nl:w-240">
-              <NlMultiSelect
-                size="small"
+          {/* Grid only: Category, Status and Sort as assist chips. The table filters and sorts from its header. */}
+          {state.view === 'grid' ? (
+            <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
+              <ChipMenu
+                multiple
                 label="Category"
                 options={categoryOptions}
                 value={state.categories}
@@ -252,10 +267,8 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
                   list.setFilter('categories', value as RewardCategory[]);
                 }}
               />
-            </div>
-            <div className="nl:w-240">
-              <NlMultiSelect
-                size="small"
+              <ChipMenu
+                multiple
                 label="Status"
                 options={statusOptions}
                 value={state.statuses}
@@ -263,35 +276,19 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
                   list.setFilter('statuses', value as RewardStatus[]);
                 }}
               />
-            </div>
-            <div className="nl:w-320">
-              <NlSelect
-                size="small"
-                label="Sort by"
+              <ChipMenu
+                label="Sort"
                 options={sortOptions}
-                value={sortOptions.some((option) => option.value === sortValue) ? sortValue : undefined}
+                value={sortOptions.some((option) => option.value === sortValue) ? sortValue : defaultSortValue}
                 onValueChange={(value) => {
                   list.setSort(fromSortValue(value));
                 }}
               />
-            </div>
-          </div>
-          {chips.length > 0 || list.hasFilters ? (
-            <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
-              {chips.map((chip) => (
-                <NlInputChip
-                  key={chip.key}
-                  size="small"
-                  removable
-                  removeLabel={`Remove ${chip.label}`}
-                  onRemove={chip.onRemove}
-                >
-                  {chip.label}
-                </NlInputChip>
-              ))}
-              <NlButton variant="link" size="small" onClick={list.clearFilters}>
-                Clear filters
-              </NlButton>
+              {list.hasFilters ? (
+                <NlButton variant="link" size="small" onClick={list.clearFilters}>
+                  Clear filters
+                </NlButton>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -335,7 +332,31 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
                   },
                 },
               ]}
-              toolbar={false}
+              // Active filters as removable chips with Clear filters, inside the table, as on the Member list.
+              toolbar={
+                chips.length > 0
+                  ? {
+                      filters: (
+                        <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
+                          {chips.map((chip) => (
+                            <NlInputChip
+                              key={chip.key}
+                              size="small"
+                              removable
+                              removeLabel={`Remove ${chip.label}`}
+                              onRemove={chip.onRemove}
+                            >
+                              {chip.label}
+                            </NlInputChip>
+                          ))}
+                          <NlButton variant="link" size="small" onClick={list.clearFilters}>
+                            Clear filters
+                          </NlButton>
+                        </div>
+                      ),
+                    }
+                  : false
+              }
               pagination={{
                 page: list.page,
                 pageCount: list.pageCount,
@@ -369,6 +390,8 @@ export function RewardList({ rewards, status: initialStatus = 'ready', initial }
                 <li key={reward.id} className="nl:min-w-0">
                   <NlListItem
                     appearance="filled"
+                    // Icon and chevron at the top, on the name's first line (OD-262).
+                    accessoryAlign="title"
                     // Placement only: every card in a row is as tall as the tallest.
                     className="nl:h-full"
                     icon={categoryIcon[reward.category]}

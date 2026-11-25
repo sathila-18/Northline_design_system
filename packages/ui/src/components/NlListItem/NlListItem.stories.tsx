@@ -95,6 +95,34 @@ export const Filled: Story = {
   ),
 };
 
+/**
+ * Accessory alignment (OD-262): centred on the row (default) or at the top, on the title's first line, for rows
+ * with several lines of body, such as reward cards.
+ */
+export const AccessoryAlign: Story = {
+  name: 'Accessory align',
+  args: { appearance: 'filled', icon: 'event' },
+  render: (args) => (
+    <div className="nl:grid nl:max-w-720 nl:grid-cols-2 nl:gap-l">
+      {(['center', 'title'] as const).map((accessoryAlign) => (
+        <NlListItem
+          key={accessoryAlign}
+          {...args}
+          accessoryAlign={accessoryAlign}
+          title={accessoryAlign === 'center' ? 'Centred (default)' : 'Top (title)'}
+          body={
+            <span className="nl:flex nl:flex-col">
+              <span>Experiences</span>
+              <span>5,100 points</span>
+              <span>Live</span>
+            </span>
+          }
+        />
+      ))}
+    </div>
+  ),
+};
+
 /** Selected and disabled, as a button, a link and a static row. */
 export const States: Story = {
   render: (args) => (

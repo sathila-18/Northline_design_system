@@ -21,10 +21,10 @@ export const defaultSort: NlTableSort = { key: 'redemptions', direction: 'descen
 
 /** The toolbar's sort choices, as "key:direction". The table's sortable columns use the same keys. */
 export const sortOptions = [
-  { value: 'points:ascending', label: 'Points cost: low to high' },
-  { value: 'points:descending', label: 'Points cost: high to low' },
-  { value: 'redemptions:descending', label: 'Redemptions: most first' },
-  { value: 'validUntil:ascending', label: 'Valid until: soonest first' },
+  { value: 'points:ascending', label: 'Points cost, low to high' },
+  { value: 'points:descending', label: 'Points cost, high to low' },
+  { value: 'redemptions:descending', label: 'Redemptions, most first' },
+  { value: 'validUntil:ascending', label: 'Valid until, soonest first' },
 ];
 
 export const toSortValue = (sort: NlTableSort) => `${sort.key}:${sort.direction}`;

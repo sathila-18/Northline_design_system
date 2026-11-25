@@ -593,4 +593,5 @@ Decide these before building the components listed under "Affects".
 - OD-259 · Switch icons · **Decided** 24 Nov 2026: add `bar_chart` and `table` to `nlIcons`
 - OD-260 · Bar limits and sizes · **Decided** 24 Nov 2026: agreed
 - OD-261 · Chart hover highlight · **Decided** 25 Nov 2026: no ring on hover. Line and bar: cursor and tooltip only. Donut: the hovered slice moves out and the others dim to 40% opacity (rule 9 exception, no opacity token). The `chart-highlight` ring stays for keyboard focus only
+- OD-262 · List item accessory alignment · **Decided** 25 Nov 2026: `NlListItem` passes `accessoryAlign` (`center` default, `title`) to `NlListItemBase`, so cards with several lines can put the icon and chevron at the top (All rewards grid)
 - Donut order (no OD) · **Decided** 24 Nov 2026: `sortBy` "value" (default) or "data"; above 5 slices the largest 4 plus "Other"; the tier donut uses data order
