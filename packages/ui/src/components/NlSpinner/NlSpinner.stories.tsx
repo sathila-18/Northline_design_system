@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NlSpinner } from './NlSpinner';
 
 const meta = {
-  title: 'Components/Atoms L1/Spinner',
+  title: 'Components/Loading/Spinner',
+  tags: ['atom-l1'],
   component: NlSpinner,
   args: { status: 'loading', label: 'Loading rewards' },
   argTypes: {

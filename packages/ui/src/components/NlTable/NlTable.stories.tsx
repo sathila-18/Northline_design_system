@@ -212,7 +212,8 @@ function Demo({
 }
 
 const meta = {
-  title: 'Components/Organisms/Table',
+  title: 'Components/Data display/Table',
+  tags: ['organism'],
   component: NlTable,
   parameters: { controls: { disable: true } },
 } satisfies Meta<typeof NlTable>;

@@ -6,7 +6,8 @@ import { NlInputChip } from './NlInputChip';
 const sizes = ['xsmall', 'small', 'large'] as const;
 
 const meta = {
-  title: 'Components/Atoms L1/Input chip',
+  title: 'Components/Chips and labels/Input chip',
+  tags: ['atom-l1'],
   component: NlInputChip,
   args: { size: 'small', disabled: false, children: 'Tier 2' },
   argTypes: {

@@ -8,7 +8,8 @@ function Frame({ children }: { children: ReactNode }) {
 }
 
 const meta = {
-  title: 'Components/Organisms/Date field',
+  title: 'Components/Forms and inputs/Date field',
+  tags: ['organism'],
   component: NlDateField,
   args: { label: 'Start date', format: 'DD/MM/YYYY', error: false, disabled: false, helperText: '' },
   argTypes: {

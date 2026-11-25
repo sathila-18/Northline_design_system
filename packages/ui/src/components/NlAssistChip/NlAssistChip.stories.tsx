@@ -22,7 +22,8 @@ interface StoryArgs {
 }
 
 const meta = {
-  title: 'Components/Atoms L1/Assist chip',
+  title: 'Components/Chips and labels/Assist chip',
+  tags: ['atom-l1'],
   args: {
     size: 'small',
     dropdown: true,

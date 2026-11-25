@@ -5,7 +5,8 @@ import { NlBadge } from '../NlBadge';
 import { NlSwitchListItem } from './NlSwitchListItem';
 
 const meta = {
-  title: 'Components/Molecules/Switch list item',
+  title: 'Components/Forms and inputs/Switch list item',
+  tags: ['molecule'],
   component: NlSwitchListItem,
   args: {
     title: 'Email updates',

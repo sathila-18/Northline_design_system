@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { NlPagination } from './NlPagination';
 
 const meta = {
-  title: 'Components/Molecules/Pagination',
+  title: 'Components/Navigation/Pagination',
+  tags: ['molecule'],
   component: NlPagination,
   args: { page: 4, pageCount: 10, siblingCount: 1, onPageChange: () => undefined },
   argTypes: {

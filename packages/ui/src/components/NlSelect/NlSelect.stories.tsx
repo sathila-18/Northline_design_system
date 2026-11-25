@@ -26,7 +26,8 @@ function Frame({ children }: { children: ReactNode }) {
 }
 
 const meta = {
-  title: 'Components/Organisms/Select',
+  title: 'Components/Forms and inputs/Select',
+  tags: ['organism'],
   component: NlSelect,
   args: { label: 'Tier', options: tiers, size: 'large', error: false, disabled: false, helperText: '' },
   argTypes: {

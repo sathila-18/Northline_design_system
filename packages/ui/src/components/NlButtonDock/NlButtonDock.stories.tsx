@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NlButtonDock } from './NlButtonDock';
 
 const meta = {
-  title: 'Components/Molecules/Button dock',
+  title: 'Components/Actions/Button dock',
+  tags: ['molecule'],
   component: NlButtonDock,
   args: {
     sticky: false,

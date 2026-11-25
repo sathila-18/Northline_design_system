@@ -8,7 +8,8 @@ const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge', 'xxxla
 const placeholder = './avatar-placeholder.svg';
 
 const meta = {
-  title: 'Components/Atoms L1/Avatar',
+  title: 'Components/Images and icons/Avatar',
+  tags: ['atom-l1'],
   component: NlAvatar,
   args: { size: 'medium', online: false, onlineLabel: 'Online' },
   argTypes: {

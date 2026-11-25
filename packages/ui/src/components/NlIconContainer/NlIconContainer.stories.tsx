@@ -6,7 +6,8 @@ const sizes = [40, 48, 64] as const;
 const tones = ['primary', 'secondary', 'disabled', 'success', 'warning', 'error', 'info'] as const;
 
 const meta = {
-  title: 'Components/Atoms L1/Icon container',
+  title: 'Components/Images and icons/Icon container',
+  tags: ['atom-l1'],
   component: NlIconContainer,
   args: { icon: 'search', size: 48, tone: 'primary' },
   argTypes: {

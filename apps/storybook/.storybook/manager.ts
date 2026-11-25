@@ -3,4 +3,6 @@ import { create } from 'storybook/theming';
 
 addons.setConfig({
   theme: create({ base: 'light', brandTitle: 'Northline design system' }),
+  // Every section starts collapsed; the one holding the open story still expands.
+  sidebar: { collapsedRoots: ['foundations', 'components', 'pages', 'internal'] },
 });

@@ -7,7 +7,8 @@ import { NlTextField } from './NlTextField';
 const knownIssue = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/Text field',
+  title: 'Components/Forms and inputs/Text field',
+  tags: ['molecule'],
   component: NlTextField,
   args: {
     label: 'Member name',

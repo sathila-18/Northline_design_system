@@ -34,7 +34,8 @@ const user = {
 const logo = <span className="nl:text-headline-small-h6 nl:text-primary">Northline</span>;
 
 const meta = {
-  title: 'Components/Organisms/Side nav',
+  title: 'Components/Navigation/Side nav',
+  tags: ['organism'],
   component: NlSideNav,
   parameters: { layout: 'fullscreen' },
   args: { items, logo, user, currentHref: '#rewards-track-day', variant: 'default' },

@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { NlProgressBar } from './NlProgressBar';
 
 const meta = {
-  title: 'Components/Atoms L0/Progress bar',
+  title: 'Components/Loading/Progress bar',
+  tags: ['atom-l0'],
   component: NlProgressBar,
   args: { value: 50, size: 'small', label: 'Upload' },
   argTypes: {

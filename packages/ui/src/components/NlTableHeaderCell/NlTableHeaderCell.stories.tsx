@@ -16,7 +16,8 @@ function Row({ children, grey = false }: { children: ReactNode; grey?: boolean }
 }
 
 const meta = {
-  title: 'Components/Molecules/Table header cell',
+  title: 'Components/Data display/Table header cell',
+  tags: ['molecule'],
   component: NlTableHeaderCell,
   args: {
     children: 'Points',

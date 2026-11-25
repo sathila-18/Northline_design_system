@@ -21,7 +21,8 @@ const labels: Record<NlBadgeTone, string> = {
 };
 
 const meta = {
-  title: 'Components/Atoms L1/Badge',
+  title: 'Components/Chips and labels/Badge',
+  tags: ['atom-l1'],
   component: NlBadge,
   args: { tone: 'neutral', size: 'small', children: 'Member' },
   argTypes: {

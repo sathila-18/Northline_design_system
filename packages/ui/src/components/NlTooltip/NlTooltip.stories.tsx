@@ -14,7 +14,8 @@ interface StoryArgs {
 }
 
 const meta = {
-  title: 'Components/Atoms L1/Tooltip',
+  title: 'Components/Overlays/Tooltip',
+  tags: ['atom-l1'],
   parameters: { layout: 'centered' },
   args: {
     placement: 'top',

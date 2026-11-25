@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NlStatCard } from './NlStatCard';
 
 const meta = {
-  title: 'Components/Molecules/Stat card',
+  title: 'Components/Data display/Stat card',
+  tags: ['molecule'],
   component: NlStatCard,
   args: { label: 'Total points', value: '806,400', inList: false },
   argTypes: {

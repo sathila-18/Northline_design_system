@@ -7,7 +7,8 @@ import { NlListItem } from './NlListItem';
 const k3 = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/List item',
+  title: 'Components/Data display/List item',
+  tags: ['molecule'],
   component: NlListItem,
   args: {
     appearance: 'plain',

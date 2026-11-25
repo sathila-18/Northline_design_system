@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NlDivider } from './NlDivider';
 
 const meta = {
-  title: 'Components/Atoms L0/Divider',
+  title: 'Components/Layout/Divider',
+  tags: ['atom-l0'],
   component: NlDivider,
   args: { type: 'divider', decorative: false },
   argTypes: {

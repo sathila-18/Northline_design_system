@@ -25,7 +25,7 @@ Instructions for Claude Code in this repo. Read them fully at the start of every
 1. **Log the start.** Add a line to `docs/BUILD_LOG.md` (see "Build log").
 2. **Never guess a measurement.** Every size, space, radius, colour and text style comes from a token named in the spec or agreed in the plan. If a value isn't covered by a token, stop and ask. Never add a token yourself.
 3. **Base first.** If the component has a base (§7.2), build or extend the base. Mapped components only pass fixed props to it.
-4. **Stories.** One story per variant, with controls, under `Components/<Level>/<Name>` (internal bases under `Internal/`). Check every story in all three brands and both themes.
+4. **Stories.** One story per variant, with controls, under `Components/<Group>/<Name>`, where the group is the component's purpose (DESIGN.md D22), with its level as a tag (`tags: ['atom-l0' | 'atom-l1' | 'molecule' | 'organism']`). Add new components to the order in `apps/storybook/.storybook/preview.tsx`. Internal bases go under `Internal/`. Check every story in all three brands and both themes.
 5. **Tests.** Behaviour with Vitest and Testing Library (keyboard, disabled, ARIA), and no a11y violations in any brand and theme.
 6. **Spec.** Add the "Spec → code" table, the API, the tokens used and any decisions to the component's §9 section.
 7. **Status.** Set the §8 row to ✅ only after the designer approves. Add a line to §11.

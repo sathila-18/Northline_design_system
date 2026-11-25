@@ -12,7 +12,8 @@ const messages: Record<NlSnackbarTone, string> = {
 };
 
 const meta = {
-  title: 'Components/Molecules/Snackbar',
+  title: 'Components/Messaging/Snackbar',
+  tags: ['molecule'],
   component: NlSnackbar,
   args: {
     tone: 'neutral',

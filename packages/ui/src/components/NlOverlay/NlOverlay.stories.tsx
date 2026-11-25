@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { NlOverlay } from './NlOverlay';
 
 const meta = {
-  title: 'Components/Atoms L0/Overlay',
+  title: 'Components/Overlays/Overlay',
+  tags: ['atom-l0'],
   component: NlOverlay,
   args: { open: true },
   argTypes: {

@@ -67,7 +67,8 @@ function Demo({
 }
 
 const meta: Meta<typeof NlMenu> = {
-  title: 'Components/Atoms L0/Menu',
+  title: 'Components/Overlays/Menu',
+  tags: ['atom-l0'],
   component: NlMenu,
   parameters: { layout: 'padded' },
 };

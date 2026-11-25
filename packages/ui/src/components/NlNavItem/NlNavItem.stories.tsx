@@ -26,7 +26,8 @@ function Frame({ minimized = false, children }: { minimized?: boolean; children:
 }
 
 const meta = {
-  title: 'Components/Molecules/Nav item',
+  title: 'Components/Navigation/Nav item',
+  tags: ['molecule'],
   component: NlNavItem,
   args: { children: 'Members', icon: 'person', href: '#members', minimized: false },
   argTypes: {

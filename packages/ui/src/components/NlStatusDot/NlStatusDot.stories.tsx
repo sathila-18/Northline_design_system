@@ -4,7 +4,8 @@ import { NlStatusDot } from './NlStatusDot';
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
 
 const meta = {
-  title: 'Components/Atoms L0/Status dot',
+  title: 'Components/Chips and labels/Status dot',
+  tags: ['atom-l0'],
   component: NlStatusDot,
   args: { size: 'medium' },
   argTypes: {

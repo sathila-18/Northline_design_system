@@ -14,7 +14,8 @@ const row =
 const knownIssue = (open: boolean | undefined) => (open ? { 'data-a11y-known-issue': 'K7' } : {});
 
 const meta = {
-  title: 'Components/Atoms L1/Rows per page',
+  title: 'Components/Navigation/Rows per page',
+  tags: ['atom-l1'],
   component: NlRowsPerPage,
   args: { value: 10, open: false, disabled: false, label: 'Rows per page' },
   argTypes: {

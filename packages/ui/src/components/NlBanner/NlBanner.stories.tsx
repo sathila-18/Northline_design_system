@@ -14,7 +14,8 @@ const samples: Record<NlBannerTone, { title: string; text: string }> = {
 };
 
 const meta = {
-  title: 'Components/Molecules/Banner',
+  title: 'Components/Messaging/Banner',
+  tags: ['molecule'],
   component: NlBanner,
   args: {
     tone: 'info',

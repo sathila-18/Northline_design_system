@@ -16,7 +16,8 @@ const sample: Record<NlHelperTextTone, string> = {
 };
 
 const meta = {
-  title: 'Components/Atoms L1/Helper text',
+  title: 'Components/Forms and inputs/Helper text',
+  tags: ['atom-l1'],
   component: NlHelperText,
   args: { tone: 'default', showIcon: true, children: sample.default },
   argTypes: {

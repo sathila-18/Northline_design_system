@@ -6,7 +6,8 @@ import { NlCheckbox } from './NlCheckbox';
 const knownIssue = (disabled: boolean | undefined) => (disabled ? { 'data-a11y-known-issue': 'K3' } : {});
 
 const meta = {
-  title: 'Components/Molecules/Checkbox',
+  title: 'Components/Forms and inputs/Checkbox',
+  tags: ['molecule'],
   component: NlCheckbox,
   args: {
     children: 'Send a welcome email',

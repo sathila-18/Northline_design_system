@@ -5,7 +5,8 @@ import { NlButton } from '../NlButton';
 import { NlEmptyState } from './NlEmptyState';
 
 const meta = {
-  title: 'Components/Molecules/Empty state',
+  title: 'Components/Messaging/Empty state',
+  tags: ['molecule'],
   component: NlEmptyState,
   args: {
     size: 'medium',

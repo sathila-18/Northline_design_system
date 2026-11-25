@@ -6,7 +6,8 @@ import { NlFilterChip } from './NlFilterChip';
 const sizes = ['xsmall', 'small', 'large'] as const;
 
 const meta = {
-  title: 'Components/Atoms L1/Filter chip',
+  title: 'Components/Chips and labels/Filter chip',
+  tags: ['atom-l1'],
   component: NlFilterChip,
   args: { size: 'small', defaultSelected: false, disabled: false, children: 'Active members' },
   argTypes: {
