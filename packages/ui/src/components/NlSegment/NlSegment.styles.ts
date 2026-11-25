@@ -44,6 +44,8 @@ export const iconSize = {
  * Colours per selected state: `segment` (background and label) and `icon`.
  * Selected: bg-primary, hover bg-secondary, pressed bg-tertiary, disabled bg-disabled; label text-primary (disabled
  * text-disabled-on_bg); icon fg-secondary, filled (disabled fg-disabled-on_bg).
+ * Selected xsmall (OD-263): bg-secondary at rest, as the unpadded xsmall track would otherwise let the segment
+ * match the page background (bg-primary); hover keeps bg-secondary; pressed and disabled as above.
  * Unselected: no background; label text-secondary, hover text-tertiary (OD-68), pressed text-primary, disabled
  * text-disabled; icon fg-secondary (disabled fg-disabled).
  */
@@ -51,6 +53,11 @@ export const selected = {
   on: {
     segment:
       'nl:bg-primary nl:text-primary nl:hover:bg-secondary nl:active:bg-tertiary nl:has-disabled:bg-disabled nl:has-disabled:text-disabled-on-bg',
+    icon: 'nl:text-fg-secondary nl:group-has-disabled/segment:text-fg-disabled-on-bg',
+  },
+  onXsmall: {
+    segment:
+      'nl:bg-secondary nl:text-primary nl:active:bg-tertiary nl:has-disabled:bg-disabled nl:has-disabled:text-disabled-on-bg',
     icon: 'nl:text-fg-secondary nl:group-has-disabled/segment:text-fg-disabled-on-bg',
   },
   off: {
