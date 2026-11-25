@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { NlAppShell, NlListItem, NlPageHeader, NlSideNav } from '@northline/ui';
+import { BrandLogo } from './BrandLogo';
 import { navItems, type PageHref } from './navItems';
 
 export interface PageLayoutProps {
@@ -24,8 +25,8 @@ export function PageLayout({ active, title, subtitle, children }: PageLayoutProp
         <NlSideNav
           items={navItems}
           currentHref={active}
-          // Story-only wordmark, as on the login page. There is no logo component.
-          logo={<span className="nl:text-headline-small-h6 nl:text-primary">Northline</span>}
+          // Story-only logo for the current brand, as on the login page. There is no library logo component.
+          logo={<BrandLogo />}
           user={{
             name: 'Admin 01',
             email: 'admin01@example.com',

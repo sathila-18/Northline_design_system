@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+// Story-only logo, kept in the Storybook app with its artwork.
+import { BrandLogo } from '../../../../../apps/storybook/src/pages/_shared/BrandLogo';
 import { NlListItem } from '../NlListItem';
 import { NlPageHeader } from '../NlPageHeader';
 import { NlSideNav, type NlSideNavItem } from '../NlSideNav';
@@ -23,7 +25,7 @@ const nav = (
   <NlSideNav
     items={items}
     currentHref="#rewards"
-    logo={<span className="nl:text-headline-small-h6 nl:text-primary">Northline</span>}
+    logo={<BrandLogo />}
     user={{
       name: 'Member 0042',
       email: 'm0042@example.test',
