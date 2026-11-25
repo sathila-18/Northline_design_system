@@ -8059,6 +8059,7 @@ Default, hover, pressed, open, focus. A user row with no menu has no hover and n
 | Menu placement | Above (expanded); to the right of the nav, along its bottom (minimized) | New `NlMenu` placements `top-start` and `end-end`. Minimized, the menu sits `Space-XS` from the avatar button, not the nav's edge; `NlSideNav` (#78) can adjust | Approved (OD-193) |
 | Accessible name | "{name}, account menu" | Named from its text plus the menu label as hidden text: "{name} {email} Account menu". An `aria-label` without the visible email fails WCAG 2.5.3 (axe `label-content-name-mismatch`) | Approved (OD-194) |
 | Minimized padding | `Space-L` block only | `Space-L` all round (a 72 × 72 target) | Approved (OD-195) |
+| Minimized placement | Not described | The row keeps its own width (the avatar plus `Space-L` all round) and is centred on the minimized nav column, which is narrower; before, it was squeezed to the column and the avatar sat off centre, to the end (fixed 25 Nov 2026, designer) | Approved |
 | Long name or email | Not described | One line each, ellipsis, `title` when cut (as OD-191) | Approved (OD-196) |
 
 #### Spec → code
