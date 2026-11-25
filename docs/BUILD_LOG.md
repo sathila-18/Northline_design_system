@@ -109,3 +109,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | Chart hover highlight (OD-261) | 2026-11-25 12:22 | 2026-11-25 13:06 | No ring on hover; donut dims the other slices to 40%; ring for keyboard focus only. Full a11y run passed (481 stories × 6). Approved by the designer |
 | Login opens the dashboard | 2026-11-25 13:09 | 2026-11-25 13:32 | Pages/Login: Log in goes to Pages/Dashboard instead of the member list. Approved by the designer |
 | Brand logos | 2026-11-25 14:07 | 2026-11-25 14:11 | Story-only BrandLogo: each brand mark (Size-24) next to its name, Space-XXS apart, following the Brand toolbar; Login, page side nav, NlSideNav and NlAppShell stories. Approved by the designer |
+| Page: All rewards | 2026-11-25 14:14 | | Pages/Rewards/All rewards: grid and table views, search, Category and Status filters, sort, pagination; 36 fixture rewards |

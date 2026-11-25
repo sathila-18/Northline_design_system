@@ -12,7 +12,7 @@ const comingSoon = 'Pages/Coming soon';
 export const pageStories: Record<PageHref, readonly [title: string, story: string]> = {
   '#dashboard': ['Pages/Dashboard', 'Default'],
   '#members': ['Pages/Members/Member list', 'Default'],
-  '#rewards': [comingSoon, 'All rewards'],
+  '#rewards': ['Pages/Rewards/All rewards', 'Default'],
   '#track-voucher': [comingSoon, 'Track voucher'],
   '#tiers': [comingSoon, 'Tiers'],
   '#events': [comingSoon, 'Events'],
