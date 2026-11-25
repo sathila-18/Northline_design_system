@@ -10,7 +10,7 @@ import { goTo } from '../_shared/navItems';
  *
  * Required fields follow D18: Log in with a field left empty puts it in error with an error helper text (and its
  * icon), and focus moves to the first empty field. A field's error clears once it has a value. Nothing is sent: with
- * both fields filled, Log in opens the member list story, so the prototype starts from here.
+ * both fields filled, Log in opens the dashboard story, so the prototype starts from here.
  */
 const meta: Meta = { title: 'Pages/Login', parameters: { layout: 'fullscreen' } };
 export default meta;
@@ -40,8 +40,8 @@ function LoginPage() {
     setErrors(next);
     if (next.username) usernameRef.current?.focus();
     else if (next.password) passwordRef.current?.focus();
-    // The prototype starts here: a filled-in form opens the member list.
-    else goTo('#members');
+    // The prototype starts here: a filled-in form opens the dashboard.
+    else goTo('#dashboard');
   };
 
   /** Clears a field's error once it has a value. */
