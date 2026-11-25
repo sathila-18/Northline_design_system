@@ -13,7 +13,7 @@ export const pageStories: Record<PageHref, readonly [title: string, story: strin
   '#dashboard': ['Pages/Dashboard', 'Default'],
   '#members': ['Pages/Members/Member list', 'Default'],
   '#rewards': ['Pages/Rewards/All rewards', 'Default'],
-  '#track-voucher': [comingSoon, 'Track voucher'],
+  '#track-voucher': ['Pages/Rewards/Track voucher', 'Default'],
   '#tiers': [comingSoon, 'Tiers'],
   '#events': [comingSoon, 'Events'],
   '#messages': [comingSoon, 'Messages'],
