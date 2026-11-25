@@ -104,3 +104,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | Chart axis and table summary fixes | 2026-11-25 00:33 | 2026-11-25 00:49 | Month ticks with a December start; last label clipped; NlTable summary commas. Approved by the designer |
 | Month axis without the year | 2026-11-25 00:56 | 2026-11-25 01:16 | Designer: x axis shows month names only; tooltip and table keep "Mar 2026". Approved by the designer |
 | Storybook purpose groups | 2026-11-25 10:25 | 2026-11-25 11:04 | Sidebar grouped by purpose (D22), level as a story tag, sections start collapsed. Approved by the designer |
+| Token pipeline page redesign | 2026-11-25 11:04 | 2026-11-25 11:24 | Foundations page: token card with result, four-step chain, six-way brand and theme grid, code and JSON paths; select with NlIcon arrow. Approved by the designer |
