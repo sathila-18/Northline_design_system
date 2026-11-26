@@ -41,5 +41,9 @@ export const RewardDetails: Story = {
   name: 'Reward details',
   render: () => <ComingSoon title="Reward details" active="#rewards" />,
 };
-export const Messages: Story = { render: () => <ComingSoon title="Messages" active="#messages" /> };
+/** Where Create campaign on Messages goes until the campaign editor is built. */
+export const CreateCampaign: Story = {
+  name: 'Create campaign',
+  render: () => <ComingSoon title="Create campaign" active="#messages" />,
+};
 export const Help: Story = { render: () => <ComingSoon title="Help" active="#help" /> };
