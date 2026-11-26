@@ -121,7 +121,7 @@ function applyDraft(tier: Tier, draft: TierDraft, isFirst: boolean): Tier {
 }
 
 /**
- * Tiers page (DESIGN.md §8.6, P6). Members by tier (one stacked NlBarChart, plain frame) and the tier rules table in
+ * Tiers page (DESIGN.md §8.6, P6). Members by tier (one stacked NlBarChart in a card frame) and the tier rules table in
  * tier order, with a visible Edit button per row. Edit opens the edit drawer (NlSideSheet): name, points to reach,
  * multiplier, keep tier for and perks, checked on Save; leaving with changes asks first. Save updates the chart and
  * table and shows a success snackbar.
@@ -297,7 +297,6 @@ function TiersPage({
       ) : (
         <div className="nl:flex nl:flex-col nl:gap-4xl">
           <NlChartFrame
-            variant="plain"
             title="Members by tier"
             description={status === 'loading' ? undefined : `${formatPoints(totalMembers)} members`}
             height="240"
