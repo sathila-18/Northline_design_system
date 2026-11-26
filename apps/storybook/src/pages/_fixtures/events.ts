@@ -532,8 +532,8 @@ export const registeredPercent = (event: NlEvent) =>
   event.capacity === 0 ? 0 : Math.round((event.registrations.length / event.capacity) * 100);
 
 /**
- * "12/12/2026, 08:30 to 16:30" for a one-day event, "19/02/2027, 15:00 to 21/02/2027, 11:00" across days. No locale
- * formatting.
+ * The date and the start and end times for a one-day event (DD/MM/YYYY, then both times); across days, the start
+ * date and time to the end date and time. No locale formatting.
  */
 export function formatEventWhen(event: NlEvent) {
   const [startDay = '', startTime = ''] = event.start.split('T');
@@ -542,7 +542,7 @@ export function formatEventWhen(event: NlEvent) {
   return `${formatDate(startDay)}, ${startTime} to ${formatDate(endDay)}, ${endTime}`;
 }
 
-/** The start only, "12/12/2026, 08:30", for the table, where the full range doesn't fit at 1440. */
+/** The start date and time only, for the table, where the full range doesn't fit at 1440. */
 export function formatEventStart(event: NlEvent) {
   const [startDay = '', startTime = ''] = event.start.split('T');
   return `${formatDate(startDay)}, ${startTime}`;
