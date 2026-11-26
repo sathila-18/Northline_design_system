@@ -15,7 +15,7 @@ export const pageStories: Record<PageHref, readonly [title: string, story: strin
   '#rewards': ['Pages/Rewards/All rewards', 'Default'],
   '#track-voucher': ['Pages/Rewards/Track voucher', 'Default'],
   '#tiers': ['Pages/Rewards/Tiers', 'Default'],
-  '#events': [comingSoon, 'Events'],
+  '#events': ['Pages/Events', 'Default'],
   '#messages': [comingSoon, 'Messages'],
   '#help': [comingSoon, 'Help'],
 };
