@@ -14,6 +14,7 @@ export type MessageChannel = 'email' | 'push' | 'sms' | 'in-app';
 export type MessageStatus = 'draft' | 'scheduled' | 'sending' | 'sent' | 'failed';
 
 export const messageChannels: MessageChannel[] = ['email', 'push', 'sms', 'in-app'];
+export const messageStatuses: MessageStatus[] = ['draft', 'scheduled', 'sending', 'sent', 'failed'];
 
 export const channelLabel: Record<MessageChannel, string> = {
   email: 'Email',

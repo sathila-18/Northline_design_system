@@ -4,8 +4,6 @@ import { action } from 'storybook/actions';
 import {
   NlButton,
   NlDialog,
-  NlFilterChip,
-  NlInputChip,
   NlSnackbarProvider,
   NlTable,
   useNlSnackbar,
@@ -18,13 +16,14 @@ import {
   formatSendDate,
   messageChannels,
   messageStatusLabel,
+  messageStatuses,
   type Message,
   type MessageChannel,
   type MessageStatus,
 } from '../_fixtures/messages';
 import { PageLayout } from '../_shared/PageLayout';
 import { CampaignDrawer, clickRate, Figure, messageStatusTone, NO_VALUE, openRate } from './CampaignDrawer';
-import { messageTabs, pageSizes, useMessageList, type MessageListState, type MessageTab } from './useMessageList';
+import { pageSizes, useMessageList, type MessageListState } from './useMessageList';
 
 /** Ready shows the data; loading and error stand in for a request that hasn't finished or failed. */
 export type MessagesStatus = 'ready' | 'loading' | 'error';
@@ -33,7 +32,7 @@ export interface MessagesProps {
   /** The campaigns to show: the fixtures, or [] for a programme with none yet. */
   messages: Message[];
   status?: MessagesStatus;
-  /** Starting tab, search, filter, sort or page. */
+  /** Starting search, filters, sort or page. */
   initial?: Partial<MessageListState>;
   /** A campaign whose drawer is open at the start (story only). */
   initialDrawer?: string;
@@ -41,7 +40,14 @@ export interface MessagesProps {
   initialCancel?: string;
 }
 
-const tabLabel: Record<MessageTab, string> = { all: 'All', scheduled: 'Scheduled', sent: 'Sent', draft: 'Drafts' };
+/** Status filter labels: plural where the status is a noun. */
+const statusFilterLabel: Record<MessageStatus, string> = {
+  draft: 'Drafts',
+  scheduled: 'Scheduled',
+  sending: 'Sending',
+  sent: 'Sent',
+  failed: 'Failed',
+};
 
 const channelOptions = messageChannels.map((channel) => ({ value: channel, label: channelLabel[channel] }));
 
@@ -52,12 +58,12 @@ const createCampaign = () => {
 };
 
 /**
- * Messages page (DESIGN.md §8.6, P8): the campaigns a brand's loyalty team sends to its members. The shared layout;
- * tabs with counts (filter chips: the library has no tabs); NlTable with a search (name or ID) and Create campaign in
- * the toolbar, the Channel filter in its header cell, active filters as removable chips with Clear filters, send
- * date sorting (newest first), open and click rates in tabular figures (a dash where they don't apply), row actions
- * and pagination. A row click or View opens the campaign drawer; Cancel asks in an NlDialog first. Every date check
- * uses the fixtures' fixed today (26/11/2026).
+ * Messages page (DESIGN.md §8.6, P8): the campaigns a brand's loyalty team sends to its members. The shared layout and
+ * NlTable: a search (name or ID) and Create campaign in the toolbar; Channel and Status filters in their header cells
+ * (nothing selected by default, counts on the status options), with Clear filters in the toolbar while any is on (no
+ * filter chips); send date sorting (newest first); open and click rates in tabular figures (a dash where they don't
+ * apply); row actions and pagination. A row click or View opens the campaign drawer; Cancel asks in an NlDialog
+ * first. Every date check uses the fixtures' fixed today (26/11/2026).
  */
 export function Messages(props: MessagesProps) {
   return (
@@ -149,6 +155,16 @@ function MessagesPage({
         type: 'badge',
         badge: { tone: messageStatusTone[message.status], label: messageStatusLabel[message.status] },
       }),
+      filter: {
+        options: messageStatuses.map((value) => ({
+          value,
+          label: `${statusFilterLabel[value]} (${String(list.counts[value])})`,
+        })),
+        value: state.statuses,
+        onApply: (value: string[]) => {
+          list.setStatuses(value as MessageStatus[]);
+        },
+      },
     },
     {
       key: 'openRate',
@@ -161,14 +177,6 @@ function MessagesPage({
       cell: (message) => ({ children: <Figure>{clickRate(message) ?? NO_VALUE}</Figure> }),
     },
   ];
-
-  const chips = state.channels.map((channel) => ({
-    key: channel,
-    label: `Channel: ${channelLabel[channel]}`,
-    onRemove: () => {
-      list.setChannels(state.channels.filter((item) => item !== channel));
-    },
-  }));
 
   let empty: NlEmptyStateProps;
   if (status === 'error') {
@@ -202,12 +210,6 @@ function MessagesPage({
         </NlButton>
       ),
     };
-  } else if (!list.hasFilters) {
-    empty = {
-      icon: 'mail',
-      heading: state.tab === 'draft' ? 'No drafts' : `No ${tabLabel[state.tab].toLowerCase()} campaigns`,
-      description: 'Campaigns with this status appear here.',
-    };
   } else {
     empty = {
       icon: 'search',
@@ -226,21 +228,6 @@ function MessagesPage({
   return (
     <PageLayout active="#messages" title="Messages">
       <div className="nl:flex nl:flex-col nl:gap-xl">
-        {/* Tabs: the library has no tabs, so single-choice filter chips stand in (Held for later). */}
-        <div role="group" aria-label="Campaign status" className="nl:flex nl:flex-wrap nl:gap-s">
-          {messageTabs.map((tab) => (
-            <NlFilterChip
-              key={tab}
-              size="small"
-              selected={state.tab === tab}
-              onSelectedChange={() => {
-                list.setTab(tab);
-              }}
-            >
-              {`${tabLabel[tab]} (${showRows ? String(list.counts[tab]) : NO_VALUE})`}
-            </NlFilterChip>
-          ))}
-        </div>
         {/* The grey header's titles are 4.46:1 in Dark: known issue K8 (accepted with NlTableHeaderCell #66). */}
         <div data-a11y-known-issue="K8">
           <NlTable
@@ -292,25 +279,12 @@ function MessagesPage({
                   list.setQuery('');
                 },
               },
-              filters:
-                chips.length > 0 || list.hasFilters ? (
-                  <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
-                    {chips.map((chip) => (
-                      <NlInputChip
-                        key={chip.key}
-                        size="small"
-                        removable
-                        removeLabel={`Remove ${chip.label}`}
-                        onRemove={chip.onRemove}
-                      >
-                        {chip.label}
-                      </NlInputChip>
-                    ))}
-                    <NlButton variant="link" size="small" onClick={list.clearFilters}>
-                      Clear filters
-                    </NlButton>
-                  </div>
-                ) : undefined,
+              // Active filters show only in the header cells (designer, 27 Nov 2026: no filter chips, as on Events).
+              filters: list.hasFilters ? (
+                <NlButton variant="link" size="small" onClick={list.clearFilters}>
+                  Clear filters
+                </NlButton>
+              ) : undefined,
               // The page header has no action slot, so Create campaign sits in the table toolbar (Held for later).
               action: { children: 'Create campaign', icon: 'leading', iconName: 'add', onClick: createCampaign },
             }}

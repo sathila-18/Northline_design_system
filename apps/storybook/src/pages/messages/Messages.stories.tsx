@@ -3,8 +3,8 @@ import { messages } from '../_fixtures/messages';
 import { Messages } from './Messages';
 
 /**
- * Messages (DESIGN.md §8.6, P8). Storybook only, built from library components and the fixture campaigns. Tabs, search,
- * the channel filter, sorting, pagination, the drawer and its actions work in story state. Every date check uses the
+ * Messages (DESIGN.md §8.6, P8). Storybook only, built from library components and the fixture campaigns. Search, the
+ * status and channel filters, sorting, pagination, the drawer and its actions work in story state. Every date check uses the
  * fixtures' fixed today, 26/11/2026, so the stories never change. Designed for 1440 wide.
  */
 const meta: Meta<typeof Messages> = {
@@ -17,16 +17,16 @@ export default meta;
 
 type Story = StoryObj<typeof Messages>;
 
-/** The All tab, newest send date first. */
+/** Every campaign, no filter selected, newest send date first. */
 export const Default: Story = {};
 
-/** The Scheduled tab. */
-export const Scheduled: Story = { args: { initial: { tab: 'scheduled' } } };
+/** The Status filter on Scheduled. */
+export const Scheduled: Story = { args: { initial: { statuses: ['scheduled'] } } };
 
-/** The Drafts tab. */
-export const Drafts: Story = { args: { initial: { tab: 'draft' } } };
+/** The Status filter on Drafts. */
+export const Drafts: Story = { args: { initial: { statuses: ['draft'] } } };
 
-/** Channel Email, shown as a chip with Clear filters. */
+/** The Channel filter on Email, with Clear filters. */
 export const Filtered: Story = { args: { initial: { channels: ['email'] } } };
 
 /** The drawer on a sent email: preview, and delivered, opened and clicked with their rates. Duplicate in the footer. */
@@ -44,7 +44,7 @@ export const NoResults: Story = { name: 'No results', args: { initial: { query: 
 /** No campaigns yet: the empty state offers Create campaign. */
 export const Empty: Story = { args: { messages: [] } };
 
-/** Waiting for the campaigns: skeleton rows; the tabs, filter and toolbar stay. */
+/** Waiting for the campaigns: skeleton rows; the filters and toolbar stay. */
 export const Loading: Story = { args: { status: 'loading' } };
 
 /** The campaigns couldn't load. Try again shows the list. */

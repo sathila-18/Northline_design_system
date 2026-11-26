@@ -2,14 +2,11 @@ import { useMemo, useState } from 'react';
 import type { NlTableSort } from '@northline/ui';
 import type { Message, MessageChannel, MessageStatus } from '../_fixtures/messages';
 
-/** The tabs: All, or one status. */
-export type MessageTab = 'all' | 'scheduled' | 'sent' | 'draft';
-export const messageTabs: MessageTab[] = ['all', 'scheduled', 'sent', 'draft'];
-
-/** The messages page's story state: tab, search, filters, sort and pages. */
+/** The messages page's story state: search, filters, sort and pages. */
 export interface MessageListState {
-  tab: MessageTab;
   query: string;
+  /** The Status column filter. [] (the default) shows every status. */
+  statuses: MessageStatus[];
   channels: MessageChannel[];
   sort: NlTableSort;
   page: number;
@@ -22,20 +19,19 @@ export const defaultSort: NlTableSort = { key: 'sendAt', direction: 'descending'
 export const pageSizes = [10, 25, 50];
 
 const initialState: MessageListState = {
-  tab: 'all',
   query: '',
+  statuses: [],
   channels: [],
   sort: defaultSort,
   page: 1,
   pageSize: 10,
 };
 
-const inTab = (status: MessageStatus, tab: MessageTab) => tab === 'all' || status === tab;
-
 function matches(message: Message, state: MessageListState) {
   const query = state.query.trim().toLowerCase();
   if (query !== '' && !message.name.toLowerCase().includes(query) && !message.id.toLowerCase().includes(query))
     return false;
+  if (state.statuses.length > 0 && !state.statuses.includes(message.status)) return false;
   if (state.channels.length > 0 && !state.channels.includes(message.channel)) return false;
   return true;
 }
@@ -46,24 +42,21 @@ function compare(a: Message, b: Message, sort: NlTableSort) {
 }
 
 /**
- * Tabs, search, the channel filter, sorting and pagination over the fixture campaigns, in story state. Changing the
- * tab, the search or a filter goes back to page 1.
+ * Search, the status and channel filters, sorting and pagination over the fixture campaigns, in story state. Changing
+ * the search or a filter goes back to page 1.
  */
 export function useMessageList(source: Message[], initial: Partial<MessageListState> = {}) {
   const [state, setState] = useState<MessageListState>({ ...initialState, ...initial });
 
-  /** Campaigns per tab (before search and filters). */
+  /** Campaigns per status, for the Status filter's options. */
   const counts = useMemo(() => {
-    const result: Record<MessageTab, number> = { all: 0, scheduled: 0, sent: 0, draft: 0 };
-    for (const message of source) for (const tab of messageTabs) if (inTab(message.status, tab)) result[tab] += 1;
+    const result: Record<MessageStatus, number> = { draft: 0, scheduled: 0, sending: 0, sent: 0, failed: 0 };
+    for (const message of source) result[message.status] += 1;
     return result;
   }, [source]);
 
   const filtered = useMemo(
-    () =>
-      source
-        .filter((message) => inTab(message.status, state.tab) && matches(message, state))
-        .sort((a, b) => compare(a, b, state.sort)),
+    () => source.filter((message) => matches(message, state)).sort((a, b) => compare(a, b, state.sort)),
     [source, state],
   );
 
@@ -71,7 +64,7 @@ export function useMessageList(source: Message[], initial: Partial<MessageListSt
   const pageCount = Math.max(1, Math.ceil(total / state.pageSize));
   const page = Math.min(state.page, pageCount);
   const rows = filtered.slice((page - 1) * state.pageSize, page * state.pageSize);
-  const hasFilters = state.query.trim() !== '' || state.channels.length > 0;
+  const hasFilters = state.query.trim() !== '' || state.statuses.length > 0 || state.channels.length > 0;
 
   return {
     state,
@@ -81,8 +74,8 @@ export function useMessageList(source: Message[], initial: Partial<MessageListSt
     page,
     pageCount,
     hasFilters,
-    setTab: (tab: MessageTab) => {
-      setState((prev) => ({ ...prev, tab, page: 1 }));
+    setStatuses: (statuses: MessageStatus[]) => {
+      setState((prev) => ({ ...prev, statuses, page: 1 }));
     },
     setQuery: (query: string) => {
       setState((prev) => ({ ...prev, query, page: 1 }));
@@ -91,7 +84,7 @@ export function useMessageList(source: Message[], initial: Partial<MessageListSt
       setState((prev) => ({ ...prev, channels, page: 1 }));
     },
     clearFilters: () => {
-      setState((prev) => ({ ...prev, query: '', channels: [], page: 1 }));
+      setState((prev) => ({ ...prev, query: '', statuses: [], channels: [], page: 1 }));
     },
     setSort: (sort: NlTableSort | null) => {
       setState((prev) => ({ ...prev, sort: sort ?? defaultSort }));
