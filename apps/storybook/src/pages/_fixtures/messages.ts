@@ -178,7 +178,7 @@ const seeds: MessageSeed[] = [
     audience: event('EV-0032'),
     sendAt: '2026-06-18T12:00',
     subject: 'Pit lane tour on Saturday',
-    body: 'Your pit lane tour starts at 10:00 on Saturday. Please arrive 15 minutes early and bring your membership card.',
+    body: 'Your pit lane tour starts at 10am on Saturday. Please arrive 15 minutes early and bring your membership card.',
   },
   {
     id: 'MS-0015',
@@ -232,7 +232,7 @@ const seeds: MessageSeed[] = [
     audience: event('EV-0036'),
     sendAt: '2026-08-21T09:00',
     subject: 'Your track day is tomorrow',
-    body: 'Check-in opens at 08:00 at Westmoor Test Track. Bring your driving licence, and wear flat shoes and long sleeves.',
+    body: 'Check-in opens at 8am at Westmoor Test Track. Bring your driving licence, and wear flat shoes and long sleeves.',
   },
   {
     id: 'MS-0021',
@@ -326,7 +326,7 @@ const seeds: MessageSeed[] = [
     audience: event('EV-0044'),
     sendAt: '2026-11-26T09:00',
     subject: 'See you tonight at Northline Hub',
-    body: 'The winter meetup starts at 17:00 in Hall B. Bring your car for the photo wall and collect 200 points at the door.',
+    body: 'The winter meetup starts at 5pm in Hall B. Bring your car for the photo wall and collect 200 points at the door.',
   },
   {
     id: 'MS-0031',
@@ -335,7 +335,7 @@ const seeds: MessageSeed[] = [
     audience: event('EV-0047'),
     sendAt: '2026-12-08T10:00',
     subject: 'Your winter track day on 12 December',
-    body: 'Check-in opens at 08:00 at Westmoor Test Track. Helmets are provided, and your instructor will meet you in the pit lane.',
+    body: 'Check-in opens at 8am at Westmoor Test Track. Helmets are provided, and your instructor will meet you in the pit lane.',
   },
   {
     id: 'MS-0032',
@@ -353,7 +353,7 @@ const seeds: MessageSeed[] = [
     audience: event('EV-0048'),
     sendAt: '2026-12-16T09:00',
     subject: 'Festive lunch on Friday',
-    body: 'Lunch is served at 12:00 at Ashcombe House on Friday. Please tell us about any dietary needs by Wednesday.',
+    body: 'Lunch is served at noon at Ashcombe House on Friday. Please tell us about any dietary needs by Wednesday.',
   },
   {
     id: 'MS-0034',
