@@ -12,19 +12,13 @@ export interface EventListState {
   from: string;
   /** ISO YYYY-MM-DD, '' for none. */
   to: string;
-  /** null: the default sort for the status filter. */
+  /** null: not sorted (fixture order, by event ID). */
   sort: NlTableSort | null;
   page: number;
   pageSize: number;
 }
 
 export const pageSizes = [10, 25, 50];
-
-/** Soonest first; most recent first when only Past or Cancelled are shown. */
-export function defaultSort(statuses: EventStatus[]): NlTableSort {
-  const backwards = statuses.length > 0 && statuses.every((status) => status === 'past' || status === 'cancelled');
-  return { key: 'start', direction: backwards ? 'descending' : 'ascending' };
-}
 
 /** The page opens on upcoming events. */
 const initialState: EventListState = {
@@ -59,11 +53,11 @@ function compare(a: NlEvent, b: NlEvent, sort: NlTableSort) {
 
 /**
  * Search, filters, sorting and pagination over the fixture events, in story state. Changing the search or a filter
- * goes back to page 1; changing the status filter also goes back to its default sort.
+ * goes back to page 1. Not sorted until a sort is chosen in the Date and time header.
  */
 export function useEventList(source: NlEvent[], initial: Partial<EventListState> = {}) {
   const [state, setState] = useState<EventListState>({ ...initialState, ...initial });
-  const sort = state.sort ?? defaultSort(state.statuses);
+  const { sort } = state;
 
   /** Events per status, for the Status filter's options. */
   const counts = useMemo(() => {
@@ -72,10 +66,10 @@ export function useEventList(source: NlEvent[], initial: Partial<EventListState>
     return result;
   }, [source]);
 
-  const filtered = useMemo(
-    () => source.filter((event) => matches(event, state)).sort((a, b) => compare(a, b, sort)),
-    [source, state, sort],
-  );
+  const filtered = useMemo(() => {
+    const matching = source.filter((event) => matches(event, state));
+    return sort ? matching.sort((a, b) => compare(a, b, sort)) : matching;
+  }, [source, state, sort]);
 
   const total = filtered.length;
   const pageCount = Math.max(1, Math.ceil(total / state.pageSize));
@@ -96,7 +90,7 @@ export function useEventList(source: NlEvent[], initial: Partial<EventListState>
     hasFilters,
     hasOtherFilters,
     setStatuses: (statuses: EventStatus[]) => {
-      setState((prev) => ({ ...prev, statuses, sort: null, page: 1 }));
+      setState((prev) => ({ ...prev, statuses, page: 1 }));
     },
     setFilter: <K extends FilterKey>(key: K, value: EventListState[K]) => {
       setState((prev) => ({ ...prev, [key]: value, page: 1 }));
@@ -105,7 +99,7 @@ export function useEventList(source: NlEvent[], initial: Partial<EventListState>
       setState((prev) => ({ ...prev, from, to, page: 1 }));
     },
     clearFilters: () => {
-      setState((prev) => ({ ...prev, query: '', statuses: [], types: [], from: '', to: '', sort: null, page: 1 }));
+      setState((prev) => ({ ...prev, query: '', statuses: [], types: [], from: '', to: '', page: 1 }));
     },
     setSort: (next: NlTableSort | null) => {
       setState((prev) => ({ ...prev, sort: next }));

@@ -17,13 +17,13 @@ export default meta;
 
 type Story = StoryObj<typeof Events>;
 
-/** The Status filter on Upcoming (shown as a chip), soonest first. */
+/** The Status filter on Upcoming, not sorted. */
 export const Default: Story = {};
 
-/** The Status filter on Past, most recent first. */
+/** The Status filter on Past, not sorted. */
 export const Past: Story = { args: { initial: { statuses: ['past'] } } };
 
-/** Status Upcoming, Type Track day between 01/12/2026 and 31/03/2027, shown as chips with Clear filters. */
+/** Status Upcoming, Type Track day between 01/12/2026 and 31/03/2027, with Clear filters. */
 export const Filtered: Story = {
   args: { initial: { types: ['track-day'], from: '2026-12-01', to: '2027-03-31' } },
 };

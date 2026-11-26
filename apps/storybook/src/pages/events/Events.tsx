@@ -3,7 +3,6 @@ import { action } from 'storybook/actions';
 import {
   NlButton,
   NlDialog,
-  NlInputChip,
   NlSnackbarProvider,
   NlTable,
   useNlSnackbar,
@@ -22,7 +21,6 @@ import {
   type EventType,
   type NlEvent,
 } from '../_fixtures/events';
-import { formatDate } from '../_fixtures/members';
 import { PageLayout } from '../_shared/PageLayout';
 import { EventDrawer, eventStatusTone, Registered, tierAccessCell } from './EventDrawer';
 import { pageSizes, useEventList, type EventListState } from './useEventList';
@@ -68,9 +66,9 @@ const createEvent = () => {
 
 /**
  * Events page (DESIGN.md §8.6, P7). The shared layout and NlTable: a search (name or ID) and Create event in the
- * toolbar; Status (opens on Upcoming), Type and Date filters in the header cells; active filters as removable chips
- * with Clear filters; date sorting (soonest first, most recent first when only Past or Cancelled are shown); row
- * actions and pagination. A row click or View opens the event drawer; Cancel event asks in an NlDialog first, then
+ * toolbar; Status (opens on Upcoming), Type and Date filters in the header cells, with Clear filters in the toolbar
+ * while any is on (no filter chips); date sorting from the header, unsorted by default; row actions and pagination.
+ * A row click or View opens the event drawer; Cancel event asks in an NlDialog first, then
  * shows a success snackbar. Every date check uses the fixtures' fixed today (26/11/2026).
  */
 export function Events(props: EventsProps) {
@@ -165,44 +163,6 @@ function EventsPage({ events, status: initialStatus = 'ready', initial, initialD
         },
       },
     },
-  ];
-
-  const dateLabel = (() => {
-    if (state.from && state.to) return `Date: ${formatDate(state.from)} to ${formatDate(state.to)}`;
-    if (state.from) return `Date from: ${formatDate(state.from)}`;
-    if (state.to) return `Date to: ${formatDate(state.to)}`;
-    return '';
-  })();
-
-  const chips = [
-    ...state.statuses.map((value) => ({
-      key: `status-${value}`,
-      label: `Status: ${statusFilterLabel[value]}`,
-      onRemove: () => {
-        list.setStatuses(state.statuses.filter((item) => item !== value));
-      },
-    })),
-    ...state.types.map((type) => ({
-      key: `type-${type}`,
-      label: `Type: ${eventTypeLabel[type]}`,
-      onRemove: () => {
-        list.setFilter(
-          'types',
-          state.types.filter((item) => item !== type),
-        );
-      },
-    })),
-    ...(dateLabel
-      ? [
-          {
-            key: 'date',
-            label: dateLabel,
-            onRemove: () => {
-              list.setRange('', '');
-            },
-          },
-        ]
-      : []),
   ];
 
   let empty: NlEmptyStateProps;
@@ -324,25 +284,12 @@ function EventsPage({ events, status: initialStatus = 'ready', initial, initialD
                   list.setFilter('query', '');
                 },
               },
-              filters:
-                chips.length > 0 || list.hasFilters ? (
-                  <div className="nl:flex nl:flex-wrap nl:items-center nl:gap-s">
-                    {chips.map((chip) => (
-                      <NlInputChip
-                        key={chip.key}
-                        size="small"
-                        removable
-                        removeLabel={`Remove ${chip.label}`}
-                        onRemove={chip.onRemove}
-                      >
-                        {chip.label}
-                      </NlInputChip>
-                    ))}
-                    <NlButton variant="link" size="small" onClick={list.clearFilters}>
-                      Clear filters
-                    </NlButton>
-                  </div>
-                ) : undefined,
+              // Active filters show only in the header cells (designer, 26 Nov 2026: no filter chips).
+              filters: list.hasFilters ? (
+                <NlButton variant="link" size="small" onClick={list.clearFilters}>
+                  Clear filters
+                </NlButton>
+              ) : undefined,
               // The page header has no action slot, so Create event sits in the table toolbar (Held for later).
               action: { children: 'Create event', icon: 'leading', iconName: 'add', onClick: createEvent },
             }}
