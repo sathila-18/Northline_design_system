@@ -3,7 +3,6 @@ import { action } from 'storybook/actions';
 import {
   NlButton,
   NlDialog,
-  NlFilterChip,
   NlInputChip,
   NlSnackbarProvider,
   NlTable,
@@ -25,7 +24,7 @@ import {
 } from '../_fixtures/events';
 import { formatDate } from '../_fixtures/members';
 import { PageLayout } from '../_shared/PageLayout';
-import { EventDrawer, Registered, tierAccessCell } from './EventDrawer';
+import { EventDrawer, eventStatusTone, Registered, tierAccessCell } from './EventDrawer';
 import { pageSizes, useEventList, type EventListState } from './useEventList';
 
 /** Ready shows the data; loading and error stand in for a request that hasn't finished or failed. */
@@ -35,7 +34,7 @@ export interface EventsProps {
   /** The events to show: the fixtures, or a subset for the empty story. */
   events: NlEvent[];
   status?: EventsStatus;
-  /** Starting tab, search, filters, sort or page. */
+  /** Starting search, filters (the status filter starts on Upcoming), sort or page. */
   initial?: Partial<EventListState>;
   /** An event whose drawer is open at the start (story only). */
   initialDrawer?: string;
@@ -45,8 +44,8 @@ export interface EventsProps {
 
 const typeOptions = eventTypes.map((type) => ({ value: type, label: eventTypeLabel[type] }));
 
-/** Tab label words, lower case for the empty states. */
-const tabNoun: Record<EventStatus, string> = {
+/** Status words, lower case, for the empty states. */
+const statusNoun: Record<EventStatus, string> = {
   upcoming: 'upcoming events',
   live: 'live events',
   past: 'past events',
@@ -54,7 +53,8 @@ const tabNoun: Record<EventStatus, string> = {
   cancelled: 'cancelled events',
 };
 
-const tabLabel: Record<EventStatus, string> = {
+/** Status filter labels: plural where the status is a noun. */
+const statusFilterLabel: Record<EventStatus, string> = {
   upcoming: 'Upcoming',
   live: 'Live',
   past: 'Past',
@@ -67,9 +67,9 @@ const createEvent = () => {
 };
 
 /**
- * Events page (DESIGN.md §8.6, P7). The shared layout; status tabs with counts (filter chips: the library has no
- * tabs); NlTable with a search (name or ID), Create event, Type and Date filters in the header cells, active filters
- * as removable chips with Clear filters, date sorting (soonest first, Past and Cancelled most recent first), row
+ * Events page (DESIGN.md §8.6, P7). The shared layout and NlTable: a search (name or ID) and Create event in the
+ * toolbar; Status (opens on Upcoming), Type and Date filters in the header cells; active filters as removable chips
+ * with Clear filters; date sorting (soonest first, most recent first when only Past or Cancelled are shown); row
  * actions and pagination. A row click or View opens the event drawer; Cancel event asks in an NlDialog first, then
  * shows a success snackbar. Every date check uses the fixtures' fixed today (26/11/2026).
  */
@@ -146,6 +146,25 @@ function EventsPage({ events, status: initialStatus = 'ready', initial, initialD
     { key: 'location', header: 'Location' },
     { key: 'tier', header: 'Tier access', cell: tierAccessCell },
     { key: 'registered', header: 'Registered', cell: (event) => ({ children: <Registered event={event} /> }) },
+    {
+      key: 'status',
+      header: 'Status',
+      cell: (event) => ({
+        type: 'badge',
+        badge: { tone: eventStatusTone[event.status], label: eventStatusLabel[event.status] },
+      }),
+      filter: {
+        // Counts on each option, as the status tabs had.
+        options: eventStatuses.map((value) => ({
+          value,
+          label: `${statusFilterLabel[value]} (${String(list.counts[value])})`,
+        })),
+        value: state.statuses,
+        onApply: (value: string[]) => {
+          list.setStatuses(value as EventStatus[]);
+        },
+      },
+    },
   ];
 
   const dateLabel = (() => {
@@ -156,6 +175,13 @@ function EventsPage({ events, status: initialStatus = 'ready', initial, initialD
   })();
 
   const chips = [
+    ...state.statuses.map((value) => ({
+      key: `status-${value}`,
+      label: `Status: ${statusFilterLabel[value]}`,
+      onRemove: () => {
+        list.setStatuses(state.statuses.filter((item) => item !== value));
+      },
+    })),
     ...state.types.map((type) => ({
       key: `type-${type}`,
       label: `Type: ${eventTypeLabel[type]}`,
@@ -200,20 +226,30 @@ function EventsPage({ events, status: initialStatus = 'ready', initial, initialD
         </NlButton>
       ),
     };
-  } else if (!list.hasFilters) {
+  } else if (!list.hasOtherFilters && state.statuses.length === 1 && state.statuses[0]) {
+    const only = state.statuses[0];
     empty = {
       icon: 'event',
-      heading: `No ${tabNoun[state.tab]}`,
+      heading: `No ${statusNoun[only]}`,
       description:
-        state.tab === 'upcoming'
-          ? 'Events appear here once they are published.'
-          : 'Events with this status appear here.',
+        only === 'upcoming' ? 'Events appear here once they are published.' : 'Events with this status appear here.',
       action:
-        state.tab === 'upcoming' || state.tab === 'draft' ? (
+        only === 'upcoming' || only === 'draft' ? (
           <NlButton variant="primary" size="small" onClick={createEvent}>
             Create event
           </NlButton>
         ) : undefined,
+    };
+  } else if (!list.hasFilters) {
+    empty = {
+      icon: 'event',
+      heading: 'No events yet',
+      description: 'Events appear here once they are created.',
+      action: (
+        <NlButton variant="primary" size="small" onClick={createEvent}>
+          Create event
+        </NlButton>
+      ),
     };
   } else {
     empty = {
@@ -233,25 +269,10 @@ function EventsPage({ events, status: initialStatus = 'ready', initial, initialD
   return (
     <PageLayout active="#events" title="Events">
       <div className="nl:flex nl:flex-col nl:gap-xl">
-        {/* Status tabs: the library has no tabs, so single-choice filter chips stand in (Held for later). */}
-        <div role="group" aria-label="Event status" className="nl:flex nl:flex-wrap nl:gap-s">
-          {eventStatuses.map((tab) => (
-            <NlFilterChip
-              key={tab}
-              size="small"
-              selected={state.tab === tab}
-              onSelectedChange={() => {
-                list.setTab(tab);
-              }}
-            >
-              {`${tabLabel[tab]} (${showRows ? String(list.counts[tab]) : '–'})`}
-            </NlFilterChip>
-          ))}
-        </div>
         {/* The grey header's titles are 4.46:1 in Dark: known issue K8 (accepted with NlTableHeaderCell #66). */}
         <div data-a11y-known-issue="K8">
           <NlTable
-            caption={`${eventStatusLabel[state.tab]} events`}
+            caption="Events"
             columns={columns}
             rows={showRows ? list.rows : []}
             getRowId={(event) => event.id}
