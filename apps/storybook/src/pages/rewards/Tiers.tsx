@@ -442,9 +442,11 @@ function TierForm({
           <NlTextBlock type="label" heading="Perks" />
         </span>
         <div>
-          {perks.map((perk) => (
+          {perks.map((perk, index) => (
             <NlCheckboxListItem
               key={perk.id}
+              // No divider under the last row (page rule 10).
+              divider={index < perks.length - 1}
               title={perk.label}
               size="small"
               density="compact"
