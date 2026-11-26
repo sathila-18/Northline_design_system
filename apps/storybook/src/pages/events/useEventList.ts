@@ -20,10 +20,9 @@ export interface EventListState {
 
 export const pageSizes = [10, 25, 50];
 
-/** The page opens on upcoming events. */
 const initialState: EventListState = {
   query: '',
-  statuses: ['upcoming'],
+  statuses: [],
   types: [],
   from: '',
   to: '',

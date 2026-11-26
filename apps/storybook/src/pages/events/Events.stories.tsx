@@ -17,13 +17,13 @@ export default meta;
 
 type Story = StoryObj<typeof Events>;
 
-/** The Status filter on Upcoming, not sorted. */
+/** All 30 events, not filtered or sorted (event ID order). */
 export const Default: Story = {};
 
 /** The Status filter on Past, not sorted. */
 export const Past: Story = { args: { initial: { statuses: ['past'] } } };
 
-/** Status Upcoming, Type Track day between 01/12/2026 and 31/03/2027, with Clear filters. */
+/** Type Track day between 01/12/2026 and 31/03/2027, with Clear filters. */
 export const Filtered: Story = {
   args: { initial: { types: ['track-day'], from: '2026-12-01', to: '2027-03-31' } },
 };
@@ -40,8 +40,8 @@ export const CancelConfirm: Story = { name: 'Cancel confirm', args: { initialCan
 /** A search with no matches: the empty state offers Clear filters. */
 export const NoResults: Story = { name: 'No results', args: { initial: { query: 'no such event' } } };
 
-/** No upcoming events: the empty state offers Create event. Other statuses keep their events. */
-export const Empty: Story = { args: { events: events.filter((event) => event.status !== 'upcoming') } };
+/** No events yet: the empty state offers Create event. */
+export const Empty: Story = { args: { events: [] } };
 
 /** Waiting for the events: skeleton rows; the filters and toolbar stay. */
 export const Loading: Story = { args: { status: 'loading' } };

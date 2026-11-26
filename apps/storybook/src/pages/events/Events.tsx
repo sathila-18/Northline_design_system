@@ -32,7 +32,7 @@ export interface EventsProps {
   /** The events to show: the fixtures, or a subset for the empty story. */
   events: NlEvent[];
   status?: EventsStatus;
-  /** Starting search, filters (the status filter starts on Upcoming), sort or page. */
+  /** Starting search, filters, sort or page. */
   initial?: Partial<EventListState>;
   /** An event whose drawer is open at the start (story only). */
   initialDrawer?: string;
@@ -66,7 +66,7 @@ const createEvent = () => {
 
 /**
  * Events page (DESIGN.md §8.6, P7). The shared layout and NlTable: a search (name or ID) and Create event in the
- * toolbar; Status (opens on Upcoming), Type and Date filters in the header cells, with Clear filters in the toolbar
+ * toolbar; Status, Type and Date filters in the header cells, with Clear filters in the toolbar
  * while any is on (no filter chips); date sorting from the header, unsorted by default; row actions and pagination.
  * A row click or View opens the event drawer; Cancel event asks in an NlDialog first, then
  * shows a success snackbar. Every date check uses the fixtures' fixed today (26/11/2026).
