@@ -3,7 +3,7 @@ import { Tiers } from './Tiers';
 
 /**
  * Tiers (DESIGN.md §8.6, P6). Storybook only, built from library components and the tier fixtures; member counts come
- * from the member fixtures. Edit in a row's actions, or a tier card, opens the edit drawer. Designed for 1440 wide.
+ * from the member fixtures. A row's Edit button opens the edit drawer. Designed for 1440 wide.
  */
 const meta: Meta<typeof Tiers> = {
   title: 'Pages/Rewards/Tiers',
@@ -14,7 +14,7 @@ export default meta;
 
 type Story = StoryObj<typeof Tiers>;
 
-/** The four tier cards and the tier rules table. */
+/** Members by tier and the tier rules table. */
 export const Default: Story = {};
 
 /** The edit drawer open on Gold. */
@@ -41,7 +41,7 @@ export const Saved: Story = {
   args: { initialSave: { id: 'tier-gold', draft: { multiplier: '1.75' } } },
 };
 
-/** The cards and table loading. */
+/** The chart and table loading. */
 export const Loading: Story = { args: { status: 'loading' } };
 
 /** The tiers failed to load. Try again shows them. */

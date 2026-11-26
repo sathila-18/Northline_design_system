@@ -1,16 +1,14 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { action } from 'storybook/actions';
+import { NlBarChart, NlChartFrame } from '@northline/ui/charts';
 import {
-  NlBadge,
   NlButton,
   NlCheckboxListItem,
   NlDialog,
   NlEmptyState,
   NlHelperText,
-  NlListItem,
   NlSelect,
   NlSideSheet,
-  NlSkeleton,
   NlSnackbarProvider,
   NlTable,
   NlTextBlock,
@@ -29,6 +27,7 @@ import {
   perks,
   shareOfMembers,
   tiers as fixtureTiers,
+  totalMembers,
   type Tier,
 } from '../_fixtures/tiers';
 import { PageLayout } from '../_shared/PageLayout';
@@ -122,9 +121,9 @@ function applyDraft(tier: Tier, draft: TierDraft, isFirst: boolean): Tier {
 }
 
 /**
- * Tiers page (DESIGN.md §8.6, P6). Four tier cards (badge, points to reach, members and their share) and the tier
- * rules table in tier order, with Edit. Edit or a card opens the edit drawer (NlSideSheet): name, points to reach,
- * multiplier, keep tier for and perks, checked on Save; leaving with changes asks first. Save updates the cards and
+ * Tiers page (DESIGN.md §8.6, P6). Members by tier (one stacked NlBarChart in a card frame) and the tier rules table in
+ * tier order, with a visible Edit button per row. Edit opens the edit drawer (NlSideSheet): name, points to reach,
+ * multiplier, keep tier for and perks, checked on Save; leaving with changes asks first. Save updates the chart and
  * table and shows a success snackbar.
  */
 export function Tiers(props: TiersProps) {
@@ -230,7 +229,9 @@ function TiersPage({
     {
       key: 'members',
       header: 'Members',
-      cell: (tier) => ({ children: formatPoints(membersInTier[tier.memberTier]) }),
+      cell: (tier) => ({
+        children: `${formatPoints(membersInTier[tier.memberTier])} (${shareOfMembers(tier.memberTier)})`,
+      }),
     },
     {
       key: 'lastUpdated',
@@ -238,7 +239,38 @@ function TiersPage({
       width: '120',
       cell: (tier) => ({ children: formatDate(tier.lastUpdated) }),
     },
+    {
+      // The only action, so a visible button instead of the row-actions menu. NlTable has no button cell type.
+      key: 'edit',
+      header: 'Action',
+      width: '96',
+      cell: (tier) => ({
+        children: (
+          <NlButton
+            variant="tertiary"
+            size="small"
+            aria-label={`Edit ${tier.name} tier`}
+            onClick={() => {
+              openEdit(tier);
+            }}
+          >
+            Edit
+          </NlButton>
+        ),
+      }),
+    },
   ];
+
+  // One stacked bar: a series per tier, in tier order. The legend label carries the count and share, since the bar
+  // chart's legend has no value slot.
+  const chartRow = Object.fromEntries([
+    ['group', 'All members'],
+    ...tiers.map((tier) => [tier.id, membersInTier[tier.memberTier]]),
+  ]) as Record<string, string | number>;
+  const chartSeries = tiers.map((tier) => ({
+    key: tier.id,
+    label: `${tier.name} ${formatPoints(membersInTier[tier.memberTier])} (${shareOfMembers(tier.memberTier)})`,
+  }));
 
   return (
     <PageLayout active="#tiers" title="Tiers" subtitle="Set how members move up and what each tier gets.">
@@ -264,46 +296,22 @@ function TiersPage({
         />
       ) : (
         <div className="nl:flex nl:flex-col nl:gap-4xl">
-          <section aria-label="Tier summary">
-            {status === 'loading' ? (
-              <ul aria-busy="true" aria-label="Loading tiers" className="nl:grid nl:grid-cols-4 nl:gap-l">
-                {fixtureTiers.map((tier) => (
-                  <li key={tier.id} className="nl:flex nl:flex-col nl:gap-m nl:p-l">
-                    <NlSkeleton shape="rect" className="nl:w-1/3" />
-                    <NlSkeleton shape="text" />
-                    <NlSkeleton shape="text" />
-                    <NlSkeleton shape="text" className="nl:w-1/2" />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <ul aria-label="Tiers" className="nl:grid nl:grid-cols-4 nl:gap-l">
-                {tiers.map((tier) => (
-                  <li key={tier.id} className="nl:min-w-0">
-                    <NlListItem
-                      appearance="filled"
-                      accessoryAlign="title"
-                      // Placement only: every card in the row is as tall as the tallest.
-                      className="nl:h-full"
-                      title={<NlBadge tone={tierTone[tier.memberTier]}>{tier.name}</NlBadge>}
-                      body={
-                        <span className="nl:flex nl:flex-col nl:items-start nl:gap-xs">
-                          <span className="nl:tabular-nums">{formatPoints(tier.pointsToReach)} points to reach</span>
-                          <span className="nl:tabular-nums">
-                            {formatPoints(membersInTier[tier.memberTier])} members
-                          </span>
-                          <span className="nl:tabular-nums">{shareOfMembers(tier.memberTier)} of all members</span>
-                        </span>
-                      }
-                      onClick={() => {
-                        openEdit(tier);
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
+          <NlChartFrame
+            title="Members by tier"
+            description={status === 'loading' ? undefined : `${formatPoints(totalMembers)} members`}
+            height="240"
+            status={status === 'loading' ? 'loading' : 'ready'}
+          >
+            <NlBarChart
+              title="Members by tier"
+              data={[chartRow]}
+              xKey="group"
+              orientation="horizontal"
+              layout="stacked"
+              height="240"
+              series={chartSeries}
+            />
+          </NlChartFrame>
 
           <section className="nl:flex nl:flex-col nl:gap-l">
             <NlTextBlock type="headline-small" headingAs="h2" heading="Tier rules" />
@@ -315,14 +323,6 @@ function TiersPage({
                 rows={tiers}
                 getRowId={(tier) => tier.id}
                 getRowLabel={(tier) => tier.name}
-                rowActions={(tier) => [
-                  {
-                    label: 'Edit',
-                    onSelect: () => {
-                      openEdit(tier);
-                    },
-                  },
-                ]}
                 loading={status === 'loading'}
                 toolbar={false}
                 pagination={false}
