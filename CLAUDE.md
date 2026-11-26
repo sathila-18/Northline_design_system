@@ -8,6 +8,8 @@ Instructions for Claude Code in this repo. Read them fully at the start of every
 
 **[`DESIGN.md`](./DESIGN.md) is the spec.** Tokens, styles, icons, components and build status. This file only says how to work.
 
+All page content must fit the product brief in [`DESIGN.md`](./DESIGN.md#product-brief).
+
 ---
 
 ## Before any task
