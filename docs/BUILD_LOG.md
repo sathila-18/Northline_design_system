@@ -113,3 +113,4 @@ How long the rebuild takes. One row per setup task, component and page: added wh
 | NlSegment xsmall selected (OD-263) | 2026-11-25 15:38 | 2026-11-25 16:39 | Selected xsmall segment on bg-secondary instead of bg-primary. Approved by the designer |
 | NlSideNavUser minimized centred | 2026-11-25 15:55 | 2026-11-25 16:39 | Minimized avatar row centred on the nav column (was off centre, to the end). Approved by the designer |
 | Page: Track voucher | 2026-11-25 16:43 | 2026-11-25 17:10 | Pages/Rewards/Track voucher: code search with format check, result with steps, details and actions, recent vouchers; 60 fixture vouchers. Approved by the designer |
+| Page: Tiers | 2026-11-26 17:19 | 2026-11-26 18:02 | Pages/Rewards/Tiers: tier cards, tier rules table, edit drawer with validation, discard dialog and saved snackbar; 4 fixture tiers, 8 perks. Revised: no divider under the last perk; page rule 10 (last row of a list group has no divider). Approved by the designer |

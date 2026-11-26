@@ -84,6 +84,7 @@ Instructions for Claude Code in this repo. Read them fully at the start of every
 - Stories: Default, Loading, Empty, Error; table pages also Filtered.
 - Designed at 1440. No mobile layout, no 1024 check. Reviewed in all three brands, Light and Dark.
 - Data from `_fixtures/` only (fixed seed, invented names, `example.com`). Run `pnpm scrub` before pushing.
+- The last row of a list group has no divider (`divider={false}` on it).
 - Checks for page work: only `pnpm build-storybook` and `pnpm scrub`. No new tests, no a11y run, no Next.js check. Don't stop for a plan; build, then stop once at the end with a summary. If a library component changes, the full checks above still apply to it.
 
 ### Names and text
