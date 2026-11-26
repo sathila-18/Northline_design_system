@@ -10,7 +10,21 @@ Northline is a public demo. It rebuilds a real design-to-code process with ficti
 
 ---
 
+## Product brief
+
+Northline is a fictional loyalty platform for car brands. Car owners join a brand's programme and earn points when they service their car, buy accessories, use partner fuel stations or attend brand events. They spend points on rewards such as driving experiences, track days, merchandise and partner offers. Tiers give the most loyal owners better perks.
+
+The pages in Storybook are the admin console used by a brand's loyalty team to manage members, rewards, tiers and events, and to see how the programme is doing.
+
+The same platform is used by three fictional car brands, which is why every page works in three brand themes: Northline, Garnet and Voltic, an electric car brand.
+
+All names, places, partners and data are invented. No real car makers, racing teams, circuits or people.
+
+---
+
 ## Contents
+
+- [Product brief](#product-brief)
 
 1. [Sources of truth](#1-sources-of-truth)
 2. [Core rules](#2-core-rules)
